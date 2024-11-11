@@ -11,7 +11,8 @@ repositories {
 
 dependencies {
     implementation(libs.kotlin.gradle.plugin)
-    implementation(libs.android.gradle.plugin)
+    implementation(libs.android.library.gradle.plugin)
+    implementation(libs.android.application.gradle.plugin)
 }
 
 gradlePlugin {
@@ -19,6 +20,11 @@ gradlePlugin {
         create("invoicer-library") {
             id = "invoicer.library"
             implementationClass = "build.logic.plugins.LibraryPlugin"
+        }
+
+        create("invoicer-application") {
+            id = "invoicer.application"
+            implementationClass = "build.logic.plugins.AppPlugin"
         }
     }
 }

@@ -53,20 +53,9 @@ class LibraryPlugin : Plugin<Project> {
     }
 
     private fun configureKotlin(target: Project) {
-//        target.tasks.named<KotlinCompilationTask<KotlinJvmCompilerOptions>>("compileKotlin")
-//            .configure {
-//                compilerOptions {
-//                    jvmTarget.set(AppConfig.jvmTarget)
-//                }
-//            }
-
-//        target.extensions.configure<KotlinJvmOptions> {
-//            jvmTarget = "1.8"
-//        }
-
         target.tasks.withType<KotlinCompile>().configureEach {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = AppConfig.jvmTarget
             }
         }
     }

@@ -30,7 +30,8 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-android-gradle-plugin = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
+android-library-gradle-plugin = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
+android-application-gradle-plugin = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "invoicer"
 include(":app")
+include(":foundation:design-system")

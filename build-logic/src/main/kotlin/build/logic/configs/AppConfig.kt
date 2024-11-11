@@ -3,7 +3,7 @@ package build.logic.configs
 import org.gradle.api.JavaVersion
 
 internal object AppConfig {
-    val compileSdk = 34
+    val compileSdk = 35
     val minSdk = 29
     val versionCode = 1
     val versionName = "1.0"

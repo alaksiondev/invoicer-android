@@ -1,6 +1,7 @@
 package build.logic.configs
 
 import org.gradle.api.JavaVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 internal object AppConfig {
     val compileSdk = 35
@@ -9,5 +10,5 @@ internal object AppConfig {
     val versionName = "1.0"
 
     val javaVersion = JavaVersion.VERSION_11
-    val jvmTarget = "11"
+    val jvmTarget = JvmTarget.JVM_1_8
 }

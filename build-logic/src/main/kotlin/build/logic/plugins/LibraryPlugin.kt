@@ -7,11 +7,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-import org.jetbrains.kotlin.gradle.utils.named
 
 class LibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -43,10 +39,35 @@ class LibraryPlugin : Plugin<Project> {
                 sourceCompatibility = AppConfig.javaVersion
                 targetCompatibility = AppConfig.javaVersion
             }
+
+            buildTypes {
+                release {
+                    isMinifyEnabled = false
+                }
+
+                debug {
+
+                }
+            }
         }
     }
 
     private fun configureKotlin(target: Project) {
-        // TODO -> Configure jvmTarget
+//        target.tasks.named<KotlinCompilationTask<KotlinJvmCompilerOptions>>("compileKotlin")
+//            .configure {
+//                compilerOptions {
+//                    jvmTarget.set(AppConfig.jvmTarget)
+//                }
+//            }
+
+//        target.extensions.configure<KotlinJvmOptions> {
+//            jvmTarget = "1.8"
+//        }
+
+        target.tasks.withType<KotlinCompile>().configureEach {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
     }
 }

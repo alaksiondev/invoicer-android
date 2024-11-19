@@ -16,4 +16,5 @@ dependencies {
     debugImplementation(libs.bundles.compose.debug)
     implementation(libs.bundles.voyager)
     implementation(projects.foundation.navigation)
+    implementation(projects.foundation.designSystem.tokens)
 }

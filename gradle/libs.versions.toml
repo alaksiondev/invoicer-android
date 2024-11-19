@@ -33,6 +33,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 # Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 
+# Gradle PLugins
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 android-library-gradle-plugin = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
 android-application-gradle-plugin = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
@@ -42,4 +43,8 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+
+[bundles]
+compose-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3"]
+compose-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 

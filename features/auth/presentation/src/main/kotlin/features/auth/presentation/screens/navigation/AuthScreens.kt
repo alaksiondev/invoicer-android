@@ -1,11 +1,11 @@
 package features.auth.presentation.screens.navigation
 
 import cafe.adriel.voyager.core.registry.screenModule
-import features.auth.presentation.screens.signin.SignInScreen
+import features.auth.presentation.screens.menu.AuthMenuScreen
 import foundation.navigation.InvoicerScreen
 
 val authScreens = screenModule {
-    register<InvoicerScreen.Auth.SignIn> {
-        SignInScreen()
+    register<InvoicerScreen.Auth.AuthMenu> {
+        AuthMenuScreen()
     }
 }

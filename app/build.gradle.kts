@@ -32,4 +32,8 @@ dependencies {
     implementation(libs.koin.core)
 
     implementation(projects.foundation.designSystem.theme)
+
+    // Projects
+    implementation(projects.foundation.navigation)
+    implementation(projects.features.auth.presentation)
 }

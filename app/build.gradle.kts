@@ -27,5 +27,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.voyager.navigator)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+
     implementation(projects.foundation.designSystem.theme)
 }

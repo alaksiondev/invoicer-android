@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.bundles.voyager)
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem.tokens)
+    implementation(projects.foundation.designSystem.components)
 }

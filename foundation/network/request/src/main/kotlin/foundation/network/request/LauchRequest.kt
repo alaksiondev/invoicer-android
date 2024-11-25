@@ -8,7 +8,7 @@ sealed interface RequestState<out T> {
     data object Started : RequestState<Nothing>
     data class Success<T>(val data: T) : RequestState<T>
     data class Error(val exception: RequestError) : RequestState<Nothing>
-    data object Finished: RequestState<Nothing>
+    data object Finished : RequestState<Nothing>
 }
 
 fun <T> launchRequest(
@@ -19,7 +19,7 @@ fun <T> launchRequest(
         block()
     }.onFailure { error ->
         if (error is RequestError) emit(RequestState.Error(error))
-        else RequestError.Other(error)
+        else emit(RequestState.Error(RequestError.Other(error)))
     }.onSuccess {
         emit(RequestState.Success(it))
     }

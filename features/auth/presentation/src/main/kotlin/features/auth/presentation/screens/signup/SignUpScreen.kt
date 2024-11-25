@@ -46,7 +46,7 @@ internal class SignUpScreen : Screen {
 
         StateContent(
             onBackClick = { navigator?.pop() },
-            onSubmitClick = {},
+            onSubmitClick = viewModel::createAccount,
             onEmailChange = viewModel::onEmailChange,
             onPasswordChange = viewModel::onPasswordChange,
             toggleCensorship = viewModel::toggleCensorship,

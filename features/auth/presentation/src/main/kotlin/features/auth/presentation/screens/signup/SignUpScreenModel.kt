@@ -1,13 +1,20 @@
 package features.auth.presentation.screens.signup
 
+import android.util.Log
 import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import features.auth.domain.usecase.SignUpUseCase
+import foundation.network.request.RequestState
+import foundation.network.request.launchRequest
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 internal class SignUpScreenModel(
-    private val signUpUseCase: SignUpUseCase
+    private val signUpUseCase: SignUpUseCase,
+    private val dispatcher: CoroutineDispatcher
 ) : ScreenModel {
 
     private val _state = MutableStateFlow(SignUpScreenState())
@@ -47,8 +54,42 @@ internal class SignUpScreenModel(
 
     fun createAccount() {
         if (state.value.buttonEnabled) {
-            runCatching {
+            screenModelScope.launch(dispatcher) {
+                launchRequest {
+                    signUpUseCase.invoke(
+                        email = state.value.email,
+                        confirmEmail = state.value.confirmEmail,
+                        password = state.value.password
+                    )
+                }.collect { handleSignUpRequest(it) }
+            }
+        }
+    }
 
+    private fun handleSignUpRequest(
+        state: RequestState<Unit>
+    ) {
+        when (state) {
+            is RequestState.Started -> {
+                _state.update {
+                    it.copy(
+                        requestLoading = true
+                    )
+                }
+            }
+
+            is RequestState.Success -> {
+                Log.d("sign-up-result", "success")
+            }
+
+            is RequestState.Error -> {
+                Log.d("sign-up-result", "failed")
+            }
+
+            RequestState.Finished -> _state.update {
+                it.copy(
+                    requestLoading = false
+                )
             }
         }
     }

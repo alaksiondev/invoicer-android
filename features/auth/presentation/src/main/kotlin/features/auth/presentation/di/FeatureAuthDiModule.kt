@@ -9,5 +9,9 @@ val featureAuthPresentationDiModule = module {
 }
 
 private fun Module.viewModelBindings() {
-    factory { SignUpScreenModel() }
+    factory {
+        SignUpScreenModel(
+            signUpUseCase = get()
+        )
+    }
 }

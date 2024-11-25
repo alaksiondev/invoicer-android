@@ -2,21 +2,22 @@ package features.auth.domain.usecase
 
 import features.auth.domain.repository.AuthRepository
 
-interface SignUpUse {
+interface SignUpUseCase {
     suspend fun invoke(email: String, confirmEmail: String, password: String)
 }
 
-internal class SignUpUseImpl(
+internal class SignUpUseCaseImpl(
     private val repository: AuthRepository
-) : SignUpUse {
+) : SignUpUseCase {
     override suspend fun invoke(
         email: String,
         confirmEmail: String,
         password: String
     ) {
-        val tokens = repository.signIn(
+        val tokens = repository.signUp(
             email = email,
-            password = password
+            password = password,
+            confirmEmail = confirmEmail
         )
     }
 }

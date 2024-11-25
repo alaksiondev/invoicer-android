@@ -1,11 +1,13 @@
 package features.auth.presentation.screens.signup
 
 import cafe.adriel.voyager.core.model.ScreenModel
+import features.auth.domain.usecase.SignUpUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 internal class SignUpScreenModel(
+    private val signUpUseCase: SignUpUseCase
 ) : ScreenModel {
 
     private val _state = MutableStateFlow(SignUpScreenState())
@@ -40,6 +42,14 @@ internal class SignUpScreenModel(
             it.copy(
                 censored = it.censored.not()
             )
+        }
+    }
+
+    fun createAccount() {
+        if (state.value.buttonEnabled) {
+            runCatching {
+
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import foundation.exception.RequestError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.DEFAULT
@@ -33,12 +34,15 @@ internal val okHttpClient = HttpClient(OkHttp) {
     }
 
     HttpResponseValidator {
-        validateResponse { response ->
+        handleResponseExceptionWithRequest { exception, request ->
+            val clientException =
+                exception as? ClientRequestException ?: return@handleResponseExceptionWithRequest
+
             runCatching {
-                response.body<InvoicerHttpError>()
+                clientException.response.body<InvoicerHttpError>()
             }.onSuccess { parsedBody ->
                 throw RequestError.Http(
-                    httpCode = response.status.value,
+                    httpCode = clientException.response.status.value,
                     errorCode = parsedBody.errorCode,
                     message = parsedBody.message
                 )

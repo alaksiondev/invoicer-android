@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.ktor.engine.okhttp)
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.negotiation)
+    implementation(libs.ktor.client.log)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(projects.foundation.exception)

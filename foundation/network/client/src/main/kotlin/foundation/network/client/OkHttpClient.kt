@@ -1,7 +1,6 @@
 package foundation.network.client
 
 import foundation.exception.RequestError
-import foundation.network.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp

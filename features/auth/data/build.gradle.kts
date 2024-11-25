@@ -13,4 +13,5 @@ dependencies {
     implementation(libs.ktor.client.core)
     implementation(libs.koin.core)
     implementation(projects.foundation.network)
+    implementation(projects.features.auth.domain)
 }

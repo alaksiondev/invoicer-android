@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "features.auth.domain"
 }
-
-dependencies {
-
-}

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "foundation.design.system.tokens"
+    namespace = "foundation.design.system.components"
 }
 
 dependencies {

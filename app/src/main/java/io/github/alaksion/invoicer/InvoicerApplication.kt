@@ -4,6 +4,7 @@ import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.auth.presentation.screens.di.featureAuthDiModule
 import features.auth.presentation.screens.navigation.authScreens
+import foundation.network.di.networkDiModule
 import org.koin.core.context.startKoin
 
 class InvoicerApplication : Application() {
@@ -17,7 +18,8 @@ class InvoicerApplication : Application() {
 
         startKoin {
             modules(
-                featureAuthDiModule
+                featureAuthDiModule,
+                networkDiModule
             )
         }
 

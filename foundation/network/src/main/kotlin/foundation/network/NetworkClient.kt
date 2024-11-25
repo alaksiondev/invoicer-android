@@ -12,12 +12,12 @@ import io.ktor.http.contentType
 internal class NetworkClientImpl(
     private val httpClient: HttpClient
 ) {
-    inline suspend fun <reified Request, reified Response> post(
+    suspend inline fun <reified Request, reified Response> post(
         requestHeaders: Map<String, String>,
         request: Request,
         urlString: String
     ): Response {
-        return httpClient.post(urlString = urlString) {
+        return httpClient.post(urlString = BuildConfig.API_URL + urlString) {
             setCustomHeaders(requestHeaders)
             contentType(ContentType.Application.Json)
             setBody(request)
@@ -25,11 +25,11 @@ internal class NetworkClientImpl(
         }.body()
     }
 
-    inline suspend fun <reified Response> get(
+    suspend inline fun <reified Response> get(
         requestHeaders: Map<String, String>,
         urlString: String,
     ): Response {
-        return httpClient.get(urlString = urlString) {
+        return httpClient.get(urlString = BuildConfig.API_URL + urlString) {
             setCustomHeaders(requestHeaders)
             contentType(ContentType.Application.Json)
         }.body()

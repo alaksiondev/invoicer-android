@@ -1,9 +1,27 @@
+import java.util.Properties
+
 plugins {
     id("invoicer.library")
 }
 
+val properties = Properties()
+properties.load(rootProject.file("local.properties").inputStream())
+
 android {
     namespace = "foundation.network"
+
+    buildTypes {
+        release {
+            buildConfigField("String", "API_URL", properties.getProperty("PROD_APP_URL"))
+        }
+        debug {
+            buildConfigField("String", "API_URL", properties.getProperty("DEBUG_APP_URL"))
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

@@ -2,4 +2,7 @@
 <resources>
     <string name="auth_sign_up_title">Sign up</string>
     <string name="auth_sign_up_submit_button">Create account</string>
+    <string name="auth_sign_up_email_label">E-mail</string>
+    <string name="auth_sign_up_password_label">Password</string>
+    <string name="auth_sign_up_email_placeholder">Enter your e-mail</string>
 </resources>

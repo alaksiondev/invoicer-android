@@ -1,7 +1,9 @@
 package features.auth.presentation.screens.signup
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -14,12 +16,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.spacer.Spacer
 import features.auth.design.system.components.spacer.SpacerSize
@@ -40,21 +43,38 @@ internal class SignUpScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
+        val viewModel = koinScreenModel<SignUpScreenModel>()
+
+        SideEffect {
+            Log.d("SignUpScreen", viewModel.censored.value.toString())
+        }
 
         StateContent(
             onBackClick = { navigator?.pop() },
-            onSubmitClick = {}
+            onSubmitClick = {},
+            email = viewModel.email.value,
+            password = viewModel.password.value,
+            isCensored = viewModel.censored.value,
+            onEmailChange = viewModel::onEmailChange,
+            onPasswordChange = viewModel::onPasswordChange,
+            toggleCensorship = viewModel::toggleCensorship
         )
     }
 
     @Composable
     fun StateContent(
+        email: String,
+        password: String,
+        isCensored: Boolean,
+        onEmailChange: (String) -> Unit,
+        onPasswordChange: (String) -> Unit,
+        toggleCensorship: () -> Unit,
         onBackClick: () -> Unit,
         onSubmitClick: () -> Unit
     ) {
         Scaffold(
             topBar = {
-                MediumTopAppBar(
+                TopAppBar(
                     title = {},
                     navigationIcon = {
                         IconButton(
@@ -74,25 +94,30 @@ internal class SignUpScreen : Screen {
             Column(
                 modifier = Modifier
                     .padding(scaffoldPadding)
-                    .padding(horizontal = Spacing.medium)
+                    .padding(Spacing.medium)
                     .fillMaxSize()
             ) {
                 Text(
                     text = stringResource(R.string.auth_sign_up_title),
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineLarge
                 )
                 Spacer(1f)
                 EmailField(
-                    value = "",
-                    onChange = {}
-                )
-                PasswordField(
-                    value = "",
-                    onChange = {},
-                    isCensored = true
+                    modifier = Modifier.fillMaxWidth(),
+                    value = email,
+                    onChange = onEmailChange
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
+                PasswordField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = password,
+                    onChange = onPasswordChange,
+                    isCensored = isCensored,
+                    toggleCensorship = toggleCensorship
+                )
+                Spacer(1f)
                 Button(
+                    modifier = Modifier.fillMaxWidth(),
                     onClick = onSubmitClick
                 ) {
                     Text(stringResource(R.string.auth_sign_up_submit_button))
@@ -120,6 +145,12 @@ private fun EmailField(
                 ),
                 contentDescription = null
             )
+        },
+        label = {
+            Text(stringResource(R.string.auth_sign_up_email_label))
+        },
+        placeholder = {
+            Text(stringResource(R.string.auth_sign_up_email_placeholder))
         }
     )
 }
@@ -127,27 +158,25 @@ private fun EmailField(
 @Composable
 private fun PasswordField(
     value: String,
-    onChange: (String) -> Unit,
     isCensored: Boolean,
+    onChange: (String) -> Unit,
+    toggleCensorship: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val trailingIcon = remember {
-        derivedStateOf {
-            if (isCensored) {
-                Icons.Outlined.VisibilityOff
-            } else {
-                Icons.Outlined.Visibility
-            }
+    val trailingIcon = remember(isCensored) {
+        if (isCensored) {
+            Icons.Outlined.Visibility
+        } else {
+            Icons.Outlined.VisibilityOff
         }
     }
 
-    val transformation = remember {
-        derivedStateOf {
-            if (isCensored) {
-                PasswordVisualTransformation()
-            } else {
-                VisualTransformation.None
-            }
+    val transformation = remember(isCensored) {
+
+        if (isCensored) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
         }
     }
 
@@ -164,13 +193,20 @@ private fun PasswordField(
             )
         },
         trailingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = trailingIcon.value
-                ),
-                contentDescription = null
-            )
+            IconButton(
+                onClick = toggleCensorship
+            ) {
+                Icon(
+                    painter = rememberVectorPainter(
+                        image = trailingIcon
+                    ),
+                    contentDescription = null
+                )
+            }
         },
-        visualTransformation = transformation.value
+        visualTransformation = transformation,
+        label = {
+            Text(stringResource(R.string.auth_sign_up_password_label))
+        }
     )
 }

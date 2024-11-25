@@ -18,4 +18,6 @@ dependencies {
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem.tokens)
     implementation(projects.foundation.designSystem.components)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
 }

@@ -38,4 +38,5 @@ dependencies {
 
     // Features
     implementation(projects.features.auth.presentation)
+    implementation(projects.features.auth.data)
 }

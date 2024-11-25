@@ -10,7 +10,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
 internal class NetworkClientImpl(
-    private val httpClient: HttpClient
+    internal val httpClient: HttpClient
 ) {
     suspend inline fun <reified Request, reified Response> post(
         requestHeaders: Map<String, String>,
@@ -43,4 +43,8 @@ internal class NetworkClientImpl(
             )
         }
     }
+}
+
+fun buildRequestUrl(endpoint: String): String {
+    return BuildConfig.API_URL + endpoint
 }

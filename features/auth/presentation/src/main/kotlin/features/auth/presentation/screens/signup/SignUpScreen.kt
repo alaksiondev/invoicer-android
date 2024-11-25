@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Email
@@ -23,8 +25,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -67,6 +73,9 @@ internal class SignUpScreen : Screen {
         onBackClick: () -> Unit,
         onSubmitClick: () -> Unit
     ) {
+        val (emailFocus, confirmEmailFocus, passwordFocus) = FocusRequester.createRefs()
+        val keyboard = LocalSoftwareKeyboardController.current
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -98,23 +107,33 @@ internal class SignUpScreen : Screen {
                 )
                 Spacer(1f)
                 EmailField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(emailFocus),
                     value = state.email,
-                    onChange = onEmailChange
+                    onChange = onEmailChange,
+                    onImeAction = { confirmEmailFocus.requestFocus() }
                 )
+                VerticalSpacer(height = SpacerSize.Medium)
                 ConfirmEmailField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(confirmEmailFocus),
                     value = state.confirmEmail,
                     onChange = onConfirmEmail,
-                    emailMatches = state.emailMatches
+                    emailMatches = state.emailMatches,
+                    onImeAction = { passwordFocus.requestFocus() }
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
                 PasswordField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(passwordFocus),
                     value = state.password,
                     onChange = onPasswordChange,
                     isCensored = state.censored,
-                    toggleCensorship = toggleCensorship
+                    toggleCensorship = toggleCensorship,
+                    onImeAction = { keyboard?.hide() }
                 )
                 Spacer(1f)
                 Button(
@@ -133,6 +152,7 @@ internal class SignUpScreen : Screen {
 private fun EmailField(
     value: String,
     onChange: (String) -> Unit,
+    onImeAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
@@ -152,7 +172,14 @@ private fun EmailField(
         },
         placeholder = {
             Text(stringResource(R.string.auth_sign_up_email_placeholder))
-        }
+        },
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(
+            onNext = { onImeAction() }
+        )
     )
 }
 
@@ -161,6 +188,7 @@ private fun ConfirmEmailField(
     value: String,
     emailMatches: Boolean,
     onChange: (String) -> Unit,
+    onImeAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
@@ -182,13 +210,20 @@ private fun ConfirmEmailField(
             Text(stringResource(R.string.auth_sign_up_email_placeholder))
         },
         isError = emailMatches.not(),
-        supportingText = emailMatches.takeIf { it }?.let {
+        supportingText = emailMatches.takeIf { it.not() }?.let {
             {
                 Text(
                     text = stringResource(R.string.auth_sign_up_email_match_error),
                 )
             }
-        }
+        },
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(
+            onNext = { onImeAction() }
+        )
     )
 }
 
@@ -199,6 +234,7 @@ private fun PasswordField(
     isCensored: Boolean,
     onChange: (String) -> Unit,
     toggleCensorship: () -> Unit,
+    onImeAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val trailingIcon = remember(isCensored) {
@@ -245,6 +281,13 @@ private fun PasswordField(
         visualTransformation = transformation,
         label = {
             Text(stringResource(R.string.auth_sign_up_password_label))
-        }
+        },
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onNext = { onImeAction() }
+        )
     )
 }

@@ -5,7 +5,7 @@ import features.auth.data.model.RefreshResponse
 import features.auth.data.model.SignInRequest
 import features.auth.data.model.SignInResponse
 import features.auth.data.model.SignUpRequest
-import foundation.network.buildRequestUrl
+import foundation.network.client.baseUrl
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post
@@ -35,7 +35,7 @@ internal class AuthDataSourceImpl(
         password: String
     ): String {
         return httpClient
-            .post(urlString = buildRequestUrl("/user")) {
+            .post(urlString = baseUrl("/user")) {
                 setBody(
                     SignUpRequest(
                         email = email,
@@ -49,7 +49,7 @@ internal class AuthDataSourceImpl(
 
     override suspend fun signIn(email: String, password: String): SignInResponse {
         return httpClient.post(
-            urlString = buildRequestUrl("/auth/login")
+            urlString = baseUrl("/auth/login")
         ) {
             setBody(
                 SignInRequest(
@@ -62,7 +62,7 @@ internal class AuthDataSourceImpl(
 
     override suspend fun refreshToken(refreshToken: String): RefreshResponse {
         return httpClient.post(
-            urlString = buildRequestUrl("/auth/login")
+            urlString = baseUrl("/auth/login")
         ) {
             setBody(
                 RefreshRequest(

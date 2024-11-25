@@ -8,7 +8,7 @@ val properties = Properties()
 properties.load(rootProject.file("local.properties").inputStream())
 
 android {
-    namespace = "foundation.network"
+    namespace = "foundation.network.client"
 
     buildTypes {
         release {

@@ -8,4 +8,6 @@ android {
 
 dependencies {
     implementation(libs.coroutines.core)
+    implementation(projects.foundation.exception)
+    implementation(projects.foundation.network.client)
 }

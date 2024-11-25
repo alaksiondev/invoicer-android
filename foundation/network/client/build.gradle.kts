@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("invoicer.library")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val properties = Properties()
@@ -31,4 +32,5 @@ dependencies {
     implementation(libs.ktor.client.negotiation)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+    implementation(projects.foundation.exception)
 }

@@ -8,7 +8,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.AlternateEmail
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -191,6 +193,11 @@ private fun ConfirmEmailField(
     onImeAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val trailingIcon = remember(emailMatches) {
+        if (emailMatches) null
+        else Icons.Outlined.ErrorOutline
+    }
+
     OutlinedTextField(
         value = value,
         onValueChange = onChange,
@@ -198,16 +205,26 @@ private fun ConfirmEmailField(
         leadingIcon = {
             Icon(
                 painter = rememberVectorPainter(
-                    image = Icons.Outlined.Email
+                    image = Icons.Outlined.AlternateEmail
                 ),
                 contentDescription = null
             )
         },
+        trailingIcon = if (trailingIcon != null) {
+            {
+                Icon(
+                    painter = rememberVectorPainter(
+                        image = trailingIcon
+                    ),
+                    contentDescription = null
+                )
+            }
+        } else null,
         label = {
-            Text(stringResource(R.string.auth_sign_up_email_label))
+            Text(stringResource(R.string.auth_sign_up_confirm_email_label))
         },
         placeholder = {
-            Text(stringResource(R.string.auth_sign_up_email_placeholder))
+            Text(stringResource(R.string.auth_sign_up_confirm_email_placeholder))
         },
         isError = emailMatches.not(),
         supportingText = emailMatches.takeIf { it.not() }?.let {

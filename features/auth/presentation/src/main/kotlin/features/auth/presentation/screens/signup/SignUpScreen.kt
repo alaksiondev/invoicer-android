@@ -1,6 +1,5 @@
 package features.auth.presentation.screens.signup
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -45,16 +43,13 @@ internal class SignUpScreen : Screen {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<SignUpScreenModel>()
 
-        SideEffect {
-            Log.d("SignUpScreen", viewModel.censored.value.toString())
-        }
-
         StateContent(
             onBackClick = { navigator?.pop() },
             onSubmitClick = {},
             email = viewModel.email.value,
             password = viewModel.password.value,
             isCensored = viewModel.censored.value,
+            buttonEnabled = viewModel.buttonEnabled.value,
             onEmailChange = viewModel::onEmailChange,
             onPasswordChange = viewModel::onPasswordChange,
             toggleCensorship = viewModel::toggleCensorship
@@ -66,6 +61,7 @@ internal class SignUpScreen : Screen {
         email: String,
         password: String,
         isCensored: Boolean,
+        buttonEnabled: Boolean,
         onEmailChange: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
         toggleCensorship: () -> Unit,
@@ -118,11 +114,11 @@ internal class SignUpScreen : Screen {
                 Spacer(1f)
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = onSubmitClick
+                    onClick = onSubmitClick,
+                    enabled = buttonEnabled
                 ) {
                     Text(stringResource(R.string.auth_sign_up_submit_button))
                 }
-
             }
         }
     }

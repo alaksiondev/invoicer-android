@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import foundation.design.system.theme.InvoicerTheme
@@ -13,6 +14,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        forceLightStatusBar()
         setContent {
             InvoicerTheme {
                 Navigator(
@@ -20,5 +22,10 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    private fun forceLightStatusBar() {
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightStatusBars = false
     }
 }

@@ -5,7 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-internal class SignUpScreenModel : ScreenModel {
+internal class SignUpScreenModel(
+) : ScreenModel {
 
     private val _state = MutableStateFlow(SignUpScreenState())
     val state: StateFlow<SignUpScreenState> = _state

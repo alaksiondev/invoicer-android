@@ -20,12 +20,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -42,27 +44,24 @@ internal class SignUpScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<SignUpScreenModel>()
+        val state by viewModel.state.collectAsStateWithLifecycle()
 
         StateContent(
             onBackClick = { navigator?.pop() },
             onSubmitClick = {},
-            email = viewModel.email.value,
-            password = viewModel.password.value,
-            isCensored = viewModel.censored.value,
-            buttonEnabled = viewModel.buttonEnabled.value,
             onEmailChange = viewModel::onEmailChange,
             onPasswordChange = viewModel::onPasswordChange,
-            toggleCensorship = viewModel::toggleCensorship
+            toggleCensorship = viewModel::toggleCensorship,
+            onConfirmEmail = viewModel::onConfirmEmailChange,
+            state = state,
         )
     }
 
     @Composable
     fun StateContent(
-        email: String,
-        password: String,
-        isCensored: Boolean,
-        buttonEnabled: Boolean,
+        state: SignUpScreenState,
         onEmailChange: (String) -> Unit,
+        onConfirmEmail: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
         toggleCensorship: () -> Unit,
         onBackClick: () -> Unit,
@@ -100,22 +99,28 @@ internal class SignUpScreen : Screen {
                 Spacer(1f)
                 EmailField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = email,
+                    value = state.email,
                     onChange = onEmailChange
+                )
+                ConfirmEmailField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.confirmEmail,
+                    onChange = onConfirmEmail,
+                    emailMatches = state.emailMatches
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
                 PasswordField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = password,
+                    value = state.password,
                     onChange = onPasswordChange,
-                    isCensored = isCensored,
+                    isCensored = state.censored,
                     toggleCensorship = toggleCensorship
                 )
                 Spacer(1f)
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = onSubmitClick,
-                    enabled = buttonEnabled
+                    enabled = state.buttonEnabled
                 ) {
                     Text(stringResource(R.string.auth_sign_up_submit_button))
                 }
@@ -150,6 +155,43 @@ private fun EmailField(
         }
     )
 }
+
+@Composable
+private fun ConfirmEmailField(
+    value: String,
+    emailMatches: Boolean,
+    onChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onChange,
+        modifier = modifier,
+        leadingIcon = {
+            Icon(
+                painter = rememberVectorPainter(
+                    image = Icons.Outlined.Email
+                ),
+                contentDescription = null
+            )
+        },
+        label = {
+            Text(stringResource(R.string.auth_sign_up_email_label))
+        },
+        placeholder = {
+            Text(stringResource(R.string.auth_sign_up_email_placeholder))
+        },
+        isError = emailMatches.not(),
+        supportingText = emailMatches.takeIf { it }?.let {
+            {
+                Text(
+                    text = stringResource(R.string.auth_sign_up_email_match_error),
+                )
+            }
+        }
+    )
+}
+
 
 @Composable
 private fun PasswordField(

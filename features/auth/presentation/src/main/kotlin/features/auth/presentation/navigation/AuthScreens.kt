@@ -1,4 +1,4 @@
-package features.auth.presentation.screens.navigation
+package features.auth.presentation.navigation
 
 import cafe.adriel.voyager.core.registry.screenModule
 import features.auth.presentation.screens.menu.AuthMenuScreen

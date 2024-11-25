@@ -1,4 +1,4 @@
-package features.auth.presentation.screens.di
+package features.auth.presentation.di
 
 import features.auth.presentation.screens.signup.SignUpScreenModel
 import org.koin.core.module.Module

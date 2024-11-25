@@ -5,4 +5,5 @@
     <string name="auth_sign_up_email_label">E-mail</string>
     <string name="auth_sign_up_password_label">Password</string>
     <string name="auth_sign_up_email_placeholder">Enter your e-mail</string>
+    <string name="auth_sign_up_email_match_error">E-mails don\'t match</string>
 </resources>

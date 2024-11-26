@@ -35,6 +35,7 @@ dependencies {
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem.theme)
     implementation(projects.foundation.network.client)
+    implementation(projects.foundation.validator.impl)
 
     // Features
     implementation(projects.features.auth.presentation)

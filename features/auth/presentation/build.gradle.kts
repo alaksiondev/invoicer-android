@@ -28,6 +28,7 @@ dependencies {
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem.tokens)
     implementation(projects.foundation.designSystem.components)
+    implementation(projects.foundation.validator.impl)
 
     // Features
     implementation(projects.features.auth.domain)

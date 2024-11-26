@@ -26,10 +26,23 @@ import features.auth.presentation.R
 @Composable
 internal fun SignUpEmailField(
     value: String,
+    isEmailValid: Boolean,
     onChange: (String) -> Unit,
     onImeAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val supportText = if (isEmailValid) {
+        null
+    } else {
+        stringResource(R.string.auth_sign_up_email_error)
+    }
+
+    val trailingIcon = remember(isEmailValid) {
+        if (isEmailValid) null
+        else Icons.Outlined.ErrorOutline
+    }
+
+
     OutlinedTextField(
         value = value,
         onValueChange = onChange,
@@ -54,7 +67,25 @@ internal fun SignUpEmailField(
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
-        )
+        ),
+        isError = isEmailValid,
+        supportingText = supportText.takeIf { it != null }?.let {
+            {
+                Text(
+                    text = it,
+                )
+            }
+        },
+        trailingIcon = if (trailingIcon != null) {
+            {
+                Icon(
+                    painter = rememberVectorPainter(
+                        image = trailingIcon
+                    ),
+                    contentDescription = null
+                )
+            }
+        } else null
     )
 }
 

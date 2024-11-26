@@ -7,6 +7,7 @@ import features.auth.domain.di.featureAuthDomainModule
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import foundation.network.client.di.networkDiModule
+import foundation.validator.impl.di.validatorDiModule
 import org.koin.core.context.startKoin
 
 class InvoicerApplication : Application() {
@@ -23,7 +24,8 @@ class InvoicerApplication : Application() {
                 featureAuthPresentationDiModule,
                 featureAuthDataModule,
                 featureAuthDomainModule,
-                networkDiModule
+                networkDiModule,
+                validatorDiModule
             )
         }
 

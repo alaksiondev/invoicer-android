@@ -6,6 +6,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import features.auth.domain.usecase.SignUpUseCase
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
+import foundation.validator.impl.EmailValidator
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,16 +15,27 @@ import kotlinx.coroutines.launch
 
 internal class SignUpScreenModel(
     private val signUpUseCase: SignUpUseCase,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val emailValidator: EmailValidator,
 ) : ScreenModel {
 
     private val _state = MutableStateFlow(SignUpScreenState())
     val state: StateFlow<SignUpScreenState> = _state
 
     fun onEmailChange(newEmail: String) {
-        _state.update {
-            it.copy(
-                email = newEmail
+        val newEmailValid = emailValidator.validate(newEmail)
+        _state.update { oldState ->
+            oldState.copy(
+                email = newEmail,
+                emailValid = newEmailValid || oldState.emailValid
+            )
+        }
+    }
+
+    fun checkEmailValid() {
+        _state.update { oldState ->
+            oldState.copy(
+                emailValid = emailValidator.validate(oldState.email)
             )
         }
     }

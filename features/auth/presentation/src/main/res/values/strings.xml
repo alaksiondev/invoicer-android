@@ -8,4 +8,5 @@
     <string name="auth_sign_up_email_placeholder">john@doe.com</string>
     <string name="auth_sign_up_confirm_email_placeholder">john@doe.com</string>
     <string name="auth_sign_up_email_match_error">E-mails don\'t match</string>
+    <string name="auth_sign_up_email_error">E-mail invalid</string>
 </resources>

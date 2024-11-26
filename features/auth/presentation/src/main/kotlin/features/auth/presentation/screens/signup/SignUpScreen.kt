@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -51,6 +52,7 @@ internal class SignUpScreen : Screen {
             onPasswordChange = viewModel::onPasswordChange,
             toggleCensorship = viewModel::toggleCensorship,
             onConfirmEmail = viewModel::onConfirmEmailChange,
+            onCheckValidEmail = viewModel::checkEmailValid,
             state = state,
         )
     }
@@ -61,6 +63,7 @@ internal class SignUpScreen : Screen {
         onEmailChange: (String) -> Unit,
         onConfirmEmail: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
+        onCheckValidEmail: () -> Unit,
         toggleCensorship: () -> Unit,
         onBackClick: () -> Unit,
         onSubmitClick: () -> Unit
@@ -101,7 +104,12 @@ internal class SignUpScreen : Screen {
                 SignUpEmailField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(emailFocus),
+                        .focusRequester(emailFocus)
+                        .onFocusChanged { focusState ->
+                            if (!focusState.isFocused) {
+                                onCheckValidEmail()
+                            }
+                        },
                     value = state.email,
                     onChange = onEmailChange,
                     onImeAction = { confirmEmailFocus.requestFocus() }

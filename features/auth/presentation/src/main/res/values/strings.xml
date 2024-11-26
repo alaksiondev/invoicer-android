@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Sign Up -->
     <string name="auth_sign_up_title">Create account</string>
     <string name="auth_sign_up_submit_button">Create account</string>
     <string name="auth_sign_up_email_label">E-mail</string>
@@ -15,4 +16,5 @@
     <string name="auth_sign_up_password_str_lowercase">* one lowercase letter</string>
     <string name="auth_sign_up_password_str_number">* one number</string>
     <string name="auth_sign_up_password_str_special">* one special character</string>
+    <string name="auth_sign_up_sign_in_button">Already have an account? Sign in</string>
 </resources>

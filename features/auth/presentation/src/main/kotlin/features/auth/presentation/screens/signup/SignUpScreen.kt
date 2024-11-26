@@ -1,13 +1,13 @@
 package features.auth.presentation.screens.signup
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,24 +18,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.spacer.Spacer
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
-import features.auth.presentation.screens.signup.components.PasswordStrength
-import features.auth.presentation.screens.signup.components.SignUpConfirmEmailField
-import features.auth.presentation.screens.signup.components.SignUpEmailField
-import features.auth.presentation.screens.signup.components.SignUpPasswordField
+import features.auth.presentation.screens.signup.components.SignUpCta
+import features.auth.presentation.screens.signup.components.SignUpForm
 import foundation.design.system.tokens.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +47,7 @@ internal class SignUpScreen : Screen {
             onConfirmEmail = viewModel::onConfirmEmailChange,
             onCheckValidEmail = viewModel::checkEmailValid,
             state = state,
+            onSignInClick = {}
         )
     }
 
@@ -68,10 +60,10 @@ internal class SignUpScreen : Screen {
         onCheckValidEmail: () -> Unit,
         toggleCensorship: () -> Unit,
         onBackClick: () -> Unit,
-        onSubmitClick: () -> Unit
+        onSubmitClick: () -> Unit,
+        onSignInClick: () -> Unit,
     ) {
-        val (emailFocus, confirmEmailFocus, passwordFocus) = FocusRequester.createRefs()
-        val keyboard = LocalSoftwareKeyboardController.current
+        val scrollState = rememberScrollState()
 
         Scaffold(
             topBar = {
@@ -97,56 +89,28 @@ internal class SignUpScreen : Screen {
                     .padding(scaffoldPadding)
                     .padding(Spacing.medium)
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 Text(
                     text = stringResource(R.string.auth_sign_up_title),
                     style = MaterialTheme.typography.headlineLarge
                 )
-                SignUpEmailField(
+                SignUpForm(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(emailFocus)
-                        .onFocusChanged { state ->
-                            if (state.hasFocus.not()) {
-                                onCheckValidEmail()
-                            }
-                        },
-                    value = state.email,
-                    onChange = onEmailChange,
-                    onImeAction = { confirmEmailFocus.requestFocus() },
-                    isEmailValid = state.emailValid
+                        .weight(1f)
+                        .verticalScroll(scrollState),
+                    state = state,
+                    onConfirmEmail = onConfirmEmail,
+                    onCheckValidEmail = onCheckValidEmail,
+                    onPasswordChange = onPasswordChange,
+                    onEmailChange = onEmailChange,
+                    toggleCensorship = toggleCensorship
                 )
-                SignUpConfirmEmailField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(confirmEmailFocus),
-                    value = state.confirmEmail,
-                    onChange = onConfirmEmail,
-                    emailMatches = state.emailMatches,
-                    onImeAction = { passwordFocus.requestFocus() }
-                )
-                SignUpPasswordField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(passwordFocus),
-                    value = state.password,
-                    onChange = onPasswordChange,
-                    isCensored = state.censored,
-                    toggleCensorship = toggleCensorship,
-                    onImeAction = { keyboard?.hide() }
-                )
-                PasswordStrength(
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(1f)
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
+                SignUpCta(
                     onClick = onSubmitClick,
-                    enabled = state.buttonEnabled
-                ) {
-                    Text(stringResource(R.string.auth_sign_up_submit_button))
-                }
+                    enabled = state.buttonEnabled,
+                    modifier = Modifier.fillMaxWidth(),
+                    onSignInClick = onSignInClick
+                )
             }
         }
     }

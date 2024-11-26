@@ -17,4 +17,5 @@
     <string name="auth_sign_up_password_str_number">* one number</string>
     <string name="auth_sign_up_password_str_special">* one special character</string>
     <string name="auth_sign_up_sign_in_button">Already have an account? Sign in</string>
+    <string name="auth_sign_up_error">Error creating account</string>
 </resources>

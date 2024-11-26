@@ -13,3 +13,9 @@ internal data class SignUpScreenState(
     val buttonEnabled: Boolean =
         email.isNotBlank() && password.isNotBlank() && emailMatches && emailValid
 }
+
+internal sealed interface SignUpEvents {
+    data object Success : SignUpEvents
+    data object GenericFailure : SignUpEvents
+    data class Failure(val message: String) : SignUpEvents
+}

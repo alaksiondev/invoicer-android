@@ -29,6 +29,8 @@ dependencies {
     implementation(projects.foundation.designSystem.tokens)
     implementation(projects.foundation.designSystem.components)
     implementation(projects.foundation.validator.impl)
+    implementation(projects.foundation.events)
+    implementation(projects.foundation.exception)
 
     // Features
     implementation(projects.features.auth.domain)

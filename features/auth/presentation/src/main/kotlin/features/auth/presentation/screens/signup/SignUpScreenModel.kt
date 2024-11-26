@@ -1,9 +1,11 @@
 package features.auth.presentation.screens.signup
 
-import android.util.Log
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.auth.domain.usecase.SignUpUseCase
+import foundation.events.EventAware
+import foundation.events.EventPublisher
+import foundation.exception.RequestError
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
 import foundation.validator.impl.EmailValidator
@@ -17,7 +19,7 @@ internal class SignUpScreenModel(
     private val signUpUseCase: SignUpUseCase,
     private val dispatcher: CoroutineDispatcher,
     private val emailValidator: EmailValidator,
-) : ScreenModel {
+) : ScreenModel, EventAware<SignUpEvents> by EventPublisher() {
 
     private val _state = MutableStateFlow(SignUpScreenState())
     val state: StateFlow<SignUpScreenState> = _state
@@ -78,7 +80,7 @@ internal class SignUpScreenModel(
         }
     }
 
-    private fun handleSignUpRequest(
+    private suspend fun handleSignUpRequest(
         state: RequestState<Unit>
     ) {
         when (state) {
@@ -91,11 +93,11 @@ internal class SignUpScreenModel(
             }
 
             is RequestState.Success -> {
-                Log.d("sign-up-result", "success")
+                publish(SignUpEvents.Success)
             }
 
             is RequestState.Error -> {
-                Log.d("sign-up-result", "failed")
+                sendErrorEvent(state.exception)
             }
 
             RequestState.Finished -> _state.update {
@@ -104,5 +106,16 @@ internal class SignUpScreenModel(
                 )
             }
         }
+    }
+
+    private suspend fun sendErrorEvent(error: RequestError) {
+        val message = when (error) {
+            is RequestError.Http -> error.message?.let {
+                SignUpEvents.Failure(it)
+            } ?: SignUpEvents.GenericFailure
+
+            is RequestError.Other -> SignUpEvents.GenericFailure
+        }
+        publish(message)
     }
 }

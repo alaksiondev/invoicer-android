@@ -13,10 +13,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
@@ -30,6 +34,8 @@ import features.auth.presentation.R
 import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
 import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 internal class SignUpScreen : Screen {
@@ -39,6 +45,34 @@ internal class SignUpScreen : Screen {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<SignUpScreenModel>()
         val state by viewModel.state.collectAsStateWithLifecycle()
+        val scope = rememberCoroutineScope()
+        val genericErrorMessage = stringResource(R.string.auth_sign_up_error)
+
+        val snackBarState = remember {
+            SnackbarHostState()
+        }
+
+        EventEffect(viewModel) {
+            when (it) {
+                SignUpEvents.Success ->
+                    // TODO -> Add navigation to success screen
+                    Unit
+
+                is SignUpEvents.Failure -> {
+                    scope.launch {
+                        snackBarState.showSnackbar(
+                            message = it.message
+                        )
+                    }
+                }
+
+                SignUpEvents.GenericFailure -> scope.launch {
+                    snackBarState.showSnackbar(
+                        message = genericErrorMessage
+                    )
+                }
+            }
+        }
 
         StateContent(
             onBackClick = { navigator?.pop() },
@@ -49,13 +83,15 @@ internal class SignUpScreen : Screen {
             onConfirmEmail = viewModel::onConfirmEmailChange,
             onCheckValidEmail = viewModel::checkEmailValid,
             state = state,
-            onSignInClick = {}
+            onSignInClick = {},
+            snackBarState = snackBarState
         )
     }
 
     @Composable
     fun StateContent(
         state: SignUpScreenState,
+        snackBarState: SnackbarHostState,
         onEmailChange: (String) -> Unit,
         onConfirmEmail: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
@@ -84,6 +120,9 @@ internal class SignUpScreen : Screen {
                         }
                     }
                 )
+            },
+            snackbarHost = {
+                SnackbarHost(snackBarState)
             }
         ) { scaffoldPadding ->
             Column(

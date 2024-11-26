@@ -1,5 +1,6 @@
 package features.auth.presentation.screens.signup
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import features.auth.design.system.components.spacer.Spacer
 import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
+import features.auth.presentation.screens.signup.components.PasswordStrength
 import features.auth.presentation.screens.signup.components.SignUpConfirmEmailField
 import features.auth.presentation.screens.signup.components.SignUpEmailField
 import features.auth.presentation.screens.signup.components.SignUpPasswordField
@@ -94,13 +96,13 @@ internal class SignUpScreen : Screen {
                 modifier = Modifier
                     .padding(scaffoldPadding)
                     .padding(Spacing.medium)
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 Text(
                     text = stringResource(R.string.auth_sign_up_title),
                     style = MaterialTheme.typography.headlineLarge
                 )
-                Spacer(1f)
                 SignUpEmailField(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -115,7 +117,6 @@ internal class SignUpScreen : Screen {
                     onImeAction = { confirmEmailFocus.requestFocus() },
                     isEmailValid = state.emailValid
                 )
-                VerticalSpacer(height = SpacerSize.Medium)
                 SignUpConfirmEmailField(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -125,7 +126,6 @@ internal class SignUpScreen : Screen {
                     emailMatches = state.emailMatches,
                     onImeAction = { passwordFocus.requestFocus() }
                 )
-                VerticalSpacer(height = SpacerSize.Medium)
                 SignUpPasswordField(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -135,6 +135,9 @@ internal class SignUpScreen : Screen {
                     isCensored = state.censored,
                     toggleCensorship = toggleCensorship,
                     onImeAction = { keyboard?.hide() }
+                )
+                PasswordStrength(
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(1f)
                 Button(

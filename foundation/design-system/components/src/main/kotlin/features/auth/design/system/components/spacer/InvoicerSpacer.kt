@@ -38,6 +38,8 @@ fun HorizontalSpacer(
 enum class SpacerSize(
     internal val value: Dp
 ) {
+    XSmall2(Spacing.xSmall2),
+    XSmall(Spacing.xSmall),
     Small(Spacing.small),
     Medium(Spacing.medium),
     Large(Spacing.large),

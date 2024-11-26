@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="auth_sign_up_title">Sign up</string>
+    <string name="auth_sign_up_title">Create account</string>
     <string name="auth_sign_up_submit_button">Create account</string>
     <string name="auth_sign_up_email_label">E-mail</string>
     <string name="auth_sign_up_confirm_email_label">Confirm E-mail</string>
@@ -9,4 +9,10 @@
     <string name="auth_sign_up_confirm_email_placeholder">john@doe.com</string>
     <string name="auth_sign_up_email_match_error">E-mails don\'t match</string>
     <string name="auth_sign_up_email_error">E-mail invalid</string>
+    <string name="auth_sign_up_password_str_title">Password must have at least</string>
+    <string name="auth_sign_up_password_str_length">* 8 characters</string>
+    <string name="auth_sign_up_password_str_uppercase">* one uppercase letter</string>
+    <string name="auth_sign_up_password_str_lowercase">* one lowercase letter</string>
+    <string name="auth_sign_up_password_str_number">* one number</string>
+    <string name="auth_sign_up_password_str_special">* one special character</string>
 </resources>

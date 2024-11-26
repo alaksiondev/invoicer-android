@@ -18,4 +18,8 @@
     <string name="auth_sign_up_password_str_special">* one special character</string>
     <string name="auth_sign_up_sign_in_button">Already have an account? Sign in</string>
     <string name="auth_sign_up_error">Error creating account</string>
+    <!-- Sign Up Feedback -->
+    <string name="auth_sign_up_feedback_title">Account created</string>
+    <string name="auth_sign_up_feedback_message">Proceed to login to use the app</string>
+    <string name="auth_sign_up_feedback_cta">Continue</string>
 </resources>

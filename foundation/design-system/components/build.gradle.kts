@@ -12,5 +12,6 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.material3)
     implementation(projects.foundation.designSystem.tokens)
+    implementation(projects.foundation.designSystem.theme)
     api(libs.androidx.material.icons)
 }

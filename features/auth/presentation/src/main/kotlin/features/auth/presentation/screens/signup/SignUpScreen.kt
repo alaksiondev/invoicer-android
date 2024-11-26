@@ -6,11 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -22,17 +18,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
+import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import kotlinx.coroutines.launch
@@ -54,9 +51,7 @@ internal class SignUpScreen : Screen {
 
         EventEffect(viewModel) {
             when (it) {
-                SignUpEvents.Success ->
-                    // TODO -> Add navigation to success screen
-                    Unit
+                SignUpEvents.Success -> navigator?.push(SignUpFeedbackScreen())
 
                 is SignUpEvents.Failure -> {
                     scope.launch {
@@ -108,16 +103,7 @@ internal class SignUpScreen : Screen {
                 TopAppBar(
                     title = {},
                     navigationIcon = {
-                        IconButton(
-                            onClick = onBackClick
-                        ) {
-                            Icon(
-                                painter = rememberVectorPainter(
-                                    image = Icons.AutoMirrored.Outlined.ArrowBack
-                                ),
-                                contentDescription = null
-                            )
-                        }
+                        BackButton(onBackClick = onBackClick)
                     }
                 )
             },

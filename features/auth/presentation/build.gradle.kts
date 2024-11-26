@@ -15,6 +15,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.ui)
     debugImplementation(libs.bundles.compose.debug)
+    implementation(libs.androidx.activity.compose)
 
     // Koin
     implementation(platform(libs.koin.bom))

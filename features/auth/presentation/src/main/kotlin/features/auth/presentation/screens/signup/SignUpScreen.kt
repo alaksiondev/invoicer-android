@@ -24,6 +24,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import features.auth.design.system.components.spacer.SpacerSize
+import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
@@ -94,6 +96,7 @@ internal class SignUpScreen : Screen {
                     text = stringResource(R.string.auth_sign_up_title),
                     style = MaterialTheme.typography.headlineLarge
                 )
+                VerticalSpacer(height = SpacerSize.Medium)
                 SignUpForm(
                     modifier = Modifier
                         .weight(1f)

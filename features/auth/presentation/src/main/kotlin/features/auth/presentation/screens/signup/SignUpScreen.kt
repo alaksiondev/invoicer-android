@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -123,6 +124,16 @@ internal class SignUpScreen : Screen {
             },
             snackbarHost = {
                 SnackbarHost(snackBarState)
+            },
+            bottomBar = {
+                BottomAppBar {
+                    SignUpCta(
+                        onClick = onSubmitClick,
+                        enabled = state.buttonEnabled,
+                        modifier = Modifier.fillMaxWidth(),
+                        onSignInClick = onSignInClick
+                    )
+                }
             }
         ) { scaffoldPadding ->
             Column(
@@ -146,12 +157,6 @@ internal class SignUpScreen : Screen {
                     onPasswordChange = onPasswordChange,
                     onEmailChange = onEmailChange,
                     toggleCensorship = toggleCensorship
-                )
-                SignUpCta(
-                    onClick = onSubmitClick,
-                    enabled = state.buttonEnabled,
-                    modifier = Modifier.fillMaxWidth(),
-                    onSignInClick = onSignInClick
                 )
             }
         }

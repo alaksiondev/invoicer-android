@@ -13,7 +13,8 @@ private fun Module.viewModelBindings() {
     factory {
         SignUpScreenModel(
             signUpUseCase = get(),
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            emailValidator = get()
         )
     }
 }

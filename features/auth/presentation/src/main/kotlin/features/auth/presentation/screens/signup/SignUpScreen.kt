@@ -105,14 +105,15 @@ internal class SignUpScreen : Screen {
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(emailFocus)
-                        .onFocusChanged { focusState ->
-                            if (!focusState.isFocused) {
+                        .onFocusChanged { state ->
+                            if (state.hasFocus.not()) {
                                 onCheckValidEmail()
                             }
                         },
                     value = state.email,
                     onChange = onEmailChange,
-                    onImeAction = { confirmEmailFocus.requestFocus() }
+                    onImeAction = { confirmEmailFocus.requestFocus() },
+                    isEmailValid = state.emailValid
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
                 SignUpConfirmEmailField(

@@ -68,7 +68,7 @@ internal fun SignUpEmailField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        isError = isEmailValid,
+        isError = isEmailValid.not(),
         supportingText = supportText.takeIf { it != null }?.let {
             {
                 Text(
@@ -85,7 +85,7 @@ internal fun SignUpEmailField(
                     contentDescription = null
                 )
             }
-        } else null
+        } else null,
     )
 }
 

@@ -11,7 +11,7 @@ internal data class SignUpScreenState(
     val emailMatches: Boolean = email == confirmEmail
 
     val buttonEnabled: Boolean =
-        email.isNotBlank() && password.isNotBlank() && emailMatches && emailValid
+        email.isNotBlank() && password.isNotBlank() && emailMatches && emailValid && requestLoading.not()
 }
 
 internal sealed interface SignUpEvents {

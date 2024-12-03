@@ -22,4 +22,6 @@
     <string name="auth_sign_up_feedback_title">Account created</string>
     <string name="auth_sign_up_feedback_message">Proceed to login to use the app</string>
     <string name="auth_sign_up_feedback_cta">Continue</string>
+    <!-- Sign IN -->
+    <string name="auth_sign_in_title">Sign in</string>
 </resources>

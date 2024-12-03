@@ -1,5 +1,6 @@
 package features.auth.presentation.di
 
+import features.auth.presentation.screens.signin.SignInScreenModel
 import features.auth.presentation.screens.signup.SignUpScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
@@ -16,5 +17,9 @@ private fun Module.viewModelBindings() {
             dispatcher = Dispatchers.Default,
             emailValidator = get()
         )
+    }
+
+    factory {
+        SignInScreenModel()
     }
 }

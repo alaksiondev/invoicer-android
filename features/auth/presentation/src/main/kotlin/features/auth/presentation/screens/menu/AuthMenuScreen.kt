@@ -11,25 +11,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import features.auth.presentation.screens.signin.SignInScreen
+import features.auth.presentation.screens.signup.SignUpScreen
 import foundation.design.system.tokens.Spacing
-import foundation.navigation.InvoicerScreen
 
 internal class AuthMenuScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val signInScreen = rememberScreen(InvoicerScreen.Auth.AuthMenu)
-        val signUpScreen = rememberScreen(InvoicerScreen.Auth.SignUp)
 
         StateContent(
             onSignInClick = {
-                navigator?.push(signInScreen)
+                navigator?.push(SignInScreen())
             },
             onSignUpClick = {
-                navigator?.push(signUpScreen)
+                navigator?.push(SignUpScreen())
             }
         )
     }

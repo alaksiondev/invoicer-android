@@ -27,6 +27,7 @@ import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
+import features.auth.presentation.screens.signin.SignInScreen
 import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
@@ -78,7 +79,7 @@ internal class SignUpScreen : Screen {
             onConfirmEmail = viewModel::onConfirmEmailChange,
             onCheckValidEmail = viewModel::checkEmailValid,
             state = state,
-            onSignInClick = {},
+            onSignInClick = { navigator?.push(SignInScreen()) },
             snackBarState = snackBarState
         )
     }

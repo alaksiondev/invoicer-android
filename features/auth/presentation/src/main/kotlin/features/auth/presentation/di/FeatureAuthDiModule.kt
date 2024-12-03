@@ -12,7 +12,7 @@ val featureAuthPresentationDiModule = module {
 private fun Module.viewModelBindings() {
     factory {
         SignUpScreenModel(
-            signUpUseCase = get(),
+            authRepository = get(),
             dispatcher = Dispatchers.Default,
             emailValidator = get()
         )

@@ -2,7 +2,7 @@ package features.auth.presentation.screens.signup
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.auth.domain.usecase.SignUpUseCase
+import features.auth.domain.repository.AuthRepository
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import foundation.exception.RequestError
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class SignUpScreenModel(
-    private val signUpUseCase: SignUpUseCase,
+    private val authRepository: AuthRepository,
     private val dispatcher: CoroutineDispatcher,
     private val emailValidator: EmailValidator,
 ) : ScreenModel, EventAware<SignUpEvents> by EventPublisher() {
@@ -70,7 +70,7 @@ internal class SignUpScreenModel(
         if (state.value.buttonEnabled) {
             screenModelScope.launch(dispatcher) {
                 launchRequest {
-                    signUpUseCase.invoke(
+                    authRepository.signUp(
                         email = state.value.email,
                         confirmEmail = state.value.confirmEmail,
                         password = state.value.password
@@ -81,7 +81,7 @@ internal class SignUpScreenModel(
     }
 
     private suspend fun handleSignUpRequest(
-        state: RequestState<Unit>
+        state: RequestState<String>
     ) {
         when (state) {
             is RequestState.Started -> {

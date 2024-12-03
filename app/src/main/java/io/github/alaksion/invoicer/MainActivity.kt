@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import foundation.design.system.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
 
@@ -19,7 +20,9 @@ class MainActivity : ComponentActivity() {
             InvoicerTheme {
                 Navigator(
                     screens = listOf(ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)),
-                )
+                ) { navigator ->
+                    SlideTransition(navigator)
+                }
             }
         }
     }

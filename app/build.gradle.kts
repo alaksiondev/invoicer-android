@@ -28,6 +28,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.voyager.navigator)
+    implementation(libs.voyager.transitions)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
 

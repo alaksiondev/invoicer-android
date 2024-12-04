@@ -51,6 +51,7 @@ voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", vers
 # Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
 koin-core = { module = "io.insert-koin:koin-core" }
+koin-android = { module = "io.insert-koin:koin-android" }
 
 # Coroutines
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

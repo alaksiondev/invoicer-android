@@ -7,7 +7,9 @@ import features.auth.domain.di.featureAuthDomainModule
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import foundation.network.client.di.networkDiModule
+import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class InvoicerApplication : Application() {
@@ -20,12 +22,14 @@ class InvoicerApplication : Application() {
         }
 
         startKoin {
+            androidContext(this@InvoicerApplication)
             modules(
                 featureAuthPresentationDiModule,
                 featureAuthDataModule,
                 featureAuthDomainModule,
                 networkDiModule,
-                validatorDiModule
+                validatorDiModule,
+                storageDiModule
             )
         }
 

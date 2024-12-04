@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import features.auth.presentation.R
@@ -64,7 +66,10 @@ internal fun SignUpEmailField(
         },
         maxLines = 1,
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.None,
+            keyboardType = KeyboardType.Email,
+            autoCorrect = false
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
@@ -143,7 +148,10 @@ internal fun SignUpConfirmEmailField(
         },
         maxLines = 1,
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.None,
+            keyboardType = KeyboardType.Email,
+            autoCorrect = false
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
@@ -210,7 +218,9 @@ internal fun SignUpPasswordField(
         },
         maxLines = 1,
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done
+            imeAction = ImeAction.Done,
+            autoCorrect = false,
+            keyboardType = KeyboardType.Password,
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }

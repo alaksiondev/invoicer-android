@@ -9,4 +9,5 @@ android {
 dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+    implementation(projects.foundation.storage.impl)
 }

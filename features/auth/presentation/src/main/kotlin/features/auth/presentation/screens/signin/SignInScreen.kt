@@ -2,6 +2,7 @@ package features.auth.presentation.screens.signin
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,9 +18,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.buttons.BackButton
+import features.auth.design.system.components.spacer.Spacer
 import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
+import features.auth.presentation.screens.signin.components.SignInCta
+import features.auth.presentation.screens.signin.components.SignInForm
+import features.auth.presentation.screens.signup.SignUpScreen
 import foundation.design.system.tokens.Spacing
 
 internal class SignInScreen : Screen {
@@ -37,7 +42,8 @@ internal class SignInScreen : Screen {
                 onEmailChanged = viewModel::onEmailChanged,
                 onPasswordChanged = viewModel::onPasswordChanged,
                 onToggleCensorship = viewModel::toggleCensorship,
-                onBack = { navigator?.pop() }
+                onBack = { navigator?.pop() },
+                onSignUpClick = { navigator?.push(SignUpScreen()) }
             )
         )
     }
@@ -69,6 +75,19 @@ internal class SignInScreen : Screen {
                     style = MaterialTheme.typography.headlineLarge
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
+                SignInForm(
+                    state = state,
+                    onPasswordChange = callBacks.onPasswordChanged,
+                    onEmailChange = callBacks.onEmailChanged,
+                    toggleCensorship = callBacks.toggleCensorship
+                )
+                Spacer(1f)
+                SignInCta(
+                    onClick = callBacks.onSubmit,
+                    onSignUpClick = callBacks.onSignUpClick,
+                    enabled = state.buttonEnabled,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

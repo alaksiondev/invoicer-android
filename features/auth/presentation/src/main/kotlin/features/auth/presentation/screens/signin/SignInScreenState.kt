@@ -19,6 +19,7 @@ internal data class SignInCallBacks(
     val onSubmit: () -> Unit,
     val toggleCensorship: () -> Unit,
     val onBack: () -> Unit,
+    val onSignUpClick: () -> Unit
 )
 
 @Composable
@@ -27,13 +28,15 @@ internal fun rememberSignInCallbacks(
     onPasswordChanged: (String) -> Unit,
     onToggleCensorship: () -> Unit,
     onSubmit: () -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onSignUpClick: () -> Unit
 ) = remember {
     SignInCallBacks(
         onEmailChanged = onEmailChanged,
         onPasswordChanged = onPasswordChanged,
         onSubmit = onSubmit,
         toggleCensorship = onToggleCensorship,
-        onBack = onBack
+        onBack = onBack,
+        onSignUpClick = onSignUpClick
     )
 }

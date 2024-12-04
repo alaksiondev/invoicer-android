@@ -41,7 +41,8 @@ internal fun SignUpForm(
             value = state.email,
             onChange = onEmailChange,
             onImeAction = { confirmEmailFocus.requestFocus() },
-            isEmailValid = state.emailValid
+            isEmailValid = state.emailValid,
+            enabled = state.requestLoading.not()
         )
         SignUpConfirmEmailField(
             modifier = Modifier
@@ -50,7 +51,8 @@ internal fun SignUpForm(
             value = state.confirmEmail,
             onChange = onConfirmEmail,
             emailMatches = state.emailMatches,
-            onImeAction = { passwordFocus.requestFocus() }
+            onImeAction = { passwordFocus.requestFocus() },
+            enabled = state.requestLoading.not()
         )
         SignUpPasswordField(
             modifier = Modifier
@@ -60,7 +62,8 @@ internal fun SignUpForm(
             onChange = onPasswordChange,
             isCensored = state.censored,
             toggleCensorship = toggleCensorship,
-            onImeAction = { keyboard?.hide() }
+            onImeAction = { keyboard?.hide() },
+            enabled = state.requestLoading.not()
         )
         PasswordStrength(
             modifier = Modifier.fillMaxWidth()

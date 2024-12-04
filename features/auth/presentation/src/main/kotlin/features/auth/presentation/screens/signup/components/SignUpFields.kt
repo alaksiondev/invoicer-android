@@ -26,6 +26,7 @@ import features.auth.presentation.R
 @Composable
 internal fun SignUpEmailField(
     value: String,
+    enabled: Boolean,
     isEmailValid: Boolean,
     onChange: (String) -> Unit,
     onImeAction: () -> Unit,
@@ -86,6 +87,7 @@ internal fun SignUpEmailField(
                 )
             }
         } else null,
+        readOnly = enabled.not()
     )
 }
 
@@ -93,6 +95,7 @@ internal fun SignUpEmailField(
 internal fun SignUpConfirmEmailField(
     value: String,
     emailMatches: Boolean,
+    enabled: Boolean,
     onChange: (String) -> Unit,
     onImeAction: () -> Unit,
     modifier: Modifier = Modifier
@@ -144,7 +147,8 @@ internal fun SignUpConfirmEmailField(
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
-        )
+        ),
+        readOnly = enabled.not()
     )
 }
 
@@ -153,6 +157,7 @@ internal fun SignUpConfirmEmailField(
 internal fun SignUpPasswordField(
     value: String,
     isCensored: Boolean,
+    enabled: Boolean,
     onChange: (String) -> Unit,
     toggleCensorship: () -> Unit,
     onImeAction: () -> Unit,
@@ -209,6 +214,7 @@ internal fun SignUpPasswordField(
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
-        )
+        ),
+        readOnly = enabled.not()
     )
 }

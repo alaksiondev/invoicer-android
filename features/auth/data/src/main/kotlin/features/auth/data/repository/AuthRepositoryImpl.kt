@@ -22,7 +22,7 @@ internal class AuthRepositoryImpl(
             password = password
         )
         return AuthToken(
-            accessToken = response.accessToken,
+            accessToken = response.token,
             refreshToken = response.refreshToken
         )
     }
@@ -32,7 +32,7 @@ internal class AuthRepositoryImpl(
             refreshToken = refreshToken
         )
         return AuthToken(
-            accessToken = response.accessToken,
+            accessToken = response.token,
             refreshToken = response.refreshToken
         )
     }

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class SignInResponse(
-    val accessToken: String,
+    val token: String,
     val refreshToken: String
 )
 

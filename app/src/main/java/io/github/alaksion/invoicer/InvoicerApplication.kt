@@ -6,6 +6,7 @@ import features.auth.data.di.featureAuthDataModule
 import features.auth.domain.di.featureAuthDomainModule
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
+import features.home.presentation.navigation.homeScreens
 import foundation.auth.impl.di.foundationAuthDiModule
 import foundation.network.client.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
@@ -20,6 +21,7 @@ class InvoicerApplication : Application() {
 
         ScreenRegistry {
             authScreens()
+            homeScreens()
         }
 
         startKoin {

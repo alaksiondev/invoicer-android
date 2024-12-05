@@ -1,7 +1,6 @@
-package io.github.alaksion.invoicer
+package io.github.alaksion.invoicer.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,8 +34,9 @@ class MainActivity : ComponentActivity() {
                     AuthEventEffect(
                         subscriber = authSubscriber,
                         onSignIn = {
-                            Toast.makeText(this, "Sign In Success", Toast.LENGTH_LONG)
-                                .show()
+                            navigator.replaceAll(
+                                ScreenRegistry.get(InvoicerScreen.Home)
+                            )
                         },
                         onSignOff = {
                             navigator.replaceAll(

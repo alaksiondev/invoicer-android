@@ -7,4 +7,6 @@ sealed interface InvoicerScreen : ScreenProvider {
         data object AuthMenu : Auth
         data object Startup : Auth
     }
+
+    data object Home : InvoicerScreen
 }

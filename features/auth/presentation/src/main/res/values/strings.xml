@@ -24,4 +24,7 @@
     <string name="auth_sign_up_feedback_cta">Continue</string>
     <!-- Sign IN -->
     <string name="auth_sign_in_title">Sign in</string>
+    <string name="auth_sign_in_error">Error during Sign in, please try again later</string>
+    <string name="auth_sign_in_sign_up_button">Don\'t have an account? Sign up</string>
+    <string name="auth_sign_in_submit_button">Sign in</string>
 </resources>

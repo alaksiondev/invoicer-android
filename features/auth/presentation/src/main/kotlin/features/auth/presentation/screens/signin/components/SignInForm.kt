@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import features.auth.presentation.screens.signin.SignInScreenState
 import features.auth.presentation.screens.signup.SignUpScreenState
@@ -24,6 +25,7 @@ internal fun SignInForm(
 ) {
     val (emailFocus, passwordFocus) = FocusRequester.createRefs()
     val keyboard = LocalSoftwareKeyboardController.current
+    val focus = LocalFocusManager.current
 
     Column(
         modifier = modifier,
@@ -45,8 +47,7 @@ internal fun SignInForm(
             value = state.password,
             onChange = onPasswordChange,
             onImeAction = {
-                passwordFocus.freeFocus()
-                keyboard?.hide()
+                focus.clearFocus()
             },
             enabled = state.requestLoading.not(),
             isCensored = state.censored,

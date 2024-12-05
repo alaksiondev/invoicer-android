@@ -40,7 +40,7 @@ internal fun SignInCta(
             onClick = onClick,
             enabled = enabled
         ) {
-            Text(stringResource(R.string.auth_sign_up_submit_button))
+            Text(stringResource(R.string.auth_sign_in_submit_button))
         }
     }
 }
@@ -55,9 +55,9 @@ private fun SignInButton(
         horizontalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = stringResource(R.string.auth_sign_up_sign_in_button)
+            text = stringResource(R.string.auth_sign_in_sign_up_button)
         )
-        HorizontalSpacer(width = SpacerSize.Medium)
+        HorizontalSpacer(width = SpacerSize.Small)
         Icon(
             imageVector = Icons.AutoMirrored.Outlined.Login,
             contentDescription = null

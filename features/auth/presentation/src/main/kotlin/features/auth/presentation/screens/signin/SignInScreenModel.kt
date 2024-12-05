@@ -47,7 +47,7 @@ internal class SignInScreenModel(
                 )
             }.handle(
                 onStart = { _state.update { it.copy(requestLoading = true) } },
-                onFinish = { _state.update { it.copy(requestLoading = true) } },
+                onFinish = { _state.update { it.copy(requestLoading = false) } },
                 onFailure = { sendErrorEvent(it) },
                 onSuccess = { authEventPublisher.publish(event = AuthEvent.SignIn) }
             )

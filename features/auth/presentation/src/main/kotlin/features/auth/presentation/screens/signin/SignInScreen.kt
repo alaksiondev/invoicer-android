@@ -7,10 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,8 +28,12 @@ import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signin.components.SignInCta
 import features.auth.presentation.screens.signin.components.SignInForm
+import features.auth.presentation.screens.signup.SignUpEvents
 import features.auth.presentation.screens.signup.SignUpScreen
+import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
 import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
+import kotlinx.coroutines.launch
 
 internal class SignInScreen : Screen {
 
@@ -34,6 +42,9 @@ internal class SignInScreen : Screen {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<SignInScreenModel>()
         val state by viewModel.state.collectAsStateWithLifecycle()
+        val scope = rememberCoroutineScope()
+        val snackBarHost = remember { SnackbarHostState() }
+        val genericErrorMessage = stringResource(R.string.auth_sign_in_error)
 
         StateContent(
             state = state,
@@ -43,15 +54,35 @@ internal class SignInScreen : Screen {
                 onPasswordChanged = viewModel::onPasswordChanged,
                 onToggleCensorship = viewModel::toggleCensorship,
                 onBack = { navigator?.pop() },
-                onSignUpClick = { navigator?.push(SignUpScreen()) }
-            )
+                onSignUpClick = { navigator?.push(SignUpScreen()) },
+            ),
+            snackbarHostState = snackBarHost
         )
+
+        EventEffect(viewModel) {
+            when (it) {
+                is SignInEvents.Failure -> {
+                    scope.launch {
+                        snackBarHost.showSnackbar(
+                            message = it.message
+                        )
+                    }
+                }
+
+                SignInEvents.GenericFailure -> scope.launch {
+                    snackBarHost.showSnackbar(
+                        message = genericErrorMessage
+                    )
+                }
+            }
+        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         state: SignInScreenState,
+        snackbarHostState: SnackbarHostState,
         callBacks: SignInCallBacks
     ) {
         Scaffold(
@@ -62,6 +93,9 @@ internal class SignInScreen : Screen {
                         BackButton(onBackClick = callBacks.onBack)
                     }
                 )
+            },
+            snackbarHost = {
+                SnackbarHost(snackbarHostState)
             }
         ) {
             Column(

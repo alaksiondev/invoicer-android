@@ -23,7 +23,6 @@ internal data class SignInCallBacks(
 )
 
 internal sealed interface SignInEvents {
-    data object Success : SignInEvents
     data object GenericFailure : SignInEvents
     data class Failure(val message: String) : SignInEvents
 }

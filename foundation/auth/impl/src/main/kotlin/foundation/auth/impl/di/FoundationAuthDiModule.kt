@@ -14,6 +14,6 @@ val foundationAuthDiModule = module {
         )
     }
 
-    single<AuthEventSubscriber> { AuthManager() }
-    single<AuthEventPublisher> { AuthManager() }
+    single<AuthEventSubscriber> { AuthManager }
+    single<AuthEventPublisher> { AuthManager }
 }

@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
         onSignIn: () -> Unit,
         onSignOff: () -> Unit
     ) {
-        LaunchedEffect(subscriber) {
+        LaunchedEffect(Unit) {
             subscriber.events.collect {
                 when (it) {
                     AuthEvent.SignIn -> onSignIn()

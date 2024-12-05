@@ -16,7 +16,7 @@ sealed interface AuthEvent {
     data class SignOff(val reason: String) : AuthEvent
 }
 
-internal class AuthManager : AuthEventPublisher, AuthEventSubscriber {
+internal object AuthManager : AuthEventPublisher, AuthEventSubscriber {
 
     private val _events = MutableSharedFlow<AuthEvent>(replay = 1)
 

@@ -20,6 +20,9 @@ private fun Module.viewModelBindings() {
     }
 
     factory {
-        SignInScreenModel()
+        SignInScreenModel(
+            signInUseCase = get(),
+            authEventPublisher = get()
+        )
     }
 }

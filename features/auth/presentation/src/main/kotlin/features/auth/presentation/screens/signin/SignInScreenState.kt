@@ -22,6 +22,12 @@ internal data class SignInCallBacks(
     val onSignUpClick: () -> Unit
 )
 
+internal sealed interface SignInEvents {
+    data object Success : SignInEvents
+    data object GenericFailure : SignInEvents
+    data class Failure(val message: String) : SignInEvents
+}
+
 @Composable
 internal fun rememberSignInCallbacks(
     onEmailChanged: (String) -> Unit,

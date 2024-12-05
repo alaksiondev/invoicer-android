@@ -32,6 +32,7 @@ dependencies {
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
+    implementation(projects.foundation.auth.impl)
 
     // Features
     implementation(projects.features.auth.domain)

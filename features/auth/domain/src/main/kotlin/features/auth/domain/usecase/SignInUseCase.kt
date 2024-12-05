@@ -12,7 +12,7 @@ interface SignInUseCase {
 
 internal class SignInUseCaseImpl(
     private val authRepository: AuthRepository,
-    private val authStorage: AuthStorage
+    private val authStorage: AuthStorage,
 ) : SignInUseCase {
 
     override suspend fun signIn(email: String, password: String) {

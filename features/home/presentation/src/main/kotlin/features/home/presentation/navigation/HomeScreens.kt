@@ -1,9 +1,9 @@
 package features.home.presentation.navigation
 
 import cafe.adriel.voyager.core.registry.screenModule
-import features.home.presentation.screens.home.HomeScreen
+import features.home.presentation.container.HomeContainerScreen
 import foundation.navigation.InvoicerScreen
 
-val homeScreens = screenModule {
-    register<InvoicerScreen.Home> { HomeScreen() }
+val homeContainerScreens = screenModule {
+    register<InvoicerScreen.Home> { HomeContainerScreen() }
 }

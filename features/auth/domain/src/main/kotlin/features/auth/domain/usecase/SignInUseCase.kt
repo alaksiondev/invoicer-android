@@ -1,7 +1,7 @@
 package features.auth.domain.usecase
 
 import features.auth.domain.repository.AuthRepository
-import features.auth.domain.storage.AuthStorage
+import foundation.auth.impl.storage.AuthStorage
 
 interface SignInUseCase {
     suspend fun signIn(

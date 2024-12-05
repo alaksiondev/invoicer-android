@@ -3,11 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "features.auth.domain"
+    namespace = "foundation.auth.impl"
 }
 
 dependencies {
+    implementation(libs.coroutines.core)
+    implementation(projects.foundation.storage.impl)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
-    implementation(projects.foundation.auth.impl)
 }

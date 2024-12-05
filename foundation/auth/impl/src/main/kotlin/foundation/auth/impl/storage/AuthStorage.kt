@@ -1,8 +1,8 @@
-package features.auth.domain.storage
+package foundation.auth.impl.storage
 
 import foundation.storage.impl.LocalStorage
 
-internal interface AuthStorage {
+interface AuthStorage {
     fun storeRefreshToken(token: String)
     fun storeAccessToken(token: String)
     fun clearTokens()

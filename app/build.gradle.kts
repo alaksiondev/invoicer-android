@@ -39,6 +39,7 @@ dependencies {
     implementation(projects.foundation.network.client)
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.storage.impl)
+    implementation(projects.foundation.auth.impl)
 
     // Features
     implementation(projects.features.auth.presentation)

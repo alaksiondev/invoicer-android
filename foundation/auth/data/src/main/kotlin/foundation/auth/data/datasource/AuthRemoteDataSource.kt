@@ -66,7 +66,7 @@ internal class AuthRemoteDataSourceImpl(
 
     override suspend fun refreshToken(refreshToken: String): RefreshResponse {
         return httpClient.post(
-            urlString = baseUrl("/auth/login")
+            urlString = baseUrl("/auth/refresh")
         ) {
             contentType(ContentType.Application.Json)
             setBody(

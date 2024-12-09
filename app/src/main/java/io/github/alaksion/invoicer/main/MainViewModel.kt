@@ -25,11 +25,12 @@ internal class MainViewModel(
                 onStart = {},
                 onFinish = {},
                 onFailure = {
-                    println(it)
                     _isUserLoggedIN.update { false }
                 },
-                onSuccess = {
-                    _isUserLoggedIN.update { it != null }
+                onSuccess = { token ->
+                    _isUserLoggedIN.update {
+                        token != null
+                    }
                 }
             )
         }

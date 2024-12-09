@@ -49,6 +49,7 @@ dependencies {
     implementation(projects.foundation.auth.data)
     implementation(projects.foundation.auth.domain)
     implementation(projects.foundation.network.request)
+    implementation(projects.foundation.exception)
 
     // Features
     implementation(projects.features.auth.presentation)

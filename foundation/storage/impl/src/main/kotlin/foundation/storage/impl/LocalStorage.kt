@@ -18,7 +18,7 @@ internal class LocalStorageImpl(
     override fun setString(value: String, key: String) {
         preferences
             .edit()
-            .putString(value, key)
+            .putString(key, value)
             .apply()
     }
 

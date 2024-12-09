@@ -21,7 +21,7 @@ private fun Module.viewModelBindings() {
 
     factory {
         SignInScreenModel(
-            signInUseCase = get(),
+            authRepository = get(),
             authEventPublisher = get()
         )
     }

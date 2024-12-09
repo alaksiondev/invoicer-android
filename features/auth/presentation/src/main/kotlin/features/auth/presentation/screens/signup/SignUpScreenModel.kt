@@ -2,7 +2,7 @@ package features.auth.presentation.screens.signup
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.auth.domain.repository.AuthRepository
+import foundation.auth.domain.repository.AuthRepository
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import foundation.exception.RequestError
@@ -81,7 +81,7 @@ internal class SignUpScreenModel(
     }
 
     private suspend fun handleSignUpRequest(
-        state: RequestState<String>
+        state: RequestState<Unit>
     ) {
         when (state) {
             is RequestState.Started -> {

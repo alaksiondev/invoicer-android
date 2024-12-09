@@ -45,10 +45,11 @@ dependencies {
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.storage.impl)
     implementation(projects.foundation.auth.impl)
+    implementation(projects.foundation.auth.data)
 
     // Features
     implementation(projects.features.auth.presentation)
-    implementation(projects.features.auth.data)
-    implementation(projects.features.auth.domain)
+//    implementation(projects.features.auth.data)
+//    implementation(projects.features.auth.domain)
     implementation(projects.features.home.presentation)
 }

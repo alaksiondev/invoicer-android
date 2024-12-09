@@ -2,7 +2,7 @@ package features.auth.presentation.screens.signin
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.auth.domain.usecase.SignInUseCase
+import foundation.auth.domain.repository.AuthRepository
 import foundation.auth.impl.watcher.AuthEvent
 import foundation.auth.impl.watcher.AuthEventPublisher
 import foundation.events.EventAware
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class SignInScreenModel(
-    private val signInUseCase: SignInUseCase,
+    private val authRepository: AuthRepository,
     private val authEventPublisher: AuthEventPublisher
 ) : ScreenModel, EventAware<SignInEvents> by EventPublisher() {
     private val _state = MutableStateFlow(SignInScreenState())
@@ -41,7 +41,7 @@ internal class SignInScreenModel(
     private fun handleSignInRequest() {
         screenModelScope.launch {
             launchRequest {
-                signInUseCase.signIn(
+                authRepository.signIn(
                     email = _state.value.email,
                     password = _state.value.password
                 )
@@ -50,7 +50,7 @@ internal class SignInScreenModel(
                 onFinish = { _state.update { it.copy(requestLoading = false) } },
                 onFailure = {
                     sendErrorEvent(it)
-                            },
+                },
                 onSuccess = { authEventPublisher.publish(event = AuthEvent.SignIn) }
             )
         }

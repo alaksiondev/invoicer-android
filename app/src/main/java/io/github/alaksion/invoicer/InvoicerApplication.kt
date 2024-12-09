@@ -5,7 +5,8 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import features.home.presentation.navigation.homeContainerScreens
-import foundation.auth.impl.di.foundationAuthDiModule
+import foundation.auth.data.di.foundationAuthDataModule
+import foundation.auth.impl.di.foundationAuthPresentationDiModule
 import foundation.network.client.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
@@ -31,7 +32,8 @@ class InvoicerApplication : Application() {
                 networkDiModule,
                 validatorDiModule,
                 storageDiModule,
-                foundationAuthDiModule
+                foundationAuthPresentationDiModule,
+                foundationAuthDataModule,
             )
         }
 

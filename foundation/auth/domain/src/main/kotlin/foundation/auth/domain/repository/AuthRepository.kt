@@ -1,7 +1,6 @@
 package foundation.auth.domain.repository
 
 import foundation.auth.domain.model.AuthToken
-import foundation.auth.domain.model.StoredTokens
 
 interface AuthRepository {
     suspend fun signUp(
@@ -16,6 +15,4 @@ interface AuthRepository {
     )
 
     suspend fun refreshToken(): AuthToken?
-
-    suspend fun getTokens(): StoredTokens
 }

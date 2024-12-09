@@ -5,7 +5,9 @@ import foundation.auth.data.datasource.AuthLocalDataSourceImpl
 import foundation.auth.data.datasource.AuthRemoteDataSource
 import foundation.auth.data.datasource.AuthRemoteDataSourceImpl
 import foundation.auth.data.repository.AuthRepositoryImpl
+import foundation.auth.data.repository.TokenRepositoryImpl
 import foundation.auth.domain.repository.AuthRepository
+import foundation.auth.domain.repository.TokenRepository
 import org.koin.dsl.module
 
 val foundationAuthDataModule = module {
@@ -17,4 +19,5 @@ val foundationAuthDataModule = module {
             remoteDataSource = get()
         )
     }
+    factory<TokenRepository> { TokenRepositoryImpl(localDataSource = get()) }
 }

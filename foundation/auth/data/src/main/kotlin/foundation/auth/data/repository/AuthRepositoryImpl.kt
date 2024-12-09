@@ -2,7 +2,6 @@ package foundation.auth.data.repository
 
 import foundation.auth.data.datasource.AuthLocalDataSource
 import foundation.auth.data.datasource.AuthRemoteDataSource
-import foundation.auth.domain.model.StoredTokens
 import foundation.auth.domain.model.AuthToken
 import foundation.auth.domain.repository.AuthRepository
 
@@ -35,13 +34,6 @@ internal class AuthRepositoryImpl(
         return AuthToken(
             accessToken = refreshedSession.token,
             refreshToken = refreshedSession.refreshToken
-        )
-    }
-
-    override suspend fun getTokens(): StoredTokens {
-        return StoredTokens(
-            token = localDataSource.getAccessToken(),
-            refreshToken = localDataSource.getRefreshToken()
         )
     }
 }

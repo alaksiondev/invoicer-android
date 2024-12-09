@@ -6,6 +6,8 @@ interface AuthStorage {
     fun storeRefreshToken(token: String)
     fun storeAccessToken(token: String)
     fun clearTokens()
+    fun getAccessToken(): String?
+    fun getRefreshToken(): String?
 }
 
 internal class AuthStorageImpl(
@@ -29,6 +31,14 @@ internal class AuthStorageImpl(
     override fun clearTokens() {
         localStorage.clear(REFRESH_TOKEN_KEY)
         localStorage.clear(ACCESS_TOKEN_KEY)
+    }
+
+    override fun getAccessToken(): String? {
+        return localStorage.getString(ACCESS_TOKEN_KEY)
+    }
+
+    override fun getRefreshToken(): String? {
+        return localStorage.getString(REFRESH_TOKEN_KEY)
     }
 
     companion object {

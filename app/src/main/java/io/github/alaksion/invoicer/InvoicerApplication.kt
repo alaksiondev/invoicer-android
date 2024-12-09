@@ -11,6 +11,7 @@ import foundation.auth.impl.di.foundationAuthDiModule
 import foundation.network.client.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
+import io.github.alaksion.invoicer.main.mainDiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -27,6 +28,7 @@ class InvoicerApplication : Application() {
         startKoin {
             androidContext(this@InvoicerApplication)
             modules(
+                mainDiModule,
                 featureAuthPresentationDiModule,
                 featureAuthDataModule,
                 featureAuthDomainModule,

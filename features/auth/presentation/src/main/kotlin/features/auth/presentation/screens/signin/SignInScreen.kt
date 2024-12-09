@@ -28,9 +28,7 @@ import features.auth.design.system.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signin.components.SignInCta
 import features.auth.presentation.screens.signin.components.SignInForm
-import features.auth.presentation.screens.signup.SignUpEvents
 import features.auth.presentation.screens.signup.SignUpScreen
-import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import kotlinx.coroutines.launch

@@ -15,38 +15,18 @@ import foundation.auth.impl.watcher.AuthEventSubscriber
 import foundation.design.system.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
     private val authSubscriber: AuthEventSubscriber by inject()
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         forceLightStatusBar()
-        setContent {
-            InvoicerTheme {
-                Navigator(
-                    screens = listOf(ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)),
-                ) { navigator ->
-                    SlideTransition(navigator)
-
-                    AuthEventEffect(
-                        subscriber = authSubscriber,
-                        onSignIn = {
-                            navigator.replaceAll(
-                                ScreenRegistry.get(InvoicerScreen.Home)
-                            )
-                        },
-                        onSignOff = {
-                            navigator.replaceAll(
-                                ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)
-                            )
-                        }
-                    )
-                }
-            }
-        }
+        setContent { AppContent() }
     }
 
     private fun forceLightStatusBar() {
@@ -66,6 +46,31 @@ class MainActivity : ComponentActivity() {
                     AuthEvent.SignIn -> onSignIn()
                     is AuthEvent.SignOff -> onSignOff()
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun AppContent() {
+        InvoicerTheme {
+            Navigator(
+                screens = listOf(ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)),
+            ) { navigator ->
+                SlideTransition(navigator)
+
+                AuthEventEffect(
+                    subscriber = authSubscriber,
+                    onSignIn = {
+                        navigator.replaceAll(
+                            ScreenRegistry.get(InvoicerScreen.Home)
+                        )
+                    },
+                    onSignOff = {
+                        navigator.replaceAll(
+                            ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)
+                        )
+                    }
+                )
             }
         }
     }

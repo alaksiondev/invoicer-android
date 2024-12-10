@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import features.home.presentation.tabs.WelcomeTab
+import features.home.presentation.tabs.welcome.WelcomeTab
 
 internal class HomeContainerScreen : Screen {
     @Composable

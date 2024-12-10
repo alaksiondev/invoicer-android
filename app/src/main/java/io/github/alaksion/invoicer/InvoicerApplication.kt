@@ -6,7 +6,7 @@ import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import features.home.presentation.navigation.homeContainerScreens
 import foundation.auth.data.di.foundationAuthDataModule
-import foundation.auth.impl.di.foundationAuthPresentationDiModule
+import foundation.auth.watchers.di.foundationAuthPresentationDiModule
 import foundation.network.client.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule

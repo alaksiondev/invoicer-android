@@ -8,8 +8,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.tab.Tab
-import features.home.presentation.tabs.SettingsTab
-import features.home.presentation.tabs.WelcomeTab
+import features.home.presentation.tabs.settings.SettingsTab
+import features.home.presentation.tabs.welcome.WelcomeTab
 
 @Composable
 internal fun HomeBottomBar(

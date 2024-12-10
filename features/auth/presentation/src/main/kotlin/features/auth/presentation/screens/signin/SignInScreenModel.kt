@@ -3,8 +3,8 @@ package features.auth.presentation.screens.signin
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.auth.domain.repository.AuthRepository
-import foundation.auth.impl.watcher.AuthEvent
-import foundation.auth.impl.watcher.AuthEventPublisher
+import foundation.auth.watchers.AuthEvent
+import foundation.auth.watchers.AuthEventPublisher
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import foundation.exception.RequestError

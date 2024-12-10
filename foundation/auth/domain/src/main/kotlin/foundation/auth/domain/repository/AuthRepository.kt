@@ -14,5 +14,7 @@ interface AuthRepository {
         password: String
     )
 
+    suspend fun signOut()
+
     suspend fun refreshToken(): AuthToken?
 }

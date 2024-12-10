@@ -45,7 +45,7 @@ dependencies {
     implementation(projects.foundation.network.client)
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.storage.impl)
-    implementation(projects.foundation.auth.impl)
+    implementation(projects.foundation.auth.watchers)
     implementation(projects.foundation.auth.data)
     implementation(projects.foundation.auth.domain)
     implementation(projects.foundation.network.request)

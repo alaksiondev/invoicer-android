@@ -27,6 +27,10 @@ internal class AuthRepositoryImpl(
         localDataSource.storeRefreshToken(session.refreshToken)
     }
 
+    override suspend fun signOut() {
+        localDataSource.clearTokens()
+    }
+
     override suspend fun refreshToken(): AuthToken? {
         val refreshToken = localDataSource.getRefreshToken() ?: return null
 

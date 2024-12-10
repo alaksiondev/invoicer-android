@@ -12,8 +12,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import foundation.auth.impl.watcher.AuthEvent
-import foundation.auth.impl.watcher.AuthEventSubscriber
+import foundation.auth.watchers.AuthEvent
+import foundation.auth.watchers.AuthEventSubscriber
 import foundation.design.system.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
 import org.koin.android.ext.android.inject

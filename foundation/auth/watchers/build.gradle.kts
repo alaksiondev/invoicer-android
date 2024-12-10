@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "foundation.auth.impl"
+    namespace = "foundation.auth.watchers"
 }
 
 dependencies {

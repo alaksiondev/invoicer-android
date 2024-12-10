@@ -1,4 +1,4 @@
-package foundation.auth.impl.watcher
+package foundation.auth.watchers
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

@@ -3,9 +3,9 @@ plugins {
 }
 
 android {
-    namespace = "foundation.storate.test"
+    namespace = "foundation.storage.test"
 }
 
 dependencies {
-
+    implementation(projects.foundation.storage.impl)
 }

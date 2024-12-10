@@ -15,4 +15,8 @@ dependencies {
     implementation(projects.foundation.network.client)
     implementation(projects.foundation.auth.domain)
     implementation(projects.foundation.storage.impl)
+
+    testImplementation(kotlin("test"))
+    testImplementation(libs.coroutines.test)
+    testImplementation(projects.foundation.storage.test)
 }

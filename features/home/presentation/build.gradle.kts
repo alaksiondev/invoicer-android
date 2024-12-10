@@ -31,4 +31,6 @@ dependencies {
     implementation(projects.foundation.designSystem.tokens)
     implementation(projects.foundation.designSystem.components)
     implementation(projects.foundation.auth.domain)
+    implementation(projects.foundation.auth.watchers)
+    implementation(projects.foundation.events)
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
+import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
@@ -34,6 +35,7 @@ class InvoicerApplication : Application() {
                 storageDiModule,
                 foundationAuthPresentationDiModule,
                 foundationAuthDataModule,
+                homePresentationDiModule
             )
         }
 

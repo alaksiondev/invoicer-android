@@ -21,7 +21,8 @@
             android:name=".main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Invoicer">
+            android:theme="@style/Theme.Invoicer"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

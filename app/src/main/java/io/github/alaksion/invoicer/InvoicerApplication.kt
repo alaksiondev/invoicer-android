@@ -8,6 +8,7 @@ import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
+import foundation.logger.di.foundationLoggerModule
 import foundation.network.client.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
@@ -35,7 +36,8 @@ class InvoicerApplication : Application() {
                 storageDiModule,
                 foundationAuthPresentationDiModule,
                 foundationAuthDataModule,
-                homePresentationDiModule
+                homePresentationDiModule,
+                foundationLoggerModule
             )
         }
 

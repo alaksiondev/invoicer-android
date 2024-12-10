@@ -7,16 +7,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
+import cafe.adriel.voyager.navigator.tab.Tab
+import features.home.presentation.tabs.SettingsTab
+import features.home.presentation.tabs.WelcomeTab
 
 @Composable
 internal fun HomeBottomBar(
-    selectedTab: HomeContainerTabs,
-    onSelectTab: (HomeContainerTabs) -> Unit
+    selectedTab: Tab,
+    onSelectTab: (Tab) -> Unit
 ) {
     NavigationBar {
         NavigationBarItem(
-            selected = selectedTab == HomeContainerTabs.Home,
-            onClick = { onSelectTab(HomeContainerTabs.Home) },
+            selected = selectedTab is WelcomeTab,
+            onClick = { onSelectTab(WelcomeTab) },
             icon = {
                 Icon(
                     imageVector = Icons.Outlined.Home,
@@ -26,8 +29,8 @@ internal fun HomeBottomBar(
         )
 
         NavigationBarItem(
-            selected = selectedTab == HomeContainerTabs.Settings,
-            onClick = { onSelectTab(HomeContainerTabs.Settings) },
+            selected = selectedTab is SettingsTab,
+            onClick = { onSelectTab(SettingsTab) },
             icon = {
                 Icon(
                     imageVector = Icons.Outlined.Settings,

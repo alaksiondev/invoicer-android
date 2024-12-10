@@ -23,6 +23,7 @@ dependencies {
 
     // Voyager
     implementation(libs.bundles.voyager)
+    implementation(libs.voyager.tabs)
 
     // Foundation
     implementation(projects.foundation.network.request)

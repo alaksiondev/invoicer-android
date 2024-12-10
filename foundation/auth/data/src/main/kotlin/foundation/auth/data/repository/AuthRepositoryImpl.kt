@@ -35,6 +35,10 @@ internal class AuthRepositoryImpl(
         val refreshToken = localDataSource.getRefreshToken() ?: return null
 
         val refreshedSession = remoteDataSource.refreshToken(refreshToken)
+
+        localDataSource.storeRefreshToken(refreshedSession.refreshToken)
+        localDataSource.storeAccessToken(refreshedSession.token)
+
         return AuthToken(
             accessToken = refreshedSession.token,
             refreshToken = refreshedSession.refreshToken

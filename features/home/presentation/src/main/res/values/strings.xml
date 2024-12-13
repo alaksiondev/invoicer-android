@@ -9,4 +9,10 @@
     <string name="home_settings_sign_out_positive">Sign out</string>
     <string name="home_settings_sign_out_negative">Cancel</string>
 
+    <!-- Welcome -->
+    <string name="welcome_icon_invoice">Invoices</string>
+    <string name="welcome_icon_beneficiary">Beneficiaries</string>
+    <string name="welcome_icon_intermediary">Intermediaries</string>
+
+
 </resources>

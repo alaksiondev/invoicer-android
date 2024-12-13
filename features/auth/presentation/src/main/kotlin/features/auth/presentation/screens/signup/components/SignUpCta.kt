@@ -29,6 +29,7 @@ internal fun SignUpCta(
     Column(
         modifier = modifier
     ) {
+        VerticalSpacer(height = SpacerSize.Small)
         SignInButton(
             modifier = Modifier
                 .fillMaxWidth()

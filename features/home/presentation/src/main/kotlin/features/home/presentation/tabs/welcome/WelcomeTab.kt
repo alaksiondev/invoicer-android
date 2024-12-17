@@ -26,7 +26,7 @@ internal object WelcomeTab : Tab {
 
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.current
+        val navigator = LocalNavigator.current?.parent
 
         val callbacks = rememberWelcomeCallbacks(
             onInvoiceClick = {

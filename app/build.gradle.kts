@@ -55,4 +55,6 @@ dependencies {
     // Features
     implementation(projects.features.auth.presentation)
     implementation(projects.features.home.presentation)
+    implementation(projects.features.invoice.data)
+    implementation(projects.features.invoice.presentation)
 }

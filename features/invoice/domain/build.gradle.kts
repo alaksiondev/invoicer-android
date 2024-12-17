@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "features.invoice.domain"
 }
+
+dependencies {
+    implementation(libs.datetime)
+}

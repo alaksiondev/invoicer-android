@@ -12,6 +12,8 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 internal interface AuthRemoteDataSource {
     suspend fun signUp(
@@ -29,51 +31,58 @@ internal interface AuthRemoteDataSource {
 }
 
 internal class AuthRemoteDataSourceImpl(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val dispatcher: CoroutineDispatcher,
 ) : AuthRemoteDataSource {
     override suspend fun signUp(
         email: String,
         confirmEmail: String,
         password: String
     ): String {
-        return httpClient
-            .post(urlString = baseUrl("/user")) {
-                contentType(ContentType.Application.Json)
-                setBody(
-                    SignUpRequest(
-                        email = email,
-                        confirmEmail = confirmEmail,
-                        password = password
+        return withContext(dispatcher) {
+            httpClient
+                .post(urlString = baseUrl("/user")) {
+                    contentType(ContentType.Application.Json)
+                    setBody(
+                        SignUpRequest(
+                            email = email,
+                            confirmEmail = confirmEmail,
+                            password = password
+                        )
                     )
-                )
-            }
-            .body<String>()
+                }
+                .body<String>()
+        }
     }
 
     override suspend fun signIn(email: String, password: String): SignInResponse {
-        return httpClient.post(
-            urlString = baseUrl("/auth/login")
-        ) {
-            contentType(ContentType.Application.Json)
-            setBody(
-                SignInRequest(
-                    email = email,
-                    password = password
+        return withContext(dispatcher) {
+            httpClient.post(
+                urlString = baseUrl("/auth/login")
+            ) {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    SignInRequest(
+                        email = email,
+                        password = password
+                    )
                 )
-            )
-        }.body()
+            }.body()
+        }
     }
 
     override suspend fun refreshToken(refreshToken: String): RefreshResponse {
-        return httpClient.post(
-            urlString = baseUrl("/auth/refresh")
-        ) {
-            contentType(ContentType.Application.Json)
-            setBody(
-                RefreshRequest(
-                    refreshToken = refreshToken
+        return withContext(dispatcher) {
+            httpClient.post(
+                urlString = baseUrl("/auth/refresh")
+            ) {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    RefreshRequest(
+                        refreshToken = refreshToken
+                    )
                 )
-            )
-        }.body()
+            }.body()
+        }
     }
 }

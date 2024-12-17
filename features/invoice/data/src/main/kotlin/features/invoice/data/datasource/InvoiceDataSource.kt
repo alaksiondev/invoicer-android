@@ -6,6 +6,8 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.buildUrl
 import io.ktor.http.path
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 internal interface InvoiceDataSource {
     suspend fun getInvoices(
@@ -21,7 +23,8 @@ internal interface InvoiceDataSource {
 }
 
 internal class InvoiceDataSourceImpl(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val dispatcher: CoroutineDispatcher
 ) : InvoiceDataSource {
 
     override suspend fun getInvoices(
@@ -34,21 +37,23 @@ internal class InvoiceDataSourceImpl(
         senderCompany: String?,
         recipientCompany: String?
     ): List<InvoiceListItemResponse> {
-        return httpClient.get(
-            url = buildUrl {
-                path("/invoice")
-                parameters.apply {
-                    append("page", page.toString())
-                    append("limit", limit.toString())
-                    minIssueDate?.let { append("minIssueDate", it) }
-                    maxIssueDate?.let { append("maxIssueDate", it) }
-                    minDueDate?.let { append("minDueDate", it) }
-                    maxDueDate?.let { append("maxDueDate", it) }
-                    senderCompany?.let { append("senderCompany", it) }
-                    recipientCompany?.let { append("recipientCompany", it) }
+        return withContext(dispatcher) {
+            httpClient.get(
+                url = buildUrl {
+                    path("/invoice")
+                    parameters.apply {
+                        append("page", page.toString())
+                        append("limit", limit.toString())
+                        minIssueDate?.let { append("minIssueDate", it) }
+                        maxIssueDate?.let { append("maxIssueDate", it) }
+                        minDueDate?.let { append("minDueDate", it) }
+                        maxDueDate?.let { append("maxDueDate", it) }
+                        senderCompany?.let { append("senderCompany", it) }
+                        recipientCompany?.let { append("recipientCompany", it) }
+                    }
                 }
-            }
-        ).body()
+            ).body()
+        }
     }
 
 }

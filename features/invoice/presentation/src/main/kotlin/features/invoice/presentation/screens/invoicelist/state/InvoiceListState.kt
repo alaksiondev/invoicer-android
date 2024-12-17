@@ -1,4 +1,4 @@
-package features.invoice.presentation.screens.invoicelist
+package features.invoice.presentation.screens.invoicelist.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,7 +25,8 @@ internal data class InvoiceListFilterState(
 )
 
 internal data class InvoiceListCallbacks(
-    val onClose: () -> Unit
+    val onClose: () -> Unit,
+    val onRetry: () -> Unit
 )
 
 internal sealed interface InvoiceListEvent {
@@ -34,11 +35,13 @@ internal sealed interface InvoiceListEvent {
 
 @Composable
 internal fun rememberInvoiceListCallbacks(
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onRetry: () -> Unit
 ): InvoiceListCallbacks {
     return remember {
         InvoiceListCallbacks(
-            onClose = onClose
+            onClose = onClose,
+            onRetry = onRetry
         )
     }
 }

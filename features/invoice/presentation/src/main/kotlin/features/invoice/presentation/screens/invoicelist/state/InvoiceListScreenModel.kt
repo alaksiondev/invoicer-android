@@ -1,4 +1,4 @@
-package features.invoice.presentation.screens.invoicelist
+package features.invoice.presentation.screens.invoicelist.state
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope

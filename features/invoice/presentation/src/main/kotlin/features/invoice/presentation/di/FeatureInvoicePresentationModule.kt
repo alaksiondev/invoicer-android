@@ -1,6 +1,6 @@
 package features.invoice.presentation.di
 
-import features.invoice.presentation.screens.invoicelist.InvoiceListScreenModel
+import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 

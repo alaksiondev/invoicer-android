@@ -5,13 +5,15 @@ import foundation.auth.data.model.RefreshResponse
 import foundation.auth.data.model.SignInRequest
 import foundation.auth.data.model.SignInResponse
 import foundation.auth.data.model.SignUpRequest
-import foundation.network.client.baseUrl
+import foundation.network.client.BASE_URL
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
+import io.ktor.http.buildUrl
 import io.ktor.http.contentType
+import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -41,7 +43,12 @@ internal class AuthRemoteDataSourceImpl(
     ): String {
         return withContext(dispatcher) {
             httpClient
-                .post(urlString = baseUrl("/user")) {
+                .post(
+                    url = buildUrl {
+                        host = BASE_URL
+                        path("/user")
+                    }
+                ) {
                     contentType(ContentType.Application.Json)
                     setBody(
                         SignUpRequest(
@@ -58,7 +65,10 @@ internal class AuthRemoteDataSourceImpl(
     override suspend fun signIn(email: String, password: String): SignInResponse {
         return withContext(dispatcher) {
             httpClient.post(
-                urlString = baseUrl("/auth/login")
+                url = buildUrl {
+                    host = BASE_URL
+                    path("/auth/login")
+                }
             ) {
                 contentType(ContentType.Application.Json)
                 setBody(
@@ -74,7 +84,10 @@ internal class AuthRemoteDataSourceImpl(
     override suspend fun refreshToken(refreshToken: String): RefreshResponse {
         return withContext(dispatcher) {
             httpClient.post(
-                urlString = baseUrl("/auth/refresh")
+                url = buildUrl {
+                    host = BASE_URL
+                    path("/auth/refresh")
+                }
             ) {
                 contentType(ContentType.Application.Json)
                 setBody(

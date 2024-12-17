@@ -11,6 +11,7 @@ import foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 internal class InvoiceListScreenModel(
@@ -21,6 +22,8 @@ internal class InvoiceListScreenModel(
     private val _state = MutableStateFlow(InvoiceListState())
     private var page = 0
     private var isFirstPageLoaded = false
+
+    val state: StateFlow<InvoiceListState> get() = _state
 
     fun loadPage() {
         if (isFirstPageLoaded.not()) {
@@ -46,6 +49,7 @@ internal class InvoiceListScreenModel(
                             )
                         },
                         onFailure = {
+                            it.message
                             _state.value = _state.value.copy(
                                 showError = true
                             )

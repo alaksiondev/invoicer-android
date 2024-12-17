@@ -41,7 +41,7 @@ internal class InvoiceDataSourceImpl(
         return withContext(dispatcher) {
             val url = buildUrl {
                 host = BASE_URL
-                path("/ invoice")
+                path("/invoice")
                 parameters.apply {
                     append("page", page.toString())
                     append("limit", limit.toString())

@@ -57,9 +57,18 @@ private val CardSize = 150.dp
 
 @Composable
 internal fun WelcomeActions(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onInvoiceClick: () -> Unit,
+    onIntermediaryClick: () -> Unit,
+    onBeneficiaryClick: () -> Unit,
 ) {
-    val items = remember { WelcomeItems.entries }
+    val items = remember {
+        mapOf(
+            WelcomeItems.Invoice to onInvoiceClick,
+            WelcomeItems.Intermediary to onIntermediaryClick,
+            WelcomeItems.Beneficiary to onBeneficiaryClick
+        )
+    }
     val scrollState = rememberScrollState()
 
     Row(
@@ -67,12 +76,12 @@ internal fun WelcomeActions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        items.forEach {
+        items.forEach { (item, onClick) ->
             Card(
                 modifier = Modifier
                     .widthIn(min = CardSize)
                     .clickable(
-                        onClick = {}
+                        onClick = onClick
                     )
             ) {
                 Column(
@@ -87,13 +96,13 @@ internal fun WelcomeActions(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = it.icon,
+                            imageVector = item.icon,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                         )
                     }
                     Text(
-                        text = stringResource(it.text),
+                        text = stringResource(item.text),
                     )
                 }
             }
@@ -105,6 +114,11 @@ internal fun WelcomeActions(
 @Preview
 private fun Preview() {
     PreviewContainer {
-        WelcomeActions(Modifier.fillMaxWidth())
+        WelcomeActions(
+            modifier = Modifier.fillMaxWidth(),
+            onInvoiceClick = {},
+            onIntermediaryClick = {},
+            onBeneficiaryClick = {}
+        )
     }
 }

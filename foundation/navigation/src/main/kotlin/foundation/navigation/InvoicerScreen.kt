@@ -9,4 +9,6 @@ sealed interface InvoicerScreen : ScreenProvider {
     }
 
     data object Home : InvoicerScreen
+
+    data object Invoices: InvoicerScreen
 }

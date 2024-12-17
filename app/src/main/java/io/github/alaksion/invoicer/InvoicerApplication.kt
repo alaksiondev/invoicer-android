@@ -7,6 +7,8 @@ import features.auth.presentation.navigation.authScreens
 import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
 import features.invoice.data.di.featureInvoiceDataModule
+import features.invoice.presentation.di.featureInvoicePresentationModule
+import features.invoice.presentation.navigation.invoiceScreens
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
 import foundation.logger.di.foundationLoggerModule
@@ -25,6 +27,7 @@ class InvoicerApplication : Application() {
         ScreenRegistry {
             authScreens()
             homeContainerScreens()
+            invoiceScreens()
         }
 
         startKoin {
@@ -39,7 +42,8 @@ class InvoicerApplication : Application() {
                 foundationAuthDataModule,
                 homePresentationDiModule,
                 foundationLoggerModule,
-                featureInvoiceDataModule
+                featureInvoiceDataModule,
+                featureInvoicePresentationModule
             )
         }
 

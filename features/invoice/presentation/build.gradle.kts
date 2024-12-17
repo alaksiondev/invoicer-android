@@ -24,10 +24,17 @@ dependencies {
     // Voyager
     implementation(libs.bundles.voyager)
 
+    // Kotlin
+    implementation(libs.immutable.collections)
+    implementation(libs.datetime)
+
     // Foundation
     implementation(projects.foundation.network.request)
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem.tokens)
     implementation(projects.foundation.designSystem.components)
     implementation(projects.foundation.events)
+
+    // Feature
+    implementation(projects.features.invoice.domain)
 }

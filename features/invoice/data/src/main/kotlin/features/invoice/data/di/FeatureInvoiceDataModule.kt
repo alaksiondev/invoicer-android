@@ -10,7 +10,7 @@ import org.koin.dsl.module
 val featureInvoiceDataModule = module {
     factory<InvoiceDataSource> {
         InvoiceDataSourceImpl(
-            httpClient = get(),
+            httpWrapper = get(),
             dispatcher = Dispatchers.IO
         )
     }

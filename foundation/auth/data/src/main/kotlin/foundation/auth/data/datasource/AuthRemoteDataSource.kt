@@ -6,7 +6,7 @@ import foundation.auth.data.model.SignInRequest
 import foundation.auth.data.model.SignInResponse
 import foundation.auth.data.model.SignUpRequest
 import foundation.network.client.BASE_URL
-import io.ktor.client.HttpClient
+import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -33,7 +33,7 @@ internal interface AuthRemoteDataSource {
 }
 
 internal class AuthRemoteDataSourceImpl(
-    private val httpClient: HttpClient,
+    private val httpWrapper: HttpWrapper,
     private val dispatcher: CoroutineDispatcher,
 ) : AuthRemoteDataSource {
     override suspend fun signUp(
@@ -42,7 +42,7 @@ internal class AuthRemoteDataSourceImpl(
         password: String
     ): String {
         return withContext(dispatcher) {
-            httpClient
+            httpWrapper.client
                 .post(
                     url = buildUrl {
                         host = BASE_URL
@@ -64,7 +64,7 @@ internal class AuthRemoteDataSourceImpl(
 
     override suspend fun signIn(email: String, password: String): SignInResponse {
         return withContext(dispatcher) {
-            httpClient.post(
+            httpWrapper.client.post(
                 url = buildUrl {
                     host = BASE_URL
                     path("/auth/login")
@@ -83,7 +83,7 @@ internal class AuthRemoteDataSourceImpl(
 
     override suspend fun refreshToken(refreshToken: String): RefreshResponse {
         return withContext(dispatcher) {
-            httpClient.post(
+            httpWrapper.client.post(
                 url = buildUrl {
                     host = BASE_URL
                     path("/auth/refresh")

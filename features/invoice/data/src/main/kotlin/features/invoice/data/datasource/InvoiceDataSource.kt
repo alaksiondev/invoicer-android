@@ -2,7 +2,7 @@ package features.invoice.data.datasource
 
 import features.invoice.data.model.InvoiceListItemResponse
 import foundation.network.client.BASE_URL
-import io.ktor.client.HttpClient
+import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.buildUrl
@@ -24,7 +24,7 @@ internal interface InvoiceDataSource {
 }
 
 internal class InvoiceDataSourceImpl(
-    private val httpClient: HttpClient,
+    private val httpWrapper: HttpWrapper,
     private val dispatcher: CoroutineDispatcher
 ) : InvoiceDataSource {
 
@@ -54,7 +54,7 @@ internal class InvoiceDataSourceImpl(
                 }
             }
 
-            httpClient.get(url = url).body()
+            httpWrapper.client.get(url = url).body()
         }
     }
 }

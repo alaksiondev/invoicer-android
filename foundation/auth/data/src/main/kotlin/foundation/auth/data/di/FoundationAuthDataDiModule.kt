@@ -19,7 +19,7 @@ val foundationAuthDataModule = module {
     }
     factory<AuthRemoteDataSource> {
         AuthRemoteDataSourceImpl(
-            httpClient = get(),
+            httpWrapper = get(),
             dispatcher = Dispatchers.IO
         )
     }

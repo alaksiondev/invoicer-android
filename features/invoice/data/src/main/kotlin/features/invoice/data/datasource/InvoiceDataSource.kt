@@ -1,6 +1,7 @@
 package features.invoice.data.datasource
 
 import features.invoice.data.model.InvoiceListItemResponse
+import features.invoice.data.model.InvoiceListResponse
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
@@ -20,7 +21,7 @@ internal interface InvoiceDataSource {
         maxDueDate: String?,
         senderCompany: String?,
         recipientCompany: String?
-    ): List<InvoiceListItemResponse>
+    ): InvoiceListResponse
 }
 
 internal class InvoiceDataSourceImpl(
@@ -37,7 +38,7 @@ internal class InvoiceDataSourceImpl(
         maxDueDate: String?,
         senderCompany: String?,
         recipientCompany: String?
-    ): List<InvoiceListItemResponse> {
+    ): InvoiceListResponse {
         return withContext(dispatcher) {
             val url = buildUrl {
                 host = BASE_URL

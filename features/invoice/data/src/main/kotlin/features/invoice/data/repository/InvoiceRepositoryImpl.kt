@@ -2,7 +2,7 @@ package features.invoice.data.repository
 
 import features.invoice.data.datasource.InvoiceDataSource
 import features.invoice.data.model.toDomainModel
-import features.invoice.domain.model.InvoiceListItem
+import features.invoice.domain.model.InvoiceList
 import features.invoice.domain.repository.InvoiceRepository
 
 internal class InvoiceRepositoryImpl(
@@ -18,7 +18,7 @@ internal class InvoiceRepositoryImpl(
         maxDueDate: String?,
         senderCompany: String?,
         recipientCompany: String?
-    ): List<InvoiceListItem> {
+    ): InvoiceList {
         return dataSource.getInvoices(
             page = page,
             limit = limit,
@@ -28,6 +28,6 @@ internal class InvoiceRepositoryImpl(
             maxDueDate = maxDueDate,
             senderCompany = senderCompany,
             recipientCompany = recipientCompany
-        ).map { it.toDomainModel() }
+        ).toDomainModel()
     }
 }

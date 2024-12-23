@@ -2,7 +2,7 @@ package features.invoice.presentation.screens.invoicelist.state
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.invoice.domain.model.InvoiceListItem
+import features.invoice.domain.model.InvoiceList
 import features.invoice.domain.repository.InvoiceRepository
 import foundation.events.EventAware
 import foundation.events.EventPublisher
@@ -37,7 +37,7 @@ internal class InvoiceListScreenModel(
                         },
                         onSuccess = {
                             _state.value = _state.value.copy(
-                                invoices = (_state.value.invoices + it).toPersistentList(),
+                                invoices = (_state.value.invoices + it.items).toPersistentList(),
                                 mode = InvoiceListMode.Content
                             )
                             page++
@@ -78,7 +78,7 @@ internal class InvoiceListScreenModel(
         }
     }
 
-    private suspend fun getInvoices(): List<InvoiceListItem> = invoiceRepository.getInvoices(
+    private suspend fun getInvoices(): InvoiceList = invoiceRepository.getInvoices(
         page = page.toLong(),
         limit = LIMIT,
         minIssueDate = _state.value.filter.minIssueDate?.toString(),

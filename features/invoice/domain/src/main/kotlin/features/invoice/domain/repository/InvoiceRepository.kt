@@ -1,6 +1,6 @@
 package features.invoice.domain.repository
 
-import features.invoice.domain.model.InvoiceListItem
+import features.invoice.domain.model.InvoiceList
 
 interface InvoiceRepository {
     suspend fun getInvoices(
@@ -12,5 +12,5 @@ interface InvoiceRepository {
         maxDueDate: String?,
         senderCompany: String?,
         recipientCompany: String?
-    ): List<InvoiceListItem>
+    ): InvoiceList
 }

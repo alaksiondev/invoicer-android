@@ -2,6 +2,12 @@ package features.invoice.domain.model
 
 import kotlinx.datetime.LocalDate
 
+data class InvoiceList(
+    val items: List<InvoiceListItem>,
+    val totalItemCount: Long,
+    val nextPage: Long?
+)
+
 data class InvoiceListItem(
     val id: String,
     val externalId: String,

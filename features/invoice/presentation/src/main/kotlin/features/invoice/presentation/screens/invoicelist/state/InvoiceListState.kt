@@ -8,8 +8,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.LocalDate
 
 internal data class InvoiceListState(
-    val isLoading: Boolean = false,
-    val showError: Boolean = false,
+    val mode: InvoiceListMode = InvoiceListMode.Content,
     val isLoadingMore: Boolean = false,
     val invoices: ImmutableList<InvoiceListItem> = persistentListOf(),
     val filter: InvoiceListFilterState = InvoiceListFilterState(),
@@ -24,9 +23,16 @@ internal data class InvoiceListFilterState(
     val recipientCompany: String? = null,
 )
 
+internal enum class InvoiceListMode {
+    Loading,
+    Content,
+    Error,
+}
+
 internal data class InvoiceListCallbacks(
     val onClose: () -> Unit,
-    val onRetry: () -> Unit
+    val onRetry: () -> Unit,
+    val onClickInvoice: (String) -> Unit,
 )
 
 internal sealed interface InvoiceListEvent {
@@ -36,12 +42,14 @@ internal sealed interface InvoiceListEvent {
 @Composable
 internal fun rememberInvoiceListCallbacks(
     onClose: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onClickInvoice: (String) -> Unit
 ): InvoiceListCallbacks {
     return remember {
         InvoiceListCallbacks(
             onClose = onClose,
-            onRetry = onRetry
+            onRetry = onRetry,
+            onClickInvoice = onClickInvoice
         )
     }
 }

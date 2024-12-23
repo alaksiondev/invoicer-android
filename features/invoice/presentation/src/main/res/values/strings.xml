@@ -5,4 +5,6 @@
     <string name="invoice_list_error_retry">Try again</string>
     <string name="invoice_list_error_title">Something went wrong</string>
     <string name="invoice_list_error_description">Check your connection and try again</string>
+    <string name="invoice_list_empty_title">Nothing to see here</string>
+    <string name="invoice_list_empty_description">No invoices found</string>
 </resources>

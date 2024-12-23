@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 internal class InvoiceListScreenModel(
     private val invoiceRepository: InvoiceRepository,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
 ) : ScreenModel, EventAware<InvoiceListEvent> by EventPublisher() {
 
     private val _state = MutableStateFlow(InvoiceListState())
@@ -32,26 +32,21 @@ internal class InvoiceListScreenModel(
                     .handle(
                         onStart = {
                             _state.value = _state.value.copy(
-                                isLoading = true,
-                                showError = false
+                                mode = InvoiceListMode.Loading,
                             )
                         },
                         onSuccess = {
                             _state.value = _state.value.copy(
-                                invoices = (_state.value.invoices + it).toPersistentList()
+                                invoices = (_state.value.invoices + it).toPersistentList(),
+                                mode = InvoiceListMode.Content
                             )
                             page++
                             isFirstPageLoaded = true
                         },
-                        onFinish = {
-                            _state.value = _state.value.copy(
-                                isLoading = false
-                            )
-                        },
+                        onFinish = { /* no op */ },
                         onFailure = {
-                            it.message
                             _state.value = _state.value.copy(
-                                showError = true
+                                mode = InvoiceListMode.Error
                             )
                         }
                     )

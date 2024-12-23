@@ -11,7 +11,7 @@ import foundation.design.system.tokens.Spacing
 
 @Composable
 fun ItemRow(
-    leading: (() -> Unit)? = null,
+    leading: @Composable (() -> Unit)? = null,
     content: @Composable () -> Unit,
     trailing: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier

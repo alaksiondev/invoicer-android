@@ -6,16 +6,17 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import features.auth.design.system.components.preview.PreviewContainer
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListCallbacks
+import features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 
 private class InvoiceListStateProvider : PreviewParameterProvider<InvoiceListState> {
     override val values: Sequence<InvoiceListState>
         get() = sequenceOf(
             InvoiceListState(
-                isLoading = true
+                mode = InvoiceListMode.Loading
             ),
             InvoiceListState(
-                showError = true
+                mode = InvoiceListMode.Error
             )
         )
 }
@@ -31,7 +32,8 @@ private fun InvoiceListPreview(
                 state = state,
                 callbacks = InvoiceListCallbacks(
                     onClose = {},
-                    onRetry = {}
+                    onRetry = {},
+                    onClickInvoice = {}
                 )
             )
     }

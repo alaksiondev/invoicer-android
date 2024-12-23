@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,9 +24,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.buttons.CloseButton
+import features.auth.design.system.components.emptystate.EmptyState
 import features.auth.design.system.components.feedback.Feedback
 import features.invoice.presentation.R
+import features.invoice.presentation.screens.invoicelist.components.InvoiceListItem
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListCallbacks
+import features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 import features.invoice.presentation.screens.invoicelist.state.rememberInvoiceListCallbacks
@@ -41,7 +45,8 @@ internal class InvoiceListScreen : Screen {
 
         val callbacks = rememberInvoiceListCallbacks(
             onClose = { navigator?.pop() },
-            onRetry = {}
+            onRetry = {},
+            onClickInvoice = {}
         )
 
         LaunchedEffect(Unit) {
@@ -68,8 +73,40 @@ internal class InvoiceListScreen : Screen {
                 )
             }
         ) {
-            when {
-                state.showError -> Feedback(
+            when (state.mode) {
+                InvoiceListMode.Content -> {
+                    if (state.invoices.isEmpty()) {
+                        EmptyState(
+                            title = stringResource(R.string.invoice_list_empty_title),
+                            description = stringResource(R.string.invoice_list_empty_description),
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.padding(it),
+                            contentPadding = PaddingValues(Spacing.medium)
+                        ) {
+                            items(
+                                items = state.invoices,
+                                key = { item -> item.id }
+                            ) { invoiceItem ->
+                                InvoiceListItem(
+                                    item = invoiceItem,
+                                    onClick = { callbacks.onClickInvoice(invoiceItem.id) }
+                                )
+                            }
+                        }
+                    }
+                }
+
+                InvoiceListMode.Loading -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+
+                InvoiceListMode.Error -> Feedback(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(Spacing.medium),
@@ -79,22 +116,6 @@ internal class InvoiceListScreen : Screen {
                     title = stringResource(R.string.invoice_list_error_title),
                     description = stringResource(R.string.invoice_list_error_description)
                 )
-
-                state.isLoading -> Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-
-                else -> {
-                    LazyColumn(
-                        modifier = Modifier.padding(it),
-                        contentPadding = PaddingValues(Spacing.medium)
-                    ) {
-
-                    }
-                }
             }
         }
     }

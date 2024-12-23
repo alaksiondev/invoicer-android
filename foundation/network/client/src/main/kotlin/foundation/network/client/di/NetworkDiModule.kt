@@ -10,7 +10,4 @@ val networkDiModule = module {
             tokenRepository = get()
         )
     }
-    factory {
-        RefreshHttpWrapper()
-    }
 }

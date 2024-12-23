@@ -34,11 +34,3 @@ class HttpWrapper(
         }
     }
 }
-
-class RefreshHttpWrapper {
-    val client by lazy {
-        HttpClient(OkHttp) {
-            setupClient()
-        }
-    }
-}

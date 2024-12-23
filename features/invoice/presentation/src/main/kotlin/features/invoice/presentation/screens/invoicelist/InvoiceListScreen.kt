@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,7 +48,7 @@ internal class InvoiceListScreen : Screen {
 
         val callbacks = rememberInvoiceListCallbacks(
             onClose = { navigator?.pop() },
-            onRetry = {},
+            onRetry = { viewModel.loadPage() },
             onClickInvoice = {}
         )
 
@@ -71,6 +74,16 @@ internal class InvoiceListScreen : Screen {
                     title = { Text(stringResource(R.string.invoice_list_title)) },
                     navigationIcon = { CloseButton(onBackClick = callbacks.onClose) },
                 )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Add,
+                        contentDescription = null
+                    )
+                }
             }
         ) {
             when (state.mode) {

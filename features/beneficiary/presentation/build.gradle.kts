@@ -27,6 +27,9 @@ dependencies {
     implementation(libs.immutable.collections)
     implementation(libs.datetime)
 
+    // Paging
+    implementation(libs.bundles.paging)
+
     // Foundation
     implementation(projects.foundation.network.request)
     implementation(projects.foundation.navigation)

@@ -66,7 +66,7 @@ internal class InvoiceListScreenModel(
                         },
                         onFinish = {
                             _state.value = _state.value.copy(
-                                isLoadingMore = true
+                                isLoadingMore = false
                             )
                         },
                         onFailure = {

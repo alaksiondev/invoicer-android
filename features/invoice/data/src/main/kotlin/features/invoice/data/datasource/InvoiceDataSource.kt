@@ -1,6 +1,5 @@
 package features.invoice.data.datasource
 
-import features.invoice.data.model.InvoiceListItemResponse
 import features.invoice.data.model.InvoiceListResponse
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper

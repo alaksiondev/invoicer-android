@@ -57,4 +57,7 @@ dependencies {
     implementation(projects.features.home.presentation)
     implementation(projects.features.invoice.data)
     implementation(projects.features.invoice.presentation)
+    implementation(projects.features.beneficiary.data)
+    implementation(projects.features.beneficiary.domain)
+    implementation(projects.features.beneficiary.presentation)
 }

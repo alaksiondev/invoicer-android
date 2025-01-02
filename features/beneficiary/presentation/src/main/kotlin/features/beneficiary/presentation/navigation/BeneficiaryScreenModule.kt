@@ -4,7 +4,7 @@ import cafe.adriel.voyager.core.registry.screenModule
 import features.beneficiary.presentation.screen.list.BeneficiaryListScreen
 import foundation.navigation.InvoicerScreen
 
-val beneficiaryScreenModule = screenModule {
+val beneficiaryScreens = screenModule {
     register<InvoicerScreen.Beneficiary.List> {
         BeneficiaryListScreen()
     }

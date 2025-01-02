@@ -6,6 +6,7 @@ import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import features.beneficiary.data.di.featureBeneficiaryDataModule
 import features.beneficiary.presentation.di.featureBeneficiaryPresentationModule
+import features.beneficiary.presentation.navigation.beneficiaryScreens
 import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
 import features.invoice.data.di.featureInvoiceDataModule
@@ -30,6 +31,7 @@ class InvoicerApplication : Application() {
             authScreens()
             homeContainerScreens()
             invoiceScreens()
+            beneficiaryScreens()
         }
 
         startKoin {

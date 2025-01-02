@@ -55,7 +55,7 @@ internal object WelcomeTab : Tab {
                 item {
                     WelcomeActions(
                         modifier = Modifier.fillParentMaxWidth(),
-                        onBeneficiaryClick = {},
+                        onBeneficiaryClick = callbacks.onBeneficiaryClick,
                         onInvoiceClick = callbacks.onInvoiceClick,
                         onIntermediaryClick = {}
                     )

@@ -33,6 +33,9 @@ internal object WelcomeTab : Tab {
                 navigator?.push(
                     ScreenRegistry.get(InvoicerScreen.Invoices)
                 )
+            },
+            onBeneficiaryClick = {
+                navigator?.push(ScreenRegistry.get(InvoicerScreen.Beneficiary.List))
             }
         )
         StateContent(

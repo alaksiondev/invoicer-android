@@ -10,7 +10,6 @@ internal data class BeneficiaryData(
     val swift: String,
     val bankName: String,
     val bankAddress: String,
-    val id: String,
     val createdAt: LocalDate,
     val updatedAt: LocalDate
 )

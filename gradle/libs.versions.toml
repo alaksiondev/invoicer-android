@@ -16,6 +16,7 @@ coroutines = "1.9.0"
 splashscreen = "1.0.0-beta02"
 datetime = "0.6.1"
 immutable-collections = "0.3.8"
+paging = "3.3.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,10 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+
+# Paging
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 # Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -77,4 +82,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 compose-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3"]
 compose-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 voyager = ["voyager-navigator", "voyager-screenmodel", "voyager-koin"]
+paging = ["paging-compose", "paging-runtime"]
 

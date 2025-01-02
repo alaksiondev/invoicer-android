@@ -10,5 +10,9 @@ sealed interface InvoicerScreen : ScreenProvider {
 
     data object Home : InvoicerScreen
 
-    data object Invoices: InvoicerScreen
+    data object Invoices : InvoicerScreen
+
+    sealed interface Beneficiary : InvoicerScreen {
+        data object List : Beneficiary
+    }
 }

@@ -12,6 +12,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -29,6 +31,7 @@ internal fun BeneficiaryBaseForm(
     buttonEnabled: Boolean,
     onBack: () -> Unit,
     onContinue: () -> Unit,
+    snackbarHostState: SnackbarHostState? = null,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -45,7 +48,8 @@ internal fun BeneficiaryBaseForm(
                     )
                 }
             )
-        }
+        },
+        snackbarHost = { snackbarHostState?.let { SnackbarHost(it) } }
     ) {
         Column(
             modifier = Modifier

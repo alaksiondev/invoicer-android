@@ -30,8 +30,8 @@ internal enum class BeneficiaryFeedbackType(
     )
 }
 
-internal class BeneficiaryScreenFeedbackScreen(
-    val type: BeneficiaryFeedbackType
+internal class BeneficiaryFeedbackScreen(
+    private val type: BeneficiaryFeedbackType
 ) : Screen {
 
     @Composable

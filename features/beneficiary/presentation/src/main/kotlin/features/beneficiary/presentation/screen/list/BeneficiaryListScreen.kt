@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -29,6 +30,7 @@ import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.list.components.BeneficiaryList
 import foundation.design.system.tokens.Spacing
+import foundation.navigation.InvoicerScreen
 
 internal class BeneficiaryListScreen : Screen {
 
@@ -44,7 +46,9 @@ internal class BeneficiaryListScreen : Screen {
             onClose = { navigator?.pop() },
             onRetry = { viewModel.loadPage() },
             state = state,
-            onAddClick = {}
+            onAddClick = {
+                navigator?.push(ScreenRegistry.get(InvoicerScreen.Beneficiary.Create))
+            }
         )
     }
 

@@ -11,5 +11,6 @@ internal data class BeneficiaryData(
     val bankName: String,
     val bankAddress: String,
     val createdAt: LocalDate,
-    val updatedAt: LocalDate
+    val updatedAt: LocalDate,
+    val id: String,
 )

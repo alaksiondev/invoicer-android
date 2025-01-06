@@ -14,5 +14,6 @@ sealed interface InvoicerScreen : ScreenProvider {
 
     sealed interface Beneficiary : InvoicerScreen {
         data object List : Beneficiary
+        data object Create: Beneficiary
     }
 }

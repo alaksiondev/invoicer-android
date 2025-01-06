@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- List Beneficiary -->
     <string name="beneficiary_list_title">Beneficiaries</string>
     <string name="beneficiary_list_error_retry">Try again</string>
     <string name="beneficiary_list_error_title">Something went wrong</string>
     <string name="beneficiary_list_error_description">Check your connection and try again</string>
     <string name="beneficiary_list_empty_title">Nothing to see here</string>
     <string name="beneficiary_list_empty_description">No beneficiaries found</string>
+
+    <!-- Create Beneficiary -->
+    <string name="create_beneficiary_continue_cta">Continue</string>
+    <string name="create_beneficiary_name_title">Beneficiary name</string>
+    <string name="create_beneficiary_swift_title">Beneficiary Swift Code</string>
+    <string name="create_beneficiary_iban_title">Beneficiary Iban Code</string>
+    <string name="create_beneficiary_bank_info_title">Bank Information</string>
+    <string name="create_beneficiary_bank_name_label">Bank Name</string>
+    <string name="create_beneficiary_bank_name_placeholder">Bank of America</string>
+    <string name="create_beneficiary_bank_address_label">Bank Address</string>
+    <string name="create_beneficiary_bank_address_placeholder">St Saint Louis 115</string>
+    <string name="create_beneficiary_name_label">Name</string>
+    <string name="create_beneficiary_name_placeholder">Company X LTD</string>
 
 </resources>

@@ -10,5 +10,5 @@ data class BeneficiaryModel(
     val bankAddress: String,
     val id: String,
     val createdAt: LocalDate,
-    val updatedAt: LocalDate
+    val updatedAt: LocalDate,
 )

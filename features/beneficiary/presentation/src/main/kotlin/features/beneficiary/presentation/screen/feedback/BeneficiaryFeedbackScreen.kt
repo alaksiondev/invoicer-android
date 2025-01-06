@@ -1,5 +1,6 @@
 package features.beneficiary.presentation.screen.feedback
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import foundation.design.system.tokens.Spacing
@@ -36,6 +38,18 @@ internal class BeneficiaryFeedbackScreen(
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
+        StateContent(onClearFlow = { navigator?.popAll() })
+    }
+
+    @Composable
+    fun StateContent(
+        onClearFlow: () -> Unit
+    ) {
+        BackHandler {
+            // no-op: Disable back button
+        }
+
         Scaffold {
             Feedback(
                 modifier = Modifier
@@ -45,7 +59,11 @@ internal class BeneficiaryFeedbackScreen(
                 primaryActionText = stringResource(type.primaryActionText),
                 title = stringResource(type.title),
                 description = stringResource(type.description),
-                onPrimaryAction = {},
+                onPrimaryAction = {
+                    when (type) {
+                        BeneficiaryFeedbackType.CreateSuccess -> onClearFlow()
+                    }
+                },
                 icon = type.icon
             )
         }

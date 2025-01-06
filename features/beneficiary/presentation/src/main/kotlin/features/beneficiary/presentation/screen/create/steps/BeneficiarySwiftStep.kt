@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -66,7 +67,17 @@ internal class BeneficiarySwiftStep : Screen {
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = { keyboard?.hide() }
-                )
+                ),
+                label = {
+                    Text(
+                        text = stringResource(R.string.create_beneficiary_swift_label)
+                    )
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.create_beneficiary_swift_placeholder)
+                    )
+                }
             )
             Spacer(1f)
         }

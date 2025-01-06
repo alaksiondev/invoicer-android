@@ -23,6 +23,10 @@
     <string name="create_beneficiary_bank_address_placeholder">St Saint Louis 115</string>
     <string name="create_beneficiary_name_label">Name</string>
     <string name="create_beneficiary_name_placeholder">Company X LTD</string>
+    <string name="create_beneficiary_swift_label">Swift Code</string>
+    <string name="create_beneficiary_swift_placeholder">LXUZFRLSXXX</string>
+    <string name="create_beneficiary_iban_label">Iban Code</string>
+    <string name="create_beneficiary_iban_placeholder">PT80 0408 0591 0071 1161 8226 7</string>
 
     <!-- Confirm Beneficiary -->
     <string name="confirm_beneficiary_name">Name</string>

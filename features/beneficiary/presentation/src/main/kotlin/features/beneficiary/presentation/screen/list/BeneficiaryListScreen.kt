@@ -48,7 +48,8 @@ internal class BeneficiaryListScreen : Screen {
             state = state,
             onAddClick = {
                 navigator?.push(ScreenRegistry.get(InvoicerScreen.Beneficiary.Create))
-            }
+            },
+            onItemClick = {}
         )
     }
 
@@ -59,6 +60,7 @@ internal class BeneficiaryListScreen : Screen {
         onClose: () -> Unit,
         onRetry: () -> Unit,
         onAddClick: () -> Unit,
+        onItemClick: (String) -> Unit,
     ) {
         val listState = rememberLazyListState()
 
@@ -93,12 +95,16 @@ internal class BeneficiaryListScreen : Screen {
                 BeneficiaryListMode.Content -> BeneficiaryList(
                     items = state.beneficiaries,
                     listState = listState,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
+                    onItemClick = onItemClick
                 )
 
                 BeneficiaryListMode.Error -> Feedback(
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(it)
                         .padding(Spacing.medium),
                     primaryActionText = stringResource(R.string.beneficiary_list_error_retry),
                     onPrimaryAction = onRetry,

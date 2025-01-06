@@ -5,10 +5,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Business
 import androidx.compose.material.icons.outlined.ChevronRight
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -40,10 +41,10 @@ internal fun BeneficiaryList(
             modifier = modifier,
             state = listState,
         ) {
-            items(
+            itemsIndexed(
                 items = items,
-                key = { it.id }
-            ) { beneficiary ->
+                key = { _, item -> item.id }
+            ) { index, beneficiary ->
                 ListItem(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -70,6 +71,9 @@ internal fun BeneficiaryList(
                         }
                     }
                 )
+                if (index != items.lastIndex) {
+                    HorizontalDivider()
+                }
             }
         }
     }

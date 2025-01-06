@@ -14,3 +14,7 @@ internal data class CreateBeneficiaryState(
 
     val formIsValid = nameIsValid && ibanIsValid && swiftIsValid && bankInfoIsValid
 }
+
+internal sealed interface CreateBeneficiaryEvents {
+
+}

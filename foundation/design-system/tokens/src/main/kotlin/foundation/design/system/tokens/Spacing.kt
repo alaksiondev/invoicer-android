@@ -3,6 +3,7 @@ package foundation.design.system.tokens
 import androidx.compose.ui.unit.dp
 
 object Spacing {
+    val xSmall3 = 2.dp
     val xSmall2 = 4.dp
     val xSmall = 8.dp
     val small = 12.dp

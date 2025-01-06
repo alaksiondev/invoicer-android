@@ -1,20 +1,11 @@
 package features.beneficiary.presentation.screen.create.steps
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,15 +19,14 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.spacer.Spacer
 import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
-import foundation.design.system.tokens.Spacing
+import features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm
 
-internal class BeneficiaryBankInfoStep: Screen {
+internal class BeneficiaryBankInfoStep : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -49,12 +39,11 @@ internal class BeneficiaryBankInfoStep: Screen {
             onAddressChange = screenModel::updateBankAddress,
             onBankNameChange = screenModel::updateBankName,
             onBack = { navigator.pop() },
-            onContinue = { navigator.push(BeneficiaryIbanStep()) },
+            onContinue = { navigator.push(BeneficiaryConfirmationStep()) },
             buttonEnabled = state.bankInfoIsValid
         )
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         address: String,
@@ -68,88 +57,65 @@ internal class BeneficiaryBankInfoStep: Screen {
         val (nameFocus, addressFocus) = FocusRequester.createRefs()
         val keyboard = LocalSoftwareKeyboardController.current
 
-        Scaffold(
-            modifier = Modifier.imePadding(),
-            topBar = {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        BackButton(
-                            onBackClick = onBack
-                        )
-                    }
-                )
-            }
+        BeneficiaryBaseForm(
+            title = stringResource(R.string.create_beneficiary_bank_info_title),
+            buttonText = stringResource(R.string.create_beneficiary_continue_cta),
+            buttonEnabled = buttonEnabled,
+            onBack = onBack,
+            onContinue = {
+                keyboard?.hide()
+                onContinue()
+            },
         ) {
-            Column(
+            Spacer(1f)
+            OutlinedTextField(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(Spacing.medium)
-            ) {
-                Text(
-                    text = stringResource(R.string.create_beneficiary_name_title),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Spacer(1f)
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(nameFocus),
-                    value = bankName,
-                    onValueChange = onBankNameChange,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { addressFocus.requestFocus() }
-                    ),
-                    label = {
-                        Text(
-                            text = stringResource(R.string.create_beneficiary_bank_name_label)
-                        )
-                    },
-                    placeholder = {
-                        Text(
-                            text = stringResource(R.string.create_beneficiary_bank_name_placeholder)
-                        )
-                    }
-                )
-                VerticalSpacer(SpacerSize.Medium)
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(nameFocus),
-                    value = address,
-                    onValueChange = onAddressChange,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { keyboard?.hide() }
-                    ),
-                    label = {
-                        Text(
-                            text = stringResource(R.string.create_beneficiary_bank_address_label)
-                        )
-                    },
-                    placeholder = {
-                        Text(
-                            text = stringResource(R.string.create_beneficiary_bank_address_placeholder)
-                        )
-                    }
-                )
-                Spacer(1f)
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onContinue,
-                    enabled = buttonEnabled
-                ) {
+                    .fillMaxWidth()
+                    .focusRequester(nameFocus),
+                value = bankName,
+                onValueChange = onBankNameChange,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { addressFocus.requestFocus() }
+                ),
+                label = {
                     Text(
-                        text = stringResource(R.string.create_beneficiary_continue_cta)
+                        text = stringResource(R.string.create_beneficiary_bank_name_label)
+                    )
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.create_beneficiary_bank_name_placeholder)
                     )
                 }
-            }
+            )
+            VerticalSpacer(SpacerSize.Medium)
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(addressFocus),
+                value = address,
+                onValueChange = onAddressChange,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { keyboard?.hide() }
+                ),
+                label = {
+                    Text(
+                        text = stringResource(R.string.create_beneficiary_bank_address_label)
+                    )
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.create_beneficiary_bank_address_placeholder)
+                    )
+                }
+            )
+            Spacer(1f)
         }
     }
 }

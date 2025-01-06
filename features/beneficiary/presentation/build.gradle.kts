@@ -22,6 +22,7 @@ dependencies {
 
     // Voyager
     implementation(libs.bundles.voyager)
+    implementation(libs.voyager.transitions)
 
     // Kotlin
     implementation(libs.immutable.collections)

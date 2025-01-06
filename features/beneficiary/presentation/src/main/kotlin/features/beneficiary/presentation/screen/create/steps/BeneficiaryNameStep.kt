@@ -1,20 +1,10 @@
 package features.beneficiary.presentation.screen.create.steps
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,11 +16,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.spacer.Spacer
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
-import foundation.design.system.tokens.Spacing
+import features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm
 
 internal class BeneficiaryNameStep : Screen {
     @Composable
@@ -48,7 +37,6 @@ internal class BeneficiaryNameStep : Screen {
         )
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         name: String,
@@ -59,62 +47,39 @@ internal class BeneficiaryNameStep : Screen {
     ) {
         val keyboard = LocalSoftwareKeyboardController.current
 
-        Scaffold(
-            modifier = Modifier.imePadding(),
-            topBar = {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        BackButton(
-                            onBackClick = onBack
-                        )
-                    }
-                )
-            }
+        BeneficiaryBaseForm(
+            title = stringResource(R.string.create_beneficiary_name_title),
+            buttonText = stringResource(R.string.create_beneficiary_continue_cta),
+            buttonEnabled = buttonEnabled,
+            onContinue = {
+                keyboard?.hide()
+                onContinue()
+            },
+            onBack = onBack
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(Spacing.medium)
-            ) {
-                Text(
-                    text = stringResource(R.string.create_beneficiary_name_title),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Spacer(1f)
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = name,
-                    onValueChange = onNameChange,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { keyboard?.hide() }
-                    ),
-                    placeholder = {
-                        Text(
-                            text = stringResource(R.string.create_beneficiary_name_placeholder)
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.create_beneficiary_name_label)
-                        )
-                    }
-                )
-                Spacer(1f)
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onContinue,
-                    enabled = buttonEnabled
-                ) {
+            Spacer(1f)
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = name,
+                onValueChange = onNameChange,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { keyboard?.hide() }
+                ),
+                placeholder = {
                     Text(
-                        text = stringResource(R.string.create_beneficiary_continue_cta)
+                        text = stringResource(R.string.create_beneficiary_name_placeholder)
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(R.string.create_beneficiary_name_label)
                     )
                 }
-            }
+            )
+            Spacer(1f)
         }
     }
 }

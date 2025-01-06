@@ -1,6 +1,7 @@
 package features.beneficiary.presentation.screen.list.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,12 +10,14 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Business
 import androidx.compose.material.icons.outlined.ChevronRight
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import features.auth.design.system.components.emptystate.EmptyState
@@ -27,6 +30,7 @@ import kotlinx.collections.immutable.ImmutableList
 internal fun BeneficiaryList(
     items: ImmutableList<BeneficiaryModel>,
     listState: LazyListState,
+    isLoadingMore: Boolean,
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -73,6 +77,16 @@ internal fun BeneficiaryList(
                 )
                 if (index != items.lastIndex) {
                     HorizontalDivider()
+                }
+            }
+            if (isLoadingMore) {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
             }
         }

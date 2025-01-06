@@ -39,6 +39,7 @@ dependencies {
     implementation(projects.foundation.designSystem.components)
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
+    implementation(projects.foundation.pagination)
 
     // Feature
     implementation(projects.features.beneficiary.domain)

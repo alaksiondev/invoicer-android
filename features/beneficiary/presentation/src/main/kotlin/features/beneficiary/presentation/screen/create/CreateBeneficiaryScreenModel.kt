@@ -5,7 +5,10 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.repository.BeneficiaryRepository
 import foundation.events.EventAware
 import foundation.events.EventPublisher
+import foundation.network.request.handle
+import foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -18,6 +21,8 @@ internal class CreateBeneficiaryScreenModel(
 
     private val _state = MutableStateFlow(CreateBeneficiaryState())
     val state: StateFlow<CreateBeneficiaryState> = _state
+
+    private var submitJob: Job? = null
 
     fun updateName(value: String) {
         _state.update { oldState ->
@@ -50,8 +55,40 @@ internal class CreateBeneficiaryScreenModel(
     }
 
     fun submit() {
-        screenModelScope.launch(dispatcher) {
-            // TODO
+        submitJob = screenModelScope.launch(dispatcher) {
+            launchRequest {
+                beneficiaryRepository.createBeneficiary(
+                    name = state.value.name,
+                    bankAddress = state.value.bankAddress,
+                    bankName = state.value.bankName,
+                    swift = state.value.swift,
+                    iban = state.value.swift
+                )
+            }.handle(
+                onStart = {
+                    _state.update {
+                        it.copy(isSubmitting = true)
+                    }
+                },
+                onFinish = {
+                    _state.update {
+                        it.copy(isSubmitting = false)
+                    }
+                },
+                onFailure = {
+                    publish(
+                        CreateBeneficiaryEvents.Error(message = it.message.orEmpty())
+                    )
+                },
+                onSuccess = {
+                    publish(CreateBeneficiaryEvents.Success)
+                }
+            )
         }
+    }
+
+    fun cancelSubmit() {
+        submitJob?.cancel()
+        submitJob = null
     }
 }

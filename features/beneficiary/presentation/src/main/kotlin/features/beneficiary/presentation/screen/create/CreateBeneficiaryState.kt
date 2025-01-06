@@ -5,7 +5,8 @@ internal data class CreateBeneficiaryState(
     val iban: String = "",
     val swift: String = "",
     val bankName: String = "",
-    val bankAddress: String = ""
+    val bankAddress: String = "",
+    val isSubmitting: Boolean = false,
 ) {
     val nameIsValid = name.isNotBlank()
     val ibanIsValid = iban.isNotBlank()
@@ -16,5 +17,6 @@ internal data class CreateBeneficiaryState(
 }
 
 internal sealed interface CreateBeneficiaryEvents {
-
+    data object Success : CreateBeneficiaryEvents
+    data class Error(val message: String) : CreateBeneficiaryEvents
 }

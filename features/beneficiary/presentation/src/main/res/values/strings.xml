@@ -35,4 +35,9 @@
     <string name="confirm_beneficiary_bank_name">Bank Name</string>
     <string name="confirm_beneficiary_bank_address">Bank Address</string>
 
+    <!-- Beneficiary Feedback -->
+    <string name="create_success_cta">Continue</string>
+    <string name="create_success_title">Beneficiary Created</string>
+    <string name="create_success_description">New registry is already avaiable for usage</string>
+
 </resources>

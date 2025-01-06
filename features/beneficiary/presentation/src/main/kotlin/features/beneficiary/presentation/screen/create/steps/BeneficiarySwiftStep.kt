@@ -33,7 +33,10 @@ internal class BeneficiarySwiftStep : Screen {
             swift = state.swift,
             onSwiftChange = screenModel::updateSwift,
             buttonEnabled = state.swiftIsValid,
-            onBack = { navigator.pop() },
+            onBack = {
+                screenModel.cancelSubmit()
+                navigator.pop()
+            },
             onContinue = { navigator.push(BeneficiaryIbanStep()) }
         )
     }

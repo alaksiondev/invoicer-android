@@ -41,6 +41,7 @@ internal class BeneficiaryConfirmationStep : Screen {
             name = state.name,
             swift = state.swift,
             iban = state.iban,
+            buttonEnabled = state.isSubmitting.not()
         )
     }
 
@@ -51,6 +52,7 @@ internal class BeneficiaryConfirmationStep : Screen {
         iban: String,
         bankName: String,
         bankAddress: String,
+        buttonEnabled: Boolean,
         onContinue: () -> Unit,
         onBack: () -> Unit,
     ) {
@@ -59,7 +61,7 @@ internal class BeneficiaryConfirmationStep : Screen {
         BeneficiaryBaseForm(
             title = stringResource(R.string.create_beneficiary_confirm_title),
             buttonText = stringResource(R.string.create_beneficiary_submit_cta),
-            buttonEnabled = true,
+            buttonEnabled = buttonEnabled,
             onContinue = onContinue,
             onBack = onBack
         ) {

@@ -31,7 +31,7 @@ internal object WelcomeTab : Tab {
         val callbacks = rememberWelcomeCallbacks(
             onInvoiceClick = {
                 navigator?.push(
-                    ScreenRegistry.get(InvoicerScreen.Invoices)
+                    ScreenRegistry.get(InvoicerScreen.Invoices.List)
                 )
             },
             onBeneficiaryClick = {

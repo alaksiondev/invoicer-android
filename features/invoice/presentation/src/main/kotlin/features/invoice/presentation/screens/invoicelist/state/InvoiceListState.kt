@@ -29,11 +29,22 @@ internal enum class InvoiceListMode {
     Error,
 }
 
-internal data class InvoiceListCallbacks(
-    val onClose: () -> Unit,
-    val onRetry: () -> Unit,
-    val onClickInvoice: (String) -> Unit,
-)
+internal interface InvoiceListCallbacks {
+    fun onClose()
+    fun onRetry()
+    fun onClickInvoice(value: String)
+    fun onCreateInvoiceClick()
+
+    companion object : InvoiceListCallbacks {
+        override fun onClose() = Unit
+
+        override fun onRetry() = Unit
+
+        override fun onClickInvoice(value: String) = Unit
+
+        override fun onCreateInvoiceClick() = Unit
+    }
+}
 
 internal sealed interface InvoiceListEvent {
     data class Error(val message: String) : InvoiceListEvent
@@ -43,13 +54,18 @@ internal sealed interface InvoiceListEvent {
 internal fun rememberInvoiceListCallbacks(
     onClose: () -> Unit,
     onRetry: () -> Unit,
-    onClickInvoice: (String) -> Unit
+    onClickInvoice: (String) -> Unit,
+    onClickCreateInvoice: () -> Unit
 ): InvoiceListCallbacks {
     return remember {
-        InvoiceListCallbacks(
-            onClose = onClose,
-            onRetry = onRetry,
-            onClickInvoice = onClickInvoice
-        )
+        object : InvoiceListCallbacks {
+            override fun onClose() = onClose()
+
+            override fun onRetry() = onRetry()
+
+            override fun onClickInvoice(value: String) = onClickInvoice(value)
+
+            override fun onCreateInvoiceClick() = onClickCreateInvoice()
+        }
     }
 }

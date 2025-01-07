@@ -30,11 +30,7 @@ private fun InvoiceListPreview(
         InvoiceListScreen()
             .StateContent(
                 state = state,
-                callbacks = InvoiceListCallbacks(
-                    onClose = {},
-                    onRetry = {},
-                    onClickInvoice = {}
-                )
+                callbacks = InvoiceListCallbacks
             )
     }
 }

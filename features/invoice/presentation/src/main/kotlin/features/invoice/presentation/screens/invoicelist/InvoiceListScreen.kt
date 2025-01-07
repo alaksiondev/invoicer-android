@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -37,6 +38,7 @@ import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreen
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 import features.invoice.presentation.screens.invoicelist.state.rememberInvoiceListCallbacks
 import foundation.design.system.tokens.Spacing
+import foundation.navigation.InvoicerScreen
 
 internal class InvoiceListScreen : Screen {
 
@@ -49,7 +51,10 @@ internal class InvoiceListScreen : Screen {
         val callbacks = rememberInvoiceListCallbacks(
             onClose = { navigator?.pop() },
             onRetry = { viewModel.loadPage() },
-            onClickInvoice = {}
+            onClickInvoice = {},
+            onClickCreateInvoice = {
+                navigator?.push(ScreenRegistry.get(InvoicerScreen.Invoices.Create))
+            }
         )
 
         LaunchedEffect(Unit) {
@@ -72,12 +77,12 @@ internal class InvoiceListScreen : Screen {
             topBar = {
                 MediumTopAppBar(
                     title = { Text(stringResource(R.string.invoice_list_title)) },
-                    navigationIcon = { CloseButton(onBackClick = callbacks.onClose) },
+                    navigationIcon = { CloseButton(onBackClick = callbacks::onClose) },
                 )
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {}
+                    onClick = callbacks::onCreateInvoiceClick
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Add,
@@ -124,7 +129,7 @@ internal class InvoiceListScreen : Screen {
                         .fillMaxSize()
                         .padding(Spacing.medium),
                     primaryActionText = stringResource(R.string.invoice_list_error_retry),
-                    onPrimaryAction = callbacks.onRetry,
+                    onPrimaryAction = callbacks::onRetry,
                     icon = Icons.Outlined.ErrorOutline,
                     title = stringResource(R.string.invoice_list_error_title),
                     description = stringResource(R.string.invoice_list_error_description)

@@ -7,4 +7,14 @@
     <string name="invoice_list_error_description">Check your connection and try again</string>
     <string name="invoice_list_empty_title">Nothing to see here</string>
     <string name="invoice_list_empty_description">No invoices found</string>
+
+    <!-- Create Invoice -->
+    <string name="invoice_create_continue_cta">Continue</string>
+
+    <!-- Create Sender Company -->
+    <string name="invoice_create_sender_company_title">Sender Company Info</string>
+    <string name="invoice_create_sender_company_name_label">Name</string>
+    <string name="invoice_create_sender_company_address_label">Address</string>
+    <string name="invoice_create_sender_company_name_placeholder">John\'s Pizzaria</string>
+    <string name="invoice_create_sender_company_address_placeholder">St Saint Louis 115</string>
 </resources>

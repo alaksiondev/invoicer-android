@@ -32,7 +32,7 @@ internal class BeneficiaryNameStep : Screen {
             name = state.name,
             onNameChange = screenModel::updateName,
             buttonEnabled = state.nameIsValid,
-            onBack = { navigator.pop() },
+            onBack = { navigator.parent?.pop() },
             onContinue = { navigator.push(BeneficiarySwiftStep()) }
         )
     }

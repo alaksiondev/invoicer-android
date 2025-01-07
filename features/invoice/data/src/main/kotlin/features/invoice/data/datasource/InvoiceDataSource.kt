@@ -1,11 +1,16 @@
 package features.invoice.data.datasource
 
+import features.invoice.data.model.CreateInvoiceRequest
 import features.invoice.data.model.InvoiceListResponse
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
 import io.ktor.http.buildUrl
+import io.ktor.http.contentType
 import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -21,6 +26,10 @@ internal interface InvoiceDataSource {
         senderCompany: String?,
         recipientCompany: String?
     ): InvoiceListResponse
+
+    suspend fun createInvoice(
+        payload: CreateInvoiceRequest
+    ): Unit
 }
 
 internal class InvoiceDataSourceImpl(
@@ -55,6 +64,23 @@ internal class InvoiceDataSourceImpl(
             }
 
             httpWrapper.client.get(url = url).body()
+        }
+    }
+
+    override suspend fun createInvoice(
+        payload: CreateInvoiceRequest
+    ) {
+        withContext(dispatcher) {
+            val url = buildUrl {
+                host = BASE_URL
+                path("/invoice")
+            }
+            httpWrapper.client.post(
+                url = url
+            ) {
+                contentType(ContentType.Application.Json)
+                setBody(payload)
+            }
         }
     }
 }

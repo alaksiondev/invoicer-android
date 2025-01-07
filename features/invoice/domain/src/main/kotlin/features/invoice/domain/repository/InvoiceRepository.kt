@@ -1,5 +1,6 @@
 package features.invoice.domain.repository
 
+import features.invoice.domain.model.CreateInvoiceModel
 import features.invoice.domain.model.InvoiceList
 
 interface InvoiceRepository {
@@ -13,4 +14,8 @@ interface InvoiceRepository {
         senderCompany: String?,
         recipientCompany: String?
     ): InvoiceList
+
+    suspend fun createInvoice(
+        payload: CreateInvoiceModel
+    )
 }

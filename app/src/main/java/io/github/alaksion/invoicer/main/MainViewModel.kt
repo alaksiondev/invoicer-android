@@ -3,7 +3,7 @@ package io.github.alaksion.invoicer.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import foundation.auth.domain.repository.AuthRepository
-import foundation.logger.InvoicerLogger
+import foundation.logger.impl.InvoicerLogger
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.flow.MutableStateFlow

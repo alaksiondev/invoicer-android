@@ -50,6 +50,7 @@ internal class RecipientCompanyScreenModel(
                 manager.recipientCompanyAddress = state.value.address
                 manager.recipientCompanyName = state.value.name
             }
+            publish(RecipientCompanyEvents.Continue)
         }
     }
 }

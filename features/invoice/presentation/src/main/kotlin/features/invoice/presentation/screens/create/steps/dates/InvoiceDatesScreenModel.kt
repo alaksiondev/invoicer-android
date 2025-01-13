@@ -8,6 +8,7 @@ import foundation.events.EventAware
 import foundation.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
@@ -15,20 +16,27 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 internal class InvoiceDatesScreenModel(
-    dateProvider: DateProvider,
+    private val dateProvider: DateProvider,
     private val dispatcher: CoroutineDispatcher,
     private val manager: CreateInvoiceManager,
 ) : ScreenModel, EventAware<InvoiceDateEvents> by EventPublisher() {
 
     private val _state = MutableStateFlow(
-        InvoiceDatesState(
-            dueDate = manager.dueDate,
-            issueDate = manager.issueDate,
-            now = dateProvider.get()
-                .toLocalDateTime(TimeZone.currentSystemDefault())
-                .date
-        )
+        InvoiceDatesState()
     )
+    val state: StateFlow<InvoiceDatesState> = _state
+
+    fun initState() {
+        _state.update {
+            it.copy(
+                dueDate = manager.dueDate,
+                issueDate = manager.issueDate,
+                now = dateProvider.get()
+                    .toLocalDateTime(TimeZone.currentSystemDefault())
+                    .date
+            )
+        }
+    }
 
     fun updateIssueDate(value: LocalDate) {
         _state.update { oldState ->
@@ -52,6 +60,7 @@ internal class InvoiceDatesScreenModel(
                 manager.dueDate = _state.value.dueDate
                 manager.issueDate = _state.value.issueDate
             }
+            publish(InvoiceDateEvents.Continue)
         }
     }
 }

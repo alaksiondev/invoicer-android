@@ -28,6 +28,7 @@ import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreen
 import foundation.events.EventEffect
 
 internal class RecipientCompanyScreen : Screen {
@@ -41,8 +42,8 @@ internal class RecipientCompanyScreen : Screen {
         LaunchedEffect(Unit) { screenModel.initScreen() }
 
         EventEffect(screenModel) {
-            when(it) {
-                RecipientCompanyEvents.Continue -> {}
+            when (it) {
+                RecipientCompanyEvents.Continue -> navigator?.push(InvoiceDatesScreen())
             }
         }
 

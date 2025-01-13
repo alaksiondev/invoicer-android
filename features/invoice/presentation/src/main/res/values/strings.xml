@@ -30,5 +30,7 @@
     <string name="invoice_create_dates_issue_date_label">Issue date</string>
     <string name="invoice_create_dates_due_date_label">Due date</string>
     <string name="invoice_create_dates_change_button">Change</string>
+    <string name="invoice_create_dates_dialog_confirm">Confirm</string>
+    <string name="invoice_create_dates_dialog_cancel">Cancel</string>
 
 </resources>

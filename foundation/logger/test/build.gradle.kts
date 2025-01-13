@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "foundation.logger"
+    namespace = "foundation.logger.test"
 
     buildFeatures {
         buildConfig = true
@@ -11,6 +11,5 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.core)
+    implementation(projects.foundation.logger.impl)
 }

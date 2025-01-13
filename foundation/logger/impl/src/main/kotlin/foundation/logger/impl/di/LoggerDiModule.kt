@@ -1,9 +1,9 @@
-package foundation.logger.di
+package foundation.logger.impl.di
 
 import foundation.logger.BuildConfig
-import foundation.logger.InvoicerLogger
-import foundation.logger.InvoicerLoggerImpl
-import foundation.logger.MutedLogger
+import foundation.logger.impl.InvoicerLogger
+import foundation.logger.impl.InvoicerLoggerImpl
+import foundation.logger.impl.MutedLogger
 import org.koin.dsl.module
 
 val foundationLoggerModule = module {

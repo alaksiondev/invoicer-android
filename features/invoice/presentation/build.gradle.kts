@@ -36,6 +36,7 @@ dependencies {
     implementation(projects.foundation.designSystem.components)
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
+    implementation(projects.foundation.date.impl)
 
     // Feature
     implementation(projects.features.invoice.domain)

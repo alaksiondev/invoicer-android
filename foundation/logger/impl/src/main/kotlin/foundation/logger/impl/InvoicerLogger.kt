@@ -1,4 +1,4 @@
-package foundation.logger
+package foundation.logger.impl
 
 import android.util.Log
 

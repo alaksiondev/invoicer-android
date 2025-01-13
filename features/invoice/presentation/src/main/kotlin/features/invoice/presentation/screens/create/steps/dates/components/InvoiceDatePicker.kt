@@ -22,68 +22,75 @@ internal fun InvoiceDatePicker(
     visibility: DatePickerVisibility,
     dueDate: Long,
     issueDate: Long,
+    now: Long,
     onDismissRequest: () -> Unit,
     onSelectIssueDate: (Long) -> Unit,
     onSelectDueDate: (Long) -> Unit,
 ) {
-    val issueDatePicker = rememberDatePickerState(
-        initialSelectedDateMillis = dueDate
-    )
-    val dueDatePicker = rememberDatePickerState(
-        initialSelectedDateMillis = issueDate
-    )
-
     when (visibility) {
-        DatePickerVisibility.DueDate -> DatePickerDialog(
-            onDismissRequest = {
-                onDismissRequest()
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        issueDatePicker.selectedDateMillis?.let {
-                            onSelectIssueDate(it)
-                            onDismissRequest()
-                        }
-                    }
-                ) {
-                    Text(
-                        text = stringResource(R.string.invoice_create_dates_dialog_confirm)
-                    )
-                }
-
-            }
-        ) {
-            DatePicker(
-                state = dueDatePicker
+        DatePickerVisibility.DueDate -> {
+            val dueDatePicker = rememberDatePickerState(
+                initialSelectedDateMillis = dueDate,
+                initialDisplayedMonthMillis = now
             )
+
+            DatePickerDialog(
+                onDismissRequest = {
+                    onDismissRequest()
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            dueDatePicker.selectedDateMillis?.let {
+                                onSelectDueDate(it)
+                                onDismissRequest()
+                            }
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.invoice_create_dates_dialog_confirm)
+                        )
+                    }
+
+                }
+            ) {
+                DatePicker(
+                    state = dueDatePicker
+                )
+            }
         }
 
-        DatePickerVisibility.IssueDate -> DatePickerDialog(
-            onDismissRequest = {
-                onDismissRequest()
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        issueDatePicker.selectedDateMillis?.let {
-                            onSelectDueDate(it)
-                            onDismissRequest()
-                        }
-                    }
-                ) {
-                    Text(
-                        text = stringResource(R.string.invoice_create_dates_dialog_confirm)
-                    )
-                }
-            }
-        ) {
-            DatePicker(
-                state = issueDatePicker
+        DatePickerVisibility.IssueDate -> {
+            val issueDatePicker = rememberDatePickerState(
+                initialSelectedDateMillis = issueDate,
+                initialDisplayedMonthMillis = now
             )
+
+            DatePickerDialog(
+                onDismissRequest = {
+                    onDismissRequest()
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            issueDatePicker.selectedDateMillis?.let {
+                                onSelectIssueDate(it)
+                                onDismissRequest()
+                            }
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.invoice_create_dates_dialog_confirm)
+                        )
+                    }
+                }
+            ) {
+                DatePicker(
+                    state = issueDatePicker
+                )
+            }
         }
 
         DatePickerVisibility.None -> {}
     }
-
 }

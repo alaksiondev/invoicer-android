@@ -4,8 +4,6 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.invoice.presentation.screens.create.CreateInvoiceManager
 import foundation.date.impl.DateProvider
-import foundation.date.impl.toEpochMilliseconds
-import foundation.date.impl.toLocalDate
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,8 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 internal class InvoiceDatesScreenModel(
     private val dateProvider: DateProvider,
@@ -30,11 +26,9 @@ internal class InvoiceDatesScreenModel(
     fun initState() {
         _state.update {
             it.copy(
-                dueDate = manager.dueDate.toEpochMilliseconds(),
-                issueDate = manager.issueDate.toEpochMilliseconds(),
-                now = dateProvider.get()
-                    .toLocalDateTime(TimeZone.currentSystemDefault())
-                    .date
+                dueDate = manager.dueDate,
+                issueDate = manager.issueDate,
+                now = dateProvider.get().toEpochMilliseconds()
             )
         }
     }
@@ -58,8 +52,8 @@ internal class InvoiceDatesScreenModel(
     fun submit() {
         screenModelScope.launch(dispatcher) {
             if (_state.value.formValid) {
-                manager.dueDate = _state.value.dueDate.toLocalDate()
-                manager.issueDate = _state.value.issueDate.toLocalDate()
+                manager.dueDate = _state.value.dueDate
+                manager.issueDate = _state.value.issueDate
             }
             publish(InvoiceDateEvents.Continue)
         }

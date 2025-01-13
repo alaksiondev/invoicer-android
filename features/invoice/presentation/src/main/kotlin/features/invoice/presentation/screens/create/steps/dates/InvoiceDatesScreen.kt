@@ -3,7 +3,6 @@ package features.invoice.presentation.screens.create.steps.dates
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
@@ -30,7 +29,6 @@ import foundation.events.EventEffect
 
 internal class InvoiceDatesScreen : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -94,7 +92,9 @@ internal class InvoiceDatesScreen : Screen {
                 },
                 trailingContent = {
                     TextButton(
-                        onClick = {}
+                        onClick = {
+                            datePickerVisibility = DatePickerVisibility.IssueDate
+                        }
                     ) {
                         Text(stringResource(R.string.invoice_create_dates_change_button))
                     }
@@ -120,7 +120,7 @@ internal class InvoiceDatesScreen : Screen {
                 trailingContent = {
                     TextButton(
                         onClick = {
-
+                            datePickerVisibility = DatePickerVisibility.DueDate
                         }
                     ) {
                         Text(stringResource(R.string.invoice_create_dates_change_button))
@@ -137,6 +137,7 @@ internal class InvoiceDatesScreen : Screen {
             issueDate = state.issueDate,
             onSelectIssueDate = onSetIssueDate,
             onSelectDueDate = onSetDueDate,
+            now = state.now
         )
     }
 }

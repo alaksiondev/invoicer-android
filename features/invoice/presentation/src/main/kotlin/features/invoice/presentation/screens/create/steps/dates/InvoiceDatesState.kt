@@ -1,18 +1,18 @@
 package features.invoice.presentation.screens.create.steps.dates
 
 import foundation.date.impl.toLocalDate
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
 
 internal data class InvoiceDatesState(
     val dueDate: Long = 0,
     val issueDate: Long = 0,
-    private val now: LocalDate = LocalDate(1, 1, 1)
+    val now: Long = 0
 ) {
-    val parsedDueDate = dueDate.toLocalDate()
-    val parsedIssueDate = dueDate.toLocalDate()
+    val parsedDueDate = dueDate.toLocalDate(TimeZone.UTC)
+    val parsedIssueDate = issueDate.toLocalDate(TimeZone.UTC)
 
-    val dueDateValid = parsedDueDate > parsedIssueDate
-    val issueDateValid = parsedIssueDate > now
+    val issueDateValid = issueDate > now
+    val dueDateValid = dueDate > issueDate
     val formValid = dueDateValid && issueDateValid
 }
 

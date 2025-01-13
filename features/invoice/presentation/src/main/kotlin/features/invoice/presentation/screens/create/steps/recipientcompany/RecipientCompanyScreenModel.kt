@@ -1,4 +1,4 @@
-package features.invoice.presentation.screens.create.steps.sendercompany
+package features.invoice.presentation.screens.create.steps.recipientcompany
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -11,19 +11,19 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class SenderCompanyScreenModel(
+internal class RecipientCompanyScreenModel(
     private val manager: CreateInvoiceManager,
-    private val dispatcher: CoroutineDispatcher,
-) : ScreenModel, EventAware<SenderCompanyEvents> by EventPublisher() {
+    private val dispatcher: CoroutineDispatcher
+) : ScreenModel, EventAware<RecipientCompanyEvents> by EventPublisher() {
 
-    private val _state = MutableStateFlow(SenderCompanyState())
-    val state: StateFlow<SenderCompanyState> = _state
+    private val _state = MutableStateFlow(RecipientCompanyState())
+    val state: StateFlow<RecipientCompanyState> = _state
 
     fun initScreen() {
         _state.update { oldState ->
             oldState.copy(
-                name = manager.senderCompanyName,
-                address = manager.senderCompanyAddress
+                name = manager.recipientCompanyName,
+                address = manager.recipientCompanyAddress
             )
         }
     }
@@ -47,10 +47,9 @@ internal class SenderCompanyScreenModel(
     fun submit() {
         screenModelScope.launch(dispatcher) {
             if (state.value.isFormValid) {
-                manager.senderCompanyAddress = state.value.address
-                manager.senderCompanyName = state.value.name
+                manager.recipientCompanyAddress = state.value.address
+                manager.recipientCompanyName = state.value.name
             }
-            publish(SenderCompanyEvents.Continue)
         }
     }
 }

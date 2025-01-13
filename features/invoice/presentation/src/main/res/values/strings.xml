@@ -17,4 +17,11 @@
     <string name="invoice_create_sender_company_address_label">Address</string>
     <string name="invoice_create_sender_company_name_placeholder">John\'s Pizzaria</string>
     <string name="invoice_create_sender_company_address_placeholder">St Saint Louis 115</string>
+
+    <!-- Create Recipient Company -->
+    <string name="invoice_create_recipient_company_title">Recipient Company Info</string>
+    <string name="invoice_create_recipient_company_name_label">Name</string>
+    <string name="invoice_create_recipient_company_address_label">Address</string>
+    <string name="invoice_create_recipient_company_name_placeholder">John\'s Pizzaria</string>
+    <string name="invoice_create_recipient_company_address_placeholder">St Saint Louis 115</string>
 </resources>

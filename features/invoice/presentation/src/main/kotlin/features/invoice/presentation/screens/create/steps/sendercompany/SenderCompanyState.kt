@@ -10,6 +10,10 @@ internal data class SenderCompanyState(
     val isFormValid = name.isNotBlank() && address.isNotBlank()
 }
 
+internal enum class SenderCompanyEvents {
+    Continue
+}
+
 internal interface SenderCompanyCallbacks {
     fun onBack()
     fun onSubmit()

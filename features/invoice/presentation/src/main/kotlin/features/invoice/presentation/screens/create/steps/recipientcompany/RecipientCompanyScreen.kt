@@ -1,4 +1,4 @@
-package features.invoice.presentation.screens.create.steps.sendercompany
+package features.invoice.presentation.screens.create.steps.recipientcompany
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,50 +28,48 @@ import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
-import features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreen
 import foundation.events.EventEffect
 
-internal class SenderCompanyScreen : Screen {
+internal class RecipientCompanyScreen : Screen {
 
     @Composable
     override fun Content() {
-        val screenModel = koinScreenModel<SenderCompanyScreenModel>()
+        val screenModel = koinScreenModel<RecipientCompanyScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
-
-        val callbacks = rememberSenderCompanyCallbacks(
-            onBack = { navigator?.parent?.pop() },
-            onUpdateAddress = screenModel::updateAddress,
-            onUpdateName = screenModel::updateName,
-            onSubmit = screenModel::submit
-        )
 
         LaunchedEffect(Unit) { screenModel.initScreen() }
 
         EventEffect(screenModel) {
-            when (it) {
-                SenderCompanyEvents.Continue -> navigator?.push(RecipientCompanyScreen())
+            when(it) {
+                RecipientCompanyEvents.Continue -> {}
             }
         }
 
         StateContent(
             state = state,
-            callbacks = callbacks
+            onContinue = screenModel::submit,
+            onBack = { navigator?.pop() },
+            onUpdateAddress = screenModel::updateAddress,
+            onUpdateName = screenModel::updateName
         )
     }
 
     @Composable
     fun StateContent(
-        state: SenderCompanyState,
-        callbacks: SenderCompanyCallbacks,
+        state: RecipientCompanyState,
+        onContinue: () -> Unit,
+        onBack: () -> Unit,
+        onUpdateName: (String) -> Unit,
+        onUpdateAddress: (String) -> Unit,
     ) {
         val (nameRef, addressRef) = FocusRequester.createRefs()
         val keyboard = LocalSoftwareKeyboardController.current
 
         CreateInvoiceBaseForm(
-            title = stringResource(R.string.invoice_create_sender_company_title),
-            onBack = callbacks::onBack,
-            onContinue = callbacks::onSubmit,
+            title = stringResource(R.string.invoice_create_recipient_company_title),
+            onBack = onBack,
+            onContinue = onContinue,
             buttonEnabled = state.isFormValid,
             buttonText = stringResource(R.string.invoice_create_continue_cta)
         ) {
@@ -81,7 +79,7 @@ internal class SenderCompanyScreen : Screen {
                     .fillMaxWidth()
                     .focusRequester(nameRef),
                 value = state.name,
-                onValueChange = callbacks::updateName,
+                onValueChange = onUpdateName,
                 maxLines = 1,
                 leadingIcon = {
                     Icon(
@@ -100,14 +98,14 @@ internal class SenderCompanyScreen : Screen {
                 placeholder = {
                     Text(
                         text = stringResource(
-                            R.string.invoice_create_sender_company_name_placeholder
+                            R.string.invoice_create_recipient_company_name_placeholder
                         )
                     )
                 },
                 label = {
                     Text(
                         text = stringResource(
-                            R.string.invoice_create_sender_company_name_label
+                            R.string.invoice_create_recipient_company_name_label
                         )
                     )
                 }
@@ -118,7 +116,7 @@ internal class SenderCompanyScreen : Screen {
                     .fillMaxWidth()
                     .focusRequester(addressRef),
                 value = state.address,
-                onValueChange = callbacks::updateAddress,
+                onValueChange = onUpdateAddress,
                 maxLines = 1,
                 leadingIcon = {
                     Icon(
@@ -144,7 +142,7 @@ internal class SenderCompanyScreen : Screen {
                 label = {
                     Text(
                         text = stringResource(
-                            R.string.invoice_create_sender_company_address_label
+                            R.string.invoice_create_recipient_company_address_placeholder
                         )
                     )
                 }

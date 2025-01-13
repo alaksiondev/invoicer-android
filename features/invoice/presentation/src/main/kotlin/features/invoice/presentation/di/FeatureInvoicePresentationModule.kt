@@ -26,7 +26,7 @@ val featureInvoicePresentationModule = module {
     factory {
         RecipientCompanyScreenModel(
             manager = get(),
-            dispatcher = get()
+            dispatcher = Dispatchers.Default
         )
     }
 

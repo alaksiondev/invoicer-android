@@ -1,6 +1,6 @@
 package features.invoice.domain.model
 
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Instant
 
 data class CreateInvoiceModel(
     val externalId: String,
@@ -8,8 +8,8 @@ data class CreateInvoiceModel(
     val senderCompanyAddress: String,
     val recipientCompanyName: String,
     val recipientCompanyAddress: String,
-    val issueDate: LocalDate,
-    val dueDate: LocalDate,
+    val issueDate: Instant,
+    val dueDate: Instant,
     val beneficiaryId: String,
     val intermediaryId: String,
     val activities: List<CreateInvoiceActivityModel> = listOf()

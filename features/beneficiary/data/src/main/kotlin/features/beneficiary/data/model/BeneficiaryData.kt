@@ -1,6 +1,6 @@
 package features.beneficiary.data.model
 
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,7 +10,7 @@ internal data class BeneficiaryData(
     val swift: String,
     val bankName: String,
     val bankAddress: String,
-    val createdAt: LocalDate,
-    val updatedAt: LocalDate,
+    val createdAt: Instant,
+    val updatedAt: Instant,
     val id: String,
 )

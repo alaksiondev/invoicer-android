@@ -1,7 +1,7 @@
 package features.invoice.data.model
 
 import features.invoice.domain.model.CreateInvoiceModel
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,8 +11,8 @@ internal data class CreateInvoiceRequest(
     val senderCompanyAddress: String,
     val recipientCompanyName: String,
     val recipientCompanyAddress: String,
-    val issueDate: LocalDate,
-    val dueDate: LocalDate,
+    val issueDate: Instant,
+    val dueDate: Instant,
     val beneficiaryId: String,
     val intermediaryId: String,
     val activities: List<CreateInvoiceActivityRequest> = listOf()

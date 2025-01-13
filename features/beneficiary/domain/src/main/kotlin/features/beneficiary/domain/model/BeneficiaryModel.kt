@@ -1,6 +1,6 @@
 package features.beneficiary.domain.model
 
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Instant
 
 data class BeneficiaryModel(
     val name: String,
@@ -9,6 +9,6 @@ data class BeneficiaryModel(
     val bankName: String,
     val bankAddress: String,
     val id: String,
-    val createdAt: LocalDate,
-    val updatedAt: LocalDate,
+    val createdAt: Instant,
+    val updatedAt: Instant,
 )

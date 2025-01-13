@@ -14,7 +14,8 @@ import features.invoice.presentation.di.featureInvoicePresentationModule
 import features.invoice.presentation.navigation.invoiceScreens
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
-import foundation.logger.di.foundationLoggerModule
+import foundation.date.impl.di.foundationDateModule
+import foundation.logger.impl.di.foundationLoggerModule
 import foundation.network.client.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
@@ -46,6 +47,7 @@ class InvoicerApplication : Application() {
                 foundationAuthDataModule,
                 homePresentationDiModule,
                 foundationLoggerModule,
+                foundationDateModule,
                 featureInvoiceDataModule,
                 featureInvoicePresentationModule,
                 featureBeneficiaryDataModule,

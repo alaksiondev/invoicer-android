@@ -43,7 +43,7 @@ internal class BeneficiaryScreenModel(
                             paginationEnabled = it.nextPage != null
 
                             _state.value = _state.value.copy(
-                                beneficiaries = (_state.value.beneficiaries + it.items).toPersistentList(),
+                                beneficiaries = it.items.toPersistentList(),
                                 mode = BeneficiaryListMode.Content
                             )
                             it.nextPage?.let { nextPage ->

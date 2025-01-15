@@ -44,7 +44,13 @@ internal class BeneficiaryListScreen : Screen {
         val callbacks = rememberBeneficiaryListCallbacks(
             onClose = { navigator?.pop() },
             onRetry = viewModel::loadPage,
-            onCreate = { navigator?.push(ScreenRegistry.get(InvoicerScreen.Beneficiary.Create)) },
+            onCreate = {
+                navigator?.push(
+                    ScreenRegistry.get(
+                        InvoicerScreen.Beneficiary.Create
+                    )
+                )
+            },
             onItemClick = { }
         )
 

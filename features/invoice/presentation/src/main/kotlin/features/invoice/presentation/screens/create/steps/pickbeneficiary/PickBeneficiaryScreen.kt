@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -25,6 +26,8 @@ import features.auth.design.system.components.LoadingState
 import features.auth.design.system.components.feedback.Feedback
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import foundation.events.EventEffect
+import foundation.navigation.InvoicerScreen
 
 internal class PickBeneficiaryScreen : Screen {
 
@@ -35,6 +38,18 @@ internal class PickBeneficiaryScreen : Screen {
         val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit) { screenModel.initState() }
+
+        EventEffect(screenModel) {
+            when (it) {
+                PickBeneficiaryEvents.StartNewBeneficiary -> navigator?.push(
+                    ScreenRegistry.get(
+                        InvoicerScreen.Beneficiary.Create
+                    )
+                )
+
+                PickBeneficiaryEvents.Continue -> Unit
+            }
+        }
 
         StateContent(
             state = state,

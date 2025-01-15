@@ -3,7 +3,6 @@ package features.home.presentation.tabs.welcome.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowOutward
@@ -69,24 +66,26 @@ internal fun WelcomeActions(
             WelcomeItems.Beneficiary to onBeneficiaryClick
         )
     }
-    val scrollState = rememberScrollState()
 
     Row(
-        modifier = modifier.horizontalScroll(scrollState),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         items.forEach { (item, onClick) ->
             Card(
                 modifier = Modifier
-                    .widthIn(min = CardSize)
+                    .weight(1f)
                     .clickable(
                         onClick = onClick
                     )
             ) {
                 Column(
-                    modifier = Modifier.padding(Spacing.medium),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.xSmall),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
                         modifier = Modifier
@@ -103,6 +102,7 @@ internal fun WelcomeActions(
                     }
                     Text(
                         text = stringResource(item.text),
+                        style = MaterialTheme.typography.titleSmall
                     )
                 }
             }

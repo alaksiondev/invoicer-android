@@ -24,6 +24,7 @@ import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.dates.components.DatePickerVisibility
 import features.invoice.presentation.screens.create.steps.dates.components.InvoiceDatePicker
+import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreen
 import foundation.date.impl.defaultFormat
 import foundation.events.EventEffect
 
@@ -37,7 +38,7 @@ internal class InvoiceDatesScreen : Screen {
 
         EventEffect(screenModel) {
             when (it) {
-                InvoiceDateEvents.Continue -> {}
+                InvoiceDateEvents.Continue -> navigator?.push(PickBeneficiaryScreen())
             }
         }
 
@@ -69,7 +70,7 @@ internal class InvoiceDatesScreen : Screen {
             title = stringResource(R.string.invoice_create_dates_title),
             onBack = onBack,
             onContinue = onContinue,
-            buttonEnabled = false,
+            buttonEnabled = state.formValid,
             buttonText = stringResource(R.string.invoice_create_continue_cta)
         ) {
             Spacer(1f)

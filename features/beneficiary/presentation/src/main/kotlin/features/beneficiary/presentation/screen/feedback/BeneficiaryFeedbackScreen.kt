@@ -38,8 +38,8 @@ internal class BeneficiaryFeedbackScreen(
 
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.current
-        StateContent(onClearFlow = { navigator?.popAll() })
+        val navigator = LocalNavigator.current?.parent
+        StateContent(onClearFlow = { navigator?.pop() })
     }
 
     @Composable

@@ -2,6 +2,7 @@ package features.invoice.presentation.di
 
 import features.invoice.presentation.screens.create.CreateInvoiceManager
 import features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreenModel
+import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreenModel
 import features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreenModel
 import features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreenModel
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
@@ -35,6 +36,14 @@ val featureInvoicePresentationModule = module {
             dispatcher = Dispatchers.Default,
             manager = get(),
             dateProvider = get()
+        )
+    }
+
+    factory {
+        PickBeneficiaryScreenModel(
+            createInvoiceManager = get(),
+            dispatcher = Dispatchers.Default,
+            beneficiaryRepository = get()
         )
     }
 

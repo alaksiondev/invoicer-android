@@ -15,6 +15,9 @@ internal class CreateInvoiceManager(
     var issueDate = dateProvider.get().toEpochMilliseconds()
     var dueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
 
+    var beneficiaryId: String = ""
+    var beneficiaryName: String = ""
+
     fun clear() {
         senderCompanyAddress = ""
         senderCompanyName = ""
@@ -22,5 +25,7 @@ internal class CreateInvoiceManager(
         recipientCompanyAddress = ""
         dueDate = dateProvider.get().toEpochMilliseconds()
         issueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
+        beneficiaryId = ""
+        beneficiaryName = ""
     }
 }

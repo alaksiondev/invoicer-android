@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,9 +30,12 @@ import features.auth.design.system.components.buttons.CloseButton
 import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.list.components.BeneficiaryList
+import features.beneficiary.publisher.NewBeneficiaryPublisher
 import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
 import foundation.navigation.InvoicerScreen
 import foundation.pagination.LazyListPaginationEffect
+import org.koin.mp.KoinPlatform.getKoin
 
 internal class BeneficiaryListScreen : Screen {
 
@@ -39,6 +43,7 @@ internal class BeneficiaryListScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<BeneficiaryScreenModel>()
+        val newBeneficiaryPublisher by remember { getKoin().inject<NewBeneficiaryPublisher>() }
         val state by viewModel.state.collectAsStateWithLifecycle()
 
         val callbacks = rememberBeneficiaryListCallbacks(
@@ -55,6 +60,10 @@ internal class BeneficiaryListScreen : Screen {
         )
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
+
+        EventEffect(newBeneficiaryPublisher) {
+            viewModel.loadPage(force = true)
+        }
 
         StateContent(
             state = state,

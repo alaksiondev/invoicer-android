@@ -61,4 +61,5 @@ dependencies {
     implementation(projects.features.beneficiary.data)
     implementation(projects.features.beneficiary.domain)
     implementation(projects.features.beneficiary.presentation)
+    implementation(projects.features.beneficiary.publisher)
 }

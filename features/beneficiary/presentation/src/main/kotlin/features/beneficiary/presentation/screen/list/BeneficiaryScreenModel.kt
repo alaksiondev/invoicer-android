@@ -27,8 +27,10 @@ internal class BeneficiaryScreenModel(
     private val _state = MutableStateFlow(BeneficiaryListState())
     val state: StateFlow<BeneficiaryListState> = _state
 
-    fun loadPage() {
-        if (isFirstPageLoaded.not()) {
+    fun loadPage(
+        force: Boolean = false
+    ) {
+        if (isFirstPageLoaded.not() || force) {
             screenModelScope.launch(dispatcher) {
                 launchRequest { getBeneficiaries() }
                     .handle(

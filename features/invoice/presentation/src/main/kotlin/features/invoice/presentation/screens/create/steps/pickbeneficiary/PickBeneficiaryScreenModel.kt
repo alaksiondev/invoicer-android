@@ -105,6 +105,42 @@ internal class PickBeneficiaryScreenModel(
         }
     }
 
+    fun refreshBeneficiaries() {
+        screenModelScope.launch(dispatcher) {
+            // No scrolling on this page yet
+            launchRequest {
+                beneficiaryRepository.getBeneficiaries(
+                    page = 0,
+                    limit = 100
+                )
+            }.handle(
+                onStart = {
+                    _state.update {
+                        it.copy(
+                            uiMode = PickBeneficiaryUiMode.Loading
+                        )
+                    }
+                },
+                onFinish = { /* no op*/ },
+                onSuccess = { data ->
+                    _state.update {
+                        it.copy(
+                            uiMode = PickBeneficiaryUiMode.Content,
+                            beneficiaries = data.items.toPersistentList()
+                        )
+                    }
+                },
+                onFailure = {
+                    _state.update {
+                        it.copy(
+                            uiMode = PickBeneficiaryUiMode.Error
+                        )
+                    }
+                }
+            )
+        }
+    }
+
     private suspend fun submitNewBeneficiary() {
         publish(PickBeneficiaryEvents.StartNewBeneficiary)
     }

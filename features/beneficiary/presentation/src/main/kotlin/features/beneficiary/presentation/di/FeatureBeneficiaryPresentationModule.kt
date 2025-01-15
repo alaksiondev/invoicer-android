@@ -16,7 +16,8 @@ val featureBeneficiaryPresentationModule = module {
     factory {
         CreateBeneficiaryScreenModel(
             beneficiaryRepository = get(),
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            newBeneficiaryPublisher = get()
         )
     }
 }

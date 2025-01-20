@@ -1,8 +1,9 @@
-package features.beneficiary.domain.repository
+package features.intermediary.domain.repository
 
-import features.beneficiary.domain.model.BeneficiariesModel
+import features.intermediary.domain.model.IntermediaryModel
 
-interface BeneficiaryRepository {
+interface IntermediaryRepository {
+
     suspend fun createIntermediary(
         name: String,
         swift: String,
@@ -14,5 +15,5 @@ interface BeneficiaryRepository {
     suspend fun getBeneficiaries(
         page: Long,
         limit: Long
-    ): BeneficiariesModel
+    ): List<IntermediaryModel>
 }

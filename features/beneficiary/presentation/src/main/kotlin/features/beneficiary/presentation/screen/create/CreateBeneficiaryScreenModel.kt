@@ -59,7 +59,7 @@ internal class CreateBeneficiaryScreenModel(
     fun submit() {
         submitJob = screenModelScope.launch(dispatcher) {
             launchRequest {
-                beneficiaryRepository.createBeneficiary(
+                beneficiaryRepository.createIntermediary(
                     name = state.value.name,
                     bankAddress = state.value.bankAddress,
                     bankName = state.value.bankName,

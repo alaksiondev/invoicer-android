@@ -9,7 +9,7 @@ internal class BeneficiaryRepositoryImpl(
     private val dataSource: BeneficiaryRemoteDataSource
 ) : BeneficiaryRepository {
 
-    override suspend fun createBeneficiary(
+    override suspend fun createIntermediary(
         name: String,
         swift: String,
         iban: String,

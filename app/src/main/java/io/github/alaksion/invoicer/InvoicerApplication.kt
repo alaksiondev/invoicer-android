@@ -4,7 +4,7 @@ import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
-import features.beneficiary.data.di.featureBeneficiaryDataModule
+import features.intermediary.data.di.featureIntermediaryDataModule
 import features.beneficiary.presentation.di.featureBeneficiaryPresentationModule
 import features.beneficiary.presentation.navigation.beneficiaryScreens
 import features.beneficiary.publisher.di.beneficiaryPublisherModule
@@ -51,7 +51,7 @@ class InvoicerApplication : Application() {
                 foundationDateModule,
                 featureInvoiceDataModule,
                 featureInvoicePresentationModule,
-                featureBeneficiaryDataModule,
+                featureIntermediaryDataModule,
                 featureBeneficiaryPresentationModule,
                 beneficiaryPublisherModule
             )

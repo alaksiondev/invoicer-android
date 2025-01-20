@@ -22,6 +22,14 @@ internal class InvoiceActivitiesScreenModel(
     private val _state = MutableStateFlow(InvoiceActivitiesState())
     val state: StateFlow<InvoiceActivitiesState> = _state
 
+    fun initState() {
+        _state.update {
+            it.copy(
+                activities = createInvoiceManager.activities.toPersistentList()
+            )
+        }
+    }
+
     fun updateFormDescription(description: String) {
         _state.update { oldState ->
             oldState.copy(

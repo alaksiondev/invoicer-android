@@ -11,6 +11,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheet
@@ -35,9 +37,14 @@ internal class InvoiceActivitiesScreen : Screen {
     override fun Content() {
         val screenModel = koinScreenModel<InvoiceActivitiesScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
         val snackbarState = remember { SnackbarHostState() }
         val messages = rememberSnackMessages()
         val scope = rememberCoroutineScope()
+
+        LaunchedEffect(Unit) {
+            screenModel.initState()
+        }
 
         EventEffect(screenModel) {
             when (it) {
@@ -60,7 +67,9 @@ internal class InvoiceActivitiesScreen : Screen {
             onClearForm = screenModel::clearForm,
             onAddActivity = screenModel::addActivity,
             snackbarHostState = snackbarState,
-            onDelete = screenModel::removeActivity
+            onDelete = screenModel::removeActivity,
+            onContinue = {},
+            onBack = { navigator?.pop() }
         )
     }
 
@@ -75,6 +84,8 @@ internal class InvoiceActivitiesScreen : Screen {
         onDelete: (String) -> Unit,
         onClearForm: () -> Unit,
         onAddActivity: () -> Unit,
+        onBack: () -> Unit,
+        onContinue: () -> Unit,
     ) {
         val sheetState = rememberModalBottomSheetState()
         var showSheet by remember {
@@ -87,8 +98,8 @@ internal class InvoiceActivitiesScreen : Screen {
             buttonText = stringResource(R.string.invoice_create_continue_cta),
             buttonEnabled = state.continueEnabled,
             snackbarState = snackbarHostState,
-            onBack = {},
-            onContinue = {}
+            onBack = onBack,
+            onContinue = onContinue
         ) {
             LazyColumn(
                 modifier = Modifier

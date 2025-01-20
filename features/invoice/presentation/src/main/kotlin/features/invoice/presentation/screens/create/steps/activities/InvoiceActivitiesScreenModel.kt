@@ -41,26 +41,22 @@ internal class InvoiceActivitiesScreenModel(
     }
 
     fun updateFormQuantity(quantity: String) {
-        quantity.toIntOrNull()?.let {
-            _state.update { oldState ->
-                oldState.copy(
-                    formState = oldState.formState.copy(
-                        quantity = quantity
-                    )
+        _state.update { oldState ->
+            oldState.copy(
+                formState = oldState.formState.copy(
+                    quantity = quantity
                 )
-            }
+            )
         }
     }
 
     fun updateFormUnitPrice(unitPrice: String) {
-        unitPrice.toLongOrNull()?.let {
-            _state.update { oldState ->
-                oldState.copy(
-                    formState = oldState.formState.copy(
-                        unitPrice = unitPrice
-                    )
+        _state.update { oldState ->
+            oldState.copy(
+                formState = oldState.formState.copy(
+                    unitPrice = unitPrice
                 )
-            }
+            )
         }
     }
 
@@ -73,16 +69,16 @@ internal class InvoiceActivitiesScreenModel(
     }
 
     fun addActivity() {
-        val unitPrice = _state.value.formState.unitPrice.toLongOrNull() ?: 0
-        val quantity = _state.value.formState.quantity.toIntOrNull() ?: 0
-
         screenModelScope.launch(dispatcher) {
+            val unitPrice = _state.value.formState.unitPriceParsed
+            val quantity = _state.value.formState.quantityParsed
+
             if (unitPrice <= 0) {
                 publish(InvoiceActivitiesEvent.ActivityUnitPriceError)
                 return@launch
             }
 
-            if (quantity <= 0 || quantity > 100) {
+            if (quantity !in 1..100) {
                 publish(InvoiceActivitiesEvent.ActivityQuantityError)
                 return@launch
             }

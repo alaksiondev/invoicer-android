@@ -81,7 +81,9 @@ internal fun AddActivityBottomSheet(
                     .focusRequester(unitPriceFocus),
                 maxLines = 1,
                 value = formState.unitPrice,
-                onValueChange = onChangeUnitPrice,
+                onValueChange = { fieldValue ->
+                    onChangeUnitPrice(fieldValue.filter { it.isDigit() })
+                },
                 keyboardActions = KeyboardActions(
                     onNext = { quantityFocus.requestFocus() }
                 ),
@@ -109,7 +111,9 @@ internal fun AddActivityBottomSheet(
             OutlinedTextField(
                 maxLines = 1,
                 value = formState.quantity,
-                onValueChange = onChangeQuantity,
+                onValueChange = { fieldValue ->
+                    onChangeQuantity(fieldValue.filter { it.isDigit() })
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(quantityFocus),

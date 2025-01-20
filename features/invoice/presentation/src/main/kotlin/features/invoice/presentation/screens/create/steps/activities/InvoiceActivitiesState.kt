@@ -16,8 +16,13 @@ internal data class AddActivityFormState(
     val unitPrice: String = "",
     val quantity: String = ""
 ) {
+    val unitPriceParsed = unitPrice.toLongOrNull() ?: 0
+    val quantityParsed = quantity.toIntOrNull() ?: 0
+
     val formButtonEnabled =
-        description.isNotEmpty() && unitPrice.isNotEmpty() && quantity.isNotEmpty()
+        description.isNotEmpty() &&
+                unitPriceParsed > 0 &&
+                (quantityParsed in 1..100)
 }
 
 sealed interface InvoiceActivitiesEvent {

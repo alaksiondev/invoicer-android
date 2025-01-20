@@ -27,6 +27,7 @@ import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.publisher.NewBeneficiaryPublisher
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen
 import foundation.events.EventEffect
 import foundation.navigation.InvoicerScreen
 import org.koin.mp.KoinPlatform.getKoin
@@ -50,7 +51,7 @@ internal class PickBeneficiaryScreen : Screen {
                     )
                 )
 
-                PickBeneficiaryEvents.Continue -> Unit
+                PickBeneficiaryEvents.Continue -> navigator?.push(InvoiceActivitiesScreen())
             }
         }
 

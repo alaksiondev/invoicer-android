@@ -40,4 +40,10 @@
     <string name="invoice_create_pick_beneficiary_retry_cta">Try again</string>
     <string name="invoice_create_pick_beneficiary_add_new">New Beneficiary</string>
 
+    <!-- Activites -->
+    <string name="invoice_create_activity_title">Invoice activities</string>
+    <string name="invoice_create_activity_list_quantity">Qtd</string>
+    <string name="invoice_create_activity_list_unitprice">Unit price</string>
+    <string name="invoice_create_activity_list_description">Description</string>
+    <string name="invoice_create_activity_add_cta">Add activity</string>
 </resources>

@@ -50,7 +50,10 @@ internal class PickBeneficiaryScreenModel(
                         _state.update {
                             it.copy(
                                 uiMode = PickBeneficiaryUiMode.Content,
-                                beneficiaries = data.items.toPersistentList()
+                                beneficiaries = data.items.toPersistentList(),
+                                selection = BeneficiarySelection.Existing(
+                                    id = createInvoiceManager.beneficiaryId
+                                )
                             )
                         }
                     },

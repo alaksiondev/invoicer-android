@@ -41,6 +41,7 @@ internal fun InvoiceDatePicker(
                 confirmButton = {
                     Button(
                         onClick = {
+                            // BUG -> Convert selected date milis from UTC to LocalTimezone
                             dueDatePicker.selectedDateMillis?.let {
                                 onSelectDueDate(it)
                                 onDismissRequest()
@@ -73,6 +74,7 @@ internal fun InvoiceDatePicker(
                 confirmButton = {
                     Button(
                         onClick = {
+                            // BUG -> Convert selected date milis from UTC to LocalTimezone
                             issueDatePicker.selectedDateMillis?.let {
                                 onSelectIssueDate(it)
                                 onDismissRequest()

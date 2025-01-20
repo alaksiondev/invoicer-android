@@ -8,8 +8,8 @@ internal data class InvoiceDatesState(
     val issueDate: Long = 0,
     val now: Long = 0
 ) {
-    val parsedDueDate = dueDate.toLocalDate(TimeZone.UTC)
-    val parsedIssueDate = issueDate.toLocalDate(TimeZone.UTC)
+    val parsedDueDate = dueDate.toLocalDate(TimeZone.currentSystemDefault())
+    val parsedIssueDate = issueDate.toLocalDate(TimeZone.currentSystemDefault())
 
     val issueDateValid = issueDate >= now
     val dueDateValid = dueDate > issueDate

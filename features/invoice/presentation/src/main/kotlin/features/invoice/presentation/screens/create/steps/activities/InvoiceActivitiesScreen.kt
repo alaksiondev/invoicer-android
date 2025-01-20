@@ -26,7 +26,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
-import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.LIST_HEADER
+import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.ADD_ACTIVITY
 import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.LIST_ITEM
 import features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheet
 import features.invoice.presentation.screens.create.steps.activities.components.NewActivityCard
@@ -40,8 +40,20 @@ internal class InvoiceActivitiesScreen : Screen {
     @Composable
     override fun Content() {
         val screenModel = koinScreenModel<InvoiceActivitiesScreenModel>()
-        val state by screenModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
+
+        ScreenContent(
+            screenModel = screenModel,
+            onBack = { navigator?.pop() }
+        )
+    }
+
+    @Composable
+    fun ScreenContent(
+        screenModel: InvoiceActivitiesScreenModel,
+        onBack: () -> Unit
+    ) {
+        val state by screenModel.state.collectAsStateWithLifecycle()
         val snackbarState = remember { SnackbarHostState() }
         val messages = rememberSnackMessages()
         val scope = rememberCoroutineScope()
@@ -73,7 +85,7 @@ internal class InvoiceActivitiesScreen : Screen {
             snackbarHostState = snackbarState,
             onDelete = screenModel::removeActivity,
             onContinue = {},
-            onBack = { navigator?.pop() }
+            onBack = onBack
         )
     }
 
@@ -116,7 +128,7 @@ internal class InvoiceActivitiesScreen : Screen {
                     Button(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .testTag(LIST_HEADER),
+                            .testTag(ADD_ACTIVITY),
                         onClick = {
                             showSheet = true
                         }
@@ -169,7 +181,7 @@ internal class InvoiceActivitiesScreen : Screen {
 
     internal object TestTags {
         const val LIST = "add_invoice_activity_list"
-        const val LIST_HEADER = "add_invoice_activity_header_button"
+        const val ADD_ACTIVITY = "add_invoice_activity_add"
         const val LIST_ITEM = "add_invoice_activity_item"
     }
 }

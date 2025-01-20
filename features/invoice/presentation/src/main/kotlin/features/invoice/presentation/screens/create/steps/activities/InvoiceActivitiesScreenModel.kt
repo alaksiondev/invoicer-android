@@ -1,5 +1,6 @@
 package features.invoice.presentation.screens.create.steps.activities
 
+import android.util.Log
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.invoice.presentation.screens.create.CreateInvoiceManager
@@ -83,6 +84,7 @@ internal class InvoiceActivitiesScreenModel(
                 return@launch
             }
 
+
             val newActivity = CreateInvoiceActivityUiModel(
                 description = _state.value.formState.description,
                 unitPrice = unitPrice,
@@ -95,6 +97,7 @@ internal class InvoiceActivitiesScreenModel(
                     formState = AddActivityFormState()
                 )
             }
+
 
             createInvoiceManager.activities.add(newActivity)
 

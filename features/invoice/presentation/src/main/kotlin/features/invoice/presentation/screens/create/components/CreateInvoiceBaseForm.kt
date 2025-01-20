@@ -19,9 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
+import features.invoice.presentation.screens.create.components.CreateInvoiceBaseFormTestTags.BACK_BUTTON
 import foundation.design.system.tokens.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +47,7 @@ internal fun CreateInvoiceBaseForm(
                 title = {},
                 navigationIcon = {
                     BackButton(
+                        modifier = Modifier.testTag(BACK_BUTTON),
                         onBackClick = onBack
                     )
                 }
@@ -86,4 +89,8 @@ internal fun CreateInvoiceBaseForm(
             }
         }
     }
+}
+
+internal object CreateInvoiceBaseFormTestTags {
+    const val BACK_BUTTON = "BACK_BUTTON"
 }

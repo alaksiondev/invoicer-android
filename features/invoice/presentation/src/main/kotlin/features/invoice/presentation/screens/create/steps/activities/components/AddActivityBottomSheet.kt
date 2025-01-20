@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -39,6 +40,7 @@ internal fun AddActivityBottomSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
+        modifier = Modifier.testTag(AddActivityBottomSheetTestTag.CONTENT)
     ) {
         Column(
             modifier = Modifier
@@ -52,7 +54,8 @@ internal fun AddActivityBottomSheet(
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .focusRequester(descriptionFocus),
+                    .focusRequester(descriptionFocus)
+                    .testTag(AddActivityBottomSheetTestTag.FIELD_DESCRIPTION),
                 maxLines = 1,
                 value = formState.description,
                 onValueChange = onChangeDescription,
@@ -78,7 +81,8 @@ internal fun AddActivityBottomSheet(
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .focusRequester(unitPriceFocus),
+                    .focusRequester(unitPriceFocus)
+                    .testTag(AddActivityBottomSheetTestTag.FIELD_UNIT_PRICE),
                 maxLines = 1,
                 value = formState.unitPrice,
                 onValueChange = { fieldValue ->
@@ -116,7 +120,8 @@ internal fun AddActivityBottomSheet(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .focusRequester(quantityFocus),
+                    .focusRequester(quantityFocus)
+                    .testTag(AddActivityBottomSheetTestTag.FIELD_QUANTITY),
                 keyboardActions = KeyboardActions(
                     onDone = { keyboard?.hide() }
                 ),
@@ -143,11 +148,21 @@ internal fun AddActivityBottomSheet(
 
             Button(
                 onClick = onAddActivity,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(AddActivityBottomSheetTestTag.SUBMIT_BUTTON),
                 enabled = formState.formButtonEnabled
             ) {
                 Text(text = stringResource(R.string.invoice_add_activity_cta))
             }
         }
     }
+}
+
+internal object AddActivityBottomSheetTestTag {
+    const val FIELD_DESCRIPTION = "add_activity_description"
+    const val FIELD_UNIT_PRICE = "add_activity_unit_price"
+    const val FIELD_QUANTITY = "add_activity_quantity"
+    const val CONTENT = "add_activity_content"
+    const val SUBMIT_BUTTON = "add_activity_submit_buttom"
 }

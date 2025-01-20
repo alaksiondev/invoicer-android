@@ -69,7 +69,7 @@ internal fun SignUpEmailField(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Email,
-            autoCorrect = false
+            autoCorrectEnabled = false,
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
@@ -151,7 +151,7 @@ internal fun SignUpConfirmEmailField(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Email,
-            autoCorrect = false
+            autoCorrectEnabled = false,
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
@@ -219,7 +219,7 @@ internal fun SignUpPasswordField(
         maxLines = 1,
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
-            autoCorrect = false,
+            autoCorrectEnabled = false,
             keyboardType = KeyboardType.Password,
         ),
         keyboardActions = KeyboardActions(

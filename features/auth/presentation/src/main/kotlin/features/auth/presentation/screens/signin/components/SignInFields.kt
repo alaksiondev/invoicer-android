@@ -82,7 +82,7 @@ internal fun SignInPasswordField(
         maxLines = 1,
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
-            autoCorrect = false,
+            autoCorrectEnabled = false,
             keyboardType = KeyboardType.Password,
         ),
         keyboardActions = KeyboardActions(
@@ -123,7 +123,7 @@ internal fun SignInEmailField(
             imeAction = ImeAction.Next,
             capitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Email,
-            autoCorrect = false
+            autoCorrectEnabled = false,
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }

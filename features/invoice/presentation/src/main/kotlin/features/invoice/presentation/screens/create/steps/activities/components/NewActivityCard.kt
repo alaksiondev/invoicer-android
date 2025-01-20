@@ -3,14 +3,18 @@ package features.invoice.presentation.screens.create.steps.activities.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import features.auth.design.system.components.preview.PreviewContainer
 import features.invoice.presentation.R
@@ -23,27 +27,33 @@ internal fun NewActivityCard(
     unitPrice: Long,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Card(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        colors = CardDefaults.cardColors().copy(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
     ) {
-        FieldCard(
-            content = description,
-            title = stringResource(R.string.invoice_create_activity_list_description)
-        )
-        Text(
-            text = description,
-            modifier = Modifier.weight(1f)
-        )
-        FieldCard(
-            content = quantity.toString(),
-            title = stringResource(R.string.invoice_create_activity_list_quantity)
-        )
-        FieldCard(
-            content = unitPrice.toString(),
-            title = stringResource(R.string.invoice_create_activity_list_unitprice)
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Spacing.xSmall),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+            FieldCard(
+                content = description,
+                title = stringResource(R.string.invoice_create_activity_list_description),
+                modifier = Modifier.weight(1f),
+            )
+            FieldCard(
+                content = quantity.toString(),
+                title = stringResource(R.string.invoice_create_activity_list_quantity)
+            )
+            FieldCard(
+                content = unitPrice.toString(),
+                title = stringResource(R.string.invoice_create_activity_list_unitprice)
+            )
+        }
     }
 }
 
@@ -66,7 +76,8 @@ private fun FieldCard(
             )
             Text(
                 text = content,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

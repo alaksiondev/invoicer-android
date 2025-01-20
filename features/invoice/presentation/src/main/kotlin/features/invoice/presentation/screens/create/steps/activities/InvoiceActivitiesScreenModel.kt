@@ -31,22 +31,28 @@ internal class InvoiceActivitiesScreenModel(
     }
 
     fun updateFormQuantity(quantity: String) {
-        _state.update { oldState ->
-            oldState.copy(
-                formState = oldState.formState.copy(
-                    quantity = quantity
-                )
-            )
+        quantity.toIntOrNull()?.let {
+            if (it <= 100) {
+                _state.update { oldState ->
+                    oldState.copy(
+                        formState = oldState.formState.copy(
+                            quantity = quantity
+                        )
+                    )
+                }
+            }
         }
     }
 
     fun updateFormUnitPrice(unitPrice: String) {
-        _state.update { oldState ->
-            oldState.copy(
-                formState = oldState.formState.copy(
-                    unitPrice = unitPrice
+        unitPrice.toLongOrNull()?.let {
+            _state.update { oldState ->
+                oldState.copy(
+                    formState = oldState.formState.copy(
+                        unitPrice = unitPrice
+                    )
                 )
-            )
+            }
         }
     }
 

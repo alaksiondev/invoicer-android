@@ -17,7 +17,7 @@ internal data class AddActivityFormState(
     val quantity: String = ""
 )
 
-enum class InvoiceActivitiesEvent {
-    ActivityUnitPriceError,
-    ActivityQuantityError
+sealed interface InvoiceActivitiesEvent {
+    data object ActivityUnitPriceError : InvoiceActivitiesEvent
+    data object ActivityQuantityError : InvoiceActivitiesEvent
 }

@@ -1,11 +1,13 @@
 package features.invoice.presentation.screens.create.steps.activities
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -25,6 +27,8 @@ import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheet
 import features.invoice.presentation.screens.create.steps.activities.components.NewActivityCard
+import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class InvoiceActivitiesScreen : Screen {
@@ -33,6 +37,22 @@ internal class InvoiceActivitiesScreen : Screen {
     override fun Content() {
         val screenModel = koinScreenModel<InvoiceActivitiesScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
+        val snackbarState = remember { SnackbarHostState() }
+        val messages = rememberSnackMessages()
+        val scope = rememberCoroutineScope()
+
+        EventEffect(screenModel) {
+            when (it) {
+                InvoiceActivitiesEvent.ActivityQuantityError ->
+                    scope.launch {
+                        snackbarState.showSnackbar(message = messages.quantityError)
+                    }
+
+                InvoiceActivitiesEvent.ActivityUnitPriceError -> scope.launch {
+                    snackbarState.showSnackbar(message = messages.unitPriceError)
+                }
+            }
+        }
 
         StateContent(
             state = state,
@@ -40,7 +60,8 @@ internal class InvoiceActivitiesScreen : Screen {
             onChangeUnitPrice = screenModel::updateFormUnitPrice,
             onChangeQuantity = screenModel::updateFormQuantity,
             onClearForm = screenModel::clearForm,
-            onAddActivity = screenModel::addActivity
+            onAddActivity = screenModel::addActivity,
+            snackbarHostState = snackbarState
         )
     }
 
@@ -48,6 +69,7 @@ internal class InvoiceActivitiesScreen : Screen {
     @Composable
     fun StateContent(
         state: InvoiceActivitiesState,
+        snackbarHostState: SnackbarHostState,
         onChangeDescription: (String) -> Unit,
         onChangeUnitPrice: (String) -> Unit,
         onChangeQuantity: (String) -> Unit,
@@ -64,6 +86,7 @@ internal class InvoiceActivitiesScreen : Screen {
             title = stringResource(R.string.invoice_create_activity_title),
             buttonText = stringResource(R.string.invoice_create_continue_cta),
             buttonEnabled = state.continueEnabled,
+            snackbarState = snackbarHostState,
             onBack = {},
             onContinue = {}
         ) {
@@ -71,6 +94,7 @@ internal class InvoiceActivitiesScreen : Screen {
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 stickyHeader {
                     Button(
@@ -126,5 +150,23 @@ internal class InvoiceActivitiesScreen : Screen {
                 )
             }
         }
+    }
+}
+
+private data class SnackMessages(
+    val unitPriceError: String,
+    val quantityError: String
+)
+
+@Composable
+private fun rememberSnackMessages(): SnackMessages {
+    val unitPriceMsg = stringResource(R.string.invoice_add_activity_error_unit_price)
+    val quantityMsg = stringResource(R.string.invoice_add_activity_error_quantity)
+
+    return remember {
+        SnackMessages(
+            unitPriceError = unitPriceMsg,
+            quantityError = quantityMsg
+        )
     }
 }

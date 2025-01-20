@@ -15,7 +15,10 @@ internal data class AddActivityFormState(
     val description: String = "",
     val unitPrice: String = "",
     val quantity: String = ""
-)
+) {
+    val formButtonEnabled =
+        description.isNotEmpty() && unitPrice.isNotEmpty() && quantity.isNotEmpty()
+}
 
 sealed interface InvoiceActivitiesEvent {
     data object ActivityUnitPriceError : InvoiceActivitiesEvent

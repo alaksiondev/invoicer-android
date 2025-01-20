@@ -137,7 +137,13 @@ internal fun AddActivityBottomSheet(
                 }
             )
 
-            Button(onAddActivity) { Text(text = stringResource(R.string.invoice_add_activity_cta)) }
+            Button(
+                onClick = onAddActivity,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = formState.formButtonEnabled
+            ) {
+                Text(text = stringResource(R.string.invoice_add_activity_cta))
+            }
         }
     }
 }

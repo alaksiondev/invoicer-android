@@ -54,6 +54,6 @@
     <string name="invoice_create_activity_form_quantity_placeholder">100</string>
     <string name="invoice_create_activity_form_quantity_support">Limited to 100</string>
     <string name="invoice_add_activity_cta">Add Activity</string>
-    <string name="invoice_add_activity_error_quantity">Invalid quantity, must be 1 or higher</string>
+    <string name="invoice_add_activity_error_quantity">Invalid quantity, must be between 1 and 100</string>
     <string name="invoice_add_activity_error_unit_price">Invalid unit price, must be 1 cent or higher</string>
 </resources>

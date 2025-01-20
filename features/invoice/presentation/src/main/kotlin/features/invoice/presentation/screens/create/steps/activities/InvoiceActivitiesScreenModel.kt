@@ -34,14 +34,12 @@ internal class InvoiceActivitiesScreenModel(
 
     fun updateFormQuantity(quantity: String) {
         quantity.toIntOrNull()?.let {
-            if (it <= 100) {
-                _state.update { oldState ->
-                    oldState.copy(
-                        formState = oldState.formState.copy(
-                            quantity = quantity
-                        )
+            _state.update { oldState ->
+                oldState.copy(
+                    formState = oldState.formState.copy(
+                        quantity = quantity
                     )
-                }
+                )
             }
         }
     }
@@ -76,7 +74,7 @@ internal class InvoiceActivitiesScreenModel(
                 return@launch
             }
 
-            if (quantity <= 0) {
+            if (quantity <= 0 || quantity > 100) {
                 publish(InvoiceActivitiesEvent.ActivityQuantityError)
                 return@launch
             }

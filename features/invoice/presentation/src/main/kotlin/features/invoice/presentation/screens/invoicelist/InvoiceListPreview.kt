@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import features.auth.design.system.components.preview.PreviewContainer
+import features.auth.design.system.components.preview.ThemeContainer
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListCallbacks
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListState
@@ -26,7 +26,7 @@ private class InvoiceListStateProvider : PreviewParameterProvider<InvoiceListSta
 private fun InvoiceListPreview(
     @PreviewParameter(InvoiceListStateProvider::class) state: InvoiceListState
 ) {
-    PreviewContainer {
+    ThemeContainer {
         InvoiceListScreen()
             .StateContent(
                 state = state,

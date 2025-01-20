@@ -42,4 +42,13 @@ dependencies {
     implementation(projects.features.invoice.domain)
     implementation(projects.features.beneficiary.domain)
     implementation(projects.features.beneficiary.publisher)
+
+    // AndroidTest
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.koin.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Test
+    testImplementation(libs.coroutines.test)
+    implementation(projects.foundation.date.test)
 }

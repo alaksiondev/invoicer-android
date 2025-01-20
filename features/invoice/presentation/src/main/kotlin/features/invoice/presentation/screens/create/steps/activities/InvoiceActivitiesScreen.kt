@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
@@ -25,8 +26,11 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.LIST_HEADER
+import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.LIST_ITEM
 import features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheet
 import features.invoice.presentation.screens.create.steps.activities.components.NewActivityCard
+import features.invoice.presentation.screens.create.steps.activities.model.rememberSnackMessages
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import kotlinx.coroutines.launch
@@ -104,12 +108,15 @@ internal class InvoiceActivitiesScreen : Screen {
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(TestTags.LIST),
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 stickyHeader {
                     Button(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag(LIST_HEADER),
                         onClick = {
                             showSheet = true
                         }
@@ -123,6 +130,9 @@ internal class InvoiceActivitiesScreen : Screen {
                     key = { it.id }
                 ) { activity ->
                     NewActivityCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag(LIST_ITEM),
                         quantity = activity.quantity,
                         description = activity.description,
                         unitPrice = activity.unitPrice,
@@ -156,22 +166,10 @@ internal class InvoiceActivitiesScreen : Screen {
             }
         }
     }
-}
 
-private data class SnackMessages(
-    val unitPriceError: String,
-    val quantityError: String
-)
-
-@Composable
-private fun rememberSnackMessages(): SnackMessages {
-    val unitPriceMsg = stringResource(R.string.invoice_add_activity_error_unit_price)
-    val quantityMsg = stringResource(R.string.invoice_add_activity_error_quantity)
-
-    return remember {
-        SnackMessages(
-            unitPriceError = unitPriceMsg,
-            quantityError = quantityMsg
-        )
+    internal object TestTags {
+        const val LIST = "add_invoice_activity_list"
+        const val LIST_HEADER = "add_invoice_activity_header_button"
+        const val LIST_ITEM = "add_invoice_activity_item"
     }
 }

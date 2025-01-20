@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import foundation.design.system.theme.InvoicerTheme
 
 @Composable
-fun PreviewContainer(
+fun ThemeContainer(
     content: @Composable () -> Unit
 ) {
     InvoicerTheme {

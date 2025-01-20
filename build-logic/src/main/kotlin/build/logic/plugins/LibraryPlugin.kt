@@ -32,6 +32,7 @@ class LibraryPlugin : Plugin<Project> {
             compileSdk = AppConfig.compileSdk
 
             defaultConfig {
+                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 minSdk = AppConfig.minSdk
             }
 

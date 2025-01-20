@@ -18,7 +18,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.feedback.Feedback
-import features.auth.design.system.components.preview.PreviewContainer
+import features.auth.design.system.components.preview.ThemeContainer
 import features.auth.presentation.R
 import features.auth.presentation.screens.menu.AuthMenuScreen
 import foundation.design.system.tokens.Spacing
@@ -83,7 +83,7 @@ internal class SignUpFeedbackScreen : Screen {
 @Composable
 @Preview
 private fun Preview() {
-    PreviewContainer {
+    ThemeContainer {
         SignUpFeedbackScreen().StateContent(onBack = {}, onSubmit = {})
     }
 }

@@ -16,10 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import features.auth.design.system.components.preview.PreviewContainer
+import features.auth.design.system.components.preview.ThemeContainer
 import features.invoice.presentation.R
 import foundation.design.system.tokens.Spacing
 
@@ -47,20 +48,25 @@ internal fun NewActivityCard(
             FieldCard(
                 content = description,
                 title = stringResource(R.string.invoice_create_activity_list_description),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag(NewActivityCardTestTags.DESCRIPTION),
             )
             FieldCard(
                 content = quantity.toString(),
                 title = stringResource(R.string.invoice_create_activity_list_quantity),
-                alignment = Alignment.CenterHorizontally
+                alignment = Alignment.CenterHorizontally,
+                modifier = Modifier.testTag(NewActivityCardTestTags.QUANTITY)
             )
             FieldCard(
                 content = unitPrice.toString(),
                 title = stringResource(R.string.invoice_create_activity_list_unitprice),
-                alignment = Alignment.CenterHorizontally
+                alignment = Alignment.CenterHorizontally,
+                modifier = Modifier.testTag(NewActivityCardTestTags.UNIT_PRICE)
             )
             IconButton(
-                onClick = onDeleteClick
+                onClick = onDeleteClick,
+                modifier = Modifier.testTag(NewActivityCardTestTags.DELETE)
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Delete,
@@ -102,7 +108,7 @@ private fun FieldCard(
 @Preview
 @Composable
 private fun Preview() {
-    PreviewContainer {
+    ThemeContainer {
         NewActivityCard(
             quantity = 1,
             description = "Hello world",
@@ -110,4 +116,11 @@ private fun Preview() {
             onDeleteClick = {}
         )
     }
+}
+
+internal object NewActivityCardTestTags {
+    const val DESCRIPTION = "new_activity_item_description"
+    const val QUANTITY = "new_activity_item_quantity"
+    const val UNIT_PRICE = "new_activity_item_unit_price"
+    const val DELETE = "new_activity_item_delete"
 }

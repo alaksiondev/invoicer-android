@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -47,11 +46,13 @@ internal fun NewActivityCard(
             )
             FieldCard(
                 content = quantity.toString(),
-                title = stringResource(R.string.invoice_create_activity_list_quantity)
+                title = stringResource(R.string.invoice_create_activity_list_quantity),
+                alignment = Alignment.CenterHorizontally
             )
             FieldCard(
                 content = unitPrice.toString(),
-                title = stringResource(R.string.invoice_create_activity_list_unitprice)
+                title = stringResource(R.string.invoice_create_activity_list_unitprice),
+                alignment = Alignment.CenterHorizontally
             )
         }
     }
@@ -61,13 +62,14 @@ internal fun NewActivityCard(
 private fun FieldCard(
     content: String,
     title: String,
+    alignment: Alignment.Horizontal = Alignment.Start,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = alignment,
             modifier = Modifier.padding(Spacing.xSmall)
         ) {
             Text(

@@ -50,7 +50,8 @@ val featureInvoicePresentationModule = module {
 
     factory {
         InvoiceActivitiesScreenModel(
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            createInvoiceManager = get()
         )
     }
 

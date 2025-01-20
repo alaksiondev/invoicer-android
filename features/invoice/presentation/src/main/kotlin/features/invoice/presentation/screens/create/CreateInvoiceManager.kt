@@ -1,5 +1,6 @@
 package features.invoice.presentation.screens.create
 
+import features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
 import foundation.date.impl.DateProvider
 import kotlin.time.Duration.Companion.days
 
@@ -18,6 +19,8 @@ internal class CreateInvoiceManager(
     var beneficiaryId: String = ""
     var beneficiaryName: String = ""
 
+    var activities = mutableListOf<CreateInvoiceActivityUiModel>()
+
     fun clear() {
         senderCompanyAddress = ""
         senderCompanyName = ""
@@ -27,5 +30,6 @@ internal class CreateInvoiceManager(
         issueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
         beneficiaryId = ""
         beneficiaryName = ""
+        activities = mutableListOf()
     }
 }

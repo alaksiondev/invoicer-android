@@ -2,6 +2,7 @@ package features.invoice.presentation.screens.create.steps.activities
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import features.invoice.presentation.screens.create.CreateInvoiceManager
 import features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
 import foundation.events.EventAware
 import foundation.events.EventPublisher
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 internal class InvoiceActivitiesScreenModel(
     private val dispatcher: CoroutineDispatcher,
+    private val createInvoiceManager: CreateInvoiceManager
 ) : ScreenModel,
     EventAware<InvoiceActivitiesEvent> by EventPublisher() {
 
@@ -79,18 +81,20 @@ internal class InvoiceActivitiesScreenModel(
                 return@launch
             }
 
-            _state.update { oldState ->
-                val newActivity = CreateInvoiceActivityUiModel(
-                    description = oldState.formState.description,
-                    unitPrice = unitPrice,
-                    quantity = quantity
-                )
+            val newActivity = CreateInvoiceActivityUiModel(
+                description = _state.value.formState.description,
+                unitPrice = unitPrice,
+                quantity = quantity
+            )
 
+            _state.update { oldState ->
                 oldState.copy(
                     activities = (oldState.activities + newActivity).toPersistentList(),
                     formState = AddActivityFormState()
                 )
             }
+
+            createInvoiceManager.activities.add(newActivity)
 
             clearForm()
         }

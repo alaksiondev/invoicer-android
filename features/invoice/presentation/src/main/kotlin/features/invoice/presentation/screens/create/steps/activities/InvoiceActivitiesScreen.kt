@@ -8,10 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,7 +59,8 @@ internal class InvoiceActivitiesScreen : Screen {
             onChangeQuantity = screenModel::updateFormQuantity,
             onClearForm = screenModel::clearForm,
             onAddActivity = screenModel::addActivity,
-            snackbarHostState = snackbarState
+            snackbarHostState = snackbarState,
+            onDelete = screenModel::removeActivity
         )
     }
 
@@ -73,6 +72,7 @@ internal class InvoiceActivitiesScreen : Screen {
         onChangeDescription: (String) -> Unit,
         onChangeUnitPrice: (String) -> Unit,
         onChangeQuantity: (String) -> Unit,
+        onDelete: (String) -> Unit,
         onClearForm: () -> Unit,
         onAddActivity: () -> Unit,
     ) {
@@ -111,20 +111,14 @@ internal class InvoiceActivitiesScreen : Screen {
                     items = state.activities,
                     key = { it.id }
                 ) { activity ->
-                    val swipeState = rememberSwipeToDismissBoxState()
-
-                    SwipeToDismissBox(
-                        state = swipeState,
-                        backgroundContent = {
-                            Text("Hello World")
+                    NewActivityCard(
+                        quantity = activity.quantity,
+                        description = activity.description,
+                        unitPrice = activity.unitPrice,
+                        onDeleteClick = {
+                            onDelete(activity.id)
                         }
-                    ) {
-                        NewActivityCard(
-                            quantity = activity.quantity,
-                            description = activity.description,
-                            unitPrice = activity.unitPrice
-                        )
-                    }
+                    )
                 }
             }
 

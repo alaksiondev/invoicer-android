@@ -99,4 +99,15 @@ internal class InvoiceActivitiesScreenModel(
             clearForm()
         }
     }
+
+    fun removeActivity(id: String) {
+        _state.update { oldState ->
+            oldState.copy(
+                activities = oldState.activities.filter { it.id != id }.toPersistentList()
+            )
+        }
+
+        val index = createInvoiceManager.activities.indexOfFirst { it.id == id }
+        createInvoiceManager.activities.removeAt(index)
+    }
 }

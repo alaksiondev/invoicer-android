@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +25,7 @@ import foundation.design.system.tokens.Spacing
 
 @Composable
 internal fun NewActivityCard(
+    onDeleteClick: () -> Unit,
     quantity: Int,
     description: String,
     unitPrice: Long,
@@ -54,6 +59,15 @@ internal fun NewActivityCard(
                 title = stringResource(R.string.invoice_create_activity_list_unitprice),
                 alignment = Alignment.CenterHorizontally
             )
+            IconButton(
+                onClick = onDeleteClick
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Delete,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
         }
     }
 }
@@ -92,7 +106,8 @@ private fun Preview() {
         NewActivityCard(
             quantity = 1,
             description = "Hello world",
-            unitPrice = 1000
+            unitPrice = 1000,
+            onDeleteClick = {}
         )
     }
 }

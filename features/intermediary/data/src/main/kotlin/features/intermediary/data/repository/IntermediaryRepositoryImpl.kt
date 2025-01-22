@@ -24,7 +24,7 @@ internal class IntermediaryRepositoryImpl(
         )
     }
 
-    override suspend fun getBeneficiaries(page: Long, limit: Long): List<IntermediaryModel> {
+    override suspend fun getIntermediaries(page: Long, limit: Long): List<IntermediaryModel> {
         val result = dataSource.getIntermediaries(
             limit = limit,
             page = page

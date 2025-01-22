@@ -40,6 +40,14 @@
     <string name="invoice_create_pick_beneficiary_retry_cta">Try again</string>
     <string name="invoice_create_pick_beneficiary_add_new">New Beneficiary</string>
 
+    <!-- Pick Intermediary -->
+    <string name="invoice_create_pick_intermediary_title">Select intermediary</string>
+    <string name="invoice_create_pick_intermediary_retry_title">Something went wrong</string>
+    <string name="invoice_create_pick_intermediary_retry_description">Check your connection and try again</string>
+    <string name="invoice_create_pick_intermediary_retry_cta">Try again</string>
+    <string name="invoice_create_pick_intermediary_add_new">New Intermediary</string>
+    <string name="invoice_create_pick_intermediary_ignore">Proceed without intermediary</string>
+
     <!-- Activites -->
     <string name="invoice_create_activity_title">Invoice activities</string>
     <string name="invoice_create_activity_list_quantity">Qtd</string>

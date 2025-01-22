@@ -1,8 +1,8 @@
-package features.invoice.presentation.screens.create.steps.pickbeneficiary
+package features.invoice.presentation.screens.create.steps.pickintermediary
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.beneficiary.domain.repository.BeneficiaryRepository
+import features.intermediary.domain.repository.IntermediaryRepository
 import features.invoice.presentation.screens.create.CreateInvoiceManager
 import foundation.events.EventAware
 import foundation.events.EventPublisher
@@ -15,16 +15,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class PickBeneficiaryScreenModel(
+internal class PickIntermediaryScreenModel(
     private val createInvoiceManager: CreateInvoiceManager,
-    private val beneficiaryRepository: BeneficiaryRepository,
+    private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, EventAware<PickBeneficiaryEvents> by EventPublisher() {
+) : ScreenModel, EventAware<PickIntermediaryEvents> by EventPublisher() {
 
     private var isInitialized = false
 
-    private val _state = MutableStateFlow(PickBeneficiaryState())
-    val state: StateFlow<PickBeneficiaryState> = _state
+    private val _state = MutableStateFlow(PickIntermediaryState())
+    val state: StateFlow<PickIntermediaryState> = _state
 
     fun initState(
         force: Boolean = false
@@ -33,15 +33,16 @@ internal class PickBeneficiaryScreenModel(
             screenModelScope.launch(dispatcher) {
                 // No scrolling on this page yet
                 launchRequest {
-                    beneficiaryRepository.getBeneficiaries(
+                    // No pagination for this feature yet
+                    intermediaryRepository.getIntermediaries(
                         page = 0,
-                        limit = 100
+                        limit = 1000
                     )
                 }.handle(
                     onStart = {
                         _state.update {
                             it.copy(
-                                uiMode = PickBeneficiaryUiMode.Loading
+                                uiMode = PickIntermediaryUiMode.Loading
                             )
                         }
                     },
@@ -49,18 +50,19 @@ internal class PickBeneficiaryScreenModel(
                     onSuccess = { data ->
                         _state.update {
                             it.copy(
-                                uiMode = PickBeneficiaryUiMode.Content,
-                                beneficiaries = data.items.toPersistentList(),
-                                selection = BeneficiarySelection.Existing(
-                                    id = createInvoiceManager.beneficiaryId
-                                )
+                                uiMode = PickIntermediaryUiMode.Content,
+                                beneficiaries = data.toPersistentList(),
+                                selection = createInvoiceManager
+                                    .intermediaryId?.let { selectedIntermediaryId ->
+                                        IntermediarySelection.Existing(selectedIntermediaryId)
+                                    } ?: IntermediarySelection.None
                             )
                         }
                     },
                     onFailure = {
                         _state.update {
                             it.copy(
-                                uiMode = PickBeneficiaryUiMode.Error
+                                uiMode = PickIntermediaryUiMode.Error
                             )
                         }
                     }
@@ -70,21 +72,23 @@ internal class PickBeneficiaryScreenModel(
         }
     }
 
-    fun updateSelection(selection: BeneficiarySelection) {
+    fun updateSelection(selection: IntermediarySelection) {
         when (selection) {
-            BeneficiarySelection.None, BeneficiarySelection.New ->
+            IntermediarySelection.None, IntermediarySelection.New ->
                 _state.update { it.copy(selection = selection) }
 
-            is BeneficiarySelection.Existing -> {
+            is IntermediarySelection.Existing -> {
                 val item = _state.value.beneficiaries.firstOrNull { it.id == selection.id }
                 item?.let { beneficiary ->
                     _state.update {
                         it.copy(
-                            selection = BeneficiarySelection.Existing(beneficiary.id)
+                            selection = IntermediarySelection.Existing(beneficiary.id)
                         )
                     }
                 }
             }
+
+            IntermediarySelection.Ignore -> _state.update { it.copy(selection = selection) }
         }
     }
 
@@ -92,32 +96,39 @@ internal class PickBeneficiaryScreenModel(
         if (isInitialized.not()) return
 
         when (val selection = _state.value.selection) {
-            is BeneficiarySelection.Existing -> screenModelScope.launch(dispatcher) {
+            is IntermediarySelection.Existing -> screenModelScope.launch(dispatcher) {
                 val beneficiary = _state.value.beneficiaries.firstOrNull { selection.id == it.id }
                 beneficiary?.let {
                     submitBeneficiary(
-                        beneficiaryId = beneficiary.id,
-                        beneficiaryName = beneficiary.name
+                        intermediaryId = beneficiary.id,
+                        intermediaryName = beneficiary.name
                     )
                 }
 
             }
 
-            BeneficiarySelection.New -> screenModelScope.launch(dispatcher) { submitNewBeneficiary() }
-            BeneficiarySelection.None -> Unit
+            IntermediarySelection.New -> screenModelScope.launch(dispatcher) { submitNewBeneficiary() }
+
+            IntermediarySelection.Ignore -> screenModelScope.launch(dispatcher) { submitIgnoringBeneficiary() }
+
+            IntermediarySelection.None -> Unit
         }
     }
 
     private suspend fun submitNewBeneficiary() {
-        publish(PickBeneficiaryEvents.StartNewBeneficiary)
+        publish(PickIntermediaryEvents.StartNewIntermediary)
     }
 
     private suspend fun submitBeneficiary(
-        beneficiaryId: String,
-        beneficiaryName: String
+        intermediaryId: String,
+        intermediaryName: String
     ) {
-        createInvoiceManager.beneficiaryId = beneficiaryId
-        createInvoiceManager.beneficiaryName = beneficiaryName
-        publish(PickBeneficiaryEvents.Continue)
+        createInvoiceManager.intermediaryId = intermediaryId
+        createInvoiceManager.intermediaryName = intermediaryName
+        publish(PickIntermediaryEvents.Continue)
+    }
+
+    private suspend fun submitIgnoringBeneficiary() {
+        publish(PickIntermediaryEvents.Continue)
     }
 }

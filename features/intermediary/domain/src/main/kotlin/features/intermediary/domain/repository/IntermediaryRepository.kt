@@ -12,7 +12,7 @@ interface IntermediaryRepository {
         bankAddress: String,
     )
 
-    suspend fun getBeneficiaries(
+    suspend fun getIntermediaries(
         page: Long,
         limit: Long
     ): List<IntermediaryModel>

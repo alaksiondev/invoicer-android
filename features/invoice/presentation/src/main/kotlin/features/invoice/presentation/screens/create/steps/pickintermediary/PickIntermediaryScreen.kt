@@ -1,4 +1,4 @@
-package features.invoice.presentation.screens.create.steps.pickbeneficiary
+package features.invoice.presentation.screens.create.steps.pickintermediary
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Business
 import androidx.compose.material.icons.outlined.Error
+import androidx.compose.material.icons.outlined.SkipNext
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.RadioButton
@@ -24,38 +25,38 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.LoadingState
 import features.auth.design.system.components.feedback.Feedback
-import features.beneficiary.publisher.NewBeneficiaryPublisher
+import features.intermediary.publisher.NewIntermediaryPublisher
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
-import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreen
+import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen
 import foundation.events.EventEffect
 import foundation.navigation.InvoicerScreen
 import org.koin.mp.KoinPlatform.getKoin
 
-internal class PickBeneficiaryScreen : Screen {
+internal class PickIntermediaryScreen : Screen {
 
     @Composable
     override fun Content() {
-        val screenModel = koinScreenModel<PickBeneficiaryScreenModel>()
+        val screenModel = koinScreenModel<PickIntermediaryScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
-        val newBeneficiaryPublisher by remember { getKoin().inject<NewBeneficiaryPublisher>() }
+        val newIntermediaryPublisher by remember { getKoin().inject<NewIntermediaryPublisher>() }
         val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit) { screenModel.initState() }
 
         EventEffect(screenModel) {
             when (it) {
-                PickBeneficiaryEvents.StartNewBeneficiary -> navigator?.push(
+                PickIntermediaryEvents.StartNewIntermediary -> navigator?.push(
                     ScreenRegistry.get(
                         InvoicerScreen.Beneficiary.Create
                     )
                 )
 
-                PickBeneficiaryEvents.Continue -> navigator?.push(PickIntermediaryScreen())
+                PickIntermediaryEvents.Continue -> navigator?.push(InvoiceActivitiesScreen())
             }
         }
 
-        EventEffect(newBeneficiaryPublisher) {
+        EventEffect(newIntermediaryPublisher) {
             screenModel.initState(force = true)
         }
 
@@ -70,23 +71,46 @@ internal class PickBeneficiaryScreen : Screen {
 
     @Composable
     fun StateContent(
-        state: PickBeneficiaryState,
+        state: PickIntermediaryState,
         onBack: () -> Unit,
         onContinue: () -> Unit,
-        onSelect: (BeneficiarySelection) -> Unit,
+        onSelect: (IntermediarySelection) -> Unit,
         onRetry: () -> Unit,
     ) {
         CreateInvoiceBaseForm(
-            title = stringResource(R.string.invoice_create_pick_beneficiary_title),
+            title = stringResource(R.string.invoice_create_pick_intermediary_title),
             onBack = onBack,
             onContinue = onContinue,
             buttonEnabled = state.buttonEnabled,
             buttonText = stringResource(R.string.invoice_create_continue_cta)
         ) {
             when (state.uiMode) {
-                PickBeneficiaryUiMode.Content -> LazyColumn(
+                PickIntermediaryUiMode.Content -> LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
+                    item(key = "456") {
+                        ListItem(
+                            leadingContent = {
+                                Icon(
+                                    imageVector = Icons.Outlined.SkipNext,
+                                    contentDescription = null
+                                )
+                            },
+                            headlineContent = {
+                                Text(
+                                    stringResource(R.string.invoice_create_pick_intermediary_ignore)
+                                )
+                            },
+                            trailingContent = {
+                                RadioButton(
+                                    selected = state.selection is IntermediarySelection.Ignore,
+                                    onClick = { onSelect(IntermediarySelection.Ignore) }
+                                )
+                            }
+                        )
+                    }
+
+
                     item(key = "123") {
                         ListItem(
                             leadingContent = {
@@ -97,13 +121,13 @@ internal class PickBeneficiaryScreen : Screen {
                             },
                             headlineContent = {
                                 Text(
-                                    stringResource(R.string.invoice_create_pick_beneficiary_add_new)
+                                    stringResource(R.string.invoice_create_pick_intermediary_add_new)
                                 )
                             },
                             trailingContent = {
                                 RadioButton(
-                                    selected = state.selection is BeneficiarySelection.New,
-                                    onClick = { onSelect(BeneficiarySelection.New) }
+                                    selected = state.selection is IntermediarySelection.New,
+                                    onClick = { onSelect(IntermediarySelection.New) }
                                 )
                             }
                         )
@@ -128,7 +152,7 @@ internal class PickBeneficiaryScreen : Screen {
                             },
                             trailingContent = {
                                 val isSelected = remember(state.selection) {
-                                    state.selection is BeneficiarySelection.Existing &&
+                                    state.selection is IntermediarySelection.Existing &&
                                             state.selection.id == beneficiary.id
                                 }
 
@@ -136,7 +160,7 @@ internal class PickBeneficiaryScreen : Screen {
                                     selected = isSelected,
                                     onClick = {
                                         onSelect(
-                                            BeneficiarySelection.Existing(
+                                            IntermediarySelection.Existing(
                                                 beneficiary.id
                                             )
                                         )
@@ -147,19 +171,19 @@ internal class PickBeneficiaryScreen : Screen {
                     }
                 }
 
-                PickBeneficiaryUiMode.Loading -> LoadingState(
+                PickIntermediaryUiMode.Loading -> LoadingState(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
                 )
 
-                PickBeneficiaryUiMode.Error -> Feedback(
-                    primaryActionText = stringResource(R.string.invoice_create_pick_beneficiary_retry_cta),
+                PickIntermediaryUiMode.Error -> Feedback(
+                    primaryActionText = stringResource(R.string.invoice_create_pick_intermediary_retry_cta),
                     onPrimaryAction = onRetry,
                     modifier = Modifier.weight(1f),
                     icon = Icons.Outlined.Error,
-                    title = stringResource(R.string.invoice_create_pick_beneficiary_retry_title),
-                    description = stringResource(R.string.invoice_create_pick_beneficiary_retry_description)
+                    title = stringResource(R.string.invoice_create_pick_intermediary_retry_title),
+                    description = stringResource(R.string.invoice_create_pick_intermediary_retry_description)
                 )
             }
 

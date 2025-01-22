@@ -53,7 +53,7 @@ internal class IntermediaryListScreenModel(
 
     private suspend fun getBeneficiaries(): List<IntermediaryModel> =
         // No pagination support for this feature
-        intermediaryRepository.getBeneficiaries(
+        intermediaryRepository.getIntermediaries(
             page = 1,
             limit = PAGE_LIMIT,
         )

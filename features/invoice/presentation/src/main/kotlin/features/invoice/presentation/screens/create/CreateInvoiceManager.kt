@@ -19,6 +19,9 @@ internal class CreateInvoiceManager(
     var beneficiaryId: String = ""
     var beneficiaryName: String = ""
 
+    var intermediaryId: String? = null
+    var intermediaryName: String? = null
+
     var activities = mutableListOf<CreateInvoiceActivityUiModel>()
 
     fun clear() {
@@ -31,5 +34,7 @@ internal class CreateInvoiceManager(
         beneficiaryId = ""
         beneficiaryName = ""
         activities = mutableListOf()
+        intermediaryId = null
+        intermediaryName = null
     }
 }

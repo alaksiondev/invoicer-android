@@ -11,7 +11,7 @@ data class CreateInvoiceModel(
     val issueDate: Instant,
     val dueDate: Instant,
     val beneficiaryId: String,
-    val intermediaryId: String,
+    val intermediaryId: String?,
     val activities: List<CreateInvoiceActivityModel> = listOf()
 )
 

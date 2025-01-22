@@ -5,7 +5,7 @@ import features.beneficiary.presentation.screen.list.BeneficiaryScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-val featureBeneficiaryPresentationModule = module {
+val beneficiaryPresentationModule = module {
     factory {
         BeneficiaryScreenModel(
             beneficiaryRepository = get(),

@@ -64,6 +64,6 @@ dependencies {
     implementation(projects.features.beneficiary.publisher)
     implementation(projects.features.intermediary.data)
     implementation(projects.features.intermediary.domain)
-//    implementation(projects.features.beneficiary.presentation)
+    implementation(projects.features.intermediary.presentation)
 //    implementation(projects.features.beneficiary.publisher)
 }

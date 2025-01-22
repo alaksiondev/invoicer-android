@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- List Intermediary -->
+    <string name="intermediary_list_title">Intermediaries</string>
+    <string name="intermediary_list_error_retry">Try again</string>
+    <string name="intermediary_list_error_title">Something went wrong</string>
+    <string name="intermediary_list_error_description">Check your connection and try again</string>
+    <string name="intermediary_list_empty_title">Nothing to see here</string>
+    <string name="intermediary_list_empty_description">No Intermediaries found</string>
+
+
+</resources>

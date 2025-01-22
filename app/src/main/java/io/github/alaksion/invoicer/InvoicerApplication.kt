@@ -4,14 +4,17 @@ import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
-import features.intermediary.data.di.featureIntermediaryDataModule
-import features.beneficiary.presentation.di.featureBeneficiaryPresentationModule
+import features.beneficiary.data.di.beneficiaryDataModule
+import features.beneficiary.presentation.di.beneficiaryPresentationModule
 import features.beneficiary.presentation.navigation.beneficiaryScreens
 import features.beneficiary.publisher.di.beneficiaryPublisherModule
 import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
-import features.invoice.data.di.featureInvoiceDataModule
-import features.invoice.presentation.di.featureInvoicePresentationModule
+import features.intermediary.data.di.intermediaryDataModule
+import features.intermediary.presentation.di.intermediaryPresentationModule
+import features.intermediary.presentation.navigation.intermediaryScreens
+import features.invoice.data.di.invoiceDataModule
+import features.invoice.presentation.di.invoicePresentationModule
 import features.invoice.presentation.navigation.invoiceScreens
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
@@ -34,6 +37,7 @@ class InvoicerApplication : Application() {
             homeContainerScreens()
             invoiceScreens()
             beneficiaryScreens()
+            intermediaryScreens()
         }
 
         startKoin {
@@ -49,11 +53,13 @@ class InvoicerApplication : Application() {
                 homePresentationDiModule,
                 foundationLoggerModule,
                 foundationDateModule,
-                featureInvoiceDataModule,
-                featureInvoicePresentationModule,
-                featureIntermediaryDataModule,
-                featureBeneficiaryPresentationModule,
-                beneficiaryPublisherModule
+                invoiceDataModule,
+                invoicePresentationModule,
+                beneficiaryDataModule,
+                beneficiaryPresentationModule,
+                beneficiaryPublisherModule,
+                intermediaryPresentationModule,
+                intermediaryDataModule
             )
         }
     }

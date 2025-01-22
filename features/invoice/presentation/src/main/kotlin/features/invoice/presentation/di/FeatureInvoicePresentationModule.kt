@@ -10,7 +10,7 @@ import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreen
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-val featureInvoicePresentationModule = module {
+val invoicePresentationModule = module {
     factory<InvoiceListScreenModel> {
         InvoiceListScreenModel(
             invoiceRepository = get(),

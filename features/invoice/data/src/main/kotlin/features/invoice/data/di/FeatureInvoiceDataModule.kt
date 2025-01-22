@@ -7,7 +7,7 @@ import features.invoice.domain.repository.InvoiceRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-val featureInvoiceDataModule = module {
+val invoiceDataModule = module {
     factory<InvoiceDataSource> {
         InvoiceDataSourceImpl(
             httpWrapper = get(),

@@ -7,7 +7,7 @@ import features.beneficiary.domain.repository.BeneficiaryRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-val featureBeneficiaryDataModule = module {
+val beneficiaryDataModule = module {
     factory<BeneficiaryRemoteDataSource> {
         BeneficiaryRemoteDataSourceImpl(
             dispatcher = Dispatchers.IO,

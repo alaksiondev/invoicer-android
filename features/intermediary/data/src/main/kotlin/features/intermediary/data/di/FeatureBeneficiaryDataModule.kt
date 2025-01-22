@@ -7,7 +7,7 @@ import features.intermediary.domain.repository.IntermediaryRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-val featureIntermediaryDataModule = module {
+val intermediaryDataModule = module {
     factory<IntermediaryRemoteDataSource> {
         IntermediaryRemoteDataSourceImpl(
             dispatcher = Dispatchers.IO,

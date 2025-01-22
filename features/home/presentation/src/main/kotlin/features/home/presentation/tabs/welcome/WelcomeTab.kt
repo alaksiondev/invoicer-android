@@ -36,6 +36,9 @@ internal object WelcomeTab : Tab {
             },
             onBeneficiaryClick = {
                 navigator?.push(ScreenRegistry.get(InvoicerScreen.Beneficiary.List))
+            },
+            onIntermediaryClick = {
+                navigator?.push(ScreenRegistry.get(InvoicerScreen.Intermediary.List))
             }
         )
         StateContent(
@@ -57,7 +60,7 @@ internal object WelcomeTab : Tab {
                         modifier = Modifier.fillParentMaxWidth(),
                         onBeneficiaryClick = callbacks.onBeneficiaryClick,
                         onInvoiceClick = callbacks.onInvoiceClick,
-                        onIntermediaryClick = {}
+                        onIntermediaryClick = callbacks.onIntermediaryClick
                     )
                 }
             }

@@ -3,7 +3,7 @@ package features.beneficiary.domain.repository
 import features.beneficiary.domain.model.BeneficiariesModel
 
 interface BeneficiaryRepository {
-    suspend fun createIntermediary(
+    suspend fun createBeneficiary(
         name: String,
         swift: String,
         iban: String,

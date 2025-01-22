@@ -1,9 +1,8 @@
-package features.beneficiary.presentation.screen.create
+package features.intermediary.presentation.screen.create
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.beneficiary.domain.repository.BeneficiaryRepository
-import features.beneficiary.publisher.NewBeneficiaryPublisher
+import features.intermediary.domain.repository.IntermediaryRepository
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import foundation.network.request.handle
@@ -15,14 +14,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class CreateBeneficiaryScreenModel(
-    private val beneficiaryRepository: BeneficiaryRepository,
+internal class CreateIntermediaryScreenModel(
+    private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher,
-    private val newBeneficiaryPublisher: NewBeneficiaryPublisher,
-) : ScreenModel, EventAware<CreateBeneficiaryEvents> by EventPublisher() {
+//    private val newBeneficiaryPublisher: NewBeneficiaryPublisher,
+) : ScreenModel, EventAware<CreateIntermediaryEvents> by EventPublisher() {
 
-    private val _state = MutableStateFlow(CreateBeneficiaryState())
-    val state: StateFlow<CreateBeneficiaryState> = _state
+    private val _state = MutableStateFlow(CreateIntermediaryState())
+    val state: StateFlow<CreateIntermediaryState> = _state
 
     private var submitJob: Job? = null
 
@@ -59,7 +58,7 @@ internal class CreateBeneficiaryScreenModel(
     fun submit() {
         submitJob = screenModelScope.launch(dispatcher) {
             launchRequest {
-                beneficiaryRepository.createBeneficiary(
+                intermediaryRepository.createIntermediary(
                     name = state.value.name,
                     bankAddress = state.value.bankAddress,
                     bankName = state.value.bankName,
@@ -79,12 +78,12 @@ internal class CreateBeneficiaryScreenModel(
                 },
                 onFailure = {
                     publish(
-                        CreateBeneficiaryEvents.Error(message = it.message.orEmpty())
+                        CreateIntermediaryEvents.Error(message = it.message.orEmpty())
                     )
                 },
                 onSuccess = {
-                    newBeneficiaryPublisher.publish(Unit)
-                    publish(CreateBeneficiaryEvents.Success)
+//                    newBeneficiaryPublisher.publish(Unit)
+                    publish(CreateIntermediaryEvents.Success)
                 }
             )
         }

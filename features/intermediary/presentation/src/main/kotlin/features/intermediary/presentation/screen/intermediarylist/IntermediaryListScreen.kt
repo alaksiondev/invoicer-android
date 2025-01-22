@@ -21,16 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.buttons.CloseButton
 import features.auth.design.system.components.feedback.Feedback
 import features.intermediary.presentation.R
+import features.intermediary.presentation.screen.create.CreateIntermediaryFlow
 import features.intermediary.presentation.screen.intermediarylist.components.IntermediaryList
 import foundation.design.system.tokens.Spacing
-import foundation.navigation.InvoicerScreen
 import foundation.pagination.LazyListPaginationEffect
 
 internal class IntermediaryListScreen : Screen {
@@ -45,13 +44,7 @@ internal class IntermediaryListScreen : Screen {
         val callbacks = rememberIntermediaryListCallbacks(
             onClose = { navigator?.pop() },
             onRetry = viewModel::loadPage,
-            onCreate = {
-                navigator?.push(
-                    ScreenRegistry.get(
-                        InvoicerScreen.Beneficiary.Create
-                    )
-                )
-            },
+            onCreate = { navigator?.push(CreateIntermediaryFlow()) },
             onItemClick = { }
         )
 

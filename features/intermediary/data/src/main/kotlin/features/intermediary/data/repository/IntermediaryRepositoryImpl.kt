@@ -30,7 +30,7 @@ internal class IntermediaryRepositoryImpl(
             page = page
         )
 
-        return result.map {
+        return result.intermediaries.map {
             IntermediaryModel(
                 name = it.name,
                 iban = it.iban,

@@ -1,7 +1,7 @@
 package features.intermediary.data.datasource
 
 import features.intermediary.data.model.CreateIntermediaryData
-import features.intermediary.data.model.IntermediaryData
+import features.intermediary.data.model.IntermediariesData
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
@@ -28,7 +28,7 @@ internal interface IntermediaryRemoteDataSource {
     suspend fun getIntermediaries(
         limit: Long,
         page: Long
-    ): List<IntermediaryData>
+    ): IntermediariesData
 }
 
 internal class IntermediaryRemoteDataSourceImpl(
@@ -66,7 +66,7 @@ internal class IntermediaryRemoteDataSourceImpl(
     override suspend fun getIntermediaries(
         limit: Long,
         page: Long
-    ): List<IntermediaryData> =
+    ): IntermediariesData =
         withContext(dispatcher) {
             httpWrapper.client.get(
                 url = buildUrl

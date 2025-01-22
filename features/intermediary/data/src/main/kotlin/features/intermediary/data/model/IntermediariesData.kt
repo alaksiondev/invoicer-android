@@ -4,6 +4,11 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
+internal data class IntermediariesData(
+    val intermediaries: List<IntermediaryData>
+)
+
+@Serializable
 internal data class IntermediaryData(
     val name: String,
     val iban: String,

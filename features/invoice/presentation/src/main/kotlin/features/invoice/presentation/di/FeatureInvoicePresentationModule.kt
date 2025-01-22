@@ -4,6 +4,7 @@ import features.invoice.presentation.screens.create.CreateInvoiceManager
 import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreenModel
 import features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreenModel
 import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreenModel
+import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
 import features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreenModel
 import features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreenModel
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
@@ -45,6 +46,14 @@ val invoicePresentationModule = module {
             createInvoiceManager = get(),
             dispatcher = Dispatchers.Default,
             beneficiaryRepository = get()
+        )
+    }
+
+    factory {
+        PickIntermediaryScreenModel(
+            createInvoiceManager = get(),
+            dispatcher = Dispatchers.Default,
+            intermediaryRepository = get()
         )
     }
 

@@ -129,6 +129,8 @@ internal class PickIntermediaryScreenModel(
     }
 
     private suspend fun submitIgnoringBeneficiary() {
+        createInvoiceManager.intermediaryId = null
+        createInvoiceManager.intermediaryName = null
         publish(PickIntermediaryEvents.Continue)
     }
 }

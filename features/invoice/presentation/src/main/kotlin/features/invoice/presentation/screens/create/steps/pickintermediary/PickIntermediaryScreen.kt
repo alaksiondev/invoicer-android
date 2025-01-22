@@ -48,7 +48,7 @@ internal class PickIntermediaryScreen : Screen {
             when (it) {
                 PickIntermediaryEvents.StartNewIntermediary -> navigator?.push(
                     ScreenRegistry.get(
-                        InvoicerScreen.Beneficiary.Create
+                        InvoicerScreen.Intermediary.Create
                     )
                 )
 

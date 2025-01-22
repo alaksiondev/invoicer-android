@@ -1,4 +1,4 @@
-package features.beneficiary.presentation.screen.feedback
+package features.intermediary.presentation.screen.feedback
 
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
@@ -14,10 +14,10 @@ import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.feedback.Feedback
-import features.beneficiary.presentation.R
+import features.intermediary.presentation.R
 import foundation.design.system.tokens.Spacing
 
-internal enum class BeneficiaryFeedbackType(
+internal enum class IntermediaryFeedbackType(
     @StringRes val primaryActionText: Int,
     @StringRes val description: Int,
     @StringRes val title: Int,
@@ -32,8 +32,8 @@ internal enum class BeneficiaryFeedbackType(
     )
 }
 
-internal class BeneficiaryFeedbackScreen(
-    private val type: BeneficiaryFeedbackType
+internal class IntermediaryFeedbackScreen(
+    private val type: IntermediaryFeedbackType
 ) : Screen {
 
     @Composable
@@ -61,7 +61,7 @@ internal class BeneficiaryFeedbackScreen(
                 description = stringResource(type.description),
                 onPrimaryAction = {
                     when (type) {
-                        BeneficiaryFeedbackType.CreateSuccess -> onClearFlow()
+                        IntermediaryFeedbackType.CreateSuccess -> onClearFlow()
                     }
                 },
                 icon = type.icon

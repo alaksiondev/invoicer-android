@@ -16,7 +16,8 @@ val intermediaryPresentationModule = module {
     factory {
         CreateIntermediaryScreenModel(
             intermediaryRepository = get(),
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            newIntermediaryPublisher = get()
         )
     }
 }

@@ -24,8 +24,8 @@ import features.auth.design.system.components.spacer.SpacerSize
 import features.auth.design.system.components.spacer.VerticalSpacer
 import features.intermediary.presentation.screen.create.components.IntermediaryBaseForm
 import features.intermediary.presentation.screen.create.components.IntermediaryFieldCard
-import features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
-import features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
+import features.intermediary.presentation.screen.feedback.IntermediaryFeedbackScreen
+import features.intermediary.presentation.screen.feedback.IntermediaryFeedbackType
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.create.CreateIntermediaryEvents
 import features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
@@ -54,8 +54,8 @@ internal class IntermediaryConfirmationStep : Screen {
                 }
 
                 CreateIntermediaryEvents.Success -> navigator.push(
-                    BeneficiaryFeedbackScreen(
-                        type = BeneficiaryFeedbackType.CreateSuccess
+                    IntermediaryFeedbackScreen(
+                        type = IntermediaryFeedbackType.CreateSuccess
                     )
                 )
             }

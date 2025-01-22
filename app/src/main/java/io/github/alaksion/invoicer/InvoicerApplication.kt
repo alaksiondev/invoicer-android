@@ -13,6 +13,7 @@ import features.home.presentation.navigation.homeContainerScreens
 import features.intermediary.data.di.intermediaryDataModule
 import features.intermediary.presentation.di.intermediaryPresentationModule
 import features.intermediary.presentation.navigation.intermediaryScreens
+import features.intermediary.publisher.di.intermediaryPublisherModule
 import features.invoice.data.di.invoiceDataModule
 import features.invoice.presentation.di.invoicePresentationModule
 import features.invoice.presentation.navigation.invoiceScreens
@@ -59,7 +60,8 @@ class InvoicerApplication : Application() {
                 beneficiaryPresentationModule,
                 beneficiaryPublisherModule,
                 intermediaryPresentationModule,
-                intermediaryDataModule
+                intermediaryDataModule,
+                intermediaryPublisherModule
             )
         }
     }

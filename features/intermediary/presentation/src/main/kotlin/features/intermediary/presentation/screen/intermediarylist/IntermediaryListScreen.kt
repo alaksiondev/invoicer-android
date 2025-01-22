@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,8 +30,11 @@ import features.auth.design.system.components.feedback.Feedback
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.create.CreateIntermediaryFlow
 import features.intermediary.presentation.screen.intermediarylist.components.IntermediaryList
+import features.intermediary.publisher.NewIntermediaryPublisher
 import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
 import foundation.pagination.LazyListPaginationEffect
+import org.koin.java.KoinJavaComponent.getKoin
 
 internal class IntermediaryListScreen : Screen {
 
@@ -38,7 +42,7 @@ internal class IntermediaryListScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<IntermediaryListScreenModel>()
-//        val newBeneficiaryPublisher by remember { getKoin().inject<NewBeneficiaryPublisher>() }
+        val newBeneficiaryPublisher by remember { getKoin().inject<NewIntermediaryPublisher>() }
         val state by viewModel.state.collectAsStateWithLifecycle()
 
         val callbacks = rememberIntermediaryListCallbacks(
@@ -50,9 +54,9 @@ internal class IntermediaryListScreen : Screen {
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
 
-//        EventEffect(newBeneficiaryPublisher) {
-//            viewModel.loadPage(force = true)
-//        }
+        EventEffect(newBeneficiaryPublisher) {
+            viewModel.loadPage(force = true)
+        }
 
         StateContent(
             state = state,

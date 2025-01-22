@@ -3,6 +3,7 @@ package features.intermediary.presentation.screen.create
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.intermediary.domain.repository.IntermediaryRepository
+import features.intermediary.publisher.NewIntermediaryPublisher
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import foundation.network.request.handle
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class CreateIntermediaryScreenModel(
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher,
-//    private val newBeneficiaryPublisher: NewBeneficiaryPublisher,
+    private val newIntermediaryPublisher: NewIntermediaryPublisher,
 ) : ScreenModel, EventAware<CreateIntermediaryEvents> by EventPublisher() {
 
     private val _state = MutableStateFlow(CreateIntermediaryState())
@@ -82,7 +83,7 @@ internal class CreateIntermediaryScreenModel(
                     )
                 },
                 onSuccess = {
-//                    newBeneficiaryPublisher.publish(Unit)
+                    newIntermediaryPublisher.publish(Unit)
                     publish(CreateIntermediaryEvents.Success)
                 }
             )

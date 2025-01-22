@@ -43,5 +43,5 @@ dependencies {
 
     // Feature
     implementation(projects.features.intermediary.domain)
-//    implementation(projects.features.intermediary.publisher)
+    implementation(projects.features.intermediary.publisher)
 }

@@ -64,4 +64,8 @@
     <string name="invoice_add_activity_cta">Add Activity</string>
     <string name="invoice_add_activity_error_quantity">Invalid quantity, must be between 1 and 100</string>
     <string name="invoice_add_activity_error_unit_price">Invalid unit price, must be 1 cent or higher</string>
+
+    <!-- Invoice Confirmation -->
+    <string name="invoice_create_confirmation_title">Invoice Summary</string>
+    <string name="invoice_create_confirmation_continue_cta">Submit invoice</string>
 </resources>

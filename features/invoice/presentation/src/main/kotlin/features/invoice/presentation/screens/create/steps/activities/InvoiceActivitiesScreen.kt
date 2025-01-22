@@ -31,6 +31,7 @@ import features.invoice.presentation.screens.create.steps.activities.InvoiceActi
 import features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheet
 import features.invoice.presentation.screens.create.steps.activities.components.NewActivityCard
 import features.invoice.presentation.screens.create.steps.activities.model.rememberSnackMessages
+import features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreen
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import kotlinx.coroutines.launch
@@ -44,14 +45,16 @@ internal class InvoiceActivitiesScreen : Screen {
 
         ScreenContent(
             screenModel = screenModel,
-            onBack = { navigator?.pop() }
+            onBack = { navigator?.pop() },
+            onContinue = { navigator?.push(InvoiceConfirmationScreen()) }
         )
     }
 
     @Composable
     fun ScreenContent(
         screenModel: InvoiceActivitiesScreenModel,
-        onBack: () -> Unit
+        onBack: () -> Unit,
+        onContinue: () -> Unit
     ) {
         val state by screenModel.state.collectAsStateWithLifecycle()
         val snackbarState = remember { SnackbarHostState() }
@@ -84,7 +87,7 @@ internal class InvoiceActivitiesScreen : Screen {
             onAddActivity = screenModel::addActivity,
             snackbarHostState = snackbarState,
             onDelete = screenModel::removeActivity,
-            onContinue = {},
+            onContinue = onContinue,
             onBack = onBack
         )
     }

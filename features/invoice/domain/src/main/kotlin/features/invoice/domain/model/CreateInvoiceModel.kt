@@ -12,7 +12,7 @@ data class CreateInvoiceModel(
     val dueDate: Instant,
     val beneficiaryId: String,
     val intermediaryId: String?,
-    val activities: List<CreateInvoiceActivityModel> = listOf()
+    val activities: List<CreateInvoiceActivityModel>
 )
 
 data class CreateInvoiceActivityModel(

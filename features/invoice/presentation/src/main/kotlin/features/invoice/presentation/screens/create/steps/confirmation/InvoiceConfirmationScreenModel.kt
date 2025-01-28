@@ -2,6 +2,7 @@ package features.invoice.presentation.screens.create.steps.confirmation
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import features.invoice.domain.model.CreateInvoiceActivityModel
 import features.invoice.domain.model.CreateInvoiceModel
 import features.invoice.domain.repository.InvoiceRepository
 import features.invoice.presentation.screens.create.CreateInvoiceManager
@@ -41,7 +42,8 @@ internal class InvoiceConfirmationScreenModel(
                     .defaultFormat(),
                 intermediaryName = manager.intermediaryName,
                 beneficiaryName = manager.beneficiaryName,
-                activities = manager.activities
+                activities = manager.activities,
+                externalId = manager.externalId
             )
         }
     }
@@ -51,7 +53,7 @@ internal class InvoiceConfirmationScreenModel(
             launchRequest {
                 repository.createInvoice(
                     payload = CreateInvoiceModel(
-                        externalId = "",
+                        externalId = manager.externalId,
                         senderCompanyName = manager.senderCompanyName,
                         senderCompanyAddress = manager.senderCompanyAddress,
                         recipientCompanyName = manager.recipientCompanyName,
@@ -60,6 +62,13 @@ internal class InvoiceConfirmationScreenModel(
                         dueDate = Instant.fromEpochMilliseconds(manager.dueDate),
                         beneficiaryId = manager.beneficiaryId,
                         intermediaryId = manager.intermediaryId,
+                        activities = manager.activities.map {
+                            CreateInvoiceActivityModel(
+                                description = it.description,
+                                unitPrice = it.unitPrice,
+                                quantity = it.quantity,
+                            )
+                        }
                     )
                 )
             }.handle(

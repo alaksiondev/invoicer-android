@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBalance
 import androidx.compose.material.icons.outlined.Alarm
 import androidx.compose.material.icons.outlined.AlarmOn
+import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.Business
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -82,6 +83,13 @@ internal class InvoiceConfirmationScreen : Screen {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
+                item {
+                    ConfirmationCard(
+                        label = stringResource(R.string.confirmation_external_id_label),
+                        content = state.externalId,
+                        icon = Icons.Outlined.Badge
+                    )
+                }
                 item {
                     ConfirmationCard(
                         label = stringResource(R.string.confirmation_sender_company_name_label),

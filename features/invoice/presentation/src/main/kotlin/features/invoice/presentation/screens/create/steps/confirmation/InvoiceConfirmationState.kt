@@ -11,6 +11,7 @@ internal data class InvoiceConfirmationState(
     val dueDate: String = "",
     val intermediaryName: String? = null,
     val beneficiaryName: String = "",
+    val externalId: String = "",
     val activities: List<CreateInvoiceActivityUiModel> = listOf(),
     val isLoading: Boolean = false
 )

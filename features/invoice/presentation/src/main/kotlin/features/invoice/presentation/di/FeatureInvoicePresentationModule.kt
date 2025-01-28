@@ -4,6 +4,7 @@ import features.invoice.presentation.screens.create.CreateInvoiceManager
 import features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreenModel
 import features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreenModel
 import features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreenModel
+import features.invoice.presentation.screens.create.steps.externalId.InvoiceExternalIdScreenModel
 import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreenModel
 import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
 import features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreenModel
@@ -65,17 +66,24 @@ val invoicePresentationModule = module {
         )
     }
 
-    single {
-        CreateInvoiceManager(
-            dateProvider = get()
-        )
-    }
-
     factory {
         InvoiceConfirmationScreenModel(
             manager = get(),
             repository = get(),
             dispatcher = Dispatchers.Default
+        )
+    }
+
+    factory {
+        InvoiceExternalIdScreenModel(
+            dispatcher = Dispatchers.Default,
+            manager = get()
+        )
+    }
+
+    single {
+        CreateInvoiceManager(
+            dateProvider = get()
         )
     }
 }

@@ -40,7 +40,7 @@ internal class SenderCompanyScreen : Screen {
         val navigator = LocalNavigator.current
 
         val callbacks = rememberSenderCompanyCallbacks(
-            onBack = { navigator?.parent?.pop() },
+            onBack = { navigator?.pop() },
             onUpdateAddress = screenModel::updateAddress,
             onUpdateName = screenModel::updateName,
             onSubmit = screenModel::submit

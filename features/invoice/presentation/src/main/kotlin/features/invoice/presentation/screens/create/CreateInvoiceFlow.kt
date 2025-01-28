@@ -5,7 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreen
+import features.invoice.presentation.screens.create.steps.externalId.InvoiceExternalIdScreen
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class CreateInvoiceFlow : Screen {
@@ -20,7 +20,7 @@ internal class CreateInvoiceFlow : Screen {
         }
 
         Navigator(
-            screen = SenderCompanyScreen()
+            screen = InvoiceExternalIdScreen()
         ) {
             SlideTransition(it)
         }

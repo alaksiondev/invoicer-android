@@ -11,6 +11,11 @@
     <!-- Create Invoice -->
     <string name="invoice_create_continue_cta">Continue</string>
 
+    <!-- External Id -->
+    <string name="invoice_create_external_id_title">External ID</string>
+    <string name="invoice_create_external_id_placeholder">Invoice #123</string>
+    <string name="invoice_create_external_id_label">External ID</string>
+
     <!-- Create Sender Company -->
     <string name="invoice_create_sender_company_title">Sender Company Info</string>
     <string name="invoice_create_sender_company_name_label">Name</string>
@@ -77,6 +82,7 @@
     <string name="confirmation_beneficiary_label">Due date</string>
     <string name="confirmation_intermediary_label">Issue date</string>
     <string name="confirmation_activities_label">Activities</string>
+    <string name="confirmation_external_id_label">External ID</string>
 
     <!-- Invoice feedback -->
     <string name="invoice_feedback_title">Invoice created successfully</string>

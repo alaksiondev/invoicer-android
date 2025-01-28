@@ -7,6 +7,8 @@ import kotlin.time.Duration.Companion.days
 internal class CreateInvoiceManager(
     private val dateProvider: DateProvider
 ) {
+
+    var externalId: String = ""
     var senderCompanyName: String = ""
     var senderCompanyAddress: String = ""
 
@@ -36,5 +38,6 @@ internal class CreateInvoiceManager(
         activities = mutableListOf()
         intermediaryId = null
         intermediaryName = null
+        externalId = ""
     }
 }

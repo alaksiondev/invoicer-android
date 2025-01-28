@@ -25,8 +25,8 @@ internal class InvoiceListScreenModel(
 
     val state: StateFlow<InvoiceListState> get() = _state
 
-    fun loadPage() {
-        if (isFirstPageLoaded.not()) {
+    fun loadPage(force: Boolean = false) {
+        if (isFirstPageLoaded.not() || force) {
             screenModelScope.launch(dispatcher) {
                 launchRequest { getInvoices() }
                     .handle(
@@ -37,7 +37,7 @@ internal class InvoiceListScreenModel(
                         },
                         onSuccess = {
                             _state.value = _state.value.copy(
-                                invoices = (_state.value.invoices + it.items).toPersistentList(),
+                                invoices = (it.items).toPersistentList(),
                                 mode = InvoiceListMode.Content
                             )
                             page++
@@ -45,7 +45,6 @@ internal class InvoiceListScreenModel(
                         },
                         onFinish = { /* no op */ },
                         onFailure = {
-                            it.printStackTrace()
                             _state.value = _state.value.copy(
                                 mode = InvoiceListMode.Error
                             )
@@ -89,7 +88,6 @@ internal class InvoiceListScreenModel(
         senderCompany = _state.value.filter.senderCompany,
         recipientCompany = _state.value.filter.recipientCompany
     )
-
 
     companion object {
         private const val LIMIT = 20

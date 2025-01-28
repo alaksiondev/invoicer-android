@@ -17,6 +17,7 @@ import features.intermediary.publisher.di.intermediaryPublisherModule
 import features.invoice.data.di.invoiceDataModule
 import features.invoice.presentation.di.invoicePresentationModule
 import features.invoice.presentation.navigation.invoiceScreens
+import features.invoice.publisher.di.invoicePublisherModule
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
 import foundation.date.impl.di.foundationDateModule
@@ -61,7 +62,8 @@ class InvoicerApplication : Application() {
                 beneficiaryPublisherModule,
                 intermediaryPresentationModule,
                 intermediaryDataModule,
-                intermediaryPublisherModule
+                intermediaryPublisherModule,
+                invoicePublisherModule
             )
         }
     }

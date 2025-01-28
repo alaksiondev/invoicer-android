@@ -20,12 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.buttons.CloseButton
@@ -38,16 +40,27 @@ import features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 import features.invoice.presentation.screens.invoicelist.state.rememberInvoiceListCallbacks
+import features.invoice.publisher.NewInvoicePublisher
 import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
 import foundation.navigation.InvoicerScreen
+import org.koin.java.KoinJavaComponent.getKoin
 
 internal class InvoiceListScreen : Screen {
+
+
+    companion object {
+        val SCREEN_KEY = "invoice-list-screen"
+    }
+
+    override val key: ScreenKey = SCREEN_KEY
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<InvoiceListScreenModel>()
         val state by viewModel.state.collectAsStateWithLifecycle()
+        val newInvoicePublisher = remember { getKoin().get<NewInvoicePublisher>() }
 
         val callbacks = rememberInvoiceListCallbacks(
             onClose = { navigator?.pop() },
@@ -57,6 +70,10 @@ internal class InvoiceListScreen : Screen {
                 navigator?.push(ScreenRegistry.get(InvoicerScreen.Invoices.Create))
             }
         )
+
+        EventEffect(newInvoicePublisher) {
+            viewModel.loadPage(force = true)
+        }
 
         LaunchedEffect(Unit) {
             viewModel.loadPage()

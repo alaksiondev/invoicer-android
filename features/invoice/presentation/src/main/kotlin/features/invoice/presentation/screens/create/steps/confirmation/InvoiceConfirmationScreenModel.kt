@@ -6,6 +6,7 @@ import features.invoice.domain.model.CreateInvoiceActivityModel
 import features.invoice.domain.model.CreateInvoiceModel
 import features.invoice.domain.repository.InvoiceRepository
 import features.invoice.presentation.screens.create.CreateInvoiceManager
+import features.invoice.publisher.NewInvoicePublisher
 import foundation.date.impl.defaultFormat
 import foundation.date.impl.toLocalDate
 import foundation.events.EventAware
@@ -23,7 +24,8 @@ import kotlinx.datetime.TimeZone
 internal class InvoiceConfirmationScreenModel(
     private val manager: CreateInvoiceManager,
     private val repository: InvoiceRepository,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val newInvoicePublisher: NewInvoicePublisher
 ) : ScreenModel, EventAware<InvoiceConfirmationEvent> by EventPublisher() {
 
     private val _state = MutableStateFlow(InvoiceConfirmationState())
@@ -80,6 +82,7 @@ internal class InvoiceConfirmationScreenModel(
                 },
                 onSuccess = {
                     manager.clear()
+                    newInvoicePublisher.publish(Unit)
                     publish(InvoiceConfirmationEvent.Success)
                 },
                 onFailure = {

@@ -40,6 +40,7 @@ dependencies {
 
     // Feature
     implementation(projects.features.invoice.domain)
+    implementation(projects.features.invoice.publisher)
     implementation(projects.features.beneficiary.domain)
     implementation(projects.features.beneficiary.publisher)
     implementation(projects.features.intermediary.domain)

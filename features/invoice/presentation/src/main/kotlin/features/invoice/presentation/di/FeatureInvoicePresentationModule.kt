@@ -70,7 +70,8 @@ val invoicePresentationModule = module {
         InvoiceConfirmationScreenModel(
             manager = get(),
             repository = get(),
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            newInvoicePublisher = get()
         )
     }
 

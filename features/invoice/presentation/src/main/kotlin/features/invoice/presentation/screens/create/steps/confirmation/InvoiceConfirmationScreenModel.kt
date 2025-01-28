@@ -69,8 +69,12 @@ internal class InvoiceConfirmationScreenModel(
                 onFinish = {
                     _state.update { it.copy(isLoading = false) }
                 },
-                onSuccess = {},
-                onFailure = {}
+                onSuccess = {
+                    publish(InvoiceConfirmationEvent.Success)
+                },
+                onFailure = {
+                    publish(InvoiceConfirmationEvent.Error(it.message.orEmpty()))
+                }
             )
         }
     }

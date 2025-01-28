@@ -68,4 +68,18 @@
     <!-- Invoice Confirmation -->
     <string name="invoice_create_confirmation_title">Invoice Summary</string>
     <string name="invoice_create_confirmation_continue_cta">Submit invoice</string>
+    <string name="confirmation_sender_company_name_label">Sender company</string>
+    <string name="confirmation_sender_company_name_address">Sender address</string>
+    <string name="confirmation_recipient_company_name_label">Sender company</string>
+    <string name="confirmation_recipient_company_name_address">Sender address</string>
+    <string name="confirmation_issue_date_label">Issue date</string>
+    <string name="confirmation_due_date_label">Due date</string>
+    <string name="confirmation_beneficiary_label">Due date</string>
+    <string name="confirmation_intermediary_label">Issue date</string>
+    <string name="confirmation_activities_label">Activities</string>
+
+    <!-- Invoice feedback -->
+    <string name="invoice_feedback_title">Invoice created successfully</string>
+    <string name="invoice_feedback_description">You may now return to home</string>
+    <string name="invoice_feedback_cta">Return to home</string>
 </resources>

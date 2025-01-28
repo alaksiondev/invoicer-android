@@ -49,7 +49,9 @@ class InvoiceActivitiesScreenContentTest : KoinTest {
                             dispatcher = dispatcher,
                             createInvoiceManager = manager
                         ),
-                        onBack = {}
+                        onBack = {},
+                        onContinue = {}
+
                     )
             }
         }
@@ -73,7 +75,8 @@ class InvoiceActivitiesScreenContentTest : KoinTest {
                             dispatcher = dispatcher,
                             createInvoiceManager = manager
                         ),
-                        onBack = { onBackCalled = true }
+                        onBack = { onBackCalled = true },
+                        onContinue = {}
                     )
             }
         }
@@ -95,7 +98,8 @@ class InvoiceActivitiesScreenContentTest : KoinTest {
                             dispatcher = dispatcher,
                             createInvoiceManager = manager
                         ),
-                        onBack = {}
+                        onBack = {},
+                        onContinue = {}
                     )
             }
         }
@@ -152,7 +156,8 @@ class InvoiceActivitiesScreenContentTest : KoinTest {
                             dispatcher = dispatcher,
                             createInvoiceManager = manager
                         ),
-                        onBack = {}
+                        onBack = {},
+                        onContinue = {}
                     )
             }
         }
@@ -179,7 +184,8 @@ class InvoiceActivitiesScreenContentTest : KoinTest {
                             dispatcher = dispatcher,
                             createInvoiceManager = manager
                         ),
-                        onBack = {}
+                        onBack = {},
+                        onContinue = {}
                     )
             }
         }

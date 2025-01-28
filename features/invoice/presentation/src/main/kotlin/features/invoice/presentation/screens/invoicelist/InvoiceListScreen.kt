@@ -1,5 +1,6 @@
 package features.invoice.presentation.screens.invoicelist
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -102,7 +103,8 @@ internal class InvoiceListScreen : Screen {
                     } else {
                         LazyColumn(
                             modifier = Modifier.padding(it),
-                            contentPadding = PaddingValues(Spacing.medium)
+                            contentPadding = PaddingValues(Spacing.medium),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
                         ) {
                             items(
                                 items = state.invoices,

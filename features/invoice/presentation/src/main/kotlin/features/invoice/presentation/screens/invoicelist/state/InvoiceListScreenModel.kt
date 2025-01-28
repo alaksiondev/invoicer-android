@@ -45,6 +45,7 @@ internal class InvoiceListScreenModel(
                         },
                         onFinish = { /* no op */ },
                         onFailure = {
+                            it.printStackTrace()
                             _state.value = _state.value.copy(
                                 mode = InvoiceListMode.Error
                             )

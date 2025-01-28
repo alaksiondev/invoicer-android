@@ -1,6 +1,6 @@
 package features.invoice.domain.model
 
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Instant
 
 data class InvoiceList(
     val items: List<InvoiceListItem>,
@@ -13,9 +13,9 @@ data class InvoiceListItem(
     val externalId: String,
     val senderCompany: String,
     val recipientCompany: String,
-    val issueDate: LocalDate,
-    val dueDate: LocalDate,
-    val createdAt: LocalDate,
-    val updatedAt: LocalDate,
+    val issueDate: Instant,
+    val dueDate: Instant,
+    val createdAt: Instant,
+    val updatedAt: Instant,
     val totalAmount: Long
 )

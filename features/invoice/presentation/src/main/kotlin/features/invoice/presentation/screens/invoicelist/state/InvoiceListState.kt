@@ -34,6 +34,7 @@ internal interface InvoiceListCallbacks {
     fun onRetry()
     fun onClickInvoice(value: String)
     fun onCreateInvoiceClick()
+    fun onNextPage()
 
     companion object : InvoiceListCallbacks {
         override fun onClose() = Unit
@@ -43,6 +44,8 @@ internal interface InvoiceListCallbacks {
         override fun onClickInvoice(value: String) = Unit
 
         override fun onCreateInvoiceClick() = Unit
+
+        override fun onNextPage() = Unit
     }
 }
 
@@ -55,7 +58,8 @@ internal fun rememberInvoiceListCallbacks(
     onClose: () -> Unit,
     onRetry: () -> Unit,
     onClickInvoice: (String) -> Unit,
-    onClickCreateInvoice: () -> Unit
+    onClickCreateInvoice: () -> Unit,
+    onNextPage: () -> Unit,
 ): InvoiceListCallbacks {
     return remember {
         object : InvoiceListCallbacks {
@@ -66,6 +70,8 @@ internal fun rememberInvoiceListCallbacks(
             override fun onClickInvoice(value: String) = onClickInvoice(value)
 
             override fun onCreateInvoiceClick() = onClickCreateInvoice()
+
+            override fun onNextPage() = onNextPage()
         }
     }
 }

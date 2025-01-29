@@ -37,6 +37,7 @@ dependencies {
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.date.impl)
+    implementation(projects.foundation.pagination )
 
     // Feature
     implementation(projects.features.invoice.domain)

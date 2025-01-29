@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.filter
 
 @Composable
 fun LazyListPaginationEffect(
-    onPaginationTrigger: () -> Unit,
     offset: Int = 0,
     state: LazyListState,
-    enabled: Boolean
+    enabled: Boolean,
+    onPaginationTrigger: () -> Unit,
 ) {
     val shouldLoadMore = remember {
         derivedStateOf {

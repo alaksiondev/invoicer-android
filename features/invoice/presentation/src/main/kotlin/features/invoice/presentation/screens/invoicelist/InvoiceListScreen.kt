@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ErrorOutline
@@ -44,6 +45,7 @@ import features.invoice.publisher.NewInvoicePublisher
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import foundation.navigation.InvoicerScreen
+import foundation.pagination.LazyListPaginationEffect
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class InvoiceListScreen : Screen {
@@ -68,7 +70,8 @@ internal class InvoiceListScreen : Screen {
             onClickInvoice = {},
             onClickCreateInvoice = {
                 navigator?.push(ScreenRegistry.get(InvoicerScreen.Invoices.Create))
-            }
+            },
+            onNextPage = { viewModel.nextPage() }
         )
 
         EventEffect(newInvoicePublisher) {
@@ -118,10 +121,20 @@ internal class InvoiceListScreen : Screen {
                             modifier = Modifier.fillMaxSize()
                         )
                     } else {
+                        val listState = rememberLazyListState()
+
+                        LazyListPaginationEffect(
+                            state = listState,
+                            enabled = true
+                        ) {
+                            callbacks.onNextPage()
+                        }
+
                         LazyColumn(
                             modifier = Modifier.padding(it),
                             contentPadding = PaddingValues(Spacing.medium),
-                            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                            verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+                            state = listState
                         ) {
                             items(
                                 items = state.invoices,

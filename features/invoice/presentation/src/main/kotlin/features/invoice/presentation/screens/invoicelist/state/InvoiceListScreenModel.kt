@@ -35,12 +35,11 @@ internal class InvoiceListScreenModel(
                                 mode = InvoiceListMode.Loading,
                             )
                         },
-                        onSuccess = {
+                        onSuccess = { response ->
                             _state.value = _state.value.copy(
-                                invoices = (it.items).toPersistentList(),
+                                invoices = (response.items).toPersistentList(),
                                 mode = InvoiceListMode.Content
                             )
-                            page++
                             isFirstPageLoaded = true
                         },
                         onFinish = { /* no op */ },
@@ -56,6 +55,7 @@ internal class InvoiceListScreenModel(
 
     fun nextPage() {
         if (isFirstPageLoaded && _state.value.isLoadingMore.not()) {
+            page++
             screenModelScope.launch(dispatcher) {
                 launchRequest { getInvoices() }
                     .handle(

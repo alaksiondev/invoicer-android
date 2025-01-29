@@ -49,6 +49,12 @@
     <string name="beneficiary_details_iban_label">Iban Code</string>
     <string name="beneficiary_details_created_at_label">Created at</string>
     <string name="beneficiary_details_updated_at_label">Last updated at</string>
+    <string name="beneficiary_details_error_generic_title">Something went wrong</string>
+    <string name="beneficiary_details_error_generic_description">Check your connection and try again</string>
+    <string name="beneficiary_details_error_not_found_title">Beneficiary not found</string>
+    <string name="beneficiary_details_error_generic_cta">Try again</string>
+    <string name="beneficiary_details_error_not_found_cta">Go back</string>
 
 </resources>
+
 

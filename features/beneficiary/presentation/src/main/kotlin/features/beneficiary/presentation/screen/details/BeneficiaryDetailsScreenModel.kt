@@ -4,6 +4,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.repository.BeneficiaryRepository
 import foundation.date.impl.defaultFormat
+import foundation.exception.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher
@@ -25,9 +26,9 @@ internal class BeneficiaryDetailsScreenModel(
             launchRequest {
                 beneficiaryRepository.getBeneficiaryDetails(id)
             }.handle(
-                onFailure = {
+                onFailure = { error ->
                     _state.update {
-                        it.copy(mode = BeneficiaryDetailsMode.Error)
+                        it.copy(mode = BeneficiaryDetailsMode.Error(type = getErrorType(error)))
                     }
                 },
                 onSuccess = { response ->
@@ -50,6 +51,19 @@ internal class BeneficiaryDetailsScreenModel(
                     }
                 }
             )
+        }
+    }
+
+    private fun getErrorType(error: RequestError): BeneficiaryErrorType {
+        return when (error) {
+            is RequestError.Http -> {
+                when (error.httpCode) {
+                    404, 403 -> BeneficiaryErrorType.NotFound
+                    else -> BeneficiaryErrorType.Generic
+                }
+            }
+
+            else -> BeneficiaryErrorType.Generic
         }
     }
 

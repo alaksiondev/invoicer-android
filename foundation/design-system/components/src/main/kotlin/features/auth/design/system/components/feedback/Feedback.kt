@@ -31,7 +31,7 @@ fun Feedback(
     onPrimaryAction: () -> Unit,
     icon: ImageVector,
     title: String,
-    description: String,
+    description: String?,
     secondaryActionText: String? = null,
     onSecondaryAction: (() -> Unit)? = null,
 ) {
@@ -65,11 +65,13 @@ fun Feedback(
             style = MaterialTheme.typography.titleLarge
         )
         VerticalSpacer(height = SpacerSize.XSmall)
-        Text(
-            text = description,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center
-        )
+        if (description != null) {
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
+            )
+        }
         Spacer(1f)
         Buttons(
             modifier = Modifier.fillMaxWidth(),

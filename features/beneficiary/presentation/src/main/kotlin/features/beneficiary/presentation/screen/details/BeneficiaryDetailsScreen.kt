@@ -30,6 +30,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.LoadingState
 import features.auth.design.system.components.buttons.BackButton
+import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.components.BeneficiaryDetailsField
 import foundation.design.system.tokens.Spacing
@@ -52,7 +53,8 @@ internal data class BeneficiaryDetailsScreen(
         StateContent(
             state = state,
             onBack = { navigator?.pop() },
-            snackbarHost = snackbarHostState
+            snackbarHost = snackbarHostState,
+            onRetry = { screenModel.initState(id) }
         )
     }
 
@@ -61,6 +63,7 @@ internal data class BeneficiaryDetailsScreen(
     fun StateContent(
         state: BeneficiaryDetailsState,
         onBack: () -> Unit,
+        onRetry: () -> Unit,
         snackbarHost: SnackbarHostState
     ) {
         Scaffold(
@@ -78,7 +81,7 @@ internal data class BeneficiaryDetailsScreen(
                 )
             }
         ) {
-            when (state.mode) {
+            when (val mode = state.mode) {
                 BeneficiaryDetailsMode.Loading -> LoadingState(Modifier.fillMaxSize())
 
                 BeneficiaryDetailsMode.Content -> {
@@ -135,8 +138,20 @@ internal data class BeneficiaryDetailsScreen(
                     }
                 }
 
-                BeneficiaryDetailsMode.Error -> {
-
+                is BeneficiaryDetailsMode.Error -> {
+                    Feedback(
+                        modifier = Modifier.fillMaxSize(),
+                        title = stringResource(mode.type.titleResource),
+                        description = mode.type.descriptionResource?.let { stringResource(it) },
+                        icon = mode.type.icon,
+                        primaryActionText = stringResource(mode.type.ctaResource),
+                        onPrimaryAction = {
+                            when (mode.type) {
+                                BeneficiaryErrorType.NotFound -> onBack()
+                                BeneficiaryErrorType.Generic -> onRetry()
+                            }
+                        }
+                    )
                 }
             }
         }

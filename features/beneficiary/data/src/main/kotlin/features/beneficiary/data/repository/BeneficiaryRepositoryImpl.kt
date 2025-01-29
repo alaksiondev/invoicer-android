@@ -48,4 +48,18 @@ internal class BeneficiaryRepositoryImpl(
             }
         )
     }
+
+    override suspend fun getBeneficiaryDetails(id: String): BeneficiaryModel {
+        val result = dataSource.getBeneficiaryDetails(id)
+        return BeneficiaryModel(
+            name = result.name,
+            iban = result.iban,
+            swift = result.swift,
+            bankName = result.bankName,
+            bankAddress = result.bankAddress,
+            id = result.id,
+            createdAt = result.createdAt,
+            updatedAt = result.updatedAt,
+        )
+    }
 }

@@ -1,6 +1,7 @@
 package features.beneficiary.domain.repository
 
 import features.beneficiary.domain.model.BeneficiariesModel
+import features.beneficiary.domain.model.BeneficiaryModel
 
 interface BeneficiaryRepository {
     suspend fun createBeneficiary(
@@ -15,4 +16,8 @@ interface BeneficiaryRepository {
         page: Long,
         limit: Long
     ): BeneficiariesModel
+
+    suspend fun getBeneficiaryDetails(
+        id: String
+    ): BeneficiaryModel
 }

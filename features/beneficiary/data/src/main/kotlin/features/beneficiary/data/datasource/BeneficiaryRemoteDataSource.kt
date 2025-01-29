@@ -93,7 +93,7 @@ internal class BeneficiaryRemoteDataSourceImpl(
                 url = buildUrl
                 {
                     host = BASE_URL
-                    path("/v1/beneficiary")
+                    path("/v1/beneficiary/${id}")
                 },
                 block = {
                     contentType(ContentType.Application.Json)

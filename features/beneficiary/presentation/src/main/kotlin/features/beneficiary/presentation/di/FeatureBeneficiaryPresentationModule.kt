@@ -1,6 +1,7 @@
 package features.beneficiary.presentation.di
 
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
+import features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreenModel
 import features.beneficiary.presentation.screen.list.BeneficiaryScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -18,6 +19,13 @@ val beneficiaryPresentationModule = module {
             beneficiaryRepository = get(),
             dispatcher = Dispatchers.Default,
             newBeneficiaryPublisher = get()
+        )
+    }
+
+    factory {
+        BeneficiaryDetailsScreenModel(
+            beneficiaryRepository = get(),
+            dispatcher = Dispatchers.Default
         )
     }
 }

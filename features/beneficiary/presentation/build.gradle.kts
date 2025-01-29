@@ -40,6 +40,7 @@ dependencies {
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.pagination)
+    implementation(projects.foundation.date.impl)
 
     // Feature
     implementation(projects.features.beneficiary.domain)

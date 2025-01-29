@@ -29,6 +29,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.buttons.CloseButton
 import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
+import features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import features.beneficiary.presentation.screen.list.components.BeneficiaryList
 import features.beneficiary.publisher.NewBeneficiaryPublisher
 import foundation.design.system.tokens.Spacing
@@ -56,7 +57,7 @@ internal class BeneficiaryListScreen : Screen {
                     )
                 )
             },
-            onItemClick = { }
+            onItemClick = { navigator?.push(BeneficiaryDetailsScreen(it)) }
         )
 
         LaunchedEffect(Unit) { viewModel.loadPage() }

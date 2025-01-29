@@ -40,4 +40,15 @@
     <string name="create_success_title">Beneficiary Created</string>
     <string name="create_success_description">New registry is already avaiable for usage</string>
 
+    <!-- Beneficiary Details -->
+    <string name="beneficiary_details_title">Beneficiary Details</string>
+    <string name="beneficiary_details_name_label">Name</string>
+    <string name="beneficiary_details_bank_name_label">Bank Name</string>
+    <string name="beneficiary_details_bank_address_label">Bank Address</string>
+    <string name="beneficiary_details_swift_label">Swift Code</string>
+    <string name="beneficiary_details_iban_label">Iban Code</string>
+    <string name="beneficiary_details_created_at_label">Created at</string>
+    <string name="beneficiary_details_updated_at_label">Last updated at</string>
+
 </resources>
+

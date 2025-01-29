@@ -8,4 +8,11 @@ internal data class BeneficiaryDetailsState(
     val bankAddress: String = "",
     val createdAt: String = "",
     val updatedAt: String = "",
+    val mode: BeneficiaryDetailsMode = BeneficiaryDetailsMode.Content
 )
+
+internal sealed interface BeneficiaryDetailsMode {
+    data object Loading : BeneficiaryDetailsMode
+    data object Content : BeneficiaryDetailsMode
+    data object Error : BeneficiaryDetailsMode
+}

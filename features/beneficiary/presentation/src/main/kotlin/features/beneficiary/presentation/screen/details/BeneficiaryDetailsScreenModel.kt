@@ -26,7 +26,9 @@ internal class BeneficiaryDetailsScreenModel(
                 beneficiaryRepository.getBeneficiaryDetails(id)
             }.handle(
                 onFailure = {
-                    print(it)
+                    _state.update {
+                        it.copy(mode = BeneficiaryDetailsMode.Error)
+                    }
                 },
                 onSuccess = { response ->
                     _state.update {
@@ -37,8 +39,14 @@ internal class BeneficiaryDetailsScreenModel(
                             bankName = response.bankName,
                             bankAddress = response.bankAddress,
                             createdAt = response.createdAt.defaultFormat(),
-                            updatedAt = response.updatedAt.defaultFormat()
+                            updatedAt = response.updatedAt.defaultFormat(),
+                            mode = BeneficiaryDetailsMode.Content
                         )
+                    }
+                },
+                onStart = {
+                    _state.update {
+                        it.copy(mode = BeneficiaryDetailsMode.Loading)
                     }
                 }
             )

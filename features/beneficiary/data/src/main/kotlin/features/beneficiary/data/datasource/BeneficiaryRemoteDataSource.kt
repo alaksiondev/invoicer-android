@@ -1,6 +1,7 @@
 package features.beneficiary.data.datasource
 
 import features.beneficiary.data.model.BeneficiariesData
+import features.beneficiary.data.model.BeneficiaryData
 import features.beneficiary.data.model.CreateBeneficiaryData
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
@@ -29,6 +30,10 @@ internal interface BeneficiaryRemoteDataSource {
         limit: Long,
         page: Long
     ): BeneficiariesData
+
+    suspend fun getBeneficiaryDetails(
+        id: String
+    ): BeneficiaryData
 }
 
 internal class BeneficiaryRemoteDataSourceImpl(
@@ -46,7 +51,7 @@ internal class BeneficiaryRemoteDataSourceImpl(
         httpWrapper.client.post(
             url = buildUrl {
                 host = BASE_URL
-                path("/beneficiary")
+                path("/v1/beneficiary")
             },
             block = {
                 contentType(ContentType.Application.Json)
@@ -72,12 +77,26 @@ internal class BeneficiaryRemoteDataSourceImpl(
                 url = buildUrl
                 {
                     host = BASE_URL
-                    path("/beneficiary")
+                    path("/v1/beneficiary")
                 },
                 block = {
                     contentType(ContentType.Application.Json)
                     parameter("page", page.toString())
                     parameter("limit", limit.toString())
+                }
+            )
+        }.body()
+
+    override suspend fun getBeneficiaryDetails(id: String): BeneficiaryData =
+        withContext(dispatcher) {
+            httpWrapper.client.get(
+                url = buildUrl
+                {
+                    host = BASE_URL
+                    path("/v1/beneficiary")
+                },
+                block = {
+                    contentType(ContentType.Application.Json)
                 }
             )
         }.body()

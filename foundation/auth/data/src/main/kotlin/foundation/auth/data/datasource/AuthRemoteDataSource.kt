@@ -46,7 +46,7 @@ internal class AuthRemoteDataSourceImpl(
                 .post(
                     url = buildUrl {
                         host = BASE_URL
-                        path("/user")
+                        path("/v1/user")
                     }
                 ) {
                     contentType(ContentType.Application.Json)
@@ -67,7 +67,7 @@ internal class AuthRemoteDataSourceImpl(
             httpWrapper.client.post(
                 url = buildUrl {
                     host = BASE_URL
-                    path("/auth/login")
+                    path("/v1/auth/login")
                 }
             ) {
                 contentType(ContentType.Application.Json)
@@ -86,7 +86,7 @@ internal class AuthRemoteDataSourceImpl(
             httpWrapper.client.post(
                 url = buildUrl {
                     host = BASE_URL
-                    path("/auth/refresh")
+                    path("/v1/auth/refresh")
                 }
             ) {
                 contentType(ContentType.Application.Json)

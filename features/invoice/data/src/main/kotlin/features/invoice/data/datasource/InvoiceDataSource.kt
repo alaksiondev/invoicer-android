@@ -50,7 +50,7 @@ internal class InvoiceDataSourceImpl(
         return withContext(dispatcher) {
             val url = buildUrl {
                 host = BASE_URL
-                path("/invoice")
+                path("/v1/invoice")
                 parameters.apply {
                     append("page", page.toString())
                     append("limit", limit.toString())
@@ -73,7 +73,7 @@ internal class InvoiceDataSourceImpl(
         withContext(dispatcher) {
             val url = buildUrl {
                 host = BASE_URL
-                path("/invoice")
+                path("/v1/invoice")
             }
             httpWrapper.client.post(
                 url = url

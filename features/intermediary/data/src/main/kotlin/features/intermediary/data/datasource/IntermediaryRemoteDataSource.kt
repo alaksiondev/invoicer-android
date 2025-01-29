@@ -46,7 +46,7 @@ internal class IntermediaryRemoteDataSourceImpl(
         httpWrapper.client.post(
             url = buildUrl {
                 host = BASE_URL
-                path("/intermediary")
+                path("/v1/intermediary")
             },
             block = {
                 contentType(ContentType.Application.Json)
@@ -72,7 +72,7 @@ internal class IntermediaryRemoteDataSourceImpl(
                 url = buildUrl
                 {
                     host = BASE_URL
-                    path("/intermediary")
+                    path("/v1/intermediary")
                 },
                 block = {
                     contentType(ContentType.Application.Json)

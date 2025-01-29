@@ -11,8 +11,13 @@ import androidx.compose.material.icons.automirrored.filled.Subject
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -21,7 +26,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,6 +37,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.LoadingState
 import features.auth.design.system.components.buttons.BackButton
+import features.auth.design.system.components.dialog.DefaultInvoicerDialog
 import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.components.BeneficiaryDetailsField
@@ -45,6 +53,7 @@ internal data class BeneficiaryDetailsScreen(
         val state by screenModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
         val snackbarHostState = remember { SnackbarHostState() }
+        var showDialog by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
             screenModel.initState(id)
@@ -54,7 +63,13 @@ internal data class BeneficiaryDetailsScreen(
             state = state,
             onBack = { navigator?.pop() },
             snackbarHost = snackbarHostState,
-            onRetry = { screenModel.initState(id) }
+            onRetry = { screenModel.initState(id) },
+            showDeleteDialog = showDialog,
+            onConfirmDelete = {
+                showDialog = false
+            },
+            onDismissDelete = { showDialog = false },
+            onRequestDelete = { showDialog = true }
         )
     }
 
@@ -64,7 +79,11 @@ internal data class BeneficiaryDetailsScreen(
         state: BeneficiaryDetailsState,
         onBack: () -> Unit,
         onRetry: () -> Unit,
-        snackbarHost: SnackbarHostState
+        snackbarHost: SnackbarHostState,
+        showDeleteDialog: Boolean,
+        onRequestDelete: () -> Unit,
+        onConfirmDelete: () -> Unit,
+        onDismissDelete: () -> Unit
     ) {
         Scaffold(
             snackbarHost = {
@@ -77,6 +96,19 @@ internal data class BeneficiaryDetailsScreen(
                     },
                     navigationIcon = {
                         BackButton(onBackClick = onBack)
+                    },
+                    actions = {
+                        if (state.mode == BeneficiaryDetailsMode.Content) {
+                            IconButton(
+                                onClick = onRequestDelete
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                            }
+                        }
                     }
                 )
             }
@@ -134,6 +166,18 @@ internal data class BeneficiaryDetailsScreen(
                             label = stringResource(R.string.beneficiary_details_updated_at_label),
                             value = state.updatedAt,
                             icon = Icons.Default.CalendarMonth
+                        )
+                    }
+
+                    if (showDeleteDialog) {
+                        DefaultInvoicerDialog(
+                            onDismiss = onDismissDelete,
+                            title = stringResource(R.string.beneficiary_details_delete_title),
+                            description = stringResource(R.string.beneficiary_details_delete_description),
+                            confirmButtonText = stringResource(R.string.beneficiary_details_delete_cta),
+                            cancelButtonText = stringResource(R.string.beneficiary_details_delete_cancel_cta),
+                            confirmButtonClick = onConfirmDelete,
+                            icon = Icons.Rounded.WarningAmber
                         )
                     }
                 }

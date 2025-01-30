@@ -40,7 +40,7 @@ internal class InvoiceExternalIdScreen : Screen {
         }
 
         StateContent(
-            onBack = { navigator?.parent?.pop() },
+            onBack = { navigator?.pop() },
             onSubmit = screenModel::submit,
             state = state,
             onUpdate = screenModel::updateExternalId

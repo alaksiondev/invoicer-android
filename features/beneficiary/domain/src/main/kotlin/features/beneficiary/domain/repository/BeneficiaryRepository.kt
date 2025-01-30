@@ -24,4 +24,13 @@ interface BeneficiaryRepository {
     suspend fun deleteBeneficiary(
         id: String
     )
+
+    suspend fun updateBeneficiary(
+        id: String,
+        name: String,
+        bankName: String,
+        bankAddress: String,
+        swift: String,
+        iban: String,
+    )
 }

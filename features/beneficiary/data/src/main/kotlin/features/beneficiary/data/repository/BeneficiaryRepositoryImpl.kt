@@ -66,4 +66,22 @@ internal class BeneficiaryRepositoryImpl(
     override suspend fun deleteBeneficiary(id: String) {
         return dataSource.deleteBeneficiary(id = id)
     }
+
+    override suspend fun updateBeneficiary(
+        id: String,
+        name: String,
+        bankName: String,
+        bankAddress: String,
+        swift: String,
+        iban: String
+    ) {
+        return dataSource.updateBeneficiary(
+            id = id,
+            name = name,
+            bankName = bankName,
+            bankAddress = bankAddress,
+            swift = swift,
+            iban = iban
+        )
+    }
 }

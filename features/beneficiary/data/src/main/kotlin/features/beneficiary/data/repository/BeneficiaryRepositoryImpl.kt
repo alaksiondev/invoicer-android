@@ -62,4 +62,8 @@ internal class BeneficiaryRepositoryImpl(
             updatedAt = result.updatedAt,
         )
     }
+
+    override suspend fun deleteBeneficiary(id: String) {
+        return dataSource.deleteBeneficiary(id = id)
+    }
 }

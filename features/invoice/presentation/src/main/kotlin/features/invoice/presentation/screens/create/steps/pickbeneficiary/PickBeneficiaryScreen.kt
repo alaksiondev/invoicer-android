@@ -24,7 +24,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.design.system.components.LoadingState
 import features.auth.design.system.components.feedback.Feedback
-import features.beneficiary.publisher.NewBeneficiaryPublisher
+import features.beneficiary.publisher.RefreshBeneficiaryPublisher
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreen
@@ -38,7 +38,7 @@ internal class PickBeneficiaryScreen : Screen {
     override fun Content() {
         val screenModel = koinScreenModel<PickBeneficiaryScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
-        val newBeneficiaryPublisher by remember { getKoin().inject<NewBeneficiaryPublisher>() }
+        val refreshBeneficiaryPublisher by remember { getKoin().inject<RefreshBeneficiaryPublisher>() }
         val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit) { screenModel.initState() }
@@ -55,7 +55,7 @@ internal class PickBeneficiaryScreen : Screen {
             }
         }
 
-        EventEffect(newBeneficiaryPublisher) {
+        EventEffect(refreshBeneficiaryPublisher) {
             screenModel.initState(force = true)
         }
 

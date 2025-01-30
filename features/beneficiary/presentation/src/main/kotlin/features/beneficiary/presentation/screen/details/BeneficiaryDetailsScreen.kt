@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,6 +43,8 @@ import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.components.BeneficiaryDetailsField
 import foundation.design.system.tokens.Spacing
+import foundation.events.EventEffect
+import kotlinx.coroutines.launch
 
 internal data class BeneficiaryDetailsScreen(
     private val id: String
@@ -54,6 +57,19 @@ internal data class BeneficiaryDetailsScreen(
         val navigator = LocalNavigator.current
         val snackbarHostState = remember { SnackbarHostState() }
         var showDialog by remember { mutableStateOf(false) }
+        val scope = rememberCoroutineScope()
+
+        EventEffect(screenModel) {
+            when (it) {
+                is BeneficiaryDetailsEvent.DeleteError -> scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = it.message
+                    )
+                }
+
+                BeneficiaryDetailsEvent.DeleteSuccess -> navigator?.pop()
+            }
+        }
 
         LaunchedEffect(Unit) {
             screenModel.initState(id)
@@ -67,6 +83,7 @@ internal data class BeneficiaryDetailsScreen(
             showDeleteDialog = showDialog,
             onConfirmDelete = {
                 showDialog = false
+                screenModel.deleteBeneficiary(id)
             },
             onDismissDelete = { showDialog = false },
             onRequestDelete = { showDialog = true }

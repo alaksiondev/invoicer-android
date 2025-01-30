@@ -31,7 +31,7 @@ import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import features.beneficiary.presentation.screen.list.components.BeneficiaryList
-import features.beneficiary.publisher.NewBeneficiaryPublisher
+import features.beneficiary.publisher.RefreshBeneficiaryPublisher
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import foundation.navigation.InvoicerScreen
@@ -44,7 +44,7 @@ internal class BeneficiaryListScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<BeneficiaryScreenModel>()
-        val newBeneficiaryPublisher by remember { getKoin().inject<NewBeneficiaryPublisher>() }
+        val refreshBeneficiaryPublisher by remember { getKoin().inject<RefreshBeneficiaryPublisher>() }
         val state by viewModel.state.collectAsStateWithLifecycle()
 
         val callbacks = rememberBeneficiaryListCallbacks(
@@ -62,7 +62,7 @@ internal class BeneficiaryListScreen : Screen {
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
 
-        EventEffect(newBeneficiaryPublisher) {
+        EventEffect(refreshBeneficiaryPublisher) {
             viewModel.loadPage(force = true)
         }
 

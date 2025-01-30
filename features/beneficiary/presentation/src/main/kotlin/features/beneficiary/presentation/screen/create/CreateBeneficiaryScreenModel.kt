@@ -3,7 +3,7 @@ package features.beneficiary.presentation.screen.create
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.repository.BeneficiaryRepository
-import features.beneficiary.publisher.NewBeneficiaryPublisher
+import features.beneficiary.publisher.RefreshBeneficiaryPublisher
 import foundation.events.EventAware
 import foundation.events.EventPublisher
 import foundation.network.request.handle
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class CreateBeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
-    private val newBeneficiaryPublisher: NewBeneficiaryPublisher,
+    private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher,
 ) : ScreenModel, EventAware<CreateBeneficiaryEvents> by EventPublisher() {
 
     private val _state = MutableStateFlow(CreateBeneficiaryState())
@@ -83,7 +83,7 @@ internal class CreateBeneficiaryScreenModel(
                     )
                 },
                 onSuccess = {
-                    newBeneficiaryPublisher.publish(Unit)
+                    refreshBeneficiaryPublisher.publish(Unit)
                     publish(CreateBeneficiaryEvents.Success)
                 }
             )

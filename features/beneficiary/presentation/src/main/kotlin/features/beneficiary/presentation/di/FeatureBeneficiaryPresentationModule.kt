@@ -18,14 +18,15 @@ val beneficiaryPresentationModule = module {
         CreateBeneficiaryScreenModel(
             beneficiaryRepository = get(),
             dispatcher = Dispatchers.Default,
-            newBeneficiaryPublisher = get()
+            refreshBeneficiaryPublisher = get()
         )
     }
 
     factory {
         BeneficiaryDetailsScreenModel(
             beneficiaryRepository = get(),
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            refreshBeneficiaryPublisher = get()
         )
     }
 }

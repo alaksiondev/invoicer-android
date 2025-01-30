@@ -3,7 +3,10 @@ package features.beneficiary.presentation.screen.details
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.repository.BeneficiaryRepository
+import features.beneficiary.publisher.RefreshBeneficiaryPublisher
 import foundation.date.impl.defaultFormat
+import foundation.events.EventAware
+import foundation.events.EventPublisher
 import foundation.exception.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
@@ -15,8 +18,9 @@ import kotlinx.coroutines.launch
 
 internal class BeneficiaryDetailsScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
-    private val dispatcher: CoroutineDispatcher
-) : ScreenModel {
+    private val dispatcher: CoroutineDispatcher,
+    private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher
+) : ScreenModel, EventAware<BeneficiaryDetailsEvent> by EventPublisher() {
 
     private val _state = MutableStateFlow(BeneficiaryDetailsState())
     val state: StateFlow<BeneficiaryDetailsState> = _state
@@ -48,6 +52,32 @@ internal class BeneficiaryDetailsScreenModel(
                 onStart = {
                     _state.update {
                         it.copy(mode = BeneficiaryDetailsMode.Loading)
+                    }
+                }
+            )
+        }
+    }
+
+    fun deleteBeneficiary(id: String) {
+        screenModelScope.launch(dispatcher) {
+            launchRequest {
+                beneficiaryRepository.deleteBeneficiary(id)
+            }.handle(
+                onFailure = { error ->
+                    publish(BeneficiaryDetailsEvent.DeleteError(error.message ?: ""))
+                },
+                onSuccess = {
+                    refreshBeneficiaryPublisher.publish(Unit)
+                    publish(BeneficiaryDetailsEvent.DeleteSuccess)
+                },
+                onStart = {
+                    _state.update {
+                        it.copy(mode = BeneficiaryDetailsMode.Loading)
+                    }
+                },
+                onFinish = {
+                    _state.update {
+                        it.copy(mode = BeneficiaryDetailsMode.Content)
                     }
                 }
             )

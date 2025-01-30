@@ -6,6 +6,7 @@ import features.beneficiary.data.model.CreateBeneficiaryData
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -34,6 +35,10 @@ internal interface BeneficiaryRemoteDataSource {
     suspend fun getBeneficiaryDetails(
         id: String
     ): BeneficiaryData
+
+    suspend fun deleteBeneficiary(
+        id: String
+    )
 }
 
 internal class BeneficiaryRemoteDataSourceImpl(
@@ -100,4 +105,20 @@ internal class BeneficiaryRemoteDataSourceImpl(
                 }
             )
         }.body()
+
+    override suspend fun deleteBeneficiary(id: String) {
+        withContext(dispatcher) {
+            httpWrapper.client.delete(
+                url = buildUrl
+                {
+                    host = BASE_URL
+                    path("/v1/beneficiary/${id}")
+                },
+                block = {
+                    contentType(ContentType.Application.Json)
+                }
+            )
+        }
+    }
+
 }

@@ -20,4 +20,8 @@ interface BeneficiaryRepository {
     suspend fun getBeneficiaryDetails(
         id: String
     ): BeneficiaryModel
+
+    suspend fun deleteBeneficiary(
+        id: String
+    )
 }

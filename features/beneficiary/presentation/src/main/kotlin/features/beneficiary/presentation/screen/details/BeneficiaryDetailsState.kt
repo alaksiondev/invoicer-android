@@ -18,6 +18,11 @@ internal data class BeneficiaryDetailsState(
     val mode: BeneficiaryDetailsMode = BeneficiaryDetailsMode.Content
 )
 
+internal sealed interface BeneficiaryDetailsEvent {
+    data class DeleteError(val message: String) : BeneficiaryDetailsEvent
+    data object DeleteSuccess : BeneficiaryDetailsEvent
+}
+
 internal sealed interface BeneficiaryDetailsMode {
     data object Loading : BeneficiaryDetailsMode
     data object Content : BeneficiaryDetailsMode

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,6 +43,7 @@ import features.auth.design.system.components.dialog.DefaultInvoicerDialog
 import features.auth.design.system.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.components.BeneficiaryDetailsField
+import features.beneficiary.presentation.screen.update.UpdateBeneficiaryScreen
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import kotlinx.coroutines.launch
@@ -71,9 +73,7 @@ internal data class BeneficiaryDetailsScreen(
             }
         }
 
-        LaunchedEffect(Unit) {
-            screenModel.initState(id)
-        }
+        LaunchedEffect(Unit) { screenModel.initState(id) }
 
         StateContent(
             state = state,
@@ -86,7 +86,8 @@ internal data class BeneficiaryDetailsScreen(
                 screenModel.deleteBeneficiary(id)
             },
             onDismissDelete = { showDialog = false },
-            onRequestDelete = { showDialog = true }
+            onRequestDelete = { showDialog = true },
+            onRequestEdit = { navigator?.push(UpdateBeneficiaryScreen(id)) }
         )
     }
 
@@ -100,7 +101,8 @@ internal data class BeneficiaryDetailsScreen(
         showDeleteDialog: Boolean,
         onRequestDelete: () -> Unit,
         onConfirmDelete: () -> Unit,
-        onDismissDelete: () -> Unit
+        onDismissDelete: () -> Unit,
+        onRequestEdit: () -> Unit,
     ) {
         Scaffold(
             snackbarHost = {
@@ -116,6 +118,15 @@ internal data class BeneficiaryDetailsScreen(
                     },
                     actions = {
                         if (state.mode == BeneficiaryDetailsMode.Content) {
+                            IconButton(
+                                onClick = onRequestEdit
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = null,
+                                )
+                            }
+
                             IconButton(
                                 onClick = onRequestDelete
                             ) {

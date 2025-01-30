@@ -59,6 +59,14 @@
     <string name="beneficiary_details_delete_cta">Delete</string>
     <string name="beneficiary_details_delete_cancel_cta">Cancel</string>
 
+    <!-- Update beneficiary -->
+    <string name="update_beneficiary_title">Update Beneficiary</string>
+    <string name="beneficiary_update_name_label">Name</string>
+    <string name="beneficiary_update_bank_name_label">Bank Name</string>
+    <string name="beneficiary_update_bank_address_label">Bank Address</string>
+    <string name="beneficiary_update_swift_label">Swift Code</string>
+    <string name="beneficiary_update_iban_label">Iban Code</string>
+    <string name="beneficiary_update_cta">Update beneficiary</string>
 
 </resources>
 

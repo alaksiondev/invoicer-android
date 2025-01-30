@@ -73,4 +73,37 @@ internal class UpdateBeneficiaryScreenModel(
     fun updateIban(iban: String) {
         _state.update { it.copy(iban = iban) }
     }
+
+    fun submit(beneficiaryId: String) {
+        screenModelScope.launch(dispatcher) {
+            launchRequest {
+                beneficiaryRepository.updateBeneficiary(
+                    id = beneficiaryId,
+                    name = state.value.name,
+                    bankName = state.value.bankName,
+                    bankAddress = state.value.bankAddress,
+                    swift = state.value.swift,
+                    iban = state.value.iban
+                )
+            }.handle(
+                onSuccess = {
+                    refreshBeneficiaryPublisher.publish(Unit)
+                    publish(UpdateBeneficiaryEvent.Success)
+                },
+                onFailure = {
+                    publish(UpdateBeneficiaryEvent.Error(it.message.orEmpty()))
+                },
+                onStart = {
+                    _state.update {
+                        it.copy(mode = UpdateBeneficiaryMode.Loading)
+                    }
+                },
+                onFinish = {
+                    _state.update {
+                        it.copy(mode = UpdateBeneficiaryMode.Content)
+                    }
+                }
+            )
+        }
+    }
 }

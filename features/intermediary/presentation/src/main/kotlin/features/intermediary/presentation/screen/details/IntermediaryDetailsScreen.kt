@@ -43,6 +43,7 @@ import features.auth.design.system.components.dialog.DefaultInvoicerDialog
 import features.auth.design.system.components.feedback.Feedback
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.details.components.IntermediaryDetailsField
+import features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import kotlinx.coroutines.launch
@@ -86,7 +87,7 @@ internal data class IntermediaryDetailsScreen(
             },
             onDismissDelete = { showDialog = false },
             onRequestDelete = { showDialog = true },
-            onRequestEdit = {}
+            onRequestEdit = { navigator?.push(UpdateIntermediaryScreen(id)) }
         )
     }
 

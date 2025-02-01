@@ -3,6 +3,7 @@ package features.intermediary.data.datasource
 import features.intermediary.data.model.CreateIntermediaryData
 import features.intermediary.data.model.IntermediariesData
 import features.intermediary.data.model.IntermediaryData
+import features.intermediary.data.model.UpdateIntermediaryData
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
@@ -10,6 +11,7 @@ import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.buildUrl
@@ -38,6 +40,15 @@ internal interface IntermediaryRemoteDataSource {
 
     suspend fun deleteIntermediary(
         id: String
+    )
+
+    suspend fun updateIntermediary(
+        id: String,
+        name: String,
+        bankName: String,
+        bankAddress: String,
+        swift: String,
+        iban: String,
     )
 }
 
@@ -116,6 +127,36 @@ internal class IntermediaryRemoteDataSourceImpl(
                 },
                 block = {
                     contentType(ContentType.Application.Json)
+                }
+            )
+        }
+    }
+
+    override suspend fun updateIntermediary(
+        id: String,
+        name: String,
+        bankName: String,
+        bankAddress: String,
+        swift: String,
+        iban: String
+    ) {
+        withContext(dispatcher) {
+            httpWrapper.client.put(
+                url = buildUrl {
+                    host = BASE_URL
+                    path("/v1/intermediary/${id}")
+                },
+                block = {
+                    contentType(ContentType.Application.Json)
+                    setBody(
+                        UpdateIntermediaryData(
+                            name = name,
+                            swift = swift,
+                            iban = iban,
+                            bankName = bankName,
+                            bankAddress = bankAddress
+                        )
+                    )
                 }
             )
         }

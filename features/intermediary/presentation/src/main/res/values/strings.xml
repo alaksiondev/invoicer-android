@@ -59,4 +59,14 @@
     <string name="intermediary_details_delete_cta">Delete</string>
     <string name="intermediary_details_delete_cancel_cta">Cancel</string>
 
+    <!-- Update beneficiary -->
+    <string name="update_intermediary_title">Update Beneficiary</string>
+    <string name="intermediary_update_name_label">Name</string>
+    <string name="intermediary_update_bank_name_label">Bank Name</string>
+    <string name="intermediary_update_bank_address_label">Bank Address</string>
+    <string name="intermediary_update_swift_label">Swift Code</string>
+    <string name="intermediary_update_iban_label">Iban Code</string>
+    <string name="intermediary_update_cta">Update beneficiary</string>
+
+
 </resources>

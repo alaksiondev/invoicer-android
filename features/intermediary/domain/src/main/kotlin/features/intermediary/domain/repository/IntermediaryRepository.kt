@@ -24,4 +24,13 @@ interface IntermediaryRepository {
     suspend fun deleteBeneficiary(
         id: String
     )
+
+    suspend fun updateIntermediary(
+        id: String,
+        name: String,
+        bankName: String,
+        bankAddress: String,
+        swift: String,
+        iban: String,
+    )
 }

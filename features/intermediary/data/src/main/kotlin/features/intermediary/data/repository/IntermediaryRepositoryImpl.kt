@@ -63,5 +63,21 @@ internal class IntermediaryRepositoryImpl(
         dataSource.deleteIntermediary(id)
     }
 
-
+    override suspend fun updateIntermediary(
+        id: String,
+        name: String,
+        bankName: String,
+        bankAddress: String,
+        swift: String,
+        iban: String
+    ) {
+        dataSource.updateIntermediary(
+            id = id,
+            name = name,
+            bankName = bankName,
+            bankAddress = bankAddress,
+            swift = swift,
+            iban = iban,
+        )
+    }
 }

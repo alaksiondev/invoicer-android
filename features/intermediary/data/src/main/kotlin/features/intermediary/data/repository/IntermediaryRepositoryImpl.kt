@@ -43,4 +43,25 @@ internal class IntermediaryRepositoryImpl(
             )
         }
     }
+
+    override suspend fun getIntermediaryDetails(id: String): IntermediaryModel {
+        return dataSource.getIntermediaryDetails(id).let {
+            IntermediaryModel(
+                name = it.name,
+                iban = it.iban,
+                swift = it.swift,
+                bankName = it.bankName,
+                bankAddress = it.bankAddress,
+                id = it.id,
+                createdAt = it.createdAt,
+                updatedAt = it.updatedAt,
+            )
+        }
+    }
+
+    override suspend fun deleteBeneficiary(id: String) {
+        dataSource.deleteIntermediary(id)
+    }
+
+
 }

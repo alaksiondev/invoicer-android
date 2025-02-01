@@ -2,9 +2,11 @@ package features.intermediary.data.datasource
 
 import features.intermediary.data.model.CreateIntermediaryData
 import features.intermediary.data.model.IntermediariesData
+import features.intermediary.data.model.IntermediaryData
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -29,6 +31,14 @@ internal interface IntermediaryRemoteDataSource {
         limit: Long,
         page: Long
     ): IntermediariesData
+
+    suspend fun getIntermediaryDetails(
+        id: String
+    ): IntermediaryData
+
+    suspend fun deleteIntermediary(
+        id: String
+    )
 }
 
 internal class IntermediaryRemoteDataSourceImpl(
@@ -81,4 +91,33 @@ internal class IntermediaryRemoteDataSourceImpl(
                 }
             )
         }.body()
+
+    override suspend fun getIntermediaryDetails(id: String): IntermediaryData =
+        withContext(dispatcher) {
+            httpWrapper.client.get(
+                url = buildUrl
+                {
+                    host = BASE_URL
+                    path("/v1/intermediary/${id}")
+                },
+                block = {
+                    contentType(ContentType.Application.Json)
+                }
+            )
+        }.body()
+
+    override suspend fun deleteIntermediary(id: String) {
+        withContext(dispatcher) {
+            httpWrapper.client.delete(
+                url = buildUrl
+                {
+                    host = BASE_URL
+                    path("/v1/intermediary/${id}")
+                },
+                block = {
+                    contentType(ContentType.Application.Json)
+                }
+            )
+        }
+    }
 }

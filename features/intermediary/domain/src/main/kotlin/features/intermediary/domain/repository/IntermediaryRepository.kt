@@ -16,4 +16,12 @@ interface IntermediaryRepository {
         page: Long,
         limit: Long
     ): List<IntermediaryModel>
+
+    suspend fun getIntermediaryDetails(
+        id: String
+    ): IntermediaryModel
+
+    suspend fun deleteBeneficiary(
+        id: String
+    )
 }

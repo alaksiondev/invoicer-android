@@ -27,7 +27,7 @@ internal class IntermediaryListScreenModel(
     ) {
         if (isInitialized.not() || force) {
             screenModelScope.launch(dispatcher) {
-                launchRequest { getBeneficiaries() }
+                launchRequest { getIntermediaries() }
                     .handle(
                         onStart = {
                             _state.value = _state.value.copy(
@@ -51,10 +51,10 @@ internal class IntermediaryListScreenModel(
         }
     }
 
-    private suspend fun getBeneficiaries(): List<IntermediaryModel> =
+    private suspend fun getIntermediaries(): List<IntermediaryModel> =
         // No pagination support for this feature
         intermediaryRepository.getIntermediaries(
-            page = 1,
+            page = 0,
             limit = PAGE_LIMIT,
         )
 

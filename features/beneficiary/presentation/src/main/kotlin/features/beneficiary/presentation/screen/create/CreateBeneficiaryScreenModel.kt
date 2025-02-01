@@ -64,7 +64,7 @@ internal class CreateBeneficiaryScreenModel(
                     bankAddress = state.value.bankAddress,
                     bankName = state.value.bankName,
                     swift = state.value.swift,
-                    iban = state.value.swift
+                    iban = state.value.iban
                 )
             }.handle(
                 onStart = {

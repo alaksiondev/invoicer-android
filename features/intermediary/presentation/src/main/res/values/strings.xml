@@ -28,16 +28,35 @@
     <string name="create_intermediary_iban_label">Iban Code</string>
     <string name="create_intermediary_iban_placeholder">PT80 0408 0591 0071 1161 8226 7</string>
 
-    <!-- Confirm Beneficiary -->
+    <!-- Confirm Intermediary -->
     <string name="confirm_intermediary_name">Name</string>
     <string name="confirm_intermediary_swift">Swift</string>
     <string name="confirm_intermediary_iban">Iban</string>
     <string name="confirm_intermediary_bank_name">Bank Name</string>
     <string name="confirm_intermediary_bank_address">Bank Address</string>
 
-    <!-- Beneficiary Feedback -->
+    <!-- Intermediary Feedback -->
     <string name="create_success_cta">Continue</string>
     <string name="create_success_title">Intermediary Created</string>
     <string name="create_success_description">New registry is already avaiable for usage</string>
+
+    <!-- Intermediary Details-->
+    <string name="intermediary_details_error_generic_title">Something went wrong</string>
+    <string name="intermediary_details_error_generic_description">Check your connection and try again</string>
+    <string name="intermediary_details_error_not_found_title">Intermediary not found</string>
+    <string name="intermediary_details_error_generic_cta">Try again</string>
+    <string name="intermediary_details_error_not_found_cta">Go back</string>
+    <string name="intermediary_details_title">Intermediary Details</string>
+    <string name="intermediary_details_name_label">Name</string>
+    <string name="intermediary_details_bank_name_label">Bank Name</string>
+    <string name="intermediary_details_bank_address_label">Bank Address</string>
+    <string name="intermediary_details_swift_label">Swift Code</string>
+    <string name="intermediary_details_iban_label">Iban Code</string>
+    <string name="intermediary_details_created_at_label">Created at</string>
+    <string name="intermediary_details_updated_at_label">Last updated at</string>
+    <string name="intermediary_details_delete_title">Delete beneficiary</string>
+    <string name="intermediary_details_delete_description">This operation is terminal and cannot be undone. Note that it\'s not possible to delete beneficiaries attached to active invoices</string>
+    <string name="intermediary_details_delete_cta">Delete</string>
+    <string name="intermediary_details_delete_cancel_cta">Cancel</string>
 
 </resources>

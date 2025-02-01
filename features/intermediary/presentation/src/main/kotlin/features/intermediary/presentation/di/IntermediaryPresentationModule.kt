@@ -1,6 +1,7 @@
 package features.intermediary.presentation.di
 
 import features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
+import features.intermediary.presentation.screen.details.IntermediaryDetailsScreenModel
 import features.intermediary.presentation.screen.intermediarylist.IntermediaryListScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -17,7 +18,15 @@ val intermediaryPresentationModule = module {
         CreateIntermediaryScreenModel(
             intermediaryRepository = get(),
             dispatcher = Dispatchers.Default,
-            newIntermediaryPublisher = get()
+            refreshIntermediaryPublisher = get()
+        )
+    }
+
+    factory {
+        IntermediaryDetailsScreenModel(
+            intermediaryRepository = get(),
+            dispatcher = Dispatchers.Default,
+            refreshIntermediaryPublisher = get()
         )
     }
 }

@@ -29,8 +29,9 @@ import features.auth.design.system.components.buttons.CloseButton
 import features.auth.design.system.components.feedback.Feedback
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.create.CreateIntermediaryFlow
+import features.intermediary.presentation.screen.details.IntermediaryDetailsScreen
 import features.intermediary.presentation.screen.intermediarylist.components.IntermediaryList
-import features.intermediary.publisher.NewIntermediaryPublisher
+import features.intermediary.publisher.RefreshIntermediaryPublisher
 import foundation.design.system.tokens.Spacing
 import foundation.events.EventEffect
 import foundation.pagination.LazyListPaginationEffect
@@ -42,14 +43,14 @@ internal class IntermediaryListScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<IntermediaryListScreenModel>()
-        val newBeneficiaryPublisher by remember { getKoin().inject<NewIntermediaryPublisher>() }
+        val newBeneficiaryPublisher by remember { getKoin().inject<RefreshIntermediaryPublisher>() }
         val state by viewModel.state.collectAsStateWithLifecycle()
 
         val callbacks = rememberIntermediaryListCallbacks(
             onClose = { navigator?.pop() },
             onRetry = viewModel::loadPage,
             onCreate = { navigator?.push(CreateIntermediaryFlow()) },
-            onItemClick = { }
+            onItemClick = { navigator?.push(IntermediaryDetailsScreen(it)) }
         )
 
         LaunchedEffect(Unit) { viewModel.loadPage() }

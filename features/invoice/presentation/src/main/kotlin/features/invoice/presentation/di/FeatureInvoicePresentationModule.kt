@@ -9,6 +9,7 @@ import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBe
 import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
 import features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreenModel
 import features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreenModel
+import features.invoice.presentation.screens.details.InvoiceDetailsScreenModel
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -79,6 +80,13 @@ val invoicePresentationModule = module {
         InvoiceExternalIdScreenModel(
             dispatcher = Dispatchers.Default,
             manager = get()
+        )
+    }
+
+    factory {
+        InvoiceDetailsScreenModel(
+            invoiceRepository = get(),
+            dispatcher = Dispatchers.Default
         )
     }
 

@@ -54,11 +54,9 @@ internal fun InvoiceDetailsResponse.toDomainModel(): InvoiceDetailsModel {
         externalId = this.externalId,
         senderCompany = InvoiceCompanyModel(
             name = this.senderCompany.name,
-            address = this.senderCompany.address
         ),
         recipientCompany = InvoiceCompanyModel(
             name = this.recipientCompany.name,
-            address = this.recipientCompany.address
         ),
         issueDate = this.issueDate,
         dueDate = this.dueDate,

@@ -19,7 +19,6 @@ data class InvoiceDetailsModel(
 
 data class InvoiceCompanyModel(
     val name: String,
-    val address: String
 )
 
 

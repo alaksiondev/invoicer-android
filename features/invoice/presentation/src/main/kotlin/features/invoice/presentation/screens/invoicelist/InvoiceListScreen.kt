@@ -35,6 +35,7 @@ import features.auth.design.system.components.buttons.CloseButton
 import features.auth.design.system.components.emptystate.EmptyState
 import features.auth.design.system.components.feedback.Feedback
 import features.invoice.presentation.R
+import features.invoice.presentation.screens.details.InvoiceDetailsScreen
 import features.invoice.presentation.screens.invoicelist.components.InvoiceListItem
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListCallbacks
 import features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
@@ -67,7 +68,9 @@ internal class InvoiceListScreen : Screen {
         val callbacks = rememberInvoiceListCallbacks(
             onClose = { navigator?.pop() },
             onRetry = { viewModel.loadPage() },
-            onClickInvoice = {},
+            onClickInvoice = {
+                navigator?.push(InvoiceDetailsScreen(it))
+            },
             onClickCreateInvoice = {
                 navigator?.push(ScreenRegistry.get(InvoicerScreen.Invoices.Create))
             },

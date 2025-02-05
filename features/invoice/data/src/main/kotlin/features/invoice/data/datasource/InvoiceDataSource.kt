@@ -1,6 +1,7 @@
 package features.invoice.data.datasource
 
 import features.invoice.data.model.CreateInvoiceRequest
+import features.invoice.data.model.InvoiceDetailsResponse
 import features.invoice.data.model.InvoiceListResponse
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
@@ -30,6 +31,10 @@ internal interface InvoiceDataSource {
     suspend fun createInvoice(
         payload: CreateInvoiceRequest
     ): Unit
+
+    suspend fun getInvoiceDetails(
+        invoiceId: String
+    ): InvoiceDetailsResponse
 }
 
 internal class InvoiceDataSourceImpl(
@@ -81,6 +86,19 @@ internal class InvoiceDataSourceImpl(
                 contentType(ContentType.Application.Json)
                 setBody(payload)
             }
+        }
+    }
+
+    override suspend fun getInvoiceDetails(invoiceId: String): InvoiceDetailsResponse {
+        return withContext(dispatcher) {
+            val url = buildUrl {
+                host = BASE_URL
+                path("/v1/invoice/$invoiceId")
+            }
+
+            httpWrapper.client.get(url = url) {
+                contentType(ContentType.Application.Json)
+            }.body()
         }
     }
 }

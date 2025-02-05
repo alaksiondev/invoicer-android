@@ -4,6 +4,7 @@ import features.invoice.data.datasource.InvoiceDataSource
 import features.invoice.data.model.toDataModel
 import features.invoice.data.model.toDomainModel
 import features.invoice.domain.model.CreateInvoiceModel
+import features.invoice.domain.model.InvoiceDetailsModel
 import features.invoice.domain.model.InvoiceList
 import features.invoice.domain.repository.InvoiceRepository
 
@@ -37,5 +38,9 @@ internal class InvoiceRepositoryImpl(
         return dataSource.createInvoice(
             payload = payload.toDataModel()
         )
+    }
+
+    override suspend fun getInvoiceDetails(id: String): InvoiceDetailsModel {
+        return dataSource.getInvoiceDetails(invoiceId = id).toDomainModel()
     }
 }

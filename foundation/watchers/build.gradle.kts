@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "features.invoice.publisher"
+    namespace = "foundation.watchers"
 }
 
 dependencies {

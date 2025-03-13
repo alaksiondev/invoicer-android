@@ -39,5 +39,5 @@ dependencies {
 
     // Feature
     implementation(projects.features.beneficiary.domain)
-    implementation(projects.features.beneficiary.publisher)
+    implementation(projects.foundation.watchers)
 }

@@ -3,11 +3,11 @@ package features.beneficiary.presentation.screen.update
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.repository.BeneficiaryRepository
-import features.beneficiary.publisher.RefreshBeneficiaryPublisher
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
+import foundation.watchers.RefreshBeneficiaryPublisher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ internal class UpdateBeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher
-) : ScreenModel, foundation.ui.events.EventAware<UpdateBeneficiaryEvent> by foundation.ui.events.EventPublisher() {
+) : ScreenModel, EventAware<UpdateBeneficiaryEvent> by EventPublisher() {
 
     private val _state = MutableStateFlow(UpdateBeneficiaryState())
     val state: StateFlow<UpdateBeneficiaryState> = _state

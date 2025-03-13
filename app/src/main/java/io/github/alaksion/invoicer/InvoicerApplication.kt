@@ -7,17 +7,14 @@ import features.auth.presentation.navigation.authScreens
 import features.beneficiary.data.di.beneficiaryDataModule
 import features.beneficiary.presentation.di.beneficiaryPresentationModule
 import features.beneficiary.presentation.navigation.beneficiaryScreens
-import features.beneficiary.publisher.di.beneficiaryPublisherModule
 import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
 import features.intermediary.data.di.intermediaryDataModule
 import features.intermediary.presentation.di.intermediaryPresentationModule
 import features.intermediary.presentation.navigation.intermediaryScreens
-import features.intermediary.publisher.di.intermediaryPublisherModule
 import features.invoice.data.di.invoiceDataModule
 import features.invoice.presentation.di.invoicePresentationModule
 import features.invoice.presentation.navigation.invoiceScreens
-import features.invoice.publisher.di.invoicePublisherModule
 import features.qrcodeSession.di.qrCodeSessionDi
 import features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import foundation.auth.data.di.foundationAuthDataModule
@@ -27,6 +24,7 @@ import foundation.logger.impl.di.foundationLoggerModule
 import foundation.network.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
+import foundation.watchers.di.watchersDiModule
 import io.github.alaksion.invoicer.main.mainDiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -62,12 +60,10 @@ class InvoicerApplication : Application() {
                 invoicePresentationModule,
                 beneficiaryDataModule,
                 beneficiaryPresentationModule,
-                beneficiaryPublisherModule,
                 intermediaryPresentationModule,
                 intermediaryDataModule,
-                intermediaryPublisherModule,
-                invoicePublisherModule,
-                qrCodeSessionDi
+                qrCodeSessionDi,
+                watchersDiModule
             )
         }
     }

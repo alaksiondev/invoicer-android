@@ -3,11 +3,11 @@ package features.intermediary.presentation.screen.update
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.intermediary.domain.repository.IntermediaryRepository
-import features.intermediary.publisher.RefreshIntermediaryPublisher
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
+import foundation.watchers.RefreshIntermediaryPublisher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ internal class UpdateIntermediaryScreenModel(
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshIntermediaryPublisher: RefreshIntermediaryPublisher
-) : ScreenModel, foundation.ui.events.EventAware<UpdateIntermediaryEvent> by foundation.ui.events.EventPublisher() {
+) : ScreenModel, EventAware<UpdateIntermediaryEvent> by EventPublisher() {
 
     private val _state = MutableStateFlow(UpdateIntermediaryState())
     val state: StateFlow<UpdateIntermediaryState> = _state

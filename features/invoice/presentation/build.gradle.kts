@@ -35,11 +35,9 @@ dependencies {
 
     // Feature
     implementation(projects.features.invoice.domain)
-    implementation(projects.features.invoice.publisher)
+    implementation(projects.foundation.watchers)
     implementation(projects.features.beneficiary.domain)
-    implementation(projects.features.beneficiary.publisher)
     implementation(projects.features.intermediary.domain)
-    implementation(projects.features.intermediary.publisher)
 
     // AndroidTest
     androidTestImplementation(libs.androidx.ui.test.junit4)

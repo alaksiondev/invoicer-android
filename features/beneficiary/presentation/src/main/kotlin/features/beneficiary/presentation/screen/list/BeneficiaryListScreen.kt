@@ -26,14 +26,14 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.buttons.CloseButton
-import foundation.designsystem.components.feedback.Feedback
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import features.beneficiary.presentation.screen.list.components.BeneficiaryList
-import features.beneficiary.publisher.RefreshBeneficiaryPublisher
+import foundation.designsystem.components.buttons.CloseButton
+import foundation.designsystem.components.feedback.Feedback
 import foundation.designsystem.tokens.Spacing
 import foundation.navigation.InvoicerScreen
+import foundation.watchers.RefreshBeneficiaryPublisher
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class BeneficiaryListScreen : Screen {

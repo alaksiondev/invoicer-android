@@ -14,7 +14,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.datetime)
 
-    implementation(projects.foundation.network.client)
+    implementation(projects.foundation.network)
     implementation(projects.features.invoice.domain)
 
     testImplementation(kotlin("test"))

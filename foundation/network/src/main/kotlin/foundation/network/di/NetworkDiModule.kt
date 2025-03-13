@@ -1,4 +1,4 @@
-package foundation.network.client.di
+package foundation.network.di
 
 import foundation.network.client.HttpWrapper
 import org.koin.dsl.module

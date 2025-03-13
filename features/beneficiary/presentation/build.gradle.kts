@@ -33,7 +33,7 @@ dependencies {
     implementation(libs.bundles.paging)
 
     // Foundation
-    implementation(projects.foundation.network.request)
+    implementation(projects.foundation.network)
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem.tokens)
     implementation(projects.foundation.designSystem.components)

@@ -12,7 +12,7 @@ dependencies {
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.core)
     implementation(libs.koin.core)
-    implementation(projects.foundation.network.client)
+    implementation(projects.foundation.network)
     implementation(projects.foundation.auth.domain)
     implementation(projects.foundation.storage.impl)
 

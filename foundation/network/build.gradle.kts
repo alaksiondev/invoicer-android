@@ -36,4 +36,5 @@ dependencies {
     implementation(libs.koin.core)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.auth.domain)
+    implementation(libs.coroutines.core)
 }

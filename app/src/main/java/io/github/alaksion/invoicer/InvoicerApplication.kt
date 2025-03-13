@@ -23,7 +23,7 @@ import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
 import foundation.date.impl.di.foundationDateModule
 import foundation.logger.impl.di.foundationLoggerModule
-import foundation.network.client.di.networkDiModule
+import foundation.network.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
 import io.github.alaksion.invoicer.main.mainDiModule

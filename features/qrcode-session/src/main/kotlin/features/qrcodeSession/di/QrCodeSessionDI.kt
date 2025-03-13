@@ -1,4 +1,4 @@
-package di
+package features.qrcodeSession.di
 
 import features.qrcodeSession.data.repository.QrCodeTokenRepositoryImpl
 import features.qrcodeSession.domain.repository.QrCodeTokenRepository

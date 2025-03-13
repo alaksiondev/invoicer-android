@@ -2,7 +2,6 @@ package io.github.alaksion.invoicer
 
 import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
-import di.qrCodeSessionDi
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import features.beneficiary.data.di.beneficiaryDataModule
@@ -19,6 +18,8 @@ import features.invoice.data.di.invoiceDataModule
 import features.invoice.presentation.di.invoicePresentationModule
 import features.invoice.presentation.navigation.invoiceScreens
 import features.invoice.publisher.di.invoicePublisherModule
+import features.qrcodeSession.di.qrCodeSessionDi
+import features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import foundation.auth.data.di.foundationAuthDataModule
 import foundation.auth.watchers.di.foundationAuthPresentationDiModule
 import foundation.date.impl.di.foundationDateModule
@@ -41,6 +42,7 @@ class InvoicerApplication : Application() {
             invoiceScreens()
             beneficiaryScreens()
             intermediaryScreens()
+            qrCodeNavigationModule()
         }
 
         startKoin {

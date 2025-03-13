@@ -93,7 +93,7 @@ internal object SettingsTab : Tab {
             ) {
                 SettingsItem(
                     modifier = Modifier.fillMaxWidth(),
-                    content = "Authorization",
+                    content = stringResource(R.string.home_settings_authorization),
                     icon = Icons.Outlined.QrCodeScanner,
                     onClick = callbacks.goToAuthorizations
                 )

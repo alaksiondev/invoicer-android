@@ -65,12 +65,8 @@ internal class IntermediaryRemoteDataSourceImpl(
         bankAddress: String
     ) = withContext<Unit>(dispatcher) {
         httpWrapper.client.post(
-            url = buildUrl {
-                host = BASE_URL
-                path("/v1/intermediary")
-            },
+            urlString = "/v1/intermediary",
             block = {
-                contentType(ContentType.Application.Json)
                 setBody(
                     CreateIntermediaryData(
                         name = name,
@@ -90,13 +86,8 @@ internal class IntermediaryRemoteDataSourceImpl(
     ): IntermediariesData =
         withContext(dispatcher) {
             httpWrapper.client.get(
-                url = buildUrl
-                {
-                    host = BASE_URL
-                    path("/v1/intermediary")
-                },
+                urlString = "/v1/intermediary",
                 block = {
-                    contentType(ContentType.Application.Json)
                     parameter("page", page.toString())
                     parameter("limit", limit.toString())
                 }
@@ -106,11 +97,7 @@ internal class IntermediaryRemoteDataSourceImpl(
     override suspend fun getIntermediaryDetails(id: String): IntermediaryData =
         withContext(dispatcher) {
             httpWrapper.client.get(
-                url = buildUrl
-                {
-                    host = BASE_URL
-                    path("/v1/intermediary/${id}")
-                },
+                urlString = "/v1/intermediary/${id}",
                 block = {
                     contentType(ContentType.Application.Json)
                 }

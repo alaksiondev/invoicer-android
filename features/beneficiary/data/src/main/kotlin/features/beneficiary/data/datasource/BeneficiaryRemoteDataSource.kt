@@ -4,7 +4,6 @@ import features.beneficiary.data.model.BeneficiariesData
 import features.beneficiary.data.model.BeneficiaryData
 import features.beneficiary.data.model.CreateBeneficiaryData
 import features.beneficiary.data.model.UpdateBeneficiaryData
-import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -14,9 +13,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
-import io.ktor.http.buildUrl
 import io.ktor.http.contentType
-import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -65,10 +62,7 @@ internal class BeneficiaryRemoteDataSourceImpl(
         bankAddress: String
     ) = withContext<Unit>(dispatcher) {
         httpWrapper.client.post(
-            url = buildUrl {
-                host = BASE_URL
-                path("/v1/beneficiary")
-            },
+            urlString = "/v1/beneficiary",
             block = {
                 contentType(ContentType.Application.Json)
                 setBody(
@@ -90,13 +84,8 @@ internal class BeneficiaryRemoteDataSourceImpl(
     ): BeneficiariesData =
         withContext(dispatcher) {
             httpWrapper.client.get(
-                url = buildUrl
-                {
-                    host = BASE_URL
-                    path("/v1/beneficiary")
-                },
+                urlString = "/v1/beneficiary",
                 block = {
-                    contentType(ContentType.Application.Json)
                     parameter("page", page.toString())
                     parameter("limit", limit.toString())
                 }
@@ -106,28 +95,14 @@ internal class BeneficiaryRemoteDataSourceImpl(
     override suspend fun getBeneficiaryDetails(id: String): BeneficiaryData =
         withContext(dispatcher) {
             httpWrapper.client.get(
-                url = buildUrl
-                {
-                    host = BASE_URL
-                    path("/v1/beneficiary/${id}")
-                },
-                block = {
-                    contentType(ContentType.Application.Json)
-                }
+                urlString = "/v1/beneficiary/${id}",
             )
         }.body()
 
     override suspend fun deleteBeneficiary(id: String) {
         withContext(dispatcher) {
             httpWrapper.client.delete(
-                url = buildUrl
-                {
-                    host = BASE_URL
-                    path("/v1/beneficiary/${id}")
-                },
-                block = {
-                    contentType(ContentType.Application.Json)
-                }
+                urlString = "/v1/beneficiary/${id}",
             )
         }
     }
@@ -142,12 +117,8 @@ internal class BeneficiaryRemoteDataSourceImpl(
     ) {
         withContext(dispatcher) {
             httpWrapper.client.put(
-                url = buildUrl {
-                    host = BASE_URL
-                    path("/v1/beneficiary/${id}")
-                },
+                urlString = "/v1/beneficiary/${id}",
                 block = {
-                    contentType(ContentType.Application.Json)
                     setBody(
                         UpdateBeneficiaryData(
                             name = name,

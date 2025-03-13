@@ -3,16 +3,12 @@ package features.invoice.data.datasource
 import features.invoice.data.model.CreateInvoiceRequest
 import features.invoice.data.model.InvoiceDetailsResponse
 import features.invoice.data.model.InvoiceListResponse
-import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.http.ContentType
-import io.ktor.http.buildUrl
-import io.ktor.http.contentType
-import io.ktor.http.path
+import io.ktor.http.parameters
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -30,7 +26,7 @@ internal interface InvoiceDataSource {
 
     suspend fun createInvoice(
         payload: CreateInvoiceRequest
-    ): Unit
+    )
 
     suspend fun getInvoiceDetails(
         invoiceId: String
@@ -53,10 +49,8 @@ internal class InvoiceDataSourceImpl(
         recipientCompany: String?
     ): InvoiceListResponse {
         return withContext(dispatcher) {
-            val url = buildUrl {
-                host = BASE_URL
-                path("/v1/invoice")
-                parameters.apply {
+            httpWrapper.client.get(urlString = "/v1/invoice") {
+                parameters {
                     append("page", page.toString())
                     append("limit", limit.toString())
                     minIssueDate?.let { append("minIssueDate", it) }
@@ -66,9 +60,7 @@ internal class InvoiceDataSourceImpl(
                     senderCompany?.let { append("senderCompany", it) }
                     recipientCompany?.let { append("recipientCompany", it) }
                 }
-            }
-
-            httpWrapper.client.get(url = url).body()
+            }.body()
         }
     }
 
@@ -76,14 +68,9 @@ internal class InvoiceDataSourceImpl(
         payload: CreateInvoiceRequest
     ) {
         withContext(dispatcher) {
-            val url = buildUrl {
-                host = BASE_URL
-                path("/v1/invoice")
-            }
             httpWrapper.client.post(
-                url = url
+                urlString = "/v1/invoice"
             ) {
-                contentType(ContentType.Application.Json)
                 setBody(payload)
             }
         }
@@ -91,14 +78,7 @@ internal class InvoiceDataSourceImpl(
 
     override suspend fun getInvoiceDetails(invoiceId: String): InvoiceDetailsResponse {
         return withContext(dispatcher) {
-            val url = buildUrl {
-                host = BASE_URL
-                path("/v1/invoice/$invoiceId")
-            }
-
-            httpWrapper.client.get(url = url) {
-                contentType(ContentType.Application.Json)
-            }.body()
+            httpWrapper.client.get(urlString = "/v1/invoice/$invoiceId").body()
         }
     }
 }

@@ -15,7 +15,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.presentation.screens.signin.SignInScreen
 import features.auth.presentation.screens.signup.SignUpScreen
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 internal class AuthMenuScreen : Screen {
     @Composable

@@ -11,7 +11,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import features.home.presentation.tabs.welcome.components.WelcomeActions
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 import foundation.navigation.InvoicerScreen
 
 internal object WelcomeTab : Tab {

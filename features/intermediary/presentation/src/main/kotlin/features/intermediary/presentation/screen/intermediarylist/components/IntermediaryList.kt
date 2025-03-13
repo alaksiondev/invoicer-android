@@ -20,10 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import features.auth.design.system.components.emptystate.EmptyState
+import foundation.designsystem.components.emptystate.EmptyState
 import features.intermediary.domain.model.IntermediaryModel
 import features.intermediary.presentation.R
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

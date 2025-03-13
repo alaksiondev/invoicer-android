@@ -25,16 +25,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.buttons.CloseButton
-import features.auth.design.system.components.feedback.Feedback
+import foundation.designsystem.components.buttons.CloseButton
+import foundation.designsystem.components.feedback.Feedback
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.create.CreateIntermediaryFlow
 import features.intermediary.presentation.screen.details.IntermediaryDetailsScreen
 import features.intermediary.presentation.screen.intermediarylist.components.IntermediaryList
 import features.intermediary.publisher.RefreshIntermediaryPublisher
-import foundation.design.system.tokens.Spacing
-import foundation.ui.events.EventEffect
-import foundation.ui.LazyListPaginationEffect
+import foundation.designsystem.tokens.Spacing
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class IntermediaryListScreen : Screen {

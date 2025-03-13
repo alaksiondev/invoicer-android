@@ -9,7 +9,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
-import features.auth.design.system.components.preview.ThemeContainer
+import foundation.designsystem.components.preview.ThemeContainer
 import features.invoice.presentation.screens.create.CreateInvoiceManager
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseFormTestTags
 import features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheetTestTag

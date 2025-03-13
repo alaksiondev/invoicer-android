@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.steps.activities.components.NewActivityCardTestTags
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 @Composable
 internal fun ConfirmActivityCard(

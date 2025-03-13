@@ -20,8 +20,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryEvents
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
@@ -29,7 +29,6 @@ import features.beneficiary.presentation.screen.create.components.BeneficiaryBas
 import features.beneficiary.presentation.screen.create.components.BeneficiaryFieldCard
 import features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
 import features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
-import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class BeneficiaryConfirmationStep : Screen {

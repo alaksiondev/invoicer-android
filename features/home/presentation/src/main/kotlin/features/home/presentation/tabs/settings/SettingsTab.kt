@@ -27,11 +27,11 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import features.auth.design.system.components.spacer.Spacer
+import foundation.designsystem.components.spacer.Spacer
 import features.home.presentation.R
 import features.home.presentation.tabs.settings.components.SettingsItem
 import features.home.presentation.tabs.settings.components.SignOutDialog
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 import foundation.navigation.InvoicerScreen
 
 internal object SettingsTab : Tab {

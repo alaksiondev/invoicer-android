@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import features.invoice.domain.model.InvoiceListItem
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 @Composable
 internal fun InvoiceListItem(

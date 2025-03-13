@@ -19,14 +19,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.spacer.Spacer
+import foundation.designsystem.components.spacer.Spacer
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.dates.components.DatePickerVisibility
 import features.invoice.presentation.screens.create.steps.dates.components.InvoiceDatePicker
 import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreen
 import foundation.date.impl.defaultFormat
-import foundation.ui.events.EventEffect
 
 internal class InvoiceDatesScreen : Screen {
 

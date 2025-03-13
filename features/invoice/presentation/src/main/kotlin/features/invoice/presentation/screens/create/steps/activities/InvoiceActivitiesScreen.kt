@@ -32,8 +32,7 @@ import features.invoice.presentation.screens.create.steps.activities.components.
 import features.invoice.presentation.screens.create.steps.activities.components.NewActivityCard
 import features.invoice.presentation.screens.create.steps.activities.model.rememberSnackMessages
 import features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreen
-import foundation.design.system.tokens.Spacing
-import foundation.ui.events.EventEffect
+import foundation.designsystem.tokens.Spacing
 import kotlinx.coroutines.launch
 
 internal class InvoiceActivitiesScreen : Screen {

@@ -10,7 +10,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import features.auth.presentation.screens.signup.SignUpScreenState
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 @Composable
 internal fun SignUpForm(

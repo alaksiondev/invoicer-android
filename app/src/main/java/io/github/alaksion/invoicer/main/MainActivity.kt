@@ -14,7 +14,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import foundation.auth.watchers.AuthEvent
 import foundation.auth.watchers.AuthEventSubscriber
-import foundation.design.system.theme.InvoicerTheme
+import foundation.designsystem.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

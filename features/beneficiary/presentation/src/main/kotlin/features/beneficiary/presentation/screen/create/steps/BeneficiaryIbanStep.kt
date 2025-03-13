@@ -16,7 +16,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import features.auth.design.system.components.spacer.Spacer
+import foundation.designsystem.components.spacer.Spacer
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
 import features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm

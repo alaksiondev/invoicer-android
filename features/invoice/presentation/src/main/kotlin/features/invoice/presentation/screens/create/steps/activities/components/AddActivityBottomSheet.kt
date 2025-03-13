@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.steps.activities.AddActivityFormState
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

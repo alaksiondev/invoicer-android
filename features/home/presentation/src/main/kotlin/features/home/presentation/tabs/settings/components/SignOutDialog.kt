@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import features.auth.design.system.components.dialog.DefaultInvoicerDialog
+import foundation.designsystem.components.dialog.DefaultInvoicerDialog
 import features.home.presentation.R
 
 

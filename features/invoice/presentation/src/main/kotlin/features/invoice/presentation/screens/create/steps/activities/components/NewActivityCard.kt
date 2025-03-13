@@ -20,9 +20,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import features.auth.design.system.components.preview.ThemeContainer
+import foundation.designsystem.components.preview.ThemeContainer
 import features.invoice.presentation.R
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 @Composable
 internal fun NewActivityCard(

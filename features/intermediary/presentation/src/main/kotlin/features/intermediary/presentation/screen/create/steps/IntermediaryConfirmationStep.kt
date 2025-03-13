@@ -20,8 +20,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import features.intermediary.presentation.screen.create.components.IntermediaryBaseForm
 import features.intermediary.presentation.screen.create.components.IntermediaryFieldCard
 import features.intermediary.presentation.screen.feedback.IntermediaryFeedbackScreen
@@ -29,7 +29,6 @@ import features.intermediary.presentation.screen.feedback.IntermediaryFeedbackTy
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.create.CreateIntermediaryEvents
 import features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
-import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class IntermediaryConfirmationStep : Screen {

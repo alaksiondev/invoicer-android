@@ -31,11 +31,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.buttons.BackButton
-import features.auth.design.system.components.spacer.Spacer
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.spacer.Spacer
 import features.intermediary.presentation.R
-import foundation.design.system.tokens.Spacing
-import foundation.ui.events.EventEffect
+import foundation.designsystem.tokens.Spacing
 import kotlinx.coroutines.launch
 
 internal data class UpdateIntermediaryScreen(

@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import features.auth.design.system.components.spacer.HorizontalSpacer
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
+import foundation.designsystem.components.spacer.HorizontalSpacer
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 
 @Composable

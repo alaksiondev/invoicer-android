@@ -3,7 +3,6 @@ package features.beneficiary.presentation.screen.create.steps
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,9 +18,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import features.auth.design.system.components.spacer.Spacer
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
+import foundation.designsystem.components.spacer.Spacer
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
 import features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm

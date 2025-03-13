@@ -16,12 +16,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.buttons.BackButton
-import features.auth.design.system.components.feedback.Feedback
-import features.auth.design.system.components.preview.ThemeContainer
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.feedback.Feedback
+import foundation.designsystem.components.preview.ThemeContainer
 import features.auth.presentation.R
 import features.auth.presentation.screens.menu.AuthMenuScreen
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 internal class SignUpFeedbackScreen : Screen {
 

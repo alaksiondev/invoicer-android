@@ -30,8 +30,7 @@ import features.invoice.presentation.screens.create.components.CreateInvoiceBase
 import features.invoice.presentation.screens.create.steps.confirmation.components.ConfirmActivityCard
 import features.invoice.presentation.screens.create.steps.confirmation.components.ConfirmationCard
 import features.invoice.presentation.screens.feedback.InvoiceFeedbackScreen
-import foundation.design.system.tokens.Spacing
-import foundation.ui.events.EventEffect
+import foundation.designsystem.tokens.Spacing
 import kotlinx.coroutines.launch
 
 internal class InvoiceConfirmationScreen : Screen {

@@ -18,11 +18,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import features.auth.design.system.components.buttons.BackButton
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseFormTestTags.BACK_BUTTON
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

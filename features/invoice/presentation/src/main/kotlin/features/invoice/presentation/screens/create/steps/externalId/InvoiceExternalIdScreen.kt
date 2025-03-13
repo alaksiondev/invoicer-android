@@ -19,11 +19,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.spacer.Spacer
+import foundation.designsystem.components.spacer.Spacer
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreen
-import foundation.ui.events.EventEffect
 
 internal class InvoiceExternalIdScreen : Screen {
 

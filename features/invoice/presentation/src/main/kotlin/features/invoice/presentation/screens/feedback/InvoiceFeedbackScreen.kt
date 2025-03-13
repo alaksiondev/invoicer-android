@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.feedback.Feedback
+import foundation.designsystem.components.feedback.Feedback
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.invoicelist.InvoiceListScreen
-import foundation.design.system.tokens.Spacing
+import foundation.designsystem.tokens.Spacing
 
 internal class InvoiceFeedbackScreen : Screen {
 

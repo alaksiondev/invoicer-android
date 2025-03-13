@@ -24,16 +24,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.auth.design.system.components.buttons.BackButton
-import features.auth.design.system.components.spacer.SpacerSize
-import features.auth.design.system.components.spacer.VerticalSpacer
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signin.SignInScreen
 import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
-import foundation.design.system.tokens.Spacing
-import foundation.ui.events.EventEffect
+import foundation.designsystem.tokens.Spacing
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,18 +1,14 @@
 plugins {
     id("invoicer.library")
-    alias(libs.plugins.kotlin.compose)
+    id("invoicer.compose")
 }
 
 android {
     namespace = "features.invoice.presentation"
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
     // Compose
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.ui)
     debugImplementation(libs.bundles.compose.debug)
     implementation(libs.androidx.activity.compose)
@@ -37,7 +33,7 @@ dependencies {
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.date.impl)
-    implementation(projects.foundation.pagination )
+    implementation(projects.foundation.pagination)
 
     // Feature
     implementation(projects.features.invoice.domain)

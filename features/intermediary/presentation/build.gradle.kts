@@ -1,18 +1,14 @@
 plugins {
     id("invoicer.library")
-    alias(libs.plugins.kotlin.compose)
+    id("invoicer.compose")
 }
 
 android {
     namespace = "features.intermediary.presentation"
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
     // Compose
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.ui)
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.bundles.compose.debug)

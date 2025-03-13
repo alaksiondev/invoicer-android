@@ -1,6 +1,7 @@
 package build.logic.extensions
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.getByType
@@ -13,4 +14,8 @@ internal val Project.versionCatalog: VersionCatalog
 
 internal fun Project.getPlugin(alias: String): PluginDependency {
     return versionCatalog.findPlugin(alias).get().get()
+}
+
+internal fun Project.getLibrary(alias: String): MinimalExternalModuleDependency {
+    return versionCatalog.findLibrary(alias).get().get()
 }

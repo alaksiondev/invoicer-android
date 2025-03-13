@@ -22,6 +22,11 @@ gradlePlugin {
             implementationClass = "build.logic.plugins.LibraryPlugin"
         }
 
+        create("invoicer-compose") {
+            id = "invoicer.compose"
+            implementationClass = "build.logic.plugins.ComposePlugin"
+        }
+
         create("invoicer-application") {
             id = "invoicer.application"
             implementationClass = "build.logic.plugins.AppPlugin"

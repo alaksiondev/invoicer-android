@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.outlined.QrCodeScanner
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,13 +22,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import features.auth.design.system.components.spacer.Spacer
 import features.home.presentation.R
+import features.home.presentation.tabs.settings.components.SettingsItem
 import features.home.presentation.tabs.settings.components.SignOutDialog
 import foundation.design.system.tokens.Spacing
+import foundation.navigation.InvoicerScreen
 
 internal object SettingsTab : Tab {
 
@@ -42,6 +47,7 @@ internal object SettingsTab : Tab {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current?.parent
         val viewModel = koinScreenModel<SettingsScreenModel>()
         var signOutDialogState by remember { mutableStateOf(false) }
 
@@ -51,7 +57,10 @@ internal object SettingsTab : Tab {
                 signOutDialogState = false
                 viewModel.signOut()
             },
-            onCancelSignOut = { signOutDialogState = false }
+            onCancelSignOut = { signOutDialogState = false },
+            goToAuthorizations = {
+                navigator?.push(ScreenRegistry.get(InvoicerScreen.Authorization.Home))
+            }
         )
 
         StateContent(
@@ -82,6 +91,12 @@ internal object SettingsTab : Tab {
                     .padding(it)
                     .padding(Spacing.medium)
             ) {
+                SettingsItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    content = "Authorization",
+                    icon = Icons.Outlined.QrCodeScanner,
+                    onClick = callbacks.goToAuthorizations
+                )
                 Spacer(1f)
                 Button(
                     modifier = Modifier.fillMaxWidth(),

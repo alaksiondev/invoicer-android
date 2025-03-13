@@ -67,4 +67,5 @@ dependencies {
     implementation(projects.features.intermediary.domain)
     implementation(projects.features.intermediary.presentation)
     implementation(projects.features.intermediary.publisher)
+    implementation(projects.features.qrcodeSession)
 }

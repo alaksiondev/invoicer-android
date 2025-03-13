@@ -2,6 +2,7 @@ package io.github.alaksion.invoicer
 
 import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
+import di.qrCodeSessionDi
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
 import features.beneficiary.data.di.beneficiaryDataModule
@@ -63,7 +64,8 @@ class InvoicerApplication : Application() {
                 intermediaryPresentationModule,
                 intermediaryDataModule,
                 intermediaryPublisherModule,
-                invoicePublisherModule
+                invoicePublisherModule,
+                qrCodeSessionDi
             )
         }
     }

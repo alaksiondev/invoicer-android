@@ -44,9 +44,9 @@ import features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 import features.invoice.presentation.screens.invoicelist.state.rememberInvoiceListCallbacks
 import features.invoice.publisher.NewInvoicePublisher
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import foundation.navigation.InvoicerScreen
-import foundation.pagination.LazyListPaginationEffect
+import foundation.ui.LazyListPaginationEffect
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class InvoiceListScreen : Screen {
@@ -77,7 +77,7 @@ internal class InvoiceListScreen : Screen {
             onNextPage = { viewModel.nextPage() }
         )
 
-        EventEffect(newInvoicePublisher) {
+        foundation.ui.events.EventEffect(newInvoicePublisher) {
             viewModel.loadPage(force = true)
         }
 
@@ -126,7 +126,7 @@ internal class InvoiceListScreen : Screen {
                     } else {
                         val listState = rememberLazyListState()
 
-                        LazyListPaginationEffect(
+                        foundation.ui.LazyListPaginationEffect(
                             state = listState,
                             enabled = true
                         ) {

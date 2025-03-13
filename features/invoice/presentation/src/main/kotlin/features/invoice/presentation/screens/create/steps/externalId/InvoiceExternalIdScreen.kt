@@ -23,7 +23,7 @@ import features.auth.design.system.components.spacer.Spacer
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreen
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 
 internal class InvoiceExternalIdScreen : Screen {
 
@@ -33,7 +33,7 @@ internal class InvoiceExternalIdScreen : Screen {
         val state by screenModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 InvoiceExternalIdEvents.Continue -> navigator?.push(SenderCompanyScreen())
             }

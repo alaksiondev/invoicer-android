@@ -3,8 +3,8 @@ package features.invoice.presentation.screens.create.steps.recipientcompany
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.invoice.presentation.screens.create.CreateInvoiceManager
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 internal class RecipientCompanyScreenModel(
     private val manager: CreateInvoiceManager,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, EventAware<RecipientCompanyEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<RecipientCompanyEvents> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(RecipientCompanyState())
     val state: StateFlow<RecipientCompanyState> = _state

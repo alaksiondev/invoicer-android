@@ -1,6 +1,6 @@
 package features.beneficiary.publisher
 
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 
-class RefreshBeneficiaryPublisher : EventAware<Unit> by EventPublisher()
+class RefreshBeneficiaryPublisher : foundation.ui.events.EventAware<Unit> by foundation.ui.events.EventPublisher()

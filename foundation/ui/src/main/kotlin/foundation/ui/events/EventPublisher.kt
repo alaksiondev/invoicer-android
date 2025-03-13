@@ -1,4 +1,4 @@
-package foundation.events
+package foundation.ui.events
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

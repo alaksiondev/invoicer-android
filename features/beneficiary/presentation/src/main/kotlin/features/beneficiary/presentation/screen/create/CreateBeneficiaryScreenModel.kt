@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.repository.BeneficiaryRepository
 import features.beneficiary.publisher.RefreshBeneficiaryPublisher
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +19,7 @@ internal class CreateBeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher,
-) : ScreenModel, EventAware<CreateBeneficiaryEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<CreateBeneficiaryEvents> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(CreateBeneficiaryState())
     val state: StateFlow<CreateBeneficiaryState> = _state

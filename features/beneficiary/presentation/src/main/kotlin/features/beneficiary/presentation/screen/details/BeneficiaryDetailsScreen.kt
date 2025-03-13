@@ -45,7 +45,7 @@ import features.beneficiary.presentation.R
 import features.beneficiary.presentation.screen.details.components.BeneficiaryDetailsField
 import features.beneficiary.presentation.screen.update.UpdateBeneficiaryScreen
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal data class BeneficiaryDetailsScreen(
@@ -61,7 +61,7 @@ internal data class BeneficiaryDetailsScreen(
         var showDialog by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 is BeneficiaryDetailsEvent.DeleteError -> scope.launch {
                     snackbarHostState.showSnackbar(

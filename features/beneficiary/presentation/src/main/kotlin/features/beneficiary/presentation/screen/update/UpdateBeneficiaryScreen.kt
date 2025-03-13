@@ -35,7 +35,7 @@ import features.auth.design.system.components.buttons.BackButton
 import features.auth.design.system.components.spacer.Spacer
 import features.beneficiary.presentation.R
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal data class UpdateBeneficiaryScreen(
@@ -52,7 +52,7 @@ internal data class UpdateBeneficiaryScreen(
 
         LaunchedEffect(Unit) { screenModel.initState(id) }
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 is UpdateBeneficiaryEvent.Error ->
                     scope.launch { snackbarHostState.showSnackbar(it.message) }

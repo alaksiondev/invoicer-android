@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.invoice.presentation.screens.create.CreateInvoiceManager
 import foundation.date.impl.DateProvider
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ internal class InvoiceDatesScreenModel(
     private val dateProvider: DateProvider,
     private val dispatcher: CoroutineDispatcher,
     private val manager: CreateInvoiceManager,
-) : ScreenModel, EventAware<InvoiceDateEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<InvoiceDateEvents> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(
         InvoiceDatesState()

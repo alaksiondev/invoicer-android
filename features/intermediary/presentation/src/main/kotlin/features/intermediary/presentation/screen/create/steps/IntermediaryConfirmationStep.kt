@@ -29,7 +29,7 @@ import features.intermediary.presentation.screen.feedback.IntermediaryFeedbackTy
 import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.create.CreateIntermediaryEvents
 import features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class IntermediaryConfirmationStep : Screen {
@@ -45,7 +45,7 @@ internal class IntermediaryConfirmationStep : Screen {
             SnackbarHostState()
         }
 
-        EventEffect(
+        foundation.ui.events.EventEffect(
             publisher = screenModel
         ) {
             when (it) {

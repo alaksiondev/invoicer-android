@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.intermediary.domain.repository.IntermediaryRepository
 import features.invoice.presentation.screens.create.CreateInvoiceManager
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList
@@ -19,7 +19,7 @@ internal class PickIntermediaryScreenModel(
     private val createInvoiceManager: CreateInvoiceManager,
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, EventAware<PickIntermediaryEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<PickIntermediaryEvents> by foundation.ui.events.EventPublisher() {
 
     private var isInitialized = false
 

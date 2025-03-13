@@ -25,7 +25,7 @@ dependencies {
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.validator.impl)
-    implementation(projects.foundation.events)
+    implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.auth.watchers)
     implementation(projects.foundation.auth.domain)

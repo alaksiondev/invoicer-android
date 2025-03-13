@@ -33,7 +33,7 @@ import features.invoice.presentation.screens.create.steps.activities.components.
 import features.invoice.presentation.screens.create.steps.activities.model.rememberSnackMessages
 import features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreen
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class InvoiceActivitiesScreen : Screen {
@@ -65,7 +65,7 @@ internal class InvoiceActivitiesScreen : Screen {
             screenModel.initState()
         }
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 InvoiceActivitiesEvent.ActivityQuantityError ->
                     scope.launch {

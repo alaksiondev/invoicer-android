@@ -33,8 +33,8 @@ import features.intermediary.presentation.screen.details.IntermediaryDetailsScre
 import features.intermediary.presentation.screen.intermediarylist.components.IntermediaryList
 import features.intermediary.publisher.RefreshIntermediaryPublisher
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
-import foundation.pagination.LazyListPaginationEffect
+import foundation.ui.events.EventEffect
+import foundation.ui.LazyListPaginationEffect
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class IntermediaryListScreen : Screen {
@@ -55,7 +55,7 @@ internal class IntermediaryListScreen : Screen {
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
 
-        EventEffect(newBeneficiaryPublisher) {
+        foundation.ui.events.EventEffect(newBeneficiaryPublisher) {
             viewModel.loadPage(force = true)
         }
 
@@ -111,7 +111,7 @@ internal class IntermediaryListScreen : Screen {
                         onItemClick = callbacks::onItemClick,
                         isLoadingMore = state.isNextPageLoading
                     )
-                    LazyListPaginationEffect(
+                    foundation.ui.LazyListPaginationEffect(
                         state = listState,
                         onPaginationTrigger = {},
                         enabled = true,

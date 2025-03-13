@@ -29,7 +29,7 @@ import features.auth.design.system.components.spacer.VerticalSpacer
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreen
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 
 internal class RecipientCompanyScreen : Screen {
 
@@ -41,7 +41,7 @@ internal class RecipientCompanyScreen : Screen {
 
         LaunchedEffect(Unit) { screenModel.initScreen() }
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 RecipientCompanyEvents.Continue -> navigator?.push(InvoiceDatesScreen())
             }

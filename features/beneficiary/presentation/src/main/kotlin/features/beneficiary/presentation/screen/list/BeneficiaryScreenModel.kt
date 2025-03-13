@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.beneficiary.domain.model.BeneficiariesModel
 import features.beneficiary.domain.repository.BeneficiaryRepository
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class BeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
-) : ScreenModel, EventAware<BeneficiaryListEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<BeneficiaryListEvents> by foundation.ui.events.EventPublisher() {
 
     private var page: Long = 0
     private var isFirstPageLoaded = false

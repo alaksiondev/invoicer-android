@@ -29,10 +29,9 @@ dependencies {
     implementation(projects.foundation.network)
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem)
-    implementation(projects.foundation.events)
+    implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.date.impl)
-    implementation(projects.foundation.pagination)
 
     // Feature
     implementation(projects.features.invoice.domain)

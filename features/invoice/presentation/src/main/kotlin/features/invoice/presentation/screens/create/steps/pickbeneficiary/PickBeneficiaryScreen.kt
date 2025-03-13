@@ -28,7 +28,7 @@ import features.beneficiary.publisher.RefreshBeneficiaryPublisher
 import features.invoice.presentation.R
 import features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
 import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreen
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import foundation.navigation.InvoicerScreen
 import org.koin.mp.KoinPlatform.getKoin
 
@@ -43,7 +43,7 @@ internal class PickBeneficiaryScreen : Screen {
 
         LaunchedEffect(Unit) { screenModel.initState() }
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 PickBeneficiaryEvents.StartNewBeneficiary -> navigator?.push(
                     ScreenRegistry.get(
@@ -55,7 +55,7 @@ internal class PickBeneficiaryScreen : Screen {
             }
         }
 
-        EventEffect(refreshBeneficiaryPublisher) {
+        foundation.ui.events.EventEffect(refreshBeneficiaryPublisher) {
             screenModel.initState(force = true)
         }
 

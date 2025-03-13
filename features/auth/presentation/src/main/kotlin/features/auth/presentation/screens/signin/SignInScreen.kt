@@ -31,7 +31,7 @@ import features.auth.presentation.screens.signin.components.SignInCta
 import features.auth.presentation.screens.signin.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class SignInScreen : Screen {
@@ -58,7 +58,7 @@ internal class SignInScreen : Screen {
             snackbarHostState = snackBarHost
         )
 
-        EventEffect(viewModel) {
+        foundation.ui.events.EventEffect(viewModel) {
             when (it) {
                 is SignInEvents.Failure -> {
                     scope.launch {

@@ -45,7 +45,7 @@ import features.intermediary.presentation.R
 import features.intermediary.presentation.screen.details.components.IntermediaryDetailsField
 import features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal data class IntermediaryDetailsScreen(
@@ -61,7 +61,7 @@ internal data class IntermediaryDetailsScreen(
         var showDialog by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 is IntermediaryDetailsEvent.DeleteError -> scope.launch {
                     snackbarHostState.showSnackbar(

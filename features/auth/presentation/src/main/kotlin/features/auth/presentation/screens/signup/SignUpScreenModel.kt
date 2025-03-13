@@ -3,8 +3,8 @@ package features.auth.presentation.screens.signup
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.auth.domain.repository.AuthRepository
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.exception.RequestError
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
@@ -19,7 +19,7 @@ internal class SignUpScreenModel(
     private val authRepository: AuthRepository,
     private val dispatcher: CoroutineDispatcher,
     private val emailValidator: EmailValidator,
-) : ScreenModel, EventAware<SignUpEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<SignUpEvents> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(SignUpScreenState())
     val state: StateFlow<SignUpScreenState> = _state

@@ -27,5 +27,5 @@ dependencies {
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.auth.domain)
     implementation(projects.foundation.auth.watchers)
-    implementation(projects.foundation.events)
+    implementation(projects.foundation.ui)
 }

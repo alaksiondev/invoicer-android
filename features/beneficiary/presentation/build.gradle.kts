@@ -33,9 +33,8 @@ dependencies {
     implementation(projects.foundation.network)
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem)
-    implementation(projects.foundation.events)
+    implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
-    implementation(projects.foundation.pagination)
     implementation(projects.foundation.date.impl)
 
     // Feature

@@ -31,7 +31,7 @@ import features.invoice.presentation.screens.create.steps.confirmation.component
 import features.invoice.presentation.screens.create.steps.confirmation.components.ConfirmationCard
 import features.invoice.presentation.screens.feedback.InvoiceFeedbackScreen
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class InvoiceConfirmationScreen : Screen {
@@ -46,7 +46,7 @@ internal class InvoiceConfirmationScreen : Screen {
 
         LaunchedEffect(Unit) { screenModel.initState() }
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 is InvoiceConfirmationEvent.Error -> scope.launch {
                     snackbarHostState.showSnackbar(it.message)

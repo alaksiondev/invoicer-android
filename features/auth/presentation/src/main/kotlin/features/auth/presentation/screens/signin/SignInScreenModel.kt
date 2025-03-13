@@ -5,8 +5,8 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.auth.domain.repository.AuthRepository
 import foundation.auth.watchers.AuthEvent
 import foundation.auth.watchers.AuthEventPublisher
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.exception.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class SignInScreenModel(
     private val authRepository: AuthRepository,
     private val authEventPublisher: AuthEventPublisher
-) : ScreenModel, EventAware<SignInEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<SignInEvents> by foundation.ui.events.EventPublisher() {
     private val _state = MutableStateFlow(SignInScreenState())
     val state: StateFlow<SignInScreenState> = _state
 

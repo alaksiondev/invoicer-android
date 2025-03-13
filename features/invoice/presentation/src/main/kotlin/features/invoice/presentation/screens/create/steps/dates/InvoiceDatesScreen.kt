@@ -26,7 +26,7 @@ import features.invoice.presentation.screens.create.steps.dates.components.DateP
 import features.invoice.presentation.screens.create.steps.dates.components.InvoiceDatePicker
 import features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreen
 import foundation.date.impl.defaultFormat
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 
 internal class InvoiceDatesScreen : Screen {
 
@@ -36,7 +36,7 @@ internal class InvoiceDatesScreen : Screen {
         val screenModel = koinScreenModel<InvoiceDatesScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
 
-        EventEffect(screenModel) {
+        foundation.ui.events.EventEffect(screenModel) {
             when (it) {
                 InvoiceDateEvents.Continue -> navigator?.push(PickBeneficiaryScreen())
             }

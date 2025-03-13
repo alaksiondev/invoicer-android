@@ -9,8 +9,8 @@ import features.invoice.presentation.screens.create.CreateInvoiceManager
 import features.invoice.publisher.NewInvoicePublisher
 import foundation.date.impl.defaultFormat
 import foundation.date.impl.toLocalDate
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,7 +26,7 @@ internal class InvoiceConfirmationScreenModel(
     private val repository: InvoiceRepository,
     private val dispatcher: CoroutineDispatcher,
     private val newInvoicePublisher: NewInvoicePublisher
-) : ScreenModel, EventAware<InvoiceConfirmationEvent> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<InvoiceConfirmationEvent> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(InvoiceConfirmationState())
     val state: StateFlow<InvoiceConfirmationState> = _state

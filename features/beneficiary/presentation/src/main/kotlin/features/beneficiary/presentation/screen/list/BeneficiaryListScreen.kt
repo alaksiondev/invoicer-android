@@ -33,9 +33,9 @@ import features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import features.beneficiary.presentation.screen.list.components.BeneficiaryList
 import features.beneficiary.publisher.RefreshBeneficiaryPublisher
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import foundation.navigation.InvoicerScreen
-import foundation.pagination.LazyListPaginationEffect
+import foundation.ui.LazyListPaginationEffect
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class BeneficiaryListScreen : Screen {
@@ -62,7 +62,7 @@ internal class BeneficiaryListScreen : Screen {
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
 
-        EventEffect(refreshBeneficiaryPublisher) {
+        foundation.ui.events.EventEffect(refreshBeneficiaryPublisher) {
             viewModel.loadPage(force = true)
         }
 
@@ -118,7 +118,7 @@ internal class BeneficiaryListScreen : Screen {
                         onItemClick = callbacks::onItemClick,
                         isLoadingMore = state.isNextPageLoading
                     )
-                    LazyListPaginationEffect(
+                    foundation.ui.LazyListPaginationEffect(
                         state = listState,
                         onPaginationTrigger = {},
                         enabled = true,

@@ -29,7 +29,7 @@ import features.beneficiary.presentation.screen.create.components.BeneficiaryBas
 import features.beneficiary.presentation.screen.create.components.BeneficiaryFieldCard
 import features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
 import features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 internal class BeneficiaryConfirmationStep : Screen {
@@ -45,7 +45,7 @@ internal class BeneficiaryConfirmationStep : Screen {
             SnackbarHostState()
         }
 
-        EventEffect(
+        foundation.ui.events.EventEffect(
             publisher = screenModel
         ) {
             when (it) {

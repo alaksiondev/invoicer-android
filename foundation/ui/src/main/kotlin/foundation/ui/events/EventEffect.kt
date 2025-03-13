@@ -1,4 +1,4 @@
-package foundation.events
+package foundation.ui.events
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

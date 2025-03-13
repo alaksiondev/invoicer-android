@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.invoice.domain.model.InvoiceList
 import features.invoice.domain.repository.InvoiceRepository
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 internal class InvoiceListScreenModel(
     private val invoiceRepository: InvoiceRepository,
     private val dispatcher: CoroutineDispatcher,
-) : ScreenModel, EventAware<InvoiceListEvent> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<InvoiceListEvent> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(InvoiceListState())
     private var page = 0

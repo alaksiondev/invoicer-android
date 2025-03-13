@@ -33,7 +33,7 @@ import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
 import foundation.design.system.tokens.Spacing
-import foundation.events.EventEffect
+import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +51,7 @@ internal class SignUpScreen : Screen {
             SnackbarHostState()
         }
 
-        EventEffect(viewModel) {
+        foundation.ui.events.EventEffect(viewModel) {
             when (it) {
                 SignUpEvents.Success -> navigator?.push(SignUpFeedbackScreen())
 

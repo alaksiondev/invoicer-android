@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.intermediary.domain.repository.IntermediaryRepository
 import features.intermediary.publisher.RefreshIntermediaryPublisher
-import foundation.events.EventAware
-import foundation.events.EventPublisher
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +19,7 @@ internal class CreateIntermediaryScreenModel(
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshIntermediaryPublisher: RefreshIntermediaryPublisher,
-) : ScreenModel, EventAware<CreateIntermediaryEvents> by EventPublisher() {
+) : ScreenModel, foundation.ui.events.EventAware<CreateIntermediaryEvents> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(CreateIntermediaryState())
     val state: StateFlow<CreateIntermediaryState> = _state

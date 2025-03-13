@@ -1,4 +1,4 @@
-package foundation.pagination
+package foundation.ui
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable

@@ -31,8 +31,7 @@ dependencies {
     // Foundation
     implementation(projects.foundation.network)
     implementation(projects.foundation.navigation)
-    implementation(projects.foundation.designSystem.tokens)
-    implementation(projects.foundation.designSystem.components)
+    implementation(projects.foundation.designSystem)
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.pagination)

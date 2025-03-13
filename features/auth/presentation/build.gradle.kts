@@ -23,8 +23,7 @@ dependencies {
     // Foundation
     implementation(projects.foundation.network)
     implementation(projects.foundation.navigation)
-    implementation(projects.foundation.designSystem.tokens)
-    implementation(projects.foundation.designSystem.components)
+    implementation(projects.foundation.designSystem)
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.events)
     implementation(projects.foundation.exception)

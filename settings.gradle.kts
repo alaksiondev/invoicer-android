@@ -24,9 +24,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "invoicer"
 include(":app")
-include(":foundation:design-system:theme")
-include(":foundation:design-system:tokens")
-include(":foundation:design-system:components")
+include(":foundation:design-system")
 include(":features:auth:presentation")
 include(":foundation:navigation")
 include(":foundation:network")

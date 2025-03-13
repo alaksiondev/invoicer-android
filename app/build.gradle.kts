@@ -41,7 +41,7 @@ dependencies {
 
     // Foundation
     implementation(projects.foundation.navigation)
-    implementation(projects.foundation.designSystem.theme)
+    implementation(projects.foundation.designSystem)
     implementation(projects.foundation.network)
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.storage.impl)

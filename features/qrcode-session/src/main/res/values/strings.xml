@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="qrcode_session_home_title">QR Code Authorization</string>
+    <string name="qrcode_session_home_authorize_cta">Authorize new device</string>
 </resources>

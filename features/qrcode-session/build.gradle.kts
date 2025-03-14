@@ -27,6 +27,7 @@ dependencies {
     implementation(projects.foundation.network)
     implementation(projects.features.invoice.domain)
     implementation(projects.foundation.navigation)
+    implementation(projects.foundation.designSystem)
 
     implementation(libs.bundles.voyager)
 

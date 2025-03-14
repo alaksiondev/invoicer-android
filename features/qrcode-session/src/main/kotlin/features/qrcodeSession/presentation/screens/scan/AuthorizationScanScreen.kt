@@ -12,7 +12,9 @@ internal class AuthorizationScanScreen : Screen {
     @Composable
     override fun Content() {
         Scaffold { scaffoldPadding ->
-            Column(modifier = Modifier.padding(scaffoldPadding)) {
+            Column(
+                modifier = Modifier.padding(scaffoldPadding)
+            ) {
 
             }
         }

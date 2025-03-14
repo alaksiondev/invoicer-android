@@ -1,22 +1,23 @@
 [versions]
-agp = "8.7.2"
-kotlin = "2.0.20"
+agp = "8.7.3"
+kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
-espressoCore = "3.5.1"
+espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.10.01"
-koinBom = "4.1.0-Beta1"
-ktor = "3.0.1"
+activityCompose = "1.10.1"
+composeBom = "2025.03.00"
+koinBom = "4.1.0-Beta5"
+ktor = "3.1.1"
 voyager = "1.1.0-beta02"
-material-icons = "1.7.5"
-coroutines = "1.9.0"
-splashscreen = "1.0.0-beta02"
-datetime = "0.6.1"
+material-icons = "1.7.8"
+coroutines = "1.10.1"
+splashscreen = "1.0.1"
+datetime = "0.6.2"
 immutable-collections = "0.3.8"
 paging = "3.3.2"
+camerax-core = "1.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+
+# Camerax
 
 # Paging
 paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
@@ -55,12 +58,18 @@ voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voy
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-tabs = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 
+# Camerax
+camerax-core = { module = "androidx.camera:camera-core", version.ref = "camerax-core" }
+camerax-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax-core" }
+camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax-core" }
+camerax-view = { module = "androidx.camera:camera-view", version.ref = "camerax-core" }
+
 # Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-compose = { module = "io.insert-koin:koin-compose" }
-koin-junit4 = {module = "io.insert-koin:koin-test-junit4"}
+koin-junit4 = { module = "io.insert-koin:koin-test-junit4" }
 
 # KotlinX
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -72,6 +81,9 @@ immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-im
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 android-library-gradle-plugin = { module = "com.android.library:com.android.library.gradle.plugin", version.ref = "agp" }
 android-application-gradle-plugin = { module = "com.android.application:com.android.application.gradle.plugin", version.ref = "agp" }
+
+# ML Kit
+google-mlkit = { module = "com.google.mlkit:barcode-scanning", version = "17.3.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -85,4 +97,5 @@ compose-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-previe
 compose-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 voyager = ["voyager-navigator", "voyager-screenmodel", "voyager-koin"]
 paging = ["paging-compose", "paging-runtime"]
+camerax = ["camerax-core", "camerax-camera2", "camerax-lifecycle", "camerax-view"]
 

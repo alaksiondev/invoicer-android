@@ -1,14 +1,11 @@
 plugins {
     id("invoicer.library")
+    id("invoicer.compose")
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "feature.qrcodeSession"
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
@@ -22,6 +19,10 @@ dependencies {
     implementation(libs.ktor.client.core)
     implementation(libs.koin.core)
     implementation(libs.datetime)
+
+    // Camera
+    implementation(libs.bundles.camerax)
+    implementation(libs.google.mlkit)
 
     implementation(projects.foundation.network)
     implementation(projects.features.invoice.domain)

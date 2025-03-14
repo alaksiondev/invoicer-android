@@ -4,7 +4,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.intermediary.domain.repository.IntermediaryRepository
 import foundation.date.impl.defaultFormat
-import foundation.exception.RequestError
+import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import foundation.ui.events.EventAware

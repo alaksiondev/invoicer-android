@@ -3,9 +3,7 @@ package features.auth.presentation.screens.signup
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.auth.domain.repository.AuthRepository
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
-import foundation.exception.RequestError
+import foundation.network.RequestError
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
 import foundation.validator.impl.EmailValidator

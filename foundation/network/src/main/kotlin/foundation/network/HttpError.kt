@@ -1,4 +1,4 @@
-package foundation.exception
+package foundation.network
 
 sealed class RequestError : Throwable() {
     data class Http(

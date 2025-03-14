@@ -1,6 +1,6 @@
 package foundation.network.request
 
-import foundation.exception.RequestError
+import foundation.network.RequestError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

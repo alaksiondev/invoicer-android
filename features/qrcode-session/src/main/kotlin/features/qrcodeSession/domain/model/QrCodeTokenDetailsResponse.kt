@@ -8,6 +8,7 @@ internal data class QrCodeTokenDetailsModel(
     val agent: String,
     val base64Content: String,
     val rawContent: String,
+    val ipAddress: String,
     val status: QrCodeTokenStatusModel,
     val createdAt: Instant,
     val updatedAt: Instant,

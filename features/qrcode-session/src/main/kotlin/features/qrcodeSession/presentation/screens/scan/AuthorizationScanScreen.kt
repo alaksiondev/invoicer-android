@@ -22,7 +22,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
 import com.google.common.util.concurrent.ListenableFuture
+import features.qrcodeSession.presentation.barcodeanalyzer.QrCodeAnalyzer
 import features.qrcodeSession.presentation.barcodeanalyzer.rememberQrCodeAnalyzer
 import java.util.concurrent.Executors
 
@@ -30,14 +32,26 @@ internal class AuthorizationScanScreen : Screen {
 
     @Composable
     override fun Content() {
+        val screenModel = koinScreenModel<AuthorizationScanScreenModel>()
+
+        val analyzer = rememberQrCodeAnalyzer(
+            onSuccess = screenModel::onScanSuccess,
+            onError = { screenModel.onScanError() }
+        )
+
+        StateContent(
+            qrCodeAnalyzer = analyzer,
+        )
+    }
+
+    @Composable
+    fun StateContent(
+        qrCodeAnalyzer: QrCodeAnalyzer,
+
+        ) {
         val context = LocalContext.current
         val lifecycle = LocalLifecycleOwner.current
         var preview by remember { mutableStateOf<Preview?>(null) }
-        val analyzer = rememberQrCodeAnalyzer(
-            onSuccess = {},
-            onError = {}
-        )
-
 
         Scaffold { scaffoldPadding ->
             Column(
@@ -76,7 +90,7 @@ internal class AuthorizationScanScreen : Screen {
                                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                 .build()
                                 .also {
-                                    it.setAnalyzer(cameraExecutor, analyzer)
+                                    it.setAnalyzer(cameraExecutor, qrCodeAnalyzer)
                                 }
                             try {
                                 cameraProvider.unbindAll()

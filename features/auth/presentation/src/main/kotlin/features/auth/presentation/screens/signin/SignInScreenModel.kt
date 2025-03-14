@@ -5,9 +5,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.auth.domain.repository.AuthRepository
 import foundation.auth.watchers.AuthEvent
 import foundation.auth.watchers.AuthEventPublisher
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
-import foundation.exception.RequestError
+import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.flow.MutableStateFlow

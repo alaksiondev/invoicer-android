@@ -1,6 +1,6 @@
 package foundation.network.client.plugins
 
-import foundation.exception.RequestError
+import foundation.network.RequestError
 import foundation.network.client.BASE_URL
 import foundation.network.client.BuildConfig
 import foundation.network.client.InvoicerHttpError

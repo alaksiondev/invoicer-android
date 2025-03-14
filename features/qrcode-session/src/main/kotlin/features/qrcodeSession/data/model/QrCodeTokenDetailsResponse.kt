@@ -14,7 +14,8 @@ internal data class QrCodeTokenDetailsResponse(
     val status: QrCodeTokenStatusResponse,
     val createdAt: Instant,
     val updatedAt: Instant,
-    val expiresAt: Instant
+    val expiresAt: Instant,
+    val ipAddress: String,
 )
 
 @Serializable
@@ -37,6 +38,7 @@ internal fun QrCodeTokenDetailsResponse.toDomain(): QrCodeTokenDetailsModel {
         },
         createdAt = createdAt,
         updatedAt = updatedAt,
-        expiresAt = expiresAt
+        expiresAt = expiresAt,
+        ipAddress = ipAddress
     )
 }

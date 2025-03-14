@@ -25,9 +25,10 @@ dependencies {
     implementation(libs.google.mlkit)
 
     implementation(projects.foundation.network)
-    implementation(projects.features.invoice.domain)
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem)
+    implementation(projects.foundation.ui)
+    implementation(projects.foundation.validator.impl)
 
     implementation(libs.bundles.voyager)
 

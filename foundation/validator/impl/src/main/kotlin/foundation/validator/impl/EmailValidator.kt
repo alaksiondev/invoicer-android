@@ -4,7 +4,7 @@ interface EmailValidator {
     fun validate(email: String): Boolean
 }
 
-internal object EmailValidatorImpl : EmailValidator {
+internal class EmailValidatorImpl : EmailValidator {
     override fun validate(email: String): Boolean {
         return email.matches(emailRegex.toRegex())
     }

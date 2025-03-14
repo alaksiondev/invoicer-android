@@ -3,7 +3,7 @@ package features.invoice.presentation.screens.details
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.invoice.domain.repository.InvoiceRepository
-import foundation.exception.RequestError
+import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher

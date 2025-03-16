@@ -11,6 +11,7 @@ import foundation.ui.events.EventPublisher
 import foundation.validator.impl.UuidValidator
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 internal class AuthorizationScanScreenModel(
@@ -21,6 +22,8 @@ internal class AuthorizationScanScreenModel(
     EventAware<AuthorizationScanEvents> by EventPublisher() {
 
     private val _state = MutableStateFlow(AuthorizationScanState())
+    val state: StateFlow<AuthorizationScanState> = _state
+
     private lateinit var qrCodeContentId: String
 
     fun onScanSuccess(rawData: String) {

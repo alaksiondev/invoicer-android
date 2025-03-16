@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import com.google.common.util.concurrent.ListenableFuture
@@ -33,6 +34,7 @@ internal class AuthorizationScanScreen : Screen {
     @Composable
     override fun Content() {
         val screenModel = koinScreenModel<AuthorizationScanScreenModel>()
+        val state by screenModel.state.collectAsStateWithLifecycle()
 
         val analyzer = rememberQrCodeAnalyzer(
             onSuccess = screenModel::onScanSuccess,
@@ -41,14 +43,15 @@ internal class AuthorizationScanScreen : Screen {
 
         StateContent(
             qrCodeAnalyzer = analyzer,
+            state = state
         )
     }
 
     @Composable
     fun StateContent(
         qrCodeAnalyzer: QrCodeAnalyzer,
-
-        ) {
+        state: AuthorizationScanState
+    ) {
         val context = LocalContext.current
         val lifecycle = LocalLifecycleOwner.current
         var preview by remember { mutableStateOf<Preview?>(null) }

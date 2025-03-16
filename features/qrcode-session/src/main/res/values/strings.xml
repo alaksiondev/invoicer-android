@@ -2,4 +2,10 @@
 <resources>
     <string name="qrcode_session_home_title">QR Code Authorization</string>
     <string name="qrcode_session_home_authorize_cta">Authorize new device</string>
+    <string name="qrcode_scan_title">Scan QR Code</string>
+
+    <string name="qr_code_details_agent">Agent</string>
+    <string name="qr_code_details_ip">Ip Address</string>
+    <string name="qr_code_details_expiration">Code Expiration</string>
+    <string name="qr_code_details_requested_at">Requested At</string>
 </resources>

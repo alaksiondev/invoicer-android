@@ -1,44 +1,34 @@
 package features.qrcodeSession.presentation.screens.scan
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.util.Log
-import android.view.ViewGroup
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
-import com.google.common.util.concurrent.ListenableFuture
+import cafe.adriel.voyager.navigator.LocalNavigator
+import feature.qrcodeSession.R
 import features.qrcodeSession.presentation.barcodeanalyzer.QrCodeAnalyzer
 import features.qrcodeSession.presentation.barcodeanalyzer.rememberQrCodeAnalyzer
+import features.qrcodeSession.presentation.screens.scan.components.CameraView
+import features.qrcodeSession.presentation.screens.scan.components.CodeDetails
+import foundation.designsystem.components.LoadingState
+import foundation.designsystem.components.buttons.BackButton
 import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
 
 internal class AuthorizationScanScreen : Screen {
 
@@ -48,6 +38,7 @@ internal class AuthorizationScanScreen : Screen {
         val state by screenModel.state.collectAsStateWithLifecycle()
         val snackBarHost = remember { SnackbarHostState() }
         val scope = rememberCoroutineScope()
+        val navigator = LocalNavigator.current
 
         val analyzer = rememberQrCodeAnalyzer(
             onSuccess = screenModel::onScanSuccess,
@@ -57,115 +48,73 @@ internal class AuthorizationScanScreen : Screen {
         StateContent(
             qrCodeAnalyzer = analyzer,
             state = state,
-            snackBarHostState = snackBarHost
+            snackBarHostState = snackBarHost,
+            onBackButton = { navigator?.pop() }
         )
 
         EventEffect(screenModel) { event ->
             when (event) {
-                AuthorizationScanEvents.CodeNotFound -> Unit
-                AuthorizationScanEvents.InvalidCode -> scope.launch {
-                    snackBarHost.showSnackbar(message = "Invalid QrCode")
+                AuthorizationScanEvents.InvalidCode, AuthorizationScanEvents.CodeNotFound ->
+                    scope.launch {
+                        snackBarHost.showSnackbar(message = "Invalid QrCode")
+                    }
 
+                AuthorizationScanEvents.UnknownError -> scope.launch {
+                    snackBarHost.showSnackbar(message = "Error while validating QrCode")
                 }
-
-                AuthorizationScanEvents.UnknownError -> Unit
             }
-
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         qrCodeAnalyzer: QrCodeAnalyzer,
         state: AuthorizationScanState,
-        snackBarHostState: SnackbarHostState
+        snackBarHostState: SnackbarHostState,
+        onBackButton: () -> Unit
     ) {
-        val context = LocalContext.current
-        val lifecycle = LocalLifecycleOwner.current
-        var preview by remember { mutableStateOf<Preview?>(null) }
-
-        var hasCameraPermission by remember {
-            mutableStateOf(
-                ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED
-            )
-        }
-
-        val launcher =
-            rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.RequestPermission()
-            ) { result ->
-                hasCameraPermission = result
-            }
-
         Scaffold(
             snackbarHost = {
                 SnackbarHost(snackBarHostState)
+            },
+            topBar = {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.qrcode_scan_title)) },
+                    navigationIcon = { BackButton(onBackClick = onBackButton) }
+                )
             }
         ) { scaffoldPadding ->
             Column(
-                modifier = Modifier.padding(scaffoldPadding)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(scaffoldPadding)
             ) {
-                if (hasCameraPermission) {
-                    AndroidView(
-                        modifier = Modifier.fillMaxSize(),
-                        factory = { context ->
-                            val previewView = PreviewView(context)
-                            with(previewView) {
-                                scaleType = PreviewView.ScaleType.FIT_START
-                                layoutParams = ViewGroup.LayoutParams(
-                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.MATCH_PARENT
-                                )
-                                implementationMode = PreviewView.ImplementationMode.COMPATIBLE
-                            }
-                            previewView
-                        },
-                        update = { view ->
-                            val cameraSelector = CameraSelector.Builder()
-                                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                                .build()
-                            val cameraExecutor = Executors.newSingleThreadScheduledExecutor()
-                            val cameraProviderFuture: ListenableFuture<ProcessCameraProvider> =
-                                ProcessCameraProvider.getInstance(context)
-
-                            cameraProviderFuture.addListener({
-                                preview = Preview.Builder().build().also {
-                                    it.surfaceProvider = view.surfaceProvider
-                                }
-
-                                val cameraProvider: ProcessCameraProvider =
-                                    cameraProviderFuture.get()
-
-                                val imageAnalysis: ImageAnalysis = ImageAnalysis.Builder()
-                                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                                    .build()
-                                    .also {
-                                        it.setAnalyzer(cameraExecutor, qrCodeAnalyzer)
-                                    }
-                                try {
-                                    cameraProvider.unbindAll()
-                                    cameraProvider.bindToLifecycle(
-                                        lifecycle,
-                                        cameraSelector,
-                                        preview,
-                                        imageAnalysis
-                                    )
-                                } catch (e: Exception) {
-                                    Log.d("TAG", "CameraPreview: ${e.localizedMessage}")
-                                }
-                            }, ContextCompat.getMainExecutor(context))
-                        }
+                when (state.screenType) {
+                    AuthorizationScanMode.Loading -> LoadingState(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
                     )
-                } else {
-                    Button(
-                        onClick = { launcher.launch(Manifest.permission.CAMERA) }
-                    ) {
-                        Text("Request Camera Permission")
-                    }
+
+                    AuthorizationScanMode.QrCodeContent -> CodeDetails(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        qrCodeAgent = state.qrCodeAgent,
+                        qrCodeIp = state.qrCodeIp,
+                        qrCodeExpiration = state.qrCodeExpiration,
+                        qrCodeEmission = state.qrCodeEmission,
+                    )
+
+                    AuthorizationScanMode.CameraView -> CameraView(
+                        qrCodeAnalyzer = qrCodeAnalyzer,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    )
                 }
+
             }
         }
     }

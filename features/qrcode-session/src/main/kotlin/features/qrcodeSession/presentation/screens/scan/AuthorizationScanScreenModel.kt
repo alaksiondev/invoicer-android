@@ -21,12 +21,15 @@ internal class AuthorizationScanScreenModel(
 ) : ScreenModel,
     EventAware<AuthorizationScanEvents> by EventPublisher() {
 
+    private var processing: Boolean = false
     private val _state = MutableStateFlow(AuthorizationScanState())
     val state: StateFlow<AuthorizationScanState> = _state
 
     private lateinit var qrCodeContentId: String
 
     fun onScanSuccess(rawData: String) {
+        if (processing) return
+        processing = true
         screenModelScope.launch(dispatcher) {
             if (uuidValidator.validate(rawData).not()) {
                 publish(AuthorizationScanEvents.InvalidCode)
@@ -43,7 +46,7 @@ internal class AuthorizationScanScreenModel(
                         qrCodeIp = qrCodeDetails.ipAddress,
                         qrCodeExpiration = qrCodeDetails.expiresAt.toString(),
                         qrCodeEmission = qrCodeDetails.createdAt.toString(),
-                        screenType = AuthorizationScanType.Confirmation
+                        screenType = AuthorizationScanMode.QrCodeContent
                     )
                 },
                 onFailure = { error ->
@@ -52,15 +55,17 @@ internal class AuthorizationScanScreenModel(
                     } else {
                         publish(AuthorizationScanEvents.UnknownError)
                     }
+                    _state.value = _state.value.copy(
+                        screenType = AuthorizationScanMode.CameraView
+                    )
                 },
                 onStart = {
-                    _state.value = _state.value.copy(mode = AuthorizationScanMode.Loading)
+                    _state.value = _state.value.copy(
+                        screenType = AuthorizationScanMode.Loading
+                    )
                 },
-                onFinish = {
-                    _state.value = _state.value.copy(mode = AuthorizationScanMode.Content)
-                }
             )
-        }
+        }.invokeOnCompletion { processing = false }
     }
 
     fun onScanError() {

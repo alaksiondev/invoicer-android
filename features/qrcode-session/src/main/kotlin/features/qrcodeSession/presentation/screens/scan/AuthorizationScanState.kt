@@ -1,22 +1,18 @@
 package features.qrcodeSession.presentation.screens.scan
 
 internal data class AuthorizationScanState(
-    val screenType: AuthorizationScanType = AuthorizationScanType.Scanner,
+    val screenType: AuthorizationScanMode = AuthorizationScanMode.CameraView,
     val qrCodeAgent: String = "",
     val qrCodeIp: String = "",
     val qrCodeExpiration: String = "",
     val qrCodeEmission: String = "",
-    val mode: AuthorizationScanMode = AuthorizationScanMode.Content
 )
 
-internal enum class AuthorizationScanType {
-    Scanner,
-    Confirmation
-}
 
 internal enum class AuthorizationScanMode {
     Loading,
-    Content,
+    QrCodeContent,
+    CameraView,
 }
 
 internal sealed interface AuthorizationScanEvents {

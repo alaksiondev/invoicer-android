@@ -12,4 +12,10 @@
     <string name="qr_code_details_expiration">Code Expiration</string>
     <string name="qr_code_details_requested_at">Requested At</string>
     <string name="qr_code_details_authorize">Authorize</string>
+
+    <string name="qr_code_details_error_title">Something went wrong</string>
+    <string name="qr_code_details_error_description">Check your connection or retry scanning the Qr Code</string>
+    <string name="qr_code_details_error_primary_cta">Try again</string>
+    <string name="qr_code_details_error_secondary_cta">Go back to scanning</string>
+
 </resources>

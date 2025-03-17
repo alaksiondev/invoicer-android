@@ -1,4 +1,4 @@
-package features.qrcodeSession.presentation.screens.components
+package features.qrcodeSession.presentation.screens.confirmation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

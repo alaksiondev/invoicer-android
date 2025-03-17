@@ -12,4 +12,9 @@ internal sealed interface AuthorizationConfirmationMode {
     data object Loading : AuthorizationConfirmationMode
     data object Content : AuthorizationConfirmationMode
     data object Error : AuthorizationConfirmationMode
+    data object AuthorizeError : AuthorizationConfirmationMode
+}
+
+internal enum class AuthorizationConfirmationEvents {
+    Authorized;
 }

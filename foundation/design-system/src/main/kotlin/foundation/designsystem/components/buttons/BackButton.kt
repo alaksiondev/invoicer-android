@@ -6,11 +6,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 
 @Composable
 fun BackButton(
     modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.AutoMirrored.Outlined.ArrowBack,
     onBackClick: () -> Unit
 ) {
     IconButton(
@@ -19,7 +21,7 @@ fun BackButton(
     ) {
         Icon(
             painter = rememberVectorPainter(
-                image = Icons.AutoMirrored.Outlined.ArrowBack
+                image = icon
             ),
             contentDescription = null
         )

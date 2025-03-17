@@ -20,6 +20,7 @@ import feature.qrcodeSession.R
 import features.qrcodeSession.presentation.screens.components.CodeDetails
 import foundation.designsystem.components.LoadingState
 import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.tokens.Spacing
 
 internal data class AuthorizationConfirmationScreen(
     private val codeContentId: String
@@ -61,11 +62,11 @@ internal data class AuthorizationConfirmationScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
+                    .padding(Spacing.medium)
             ) {
                 when (state.mode) {
                     AuthorizationConfirmationMode.Content -> CodeDetails(
                         modifier = Modifier
-                            .weight(1f)
                             .fillMaxWidth(),
                         qrCodeAgent = state.qrCodeAgent,
                         qrCodeIp = state.qrCodeIp,
@@ -78,7 +79,6 @@ internal data class AuthorizationConfirmationScreen(
 
                     AuthorizationConfirmationMode.Loading -> LoadingState(Modifier.weight(1f))
                 }
-                Text("confirmation screen")
             }
         }
     }

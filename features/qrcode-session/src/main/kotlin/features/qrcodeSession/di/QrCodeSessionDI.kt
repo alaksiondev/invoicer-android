@@ -25,7 +25,7 @@ val qrCodeSessionDi = module {
     factory {
         AuthorizationConfirmationScreenModel(
             qrCodeTokenRepository = get(),
-            dispatcher = get()
+            dispatcher = Dispatchers.Default
         )
     }
 }

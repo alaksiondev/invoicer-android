@@ -116,7 +116,11 @@ internal data class AuthorizationConfirmationScreen(
                         icon = Icons.Default.ErrorOutline
                     )
 
-                    AuthorizationConfirmationMode.Loading -> LoadingState(Modifier.weight(1f))
+                    AuthorizationConfirmationMode.Loading -> LoadingState(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    )
                 }
             }
         }

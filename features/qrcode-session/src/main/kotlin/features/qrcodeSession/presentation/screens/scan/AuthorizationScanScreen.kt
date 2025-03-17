@@ -23,11 +23,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import feature.qrcodeSession.R
 import features.qrcodeSession.presentation.barcodeanalyzer.QrCodeAnalyzer
 import features.qrcodeSession.presentation.barcodeanalyzer.rememberQrCodeAnalyzer
+import features.qrcodeSession.presentation.screens.confirmation.AuthorizationConfirmationScreen
 import features.qrcodeSession.presentation.screens.scan.components.CameraView
-import features.qrcodeSession.presentation.screens.scan.components.CodeDetails
 import foundation.designsystem.components.LoadingState
 import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.spacer.Spacer
 import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
@@ -60,9 +59,11 @@ internal class AuthorizationScanScreen : Screen {
                         snackBarHost.showSnackbar(message = "Invalid QrCode")
                     }
 
-                AuthorizationScanEvents.UnknownError -> scope.launch {
-                    snackBarHost.showSnackbar(message = "Error while validating QrCode")
-                }
+                is AuthorizationScanEvents.ProceedToConfirmation -> navigator?.push(
+                    AuthorizationConfirmationScreen(
+                        codeContentId = event.contentId
+                    )
+                )
             }
         }
     }
@@ -95,22 +96,9 @@ internal class AuthorizationScanScreen : Screen {
                     AuthorizationScanMode.Loading -> LoadingState(
                         modifier = Modifier
                             .weight(1f)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        label = stringResource(R.string.qrcode_scan_in_progress)
                     )
-
-                    AuthorizationScanMode.QrCodeContent -> {
-                        this.Spacer(1f)
-                        CodeDetails(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            qrCodeAgent = state.qrCodeAgent,
-                            qrCodeIp = state.qrCodeIp,
-                            qrCodeExpiration = state.qrCodeExpiration,
-                            qrCodeEmission = state.qrCodeEmission,
-                            onAuthorize = {}
-                        )
-                        this.Spacer(1f)
-                    }
 
                     AuthorizationScanMode.CameraView -> CameraView(
                         qrCodeAnalyzer = qrCodeAnalyzer,
@@ -119,7 +107,6 @@ internal class AuthorizationScanScreen : Screen {
                             .fillMaxWidth()
                     )
                 }
-
             }
         }
     }

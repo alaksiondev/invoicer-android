@@ -3,7 +3,10 @@
     <string name="qrcode_session_home_title">QR Code Authorization</string>
     <string name="qrcode_session_home_authorize_cta">Authorize new device</string>
     <string name="qrcode_scan_title">Scan QR Code</string>
+    <string name="qrcode_scan_in_progress">Scanning QR Code</string>
 
+    <!-- Qr Code details -->
+    <string name="qr_code_details">Authorize</string>
     <string name="qr_code_details_agent">Agent</string>
     <string name="qr_code_details_ip">Ip Address</string>
     <string name="qr_code_details_expiration">Code Expiration</string>

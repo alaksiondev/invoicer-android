@@ -19,7 +19,7 @@ internal class QrCodeTokenRepositoryImpl(
     override suspend fun getQrCodeDetails(token: String): QrCodeTokenDetailsModel {
         return withContext(dispatcher) {
             httpWrapper.client
-                .get("/v1/login_code/")
+                .get("/v1/login_code/${token}")
                 .body<QrCodeTokenDetailsResponse>()
                 .toDomain()
         }

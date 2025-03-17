@@ -27,6 +27,7 @@ import features.qrcodeSession.presentation.screens.scan.components.CameraView
 import features.qrcodeSession.presentation.screens.scan.components.CodeDetails
 import foundation.designsystem.components.LoadingState
 import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.spacer.Spacer
 import foundation.ui.events.EventEffect
 import kotlinx.coroutines.launch
 
@@ -97,15 +98,19 @@ internal class AuthorizationScanScreen : Screen {
                             .fillMaxWidth()
                     )
 
-                    AuthorizationScanMode.QrCodeContent -> CodeDetails(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                        qrCodeAgent = state.qrCodeAgent,
-                        qrCodeIp = state.qrCodeIp,
-                        qrCodeExpiration = state.qrCodeExpiration,
-                        qrCodeEmission = state.qrCodeEmission,
-                    )
+                    AuthorizationScanMode.QrCodeContent -> {
+                        this.Spacer(1f)
+                        CodeDetails(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            qrCodeAgent = state.qrCodeAgent,
+                            qrCodeIp = state.qrCodeIp,
+                            qrCodeExpiration = state.qrCodeExpiration,
+                            qrCodeEmission = state.qrCodeEmission,
+                            onAuthorize = {}
+                        )
+                        this.Spacer(1f)
+                    }
 
                     AuthorizationScanMode.CameraView -> CameraView(
                         qrCodeAnalyzer = qrCodeAnalyzer,

@@ -8,4 +8,5 @@
     <string name="qr_code_details_ip">Ip Address</string>
     <string name="qr_code_details_expiration">Code Expiration</string>
     <string name="qr_code_details_requested_at">Requested At</string>
+    <string name="qr_code_details_authorize">Authorize</string>
 </resources>

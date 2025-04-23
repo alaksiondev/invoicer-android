@@ -18,6 +18,8 @@ datetime = "0.6.2"
 immutable-collections = "0.3.8"
 paging = "3.3.2"
 camerax-core = "1.4.1"
+google-services = "4.4.2"
+firebase-bom = "33.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -85,12 +87,16 @@ android-application-gradle-plugin = { module = "com.android.application:com.andr
 # ML Kit
 google-mlkit = { module = "com.google.mlkit:barcode-scanning", version = "17.3.0" }
 
+# Firebase
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 
 [bundles]
 compose-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3"]

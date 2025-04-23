@@ -1,6 +1,7 @@
 plugins {
     id("invoicer.application")
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
 }
 
 android {

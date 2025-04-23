@@ -1,10 +1,36 @@
+import java.util.Properties
+
 plugins {
     id("invoicer.library")
     id("invoicer.compose")
 }
 
+val properties = Properties()
+properties.load(rootProject.file("local.properties").inputStream())
+
 android {
     namespace = "features.auth.presentation"
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            buildConfigField(
+                "String",
+                "FIREBASE_WEB_ID",
+                properties.getProperty("FIREBASE_WEB_ID")
+            )
+        }
+        debug {
+            buildConfigField(
+                "String",
+                "FIREBASE_WEB_ID",
+                properties.getProperty("FIREBASE_WEB_ID")
+            )
+        }
+    }
 }
 
 dependencies {
@@ -19,6 +45,12 @@ dependencies {
 
     // Voyager
     implementation(libs.bundles.voyager)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.bundles.identity)
+    implementation(libs.google.services.auth)
 
     // Foundation
     implementation(projects.foundation.network)

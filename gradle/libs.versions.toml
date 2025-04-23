@@ -20,6 +20,9 @@ paging = "3.3.2"
 camerax-core = "1.4.1"
 google-services = "4.4.2"
 firebase-bom = "33.12.0"
+androidX-identity = "1.5.0"
+googleId = "1.1.1"
+google-services-auth = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,8 +41,6 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
-
-# Camerax
 
 # Paging
 paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
@@ -89,6 +90,15 @@ google-mlkit = { module = "com.google.mlkit:barcode-scanning", version = "17.3.0
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+
+# Identity
+identity-credentials-core = { module = "androidx.credentials:credentials", version.ref = "androidX-identity" }
+identity-credentials-play = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidX-identity" }
+identity-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleId" }
+
+# Google Services
+google-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "google-services-auth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -104,4 +114,5 @@ compose-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 voyager = ["voyager-navigator", "voyager-screenmodel", "voyager-koin"]
 paging = ["paging-compose", "paging-runtime"]
 camerax = ["camerax-core", "camerax-camera2", "camerax-lifecycle", "camerax-view"]
+identity = ["identity-credentials-core", "identity-credentials-play", "identity-googleid"]
 

@@ -1,5 +1,8 @@
 package features.auth.presentation.di
 
+import features.auth.presentation.firebase.FirebaseHelper
+import features.auth.presentation.firebase.GoogleFirebaseHelper
+import features.auth.presentation.screens.menu.AuthMenuScreenModel
 import features.auth.presentation.screens.signin.SignInScreenModel
 import features.auth.presentation.screens.signup.SignUpScreenModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +26,24 @@ private fun Module.viewModelBindings() {
         SignInScreenModel(
             authRepository = get(),
             authEventPublisher = get()
+        )
+    }
+
+    factory {
+        AuthMenuScreenModel(
+            firebaseHelper = get(),
+        )
+    }
+
+    factory {
+        GoogleFirebaseHelper(
+            context = get()
+        )
+    }
+
+    factory {
+        FirebaseHelper(
+            googleFirebaseHelper = get()
         )
     }
 }

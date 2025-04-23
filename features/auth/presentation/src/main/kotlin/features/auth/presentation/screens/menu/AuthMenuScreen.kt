@@ -1,5 +1,6 @@
 package features.auth.presentation.screens.menu
 
+import android.app.Activity.RESULT_OK
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import features.auth.presentation.screens.signin.SignInScreen
 import features.auth.presentation.screens.signup.SignUpScreen
 import foundation.designsystem.tokens.Spacing
@@ -30,7 +32,10 @@ internal class AuthMenuScreen : Screen {
         val firebaseLauncher = rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            Log.d("Firebase", "Result: $result")
+            if (result.resultCode == RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                screenModel.handleGoogleTask(task)
+            }
         }
 
         StateContent(

@@ -1,5 +1,7 @@
 package features.auth.presentation.di
 
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import features.auth.presentation.firebase.FirebaseHelper
 import features.auth.presentation.firebase.GoogleFirebaseHelper
 import features.auth.presentation.screens.menu.AuthMenuScreenModel
@@ -32,12 +34,14 @@ private fun Module.viewModelBindings() {
     factory {
         AuthMenuScreenModel(
             firebaseHelper = get(),
+            dispatcher = Dispatchers.IO
         )
     }
 
     factory {
         GoogleFirebaseHelper(
-            context = get()
+            context = get(),
+            firebaseAuth = Firebase.auth
         )
     }
 

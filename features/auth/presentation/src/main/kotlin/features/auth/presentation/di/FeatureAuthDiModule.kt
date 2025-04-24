@@ -35,7 +35,8 @@ private fun Module.viewModelBindings() {
         AuthMenuScreenModel(
             firebaseHelper = get(),
             dispatcher = Dispatchers.IO,
-            authRepository = get()
+            authRepository = get(),
+            authEventPublisher = get()
         )
     }
 

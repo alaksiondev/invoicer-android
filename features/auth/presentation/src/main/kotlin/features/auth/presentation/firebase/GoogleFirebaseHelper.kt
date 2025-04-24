@@ -24,12 +24,14 @@ internal class GoogleFirebaseHelper(
             .requestEmail()
             .build()
 
-        return GoogleSignIn.getClient(
+        val client = GoogleSignIn.getClient(
             context,
             options
-        ).also { it ->
-            it.revokeAccess()
-        }
+        )
+
+        client.revokeAccess()
+
+        return client
     }
 
     suspend fun handleAuthResult(task: Task<GoogleSignInAccount>): GoogleResult {

@@ -8,6 +8,8 @@ import foundation.auth.watchers.AuthEventPublisher
 import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class SignInScreenModel(
     private val authRepository: AuthRepository,
     private val authEventPublisher: AuthEventPublisher
-) : ScreenModel, foundation.ui.events.EventAware<SignInEvents> by foundation.ui.events.EventPublisher() {
+) : ScreenModel, EventAware<SignInEvents> by EventPublisher() {
     private val _state = MutableStateFlow(SignInScreenState())
     val state: StateFlow<SignInScreenState> = _state
 

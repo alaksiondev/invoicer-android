@@ -1,22 +1,33 @@
 package features.auth.presentation.screens.menu
 
-import android.util.Log
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-
 import features.auth.presentation.firebase.FirebaseHelper
 import features.auth.presentation.firebase.GoogleResult
 import foundation.auth.domain.repository.AuthRepository
+import foundation.auth.watchers.AuthEvent
+import foundation.auth.watchers.AuthEventPublisher
+import foundation.network.request.handle
+import foundation.network.request.launchRequest
+import foundation.ui.events.EventAware
+import foundation.ui.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AuthMenuScreenModel(
     private val firebaseHelper: FirebaseHelper,
     private val dispatcher: CoroutineDispatcher,
-    private val authRepository: AuthRepository
-) : ScreenModel {
+    private val authRepository: AuthRepository,
+    private val authEventPublisher: AuthEventPublisher
+) : ScreenModel, EventAware<AuthMenuEvents> by EventPublisher() {
+
+    private val _state = MutableStateFlow(AuthMenuState())
+    val state: StateFlow<AuthMenuState> = _state
 
     fun getGoogleClient() = firebaseHelper.getGoogleClient()
 
@@ -25,14 +36,43 @@ internal class AuthMenuScreenModel(
             val result = firebaseHelper.handleGoogleResult(task)
 
             when (result) {
-                is GoogleResult.Error -> Log.d(
-                    "AuthMenuScreenModel",
-                    "Google sign in failure: ${result.error}"
-                )
+                is GoogleResult.Error -> {
+                    publish(
+                        AuthMenuEvents.GoogleAuthFailure(
+                            error = result.error?.message.orEmpty()
+                        )
+                    )
+                }
 
                 is GoogleResult.Success -> {
-                    val response = authRepository.googleSignIn(result.token)
-                    Log.d("AuthMenuScreenModel", "Google sign in response: $response")
+                    launchRequest {
+                        authRepository.googleSignIn(result.token)
+                    }.handle(
+                        onSuccess = {
+                            authEventPublisher.publish(AuthEvent.SignIn)
+                        },
+                        onStart = {
+                            _state.update {
+                                it.copy(
+                                    isSocialLoginLoading = true
+                                )
+                            }
+                        },
+                        onFinish = {
+                            _state.update {
+                                it.copy(
+                                    isSocialLoginLoading = false
+                                )
+                            }
+                        },
+                        onFailure = {
+                            publish(
+                                AuthMenuEvents.GoogleAuthFailure(
+                                    error = it.message.orEmpty()
+                                )
+                            )
+                        }
+                    )
                 }
             }
         }

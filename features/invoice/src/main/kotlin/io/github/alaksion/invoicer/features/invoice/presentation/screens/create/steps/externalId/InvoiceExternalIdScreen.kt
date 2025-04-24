@@ -1,0 +1,104 @@
+package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.externalId
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.QrCode2
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreen
+import foundation.designsystem.components.spacer.Spacer
+import foundation.ui.events.EventEffect
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import io.github.alasion.invoicer.features.invoice.R
+
+internal class InvoiceExternalIdScreen : Screen {
+
+    @Composable
+    override fun Content() {
+        val screenModel = koinScreenModel<InvoiceExternalIdScreenModel>()
+        val state by screenModel.state.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
+
+        EventEffect(screenModel) {
+            when (it) {
+                InvoiceExternalIdEvents.Continue -> navigator?.push(SenderCompanyScreen())
+            }
+        }
+
+        StateContent(
+            onBack = { navigator?.pop() },
+            onSubmit = screenModel::submit,
+            state = state,
+            onUpdate = screenModel::updateExternalId
+        )
+    }
+
+    @Composable
+    fun StateContent(
+        onSubmit: () -> Unit,
+        onUpdate: (String) -> Unit,
+        onBack: () -> Unit,
+        state: InvoiceExternalIdState
+    ) {
+        val keyboard = LocalSoftwareKeyboardController.current
+
+        CreateInvoiceBaseForm(
+            title = stringResource(R.string.invoice_create_external_id_title),
+            buttonText = stringResource(R.string.invoice_create_continue_cta),
+            buttonEnabled = state.isEnabled,
+            onBack = onBack,
+            onContinue = onSubmit,
+        ) {
+            Spacer(1f)
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.externalId,
+                onValueChange = onUpdate,
+                maxLines = 1,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.QrCode2,
+                        contentDescription = null
+                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                    autoCorrectEnabled = false,
+                    capitalization = KeyboardCapitalization.Words
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { keyboard?.hide() }
+                ),
+                placeholder = {
+                    Text(
+                        text = stringResource(
+                            R.string.invoice_create_external_id_placeholder
+                        )
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(
+                            R.string.invoice_create_external_id_label
+                        )
+                    )
+                }
+            )
+            Spacer(1f)
+        }
+    }
+}

@@ -12,9 +12,6 @@ import features.home.presentation.navigation.homeContainerScreens
 import features.intermediary.data.di.intermediaryDataModule
 import features.intermediary.presentation.di.intermediaryPresentationModule
 import features.intermediary.presentation.navigation.intermediaryScreens
-import features.invoice.data.di.invoiceDataModule
-import features.invoice.presentation.di.invoicePresentationModule
-import features.invoice.presentation.navigation.invoiceScreens
 import features.qrcodeSession.di.qrCodeSessionDi
 import features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import foundation.auth.data.di.foundationAuthDataModule
@@ -25,6 +22,8 @@ import foundation.network.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
 import foundation.validator.impl.di.validatorDiModule
 import foundation.watchers.di.watchersDiModule
+import io.github.alaksion.invoicer.features.invoice.di.invoiceDiModule
+import io.github.alaksion.invoicer.features.invoice.presentation.navigation.invoiceScreens
 import io.github.alaksion.invoicer.main.mainDiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -56,8 +55,7 @@ class InvoicerApplication : Application() {
                 homePresentationDiModule,
                 foundationLoggerModule,
                 foundationDateModule,
-                invoiceDataModule,
-                invoicePresentationModule,
+                invoiceDiModule,
                 beneficiaryDataModule,
                 beneficiaryPresentationModule,
                 intermediaryPresentationModule,

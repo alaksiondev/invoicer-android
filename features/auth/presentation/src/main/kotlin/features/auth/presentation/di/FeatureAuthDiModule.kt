@@ -34,7 +34,8 @@ private fun Module.viewModelBindings() {
     factory {
         AuthMenuScreenModel(
             firebaseHelper = get(),
-            dispatcher = Dispatchers.IO
+            dispatcher = Dispatchers.IO,
+            authRepository = get()
         )
     }
 

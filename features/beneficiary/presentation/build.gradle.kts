@@ -38,6 +38,6 @@ dependencies {
     implementation(projects.foundation.date.impl)
 
     // Feature
-    implementation(projects.features.beneficiary.domain)
+    implementation(projects.features.beneficiary.services)
     implementation(projects.foundation.watchers)
 }

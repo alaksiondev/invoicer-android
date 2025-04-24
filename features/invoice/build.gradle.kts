@@ -36,7 +36,7 @@ dependencies {
     implementation(projects.foundation.watchers)
 
     // Features
-    implementation(projects.features.beneficiary.domain)
+    implementation(projects.features.beneficiary.services)
     implementation(projects.features.intermediary.domain)
 
     // Ktor

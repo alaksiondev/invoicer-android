@@ -2,7 +2,7 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.beneficiary.domain.repository.BeneficiaryRepository
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import foundation.ui.events.EventAware
 import foundation.ui.events.EventPublisher

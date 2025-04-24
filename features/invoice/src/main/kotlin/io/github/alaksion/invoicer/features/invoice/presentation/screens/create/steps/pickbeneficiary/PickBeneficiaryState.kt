@@ -1,6 +1,6 @@
 package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary
 
-import features.beneficiary.domain.model.BeneficiaryModel
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

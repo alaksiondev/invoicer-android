@@ -2,10 +2,8 @@ package features.beneficiary.presentation.screen.list
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.beneficiary.domain.model.BeneficiariesModel
-import features.beneficiary.domain.repository.BeneficiaryRepository
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiariesModel
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList

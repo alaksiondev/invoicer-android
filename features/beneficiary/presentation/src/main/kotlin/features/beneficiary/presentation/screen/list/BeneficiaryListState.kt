@@ -2,7 +2,7 @@ package features.beneficiary.presentation.screen.list
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import features.beneficiary.domain.model.BeneficiaryModel
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

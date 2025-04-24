@@ -4,7 +4,7 @@ import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.auth.presentation.di.featureAuthPresentationDiModule
 import features.auth.presentation.navigation.authScreens
-import features.beneficiary.data.di.beneficiaryDataModule
+import io.github.alaksion.invoicer.features.beneficiary.services.di.beneficiaryServicesDiModule
 import features.beneficiary.presentation.di.beneficiaryPresentationModule
 import features.beneficiary.presentation.navigation.beneficiaryScreens
 import features.home.presentation.di.homePresentationDiModule
@@ -56,7 +56,7 @@ class InvoicerApplication : Application() {
                 foundationLoggerModule,
                 foundationDateModule,
                 invoiceDiModule,
-                beneficiaryDataModule,
+                beneficiaryServicesDiModule,
                 beneficiaryPresentationModule,
                 intermediaryPresentationModule,
                 intermediaryDataModule,

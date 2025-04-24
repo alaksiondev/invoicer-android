@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import foundation.designsystem.components.emptystate.EmptyState
-import features.intermediary.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import features.intermediary.presentation.R
 import foundation.designsystem.tokens.Spacing
 import kotlinx.collections.immutable.ImmutableList

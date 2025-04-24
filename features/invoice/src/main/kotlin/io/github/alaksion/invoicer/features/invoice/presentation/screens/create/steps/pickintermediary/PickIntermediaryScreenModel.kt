@@ -2,7 +2,7 @@ package features.invoice.presentation.screens.create.steps.pickintermediary
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.intermediary.domain.repository.IntermediaryRepository
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import foundation.network.request.handle
 import foundation.network.request.launchRequest

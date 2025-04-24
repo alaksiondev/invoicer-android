@@ -1,6 +1,6 @@
 package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary
 
-import features.intermediary.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

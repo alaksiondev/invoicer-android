@@ -2,7 +2,7 @@ package features.intermediary.presentation.screen.intermediarylist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import features.intermediary.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

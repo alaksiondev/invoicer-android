@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "foundation.intermediary.data"
+    namespace = "io.github.alaksion.invoicer.features.intermediary.services"
 }
 
 dependencies {
@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.datetime)
 
     implementation(projects.foundation.network)
-    implementation(projects.features.intermediary.domain)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.coroutines.test)

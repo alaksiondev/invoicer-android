@@ -2,8 +2,8 @@ package features.intermediary.presentation.screen.intermediarylist
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.intermediary.domain.model.IntermediaryModel
-import features.intermediary.domain.repository.IntermediaryRepository
+import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList

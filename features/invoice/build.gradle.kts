@@ -37,7 +37,7 @@ dependencies {
 
     // Features
     implementation(projects.features.beneficiary.services)
-    implementation(projects.features.intermediary.domain)
+    implementation(projects.features.intermediary.services)
 
     // Ktor
     implementation(libs.ktor.client.serialization)

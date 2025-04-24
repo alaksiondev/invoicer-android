@@ -1,4 +1,4 @@
-package features.intermediary.domain.model
+package io.github.alaksion.invoicer.features.intermediary.services.domain.model
 
 import kotlinx.datetime.Instant
 

@@ -1,8 +1,8 @@
-package features.intermediary.data.repository
+package io.github.alaksion.invoicer.features.intermediary.services.data.repository
 
-import features.intermediary.data.datasource.IntermediaryRemoteDataSource
-import features.intermediary.domain.model.IntermediaryModel
-import features.intermediary.domain.repository.IntermediaryRepository
+import io.github.alaksion.invoicer.features.intermediary.services.data.datasource.IntermediaryRemoteDataSource
+import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 
 internal class IntermediaryRepositoryImpl(
     private val dataSource: IntermediaryRemoteDataSource

@@ -37,6 +37,6 @@ dependencies {
     implementation(projects.foundation.date.impl)
 
     // Feature
-    implementation(projects.features.intermediary.domain)
+    implementation(projects.features.intermediary.services)
     implementation(projects.foundation.watchers)
 }

@@ -1,6 +1,6 @@
-package features.intermediary.domain.repository
+package io.github.alaksion.invoicer.features.intermediary.services.domain.repository
 
-import features.intermediary.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 
 interface IntermediaryRepository {
 

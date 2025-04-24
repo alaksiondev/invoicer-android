@@ -9,7 +9,7 @@ import features.beneficiary.presentation.di.beneficiaryPresentationModule
 import features.beneficiary.presentation.navigation.beneficiaryScreens
 import features.home.presentation.di.homePresentationDiModule
 import features.home.presentation.navigation.homeContainerScreens
-import features.intermediary.data.di.intermediaryDataModule
+import io.github.alaksion.invoicer.features.intermediary.services.di.intermediaryServicesDiModule
 import features.intermediary.presentation.di.intermediaryPresentationModule
 import features.intermediary.presentation.navigation.intermediaryScreens
 import features.qrcodeSession.di.qrCodeSessionDi
@@ -59,7 +59,7 @@ class InvoicerApplication : Application() {
                 beneficiaryServicesDiModule,
                 beneficiaryPresentationModule,
                 intermediaryPresentationModule,
-                intermediaryDataModule,
+                intermediaryServicesDiModule,
                 qrCodeSessionDi,
                 watchersDiModule
             )

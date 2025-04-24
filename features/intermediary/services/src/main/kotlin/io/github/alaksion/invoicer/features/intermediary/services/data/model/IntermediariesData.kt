@@ -1,4 +1,4 @@
-package features.intermediary.data.model
+package io.github.alaksion.invoicer.features.intermediary.services.data.model
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable

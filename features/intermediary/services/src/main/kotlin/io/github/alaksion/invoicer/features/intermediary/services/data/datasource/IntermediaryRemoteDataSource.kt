@@ -1,9 +1,9 @@
-package features.intermediary.data.datasource
+package io.github.alaksion.invoicer.features.intermediary.services.data.datasource
 
-import features.intermediary.data.model.CreateIntermediaryData
-import features.intermediary.data.model.IntermediariesData
-import features.intermediary.data.model.IntermediaryData
-import features.intermediary.data.model.UpdateIntermediaryData
+import io.github.alaksion.invoicer.features.intermediary.services.data.model.CreateIntermediaryData
+import io.github.alaksion.invoicer.features.intermediary.services.data.model.IntermediariesData
+import io.github.alaksion.invoicer.features.intermediary.services.data.model.IntermediaryData
+import io.github.alaksion.invoicer.features.intermediary.services.data.model.UpdateIntermediaryData
 import foundation.network.client.BASE_URL
 import foundation.network.client.HttpWrapper
 import io.ktor.client.call.body

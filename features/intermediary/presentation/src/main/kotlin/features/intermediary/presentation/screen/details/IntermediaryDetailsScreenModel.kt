@@ -2,7 +2,7 @@ package features.intermediary.presentation.screen.details
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import features.intermediary.domain.repository.IntermediaryRepository
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import foundation.date.impl.defaultFormat
 import foundation.network.RequestError
 import foundation.network.request.handle

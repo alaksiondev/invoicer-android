@@ -14,6 +14,10 @@ interface AuthRepository {
         password: String
     )
 
+    suspend fun googleSignIn(
+        token: String
+    )
+
     suspend fun signOut()
 
     suspend fun refreshToken(): AuthToken?

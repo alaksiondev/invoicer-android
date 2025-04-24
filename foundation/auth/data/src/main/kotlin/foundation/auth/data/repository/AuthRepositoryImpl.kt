@@ -27,6 +27,15 @@ internal class AuthRepositoryImpl(
         localDataSource.storeRefreshToken(session.refreshToken)
     }
 
+    override suspend fun googleSignIn(token: String) {
+        val session = remoteDataSource.googleSignIn(
+            token = token
+        )
+
+        localDataSource.storeAccessToken(session.token)
+        localDataSource.storeRefreshToken(session.refreshToken)
+    }
+
     override suspend fun signOut() {
         localDataSource.clearTokens()
     }

@@ -13,3 +13,8 @@ internal data class SignInRequest(
     val email: String,
     val password: String,
 )
+
+@Serializable
+internal data class GoogleSignInRequest(
+    val token: String,
+)

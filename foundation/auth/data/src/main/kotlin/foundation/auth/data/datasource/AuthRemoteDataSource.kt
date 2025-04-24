@@ -1,5 +1,6 @@
 package foundation.auth.data.datasource
 
+import foundation.auth.data.model.GoogleSignInRequest
 import foundation.auth.data.model.RefreshRequest
 import foundation.auth.data.model.RefreshResponse
 import foundation.auth.data.model.SignInRequest
@@ -25,6 +26,10 @@ internal interface AuthRemoteDataSource {
     ): SignInResponse
 
     suspend fun refreshToken(refreshToken: String): RefreshResponse
+
+    suspend fun googleSignIn(
+        token: String
+    ): SignInResponse
 }
 
 internal class AuthRemoteDataSourceImpl(
@@ -75,6 +80,20 @@ internal class AuthRemoteDataSourceImpl(
                 setBody(
                     RefreshRequest(
                         refreshToken = refreshToken
+                    )
+                )
+            }.body()
+        }
+    }
+
+    override suspend fun googleSignIn(token: String): SignInResponse {
+        return withContext(dispatcher) {
+            httpWrapper.client.post(
+                urlString = "/v1/auth/google"
+            ) {
+                setBody(
+                    GoogleSignInRequest(
+                        token = token
                     )
                 )
             }.body()

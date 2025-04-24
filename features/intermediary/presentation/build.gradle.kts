@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "features.intermediary.presentation"
+    namespace = "io.github.alaksion.invoicer.features.intermediary.presentation"
 }
 
 dependencies {

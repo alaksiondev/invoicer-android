@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "features.beneficiary.presentation"
+    namespace = "io.github.alaksion.invoicer.features.beneficiary.presentation"
 }
 
 dependencies {

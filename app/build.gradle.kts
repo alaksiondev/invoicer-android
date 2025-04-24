@@ -56,7 +56,7 @@ dependencies {
 
     // Features
     implementation(projects.features.auth.presentation)
-    implementation(projects.features.home.presentation)
+    implementation(projects.features.home)
     implementation(projects.features.invoice)
     implementation(projects.foundation.watchers)
     implementation(projects.features.beneficiary.services)

@@ -172,7 +172,7 @@ internal class LoginScreen : Screen {
                 SecondaryButton(
                     modifier = Modifier.fillMaxWidth(),
                     label = stringResource(R.string.auth_sign_in_google_button),
-                    onClick = {},
+                    onClick = callBacks.onLaunchGoogle,
                     leadingIcon = {
                         Icon(
                             painter = painterResource(foundation.designSystem.R.drawable.google),

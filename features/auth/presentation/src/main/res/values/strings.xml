@@ -13,11 +13,11 @@
     <string name="auth_sign_up_weak_password_label">To comply with our strong password policy you are required to use a sufficiently strong password.</string>
     <string name="auth_sign_up_strong_password_suffix">strong!</string>
     <string name="auth_sign_up_strong_password_prefix">Password is</string>
-    <string name="auth_sign_up_password_str_length">Password must have at least 8 characters</string>
-    <string name="auth_sign_up_password_str_uppercase">Password must have at least one uppercase letter</string>
-    <string name="auth_sign_up_password_str_lowercase">Password must have at least one lowercase letter</string>
-    <string name="auth_sign_up_password_str_number">Password must have at least one number</string>
-    <string name="auth_sign_up_password_str_special">Password must have at least one special character</string>
+    <string name="auth_sign_up_password_str_length">8 characters</string>
+    <string name="auth_sign_up_password_str_uppercase">One uppercase letter</string>
+    <string name="auth_sign_up_password_str_lowercase">One lowercase letter</string>
+    <string name="auth_sign_up_password_str_number">One number</string>
+    <string name="auth_sign_up_password_str_special">One special character</string>
     <string name="auth_sign_up_have_account_prefix">Already have an account?</string>
     <string name="auth_sign_up_have_account_suffix">Login</string>
     <string name="auth_sign_up_error">Error creating account</string>

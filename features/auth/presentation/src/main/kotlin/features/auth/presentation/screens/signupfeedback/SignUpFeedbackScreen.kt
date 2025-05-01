@@ -16,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import features.auth.presentation.R
+import features.auth.presentation.screens.login.LoginScreen
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.feedback.Feedback
 import foundation.designsystem.components.preview.ThemeContainer
-import features.auth.presentation.R
-import features.auth.presentation.screens.menu.AuthMenuScreen
 import foundation.designsystem.tokens.Spacing
 
 internal class SignUpFeedbackScreen : Screen {
@@ -29,7 +29,7 @@ internal class SignUpFeedbackScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val onBack = remember {
-            { navigator?.replaceAll(AuthMenuScreen()) }
+            { navigator?.replaceAll(LoginScreen()) }
         }
 
         BackHandler {

@@ -1,9 +1,9 @@
-package features.auth.presentation.screens.signin
+package features.auth.presentation.screens.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 
-internal data class SignInScreenState(
+internal data class LoginScreenState(
     val email: String = "",
     val password: String = "",
     val censored: Boolean = true,
@@ -17,7 +17,7 @@ internal data class SignInScreenState(
         isSignInLoading.not() && isGoogleLoading.not()
 }
 
-internal data class SignInCallBacks(
+internal data class LoginScreenCallbacks(
     val onEmailChanged: (String) -> Unit,
     val onPasswordChanged: (String) -> Unit,
     val onSubmit: () -> Unit,
@@ -27,13 +27,13 @@ internal data class SignInCallBacks(
     val onLaunchGoogle: () -> Unit
 )
 
-internal sealed interface SignInEvents {
-    data object GenericFailure : SignInEvents
-    data class Failure(val message: String) : SignInEvents
+internal sealed interface LoginScreenEvents {
+    data object GenericFailure : LoginScreenEvents
+    data class Failure(val message: String) : LoginScreenEvents
 }
 
 @Composable
-internal fun rememberSignInCallbacks(
+internal fun rememberLoginCallbacks(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onToggleCensorship: () -> Unit,
@@ -42,7 +42,7 @@ internal fun rememberSignInCallbacks(
     onSignUpClick: () -> Unit,
     onLaunchGoogle: () -> Unit
 ) = remember {
-    SignInCallBacks(
+    LoginScreenCallbacks(
         onEmailChanged = onEmailChanged,
         onPasswordChanged = onPasswordChanged,
         onSubmit = onSubmit,

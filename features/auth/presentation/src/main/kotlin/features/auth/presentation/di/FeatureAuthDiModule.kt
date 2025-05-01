@@ -5,8 +5,7 @@ import com.google.firebase.auth.auth
 import features.auth.presentation.firebase.FirebaseHelper
 import features.auth.presentation.firebase.FirebaseHelperImpl
 import features.auth.presentation.firebase.GoogleFirebaseHelper
-import features.auth.presentation.screens.menu.AuthMenuScreenModel
-import features.auth.presentation.screens.signin.SignInScreenModel
+import features.auth.presentation.screens.login.LoginScreenModel
 import features.auth.presentation.screens.signup.SignUpScreenModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
@@ -26,20 +25,11 @@ private fun Module.viewModelBindings() {
     }
 
     factory {
-        SignInScreenModel(
+        LoginScreenModel(
             authRepository = get(),
             authEventPublisher = get(),
             firebaseHelper = get(),
             dispatcher = Dispatchers.Default
-        )
-    }
-
-    factory {
-        AuthMenuScreenModel(
-            firebaseHelper = get(),
-            dispatcher = Dispatchers.IO,
-            authRepository = get(),
-            authEventPublisher = get()
         )
     }
 

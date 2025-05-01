@@ -1,4 +1,4 @@
-package features.auth.presentation.screens.signin.components
+package features.auth.presentation.screens.login.components
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import features.auth.presentation.R
 
 @Composable
-internal fun SignInPasswordField(
+internal fun LoginPasswordField(
     value: String,
     isCensored: Boolean,
     enabled: Boolean,
@@ -84,7 +84,7 @@ internal fun SignInPasswordField(
 }
 
 @Composable
-internal fun SignInEmailField(
+internal fun LoginEmailField(
     value: String,
     enabled: Boolean,
     onChange: (String) -> Unit,

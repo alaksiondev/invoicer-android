@@ -1,4 +1,4 @@
-package features.auth.presentation.screens.signin.components
+package features.auth.presentation.screens.login.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,13 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import features.auth.presentation.screens.signin.SignInScreenState
+import features.auth.presentation.screens.login.LoginScreenState
 import foundation.designsystem.tokens.Spacing
 
 @Composable
 internal fun SignInForm(
     modifier: Modifier = Modifier,
-    state: SignInScreenState,
+    state: LoginScreenState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     toggleCensorship: () -> Unit,
@@ -26,7 +26,7 @@ internal fun SignInForm(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        SignInEmailField(
+        LoginEmailField(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(emailFocus),
@@ -35,7 +35,7 @@ internal fun SignInForm(
             onImeAction = { passwordFocus.requestFocus() },
             enabled = state.isSignInLoading.not()
         )
-        SignInPasswordField(
+        LoginPasswordField(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(passwordFocus),

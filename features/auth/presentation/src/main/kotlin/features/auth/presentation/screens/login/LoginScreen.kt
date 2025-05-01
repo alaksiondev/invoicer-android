@@ -1,4 +1,4 @@
-package features.auth.presentation.screens.signin
+package features.auth.presentation.screens.login
 
 import android.app.Activity.RESULT_OK
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -39,7 +39,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import features.auth.presentation.R
-import features.auth.presentation.screens.signin.components.SignInForm
+import features.auth.presentation.screens.login.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
 import foundation.designsystem.components.TextDivider
 import foundation.designsystem.components.buttons.BackButton
@@ -52,12 +52,12 @@ import foundation.designsystem.tokens.Spacing
 import foundation.navigation.extensions.pushToFront
 import kotlinx.coroutines.launch
 
-internal class SignInScreen : Screen {
+internal class LoginScreen : Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val viewModel = koinScreenModel<SignInScreenModel>()
+        val viewModel = koinScreenModel<LoginScreenModel>()
         val state by viewModel.state.collectAsStateWithLifecycle()
         val scope = rememberCoroutineScope()
         val snackBarHost = remember { SnackbarHostState() }
@@ -74,7 +74,7 @@ internal class SignInScreen : Screen {
 
         StateContent(
             state = state,
-            callBacks = rememberSignInCallbacks(
+            callBacks = rememberLoginCallbacks(
                 onSubmit = viewModel::submit,
                 onEmailChanged = viewModel::onEmailChanged,
                 onPasswordChanged = viewModel::onPasswordChanged,
@@ -92,7 +92,7 @@ internal class SignInScreen : Screen {
 
         foundation.ui.events.EventEffect(viewModel) {
             when (it) {
-                is SignInEvents.Failure -> {
+                is LoginScreenEvents.Failure -> {
                     scope.launch {
                         snackBarHost.showSnackbar(
                             message = it.message
@@ -100,7 +100,7 @@ internal class SignInScreen : Screen {
                     }
                 }
 
-                SignInEvents.GenericFailure -> scope.launch {
+                LoginScreenEvents.GenericFailure -> scope.launch {
                     snackBarHost.showSnackbar(
                         message = genericErrorMessage
                     )
@@ -112,9 +112,9 @@ internal class SignInScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
-        state: SignInScreenState,
+        state: LoginScreenState,
         snackbarHostState: SnackbarHostState,
-        callBacks: SignInCallBacks
+        callBacks: LoginScreenCallbacks
     ) {
         Scaffold(
             modifier = Modifier.imePadding(),

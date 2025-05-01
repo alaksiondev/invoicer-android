@@ -1,4 +1,4 @@
-package features.auth.presentation.screens.signin
+package features.auth.presentation.screens.login
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -20,14 +20,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class SignInScreenModel(
+internal class LoginScreenModel(
     private val authRepository: AuthRepository,
     private val authEventPublisher: AuthEventPublisher,
     private val firebaseHelper: FirebaseHelper,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, EventAware<SignInEvents> by EventPublisher() {
-    private val _state = MutableStateFlow(SignInScreenState())
-    val state: StateFlow<SignInScreenState> = _state
+) : ScreenModel, EventAware<LoginScreenEvents> by EventPublisher() {
+    private val _state = MutableStateFlow(LoginScreenState())
+    val state: StateFlow<LoginScreenState> = _state
 
     fun onEmailChanged(email: String) {
         _state.value = _state.value.copy(email = email)
@@ -68,10 +68,10 @@ internal class SignInScreenModel(
     private suspend fun sendErrorEvent(error: RequestError) {
         val message = when (error) {
             is RequestError.Http -> error.message?.let {
-                SignInEvents.Failure(it)
-            } ?: SignInEvents.GenericFailure
+                LoginScreenEvents.Failure(it)
+            } ?: LoginScreenEvents.GenericFailure
 
-            is RequestError.Other -> SignInEvents.GenericFailure
+            is RequestError.Other -> LoginScreenEvents.GenericFailure
         }
         publish(message)
     }
@@ -83,7 +83,7 @@ internal class SignInScreenModel(
             when (result) {
                 is GoogleResult.Error -> {
                     publish(
-                        SignInEvents.Failure(
+                        LoginScreenEvents.Failure(
                             message = result.error?.message.orEmpty()
                         )
                     )
@@ -112,7 +112,7 @@ internal class SignInScreenModel(
                         },
                         onFailure = { result ->
                             publish(
-                                SignInEvents.Failure(
+                                LoginScreenEvents.Failure(
                                     message = result.message.orEmpty()
                                 )
                             )

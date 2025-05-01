@@ -1,4 +1,4 @@
-package foundation.date.impl
+package io.github.alaksion.invoicer.foundation.utils.date
 
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate

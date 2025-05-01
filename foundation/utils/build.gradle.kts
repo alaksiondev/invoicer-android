@@ -3,7 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "foundation.date.impl"
+    namespace = "io.github.alaksion.invoicer.foundation.utils"
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

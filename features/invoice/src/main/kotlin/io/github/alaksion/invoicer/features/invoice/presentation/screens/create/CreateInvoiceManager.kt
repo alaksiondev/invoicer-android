@@ -1,7 +1,7 @@
 package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
-import foundation.date.impl.DateProvider
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
+import io.github.alaksion.invoicer.foundation.utils.date.DateProvider
 import kotlin.time.Duration.Companion.days
 
 internal class CreateInvoiceManager(

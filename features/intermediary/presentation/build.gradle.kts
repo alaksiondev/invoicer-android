@@ -34,7 +34,7 @@ dependencies {
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
-    implementation(projects.foundation.date.impl)
+    implementation(projects.foundation.utils)
 
     // Feature
     implementation(projects.features.intermediary.services)

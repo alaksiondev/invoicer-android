@@ -1,6 +1,6 @@
 package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates
 
-import foundation.date.impl.toLocalDate
+import io.github.alaksion.invoicer.foundation.utils.date.toLocalDate
 import kotlinx.datetime.TimeZone
 
 internal data class InvoiceDatesState(

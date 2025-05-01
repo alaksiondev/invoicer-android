@@ -51,8 +51,7 @@ dependencies {
     implementation(projects.foundation.auth.domain)
     implementation(projects.foundation.network)
     implementation(projects.foundation.exception)
-    implementation(projects.foundation.logger.impl)
-    implementation(projects.foundation.date.impl)
+    implementation(projects.foundation.utils)
 
     // Features
     implementation(projects.features.auth.presentation)

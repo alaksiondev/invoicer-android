@@ -32,7 +32,7 @@ dependencies {
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
-    implementation(projects.foundation.date.impl)
+    implementation(projects.foundation.utils)
     implementation(projects.foundation.watchers)
 
     // Features
@@ -50,5 +50,4 @@ dependencies {
 
     // Test
     testImplementation(libs.coroutines.test)
-    testImplementation(projects.foundation.date.test)
 }

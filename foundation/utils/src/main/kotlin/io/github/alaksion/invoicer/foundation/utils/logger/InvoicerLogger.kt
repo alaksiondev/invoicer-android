@@ -1,4 +1,4 @@
-package foundation.logger.impl
+package io.github.alaksion.invoicer.foundation.utils.logger
 
 import android.util.Log
 

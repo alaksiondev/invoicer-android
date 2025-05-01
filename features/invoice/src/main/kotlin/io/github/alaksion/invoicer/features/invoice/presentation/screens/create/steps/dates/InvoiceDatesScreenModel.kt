@@ -2,10 +2,10 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
-import foundation.date.impl.DateProvider
 import foundation.ui.events.EventAware
 import foundation.ui.events.EventPublisher
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
+import io.github.alaksion.invoicer.foundation.utils.date.DateProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -3,13 +3,11 @@ package features.auth.presentation.screens.signin.components
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.ErrorOutline
-import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,14 +53,6 @@ internal fun SignInPasswordField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.Password
-                ),
-                contentDescription = null
-            )
-        },
         trailingIcon = {
             IconButton(
                 onClick = toggleCensorship
@@ -88,7 +78,8 @@ internal fun SignInPasswordField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not()
+        readOnly = enabled.not(),
+        shape = MaterialTheme.shapes.large
     )
 }
 
@@ -104,14 +95,6 @@ internal fun SignInEmailField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.Email
-                ),
-                contentDescription = null
-            )
-        },
         label = {
             Text(stringResource(R.string.auth_sign_up_email_label))
         },
@@ -128,6 +111,7 @@ internal fun SignInEmailField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not()
+        readOnly = enabled.not(),
+        shape = MaterialTheme.shapes.large
     )
 }

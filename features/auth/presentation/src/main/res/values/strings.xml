@@ -23,8 +23,13 @@
     <string name="auth_sign_up_feedback_message">Proceed to login to use the app</string>
     <string name="auth_sign_up_feedback_cta">Continue</string>
     <!-- Sign IN -->
-    <string name="auth_sign_in_title">Sign in</string>
+    <string name="auth_sign_in_title">Sign in to your account</string>
+    <string name="auth_sign_in_description">Enter your email and password to log in </string>
     <string name="auth_sign_in_error">Error during Sign in, please try again later</string>
     <string name="auth_sign_in_sign_up_button">Don\'t have an account? Sign up</string>
-    <string name="auth_sign_in_submit_button">Sign in</string>
+    <string name="auth_sign_in_submit_button">Log in</string>
+    <string name="auth_sign_in_text_divider">Or</string>
+    <string name="auth_sign_in_google_button">Continue with Google</string>
+    <string name="auth_sign_in_dont_have_account_prefix">Don\'t have an account?</string>
+    <string name="auth_sign_in_dont_have_account_suffix">Sign up</string>
 </resources>

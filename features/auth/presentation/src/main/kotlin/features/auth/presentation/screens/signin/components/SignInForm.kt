@@ -21,7 +21,6 @@ internal fun SignInForm(
     toggleCensorship: () -> Unit,
 ) {
     val (emailFocus, passwordFocus) = FocusRequester.createRefs()
-    val keyboard = LocalSoftwareKeyboardController.current
     val focus = LocalFocusManager.current
 
     Column(

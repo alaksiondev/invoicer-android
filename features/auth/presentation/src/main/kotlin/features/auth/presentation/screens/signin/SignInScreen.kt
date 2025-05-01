@@ -3,6 +3,7 @@ package features.auth.presentation.screens.signin
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,15 +20,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.presentation.R
-import features.auth.presentation.screens.signin.components.SignInCta
 import features.auth.presentation.screens.signin.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
+import foundation.designsystem.components.TextDivider
 import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.buttons.SecondaryButton
 import foundation.designsystem.components.spacer.Spacer
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
@@ -108,22 +116,70 @@ internal class SignInScreen : Screen {
             ) {
                 Text(
                     text = stringResource(R.string.auth_sign_in_title),
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold
                 )
-                VerticalSpacer(height = SpacerSize.Medium)
+                VerticalSpacer(height = SpacerSize.Small)
+                Text(
+                    text = stringResource(R.string.auth_sign_in_description),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Medium,
+                )
+                VerticalSpacer(height = SpacerSize.XLarge3)
                 SignInForm(
                     state = state,
                     onPasswordChange = callBacks.onPasswordChanged,
                     onEmailChange = callBacks.onEmailChanged,
                     toggleCensorship = callBacks.toggleCensorship
                 )
-                Spacer(1f)
-                SignInCta(
+                VerticalSpacer(height = SpacerSize.XLarge)
+                PrimaryButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
                     onClick = callBacks.onSubmit,
-                    onSignUpClick = callBacks.onSignUpClick,
-                    enabled = state.buttonEnabled,
-                    modifier = Modifier.fillMaxWidth()
+                    isEnabled = state.buttonEnabled,
+                    isLoading = true,
+                    label = stringResource(R.string.auth_sign_in_submit_button)
                 )
+                VerticalSpacer(height = SpacerSize.XLarge)
+                TextDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.auth_sign_in_text_divider)
+                )
+                VerticalSpacer(height = SpacerSize.Medium)
+                SecondaryButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = stringResource(R.string.auth_sign_in_google_button),
+                    onClick = {},
+                    isLoading = true
+                )
+                VerticalSpacer(height = SpacerSize.Medium)
+                Spacer(1f)
+                TextButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {}
+                ) {
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = MaterialTheme.typography.bodyMedium
+                                    .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    .toSpanStyle()
+                            ) {
+                                append(text = stringResource(R.string.auth_sign_in_dont_have_account_prefix))
+                            }
+                            append(" ")
+                            withStyle(
+                                style = MaterialTheme.typography.bodyMedium
+                                    .copy(color = MaterialTheme.colorScheme.primary)
+                                    .toSpanStyle()
+                            ) {
+                                append(text = stringResource(R.string.auth_sign_in_dont_have_account_suffix))
+                            }
+                        }
+                    )
+                }
             }
         }
     }

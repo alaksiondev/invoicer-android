@@ -120,10 +120,9 @@ internal class LoginScreen : Screen {
             modifier = Modifier.imePadding(),
             topBar = {
                 TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        BackButton(onBackClick = callBacks.onBack)
-                    }
+                    title = {
+                        Text("App Logo here")
+                    },
                 )
             },
             snackbarHost = {
@@ -136,6 +135,7 @@ internal class LoginScreen : Screen {
                     .padding(Spacing.medium)
                     .fillMaxSize()
             ) {
+                VerticalSpacer(height = SpacerSize.XLarge3)
                 Text(
                     text = stringResource(R.string.auth_sign_in_title),
                     style = MaterialTheme.typography.headlineLarge,

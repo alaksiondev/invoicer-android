@@ -23,7 +23,6 @@ import features.auth.presentation.R
 import features.auth.presentation.utils.PasswordStrengthResult
 import foundation.designsystem.components.spacer.HorizontalSpacer
 import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.AppColor
 import foundation.designsystem.tokens.AppSize
 import foundation.designsystem.tokens.Spacing
@@ -40,8 +39,11 @@ internal fun PasswordStrengthCard(
                 .padding(Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.xSmall)
         ) {
-            Text(text = stringResource(R.string.auth_sign_up_password_str_title))
-            VerticalSpacer(height = SpacerSize.XSmall2)
+            Text(
+                text = stringResource(R.string.auth_sign_up_password_str_title),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
             FieldStrength(
                 text = stringResource(R.string.auth_sign_up_password_str_length),
                 isValid = passwordStrength.lengthValid

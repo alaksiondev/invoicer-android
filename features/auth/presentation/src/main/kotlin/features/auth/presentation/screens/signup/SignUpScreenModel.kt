@@ -2,11 +2,12 @@ package features.auth.presentation.screens.signup
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import features.auth.presentation.utils.EmailValidator
+import features.auth.presentation.utils.PasswordStrengthValidator
 import foundation.auth.domain.repository.AuthRepository
 import foundation.network.RequestError
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
-import foundation.validator.impl.EmailValidator
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +18,7 @@ internal class SignUpScreenModel(
     private val authRepository: AuthRepository,
     private val dispatcher: CoroutineDispatcher,
     private val emailValidator: EmailValidator,
+    private val passwordStrengthValidator: PasswordStrengthValidator,
 ) : ScreenModel,
     foundation.ui.events.EventAware<SignUpEvents> by foundation.ui.events.EventPublisher() {
 
@@ -35,7 +37,8 @@ internal class SignUpScreenModel(
     fun onPasswordChange(newPassword: String) {
         _state.update {
             it.copy(
-                password = newPassword
+                password = newPassword,
+                passwordStrength = passwordStrengthValidator.validate(newPassword)
             )
         }
     }

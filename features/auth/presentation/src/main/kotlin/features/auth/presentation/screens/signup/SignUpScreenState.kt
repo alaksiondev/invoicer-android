@@ -1,11 +1,20 @@
 package features.auth.presentation.screens.signup
 
+import features.auth.presentation.utils.PasswordStrengthResult
+
 internal data class SignUpScreenState(
     val email: String = "",
     val password: String = "",
     val censored: Boolean = true,
     val requestLoading: Boolean = false,
     val emailValid: Boolean = true,
+    val passwordStrength: PasswordStrengthResult = PasswordStrengthResult(
+        lengthValid = false,
+        upperCaseValid = false,
+        lowerCaseValid = false,
+        digitValid = false,
+        specialCharacterValid = false,
+    ),
 ) {
 
     val buttonEnabled: Boolean =

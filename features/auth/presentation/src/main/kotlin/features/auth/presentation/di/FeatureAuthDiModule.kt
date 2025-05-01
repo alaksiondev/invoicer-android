@@ -7,6 +7,10 @@ import features.auth.presentation.firebase.FirebaseHelperImpl
 import features.auth.presentation.firebase.GoogleFirebaseHelper
 import features.auth.presentation.screens.login.LoginScreenModel
 import features.auth.presentation.screens.signup.SignUpScreenModel
+import features.auth.presentation.utils.EmailValidator
+import features.auth.presentation.utils.EmailValidatorImpl
+import features.auth.presentation.utils.PasswordStrengthValidator
+import features.auth.presentation.utils.PasswordStrengthValidatorImpl
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -20,7 +24,8 @@ private fun Module.viewModelBindings() {
         SignUpScreenModel(
             authRepository = get(),
             dispatcher = Dispatchers.Default,
-            emailValidator = get()
+            emailValidator = get(),
+            passwordStrengthValidator = get()
         )
     }
 
@@ -45,4 +50,10 @@ private fun Module.viewModelBindings() {
             googleFirebaseHelper = get()
         )
     }
+
+    factory<PasswordStrengthValidator> {
+        PasswordStrengthValidatorImpl
+    }
+
+    factory<EmailValidator> { EmailValidatorImpl() }
 }

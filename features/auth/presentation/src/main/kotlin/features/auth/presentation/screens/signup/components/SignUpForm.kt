@@ -1,6 +1,5 @@
 package features.auth.presentation.screens.signup.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -12,7 +11,8 @@ import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import features.auth.presentation.screens.signup.SignUpScreenState
-import foundation.designsystem.tokens.Spacing
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 
 @Composable
 internal fun SignUpForm(
@@ -27,7 +27,6 @@ internal fun SignUpForm(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         SignUpEmailField(
             modifier = Modifier
@@ -39,6 +38,14 @@ internal fun SignUpForm(
             isEmailValid = state.emailValid,
             enabled = state.requestLoading.not()
         )
+        VerticalSpacer(SpacerSize.Medium)
+
+        StrengthStepper(
+            passwordStrength = state.passwordStrength,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        VerticalSpacer(SpacerSize.Small)
 
         SignUpPasswordField(
             modifier = Modifier

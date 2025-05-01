@@ -28,6 +28,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.auth.presentation.R
 import features.auth.presentation.screens.login.LoginScreen
+import features.auth.presentation.screens.signup.components.PasswordStrengthCard
 import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
 import foundation.designsystem.components.buttons.BackButton
@@ -135,6 +136,11 @@ internal class SignUpScreen : Screen {
                     onPasswordChange = onPasswordChange,
                     onEmailChange = onEmailChange,
                     toggleCensorship = toggleCensorship
+                )
+                VerticalSpacer(height = SpacerSize.XLarge)
+                PasswordStrengthCard(
+                    passwordStrength = state.passwordStrength,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)
                 PrimaryButton(

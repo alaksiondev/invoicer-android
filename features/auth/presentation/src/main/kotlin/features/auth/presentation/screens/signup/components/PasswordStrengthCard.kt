@@ -29,7 +29,7 @@ import foundation.designsystem.tokens.AppSize
 import foundation.designsystem.tokens.Spacing
 
 @Composable
-internal fun PasswordStrength(
+internal fun PasswordStrengthCard(
     passwordStrength: PasswordStrengthResult,
     modifier: Modifier = Modifier
 ) {

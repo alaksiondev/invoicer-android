@@ -38,14 +38,8 @@ internal fun SignUpForm(
             isEmailValid = state.emailValid,
             enabled = state.requestLoading.not()
         )
+
         VerticalSpacer(SpacerSize.Medium)
-
-        StrengthStepper(
-            passwordStrength = state.passwordStrength,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        VerticalSpacer(SpacerSize.Small)
 
         SignUpPasswordField(
             modifier = Modifier

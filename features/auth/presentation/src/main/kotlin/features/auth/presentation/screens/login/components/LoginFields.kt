@@ -7,8 +7,6 @@ import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,6 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import features.auth.presentation.R
+import foundation.designsystem.components.InputField
 
 @Composable
 internal fun LoginPasswordField(
@@ -49,7 +48,7 @@ internal fun LoginPasswordField(
         }
     }
 
-    OutlinedTextField(
+    InputField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
@@ -79,7 +78,6 @@ internal fun LoginPasswordField(
             onNext = { onImeAction() }
         ),
         readOnly = enabled.not(),
-        shape = MaterialTheme.shapes.large
     )
 }
 
@@ -91,7 +89,7 @@ internal fun LoginEmailField(
     onImeAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OutlinedTextField(
+    InputField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
@@ -112,6 +110,5 @@ internal fun LoginEmailField(
             onNext = { onImeAction() }
         ),
         readOnly = enabled.not(),
-        shape = MaterialTheme.shapes.large
     )
 }

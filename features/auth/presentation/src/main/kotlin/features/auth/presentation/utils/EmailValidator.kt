@@ -1,4 +1,4 @@
-package foundation.validator.impl
+package features.auth.presentation.utils
 
 interface EmailValidator {
     fun validate(email: String): Boolean

@@ -1,16 +1,13 @@
-package features.auth.presentation.screens.signin.components
+package features.auth.presentation.screens.login.components
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.ErrorOutline
-import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,9 +20,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import features.auth.presentation.R
+import foundation.designsystem.components.InputField
 
 @Composable
-internal fun SignInPasswordField(
+internal fun LoginPasswordField(
     value: String,
     isCensored: Boolean,
     enabled: Boolean,
@@ -51,18 +49,10 @@ internal fun SignInPasswordField(
         }
     }
 
-    OutlinedTextField(
+    InputField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.Password
-                ),
-                contentDescription = null
-            )
-        },
         trailingIcon = {
             IconButton(
                 onClick = toggleCensorship
@@ -71,7 +61,8 @@ internal fun SignInPasswordField(
                     painter = rememberVectorPainter(
                         image = trailingIcon
                     ),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
@@ -88,30 +79,22 @@ internal fun SignInPasswordField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not()
+        enabled = enabled,
     )
 }
 
 @Composable
-internal fun SignInEmailField(
+internal fun LoginEmailField(
     value: String,
     enabled: Boolean,
     onChange: (String) -> Unit,
     onImeAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OutlinedTextField(
+    InputField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.Email
-                ),
-                contentDescription = null
-            )
-        },
         label = {
             Text(stringResource(R.string.auth_sign_up_email_label))
         },
@@ -128,6 +111,6 @@ internal fun SignInEmailField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not()
+        enabled = enabled,
     )
 }

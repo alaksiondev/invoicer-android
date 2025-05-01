@@ -62,7 +62,7 @@ fun DefaultInvoicerDialog(
         Text(
             text = description,
         )
-        VerticalSpacer(SpacerSize.Large3)
+        VerticalSpacer(SpacerSize.XLarge3)
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,

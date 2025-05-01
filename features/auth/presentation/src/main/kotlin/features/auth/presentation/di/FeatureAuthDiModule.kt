@@ -3,10 +3,14 @@ package features.auth.presentation.di
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import features.auth.presentation.firebase.FirebaseHelper
+import features.auth.presentation.firebase.FirebaseHelperImpl
 import features.auth.presentation.firebase.GoogleFirebaseHelper
-import features.auth.presentation.screens.menu.AuthMenuScreenModel
-import features.auth.presentation.screens.signin.SignInScreenModel
+import features.auth.presentation.screens.login.LoginScreenModel
 import features.auth.presentation.screens.signup.SignUpScreenModel
+import features.auth.presentation.utils.EmailValidator
+import features.auth.presentation.utils.EmailValidatorImpl
+import features.auth.presentation.utils.PasswordStrengthValidator
+import features.auth.presentation.utils.PasswordStrengthValidatorImpl
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -20,23 +24,17 @@ private fun Module.viewModelBindings() {
         SignUpScreenModel(
             authRepository = get(),
             dispatcher = Dispatchers.Default,
-            emailValidator = get()
+            emailValidator = get(),
+            passwordStrengthValidator = get()
         )
     }
 
     factory {
-        SignInScreenModel(
+        LoginScreenModel(
             authRepository = get(),
-            authEventPublisher = get()
-        )
-    }
-
-    factory {
-        AuthMenuScreenModel(
+            authEventPublisher = get(),
             firebaseHelper = get(),
-            dispatcher = Dispatchers.IO,
-            authRepository = get(),
-            authEventPublisher = get()
+            dispatcher = Dispatchers.Default
         )
     }
 
@@ -47,9 +45,15 @@ private fun Module.viewModelBindings() {
         )
     }
 
-    factory {
-        FirebaseHelper(
+    factory<FirebaseHelper> {
+        FirebaseHelperImpl(
             googleFirebaseHelper = get()
         )
     }
+
+    factory<PasswordStrengthValidator> {
+        PasswordStrengthValidatorImpl
+    }
+
+    factory<EmailValidator> { EmailValidatorImpl() }
 }

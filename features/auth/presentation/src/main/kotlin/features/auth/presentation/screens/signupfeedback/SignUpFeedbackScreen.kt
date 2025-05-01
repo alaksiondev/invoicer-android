@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -16,11 +17,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import features.auth.presentation.R
+import features.auth.presentation.screens.login.LoginScreen
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.feedback.Feedback
 import foundation.designsystem.components.preview.ThemeContainer
-import features.auth.presentation.R
-import features.auth.presentation.screens.menu.AuthMenuScreen
 import foundation.designsystem.tokens.Spacing
 
 internal class SignUpFeedbackScreen : Screen {
@@ -29,7 +30,7 @@ internal class SignUpFeedbackScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val onBack = remember {
-            { navigator?.replaceAll(AuthMenuScreen()) }
+            { navigator?.replaceAll(LoginScreen()) }
         }
 
         BackHandler {
@@ -53,7 +54,10 @@ internal class SignUpFeedbackScreen : Screen {
                 TopAppBar(
                     title = {},
                     navigationIcon = {
-                        BackButton(onBackClick = onBack)
+                        BackButton(
+                            onBackClick = onBack,
+                            icon = Icons.Outlined.Close
+                        )
                     }
                 )
             }

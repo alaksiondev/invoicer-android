@@ -43,5 +43,6 @@ enum class SpacerSize(
     Small(Spacing.small),
     Medium(Spacing.medium),
     Large(Spacing.large),
-    Large3(Spacing.xLarge3)
+    XLarge(Spacing.xLarge),
+    XLarge3(Spacing.xLarge3)
 }

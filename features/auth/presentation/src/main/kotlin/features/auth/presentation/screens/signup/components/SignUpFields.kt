@@ -3,14 +3,13 @@ package features.auth.presentation.screens.signup.components
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AlternateEmail
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import features.auth.presentation.R
+import foundation.designsystem.components.InputField
 
 @Composable
 internal fun SignUpEmailField(
@@ -45,19 +45,10 @@ internal fun SignUpEmailField(
         else Icons.Outlined.ErrorOutline
     }
 
-
-    OutlinedTextField(
+    InputField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.Email
-                ),
-                contentDescription = null
-            )
-        },
         label = {
             Text(stringResource(R.string.auth_sign_up_email_label))
         },
@@ -92,74 +83,9 @@ internal fun SignUpEmailField(
                 )
             }
         } else null,
-        readOnly = enabled.not()
+        enabled = enabled
     )
 }
-
-@Composable
-internal fun SignUpConfirmEmailField(
-    value: String,
-    emailMatches: Boolean,
-    enabled: Boolean,
-    onChange: (String) -> Unit,
-    onImeAction: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val trailingIcon = remember(emailMatches) {
-        if (emailMatches) null
-        else Icons.Outlined.ErrorOutline
-    }
-
-    OutlinedTextField(
-        value = value,
-        onValueChange = onChange,
-        modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.AlternateEmail
-                ),
-                contentDescription = null
-            )
-        },
-        trailingIcon = if (trailingIcon != null) {
-            {
-                Icon(
-                    painter = rememberVectorPainter(
-                        image = trailingIcon
-                    ),
-                    contentDescription = null
-                )
-            }
-        } else null,
-        label = {
-            Text(stringResource(R.string.auth_sign_up_confirm_email_label))
-        },
-        placeholder = {
-            Text(stringResource(R.string.auth_sign_up_confirm_email_placeholder))
-        },
-        isError = emailMatches.not(),
-        supportingText = emailMatches.takeIf { it.not() }?.let {
-            {
-                Text(
-                    text = stringResource(R.string.auth_sign_up_email_match_error),
-                )
-            }
-        },
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
-            capitalization = KeyboardCapitalization.None,
-            keyboardType = KeyboardType.Email,
-            autoCorrectEnabled = false,
-        ),
-        keyboardActions = KeyboardActions(
-            onNext = { onImeAction() }
-        ),
-        readOnly = enabled.not()
-    )
-}
-
 
 @Composable
 internal fun SignUpPasswordField(
@@ -188,18 +114,10 @@ internal fun SignUpPasswordField(
         }
     }
 
-    OutlinedTextField(
+    InputField(
         value = value,
         onValueChange = onChange,
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                painter = rememberVectorPainter(
-                    image = Icons.Outlined.Password
-                ),
-                contentDescription = null
-            )
-        },
         trailingIcon = {
             IconButton(
                 onClick = toggleCensorship
@@ -208,7 +126,8 @@ internal fun SignUpPasswordField(
                     painter = rememberVectorPainter(
                         image = trailingIcon
                     ),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
@@ -225,6 +144,6 @@ internal fun SignUpPasswordField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not()
+        enabled = enabled
     )
 }

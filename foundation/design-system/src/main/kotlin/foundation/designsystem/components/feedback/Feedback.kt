@@ -7,18 +7,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.buttons.SecondaryButton
 import foundation.designsystem.components.spacer.Spacer
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
@@ -62,13 +63,14 @@ fun Feedback(
         VerticalSpacer(height = SpacerSize.Medium)
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.SemiBold
         )
         VerticalSpacer(height = SpacerSize.XSmall)
         if (description != null) {
             Text(
                 text = description,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         }
@@ -94,20 +96,18 @@ private fun Buttons(
     Column(
         modifier = modifier
     ) {
-        Button(
+        PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            onClick = onPrimaryAction
-        ) {
-            Text(text = primaryActionText)
-        }
+            onClick = onPrimaryAction,
+            label = primaryActionText
+        )
         if (secondaryActionText != null && onSecondaryAction != null) {
             VerticalSpacer(height = SpacerSize.Medium)
-            OutlinedButton(
+            SecondaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = onSecondaryAction
-            ) {
-                Text(text = secondaryActionText)
-            }
+                onClick = onSecondaryAction,
+                label = secondaryActionText
+            )
         }
     }
 }

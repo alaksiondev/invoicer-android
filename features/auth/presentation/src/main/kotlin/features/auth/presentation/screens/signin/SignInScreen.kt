@@ -139,7 +139,6 @@ internal class SignInScreen : Screen {
                         .height(48.dp),
                     onClick = callBacks.onSubmit,
                     isEnabled = state.buttonEnabled,
-                    isLoading = true,
                     label = stringResource(R.string.auth_sign_in_submit_button)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)
@@ -152,7 +151,6 @@ internal class SignInScreen : Screen {
                     modifier = Modifier.fillMaxWidth(),
                     label = stringResource(R.string.auth_sign_in_google_button),
                     onClick = {},
-                    isLoading = true
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
                 Spacer(1f)

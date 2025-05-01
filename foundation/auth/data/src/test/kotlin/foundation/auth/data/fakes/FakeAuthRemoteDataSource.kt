@@ -38,4 +38,8 @@ internal class FakeAuthRemoteDataSource : AuthRemoteDataSource {
         lastUsedRefreshToken = refreshToken
         return refreshResponse
     }
+
+    override suspend fun googleSignIn(token: String): SignInResponse {
+        return signInResponse
+    }
 }

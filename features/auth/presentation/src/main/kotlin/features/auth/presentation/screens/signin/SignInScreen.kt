@@ -22,15 +22,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.spacer.Spacer
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signin.components.SignInCta
 import features.auth.presentation.screens.signin.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.spacer.Spacer
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
+import foundation.navigation.extensions.pushToFront
 import kotlinx.coroutines.launch
 
 internal class SignInScreen : Screen {
@@ -52,7 +53,9 @@ internal class SignInScreen : Screen {
                 onPasswordChanged = viewModel::onPasswordChanged,
                 onToggleCensorship = viewModel::toggleCensorship,
                 onBack = { navigator?.pop() },
-                onSignUpClick = { navigator?.push(SignUpScreen()) },
+                onSignUpClick = {
+                    navigator?.pushToFront(SignUpScreen())
+                },
             ),
             snackbarHostState = snackBarHost
         )

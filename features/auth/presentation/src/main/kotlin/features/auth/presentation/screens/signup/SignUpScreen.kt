@@ -24,15 +24,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
 import features.auth.presentation.R
 import features.auth.presentation.screens.signin.SignInScreen
 import features.auth.presentation.screens.signup.components.SignUpCta
 import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
+import foundation.navigation.extensions.pushToFront
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,7 +80,7 @@ internal class SignUpScreen : Screen {
             onConfirmEmail = viewModel::onConfirmEmailChange,
             onCheckValidEmail = viewModel::checkEmailValid,
             state = state,
-            onSignInClick = { navigator?.push(SignInScreen()) },
+            onSignInClick = { navigator?.pushToFront(SignInScreen()) },
             snackBarState = snackBarState
         )
     }

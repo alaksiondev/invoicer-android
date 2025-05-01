@@ -17,33 +17,17 @@ internal class SignUpScreenModel(
     private val authRepository: AuthRepository,
     private val dispatcher: CoroutineDispatcher,
     private val emailValidator: EmailValidator,
-) : ScreenModel, foundation.ui.events.EventAware<SignUpEvents> by foundation.ui.events.EventPublisher() {
+) : ScreenModel,
+    foundation.ui.events.EventAware<SignUpEvents> by foundation.ui.events.EventPublisher() {
 
     private val _state = MutableStateFlow(SignUpScreenState())
     val state: StateFlow<SignUpScreenState> = _state
 
     fun onEmailChange(newEmail: String) {
-        val newEmailValid = emailValidator.validate(newEmail)
         _state.update { oldState ->
             oldState.copy(
                 email = newEmail,
-                emailValid = newEmailValid || oldState.emailValid
-            )
-        }
-    }
-
-    fun checkEmailValid() {
-        _state.update { oldState ->
-            oldState.copy(
-                emailValid = emailValidator.validate(oldState.email)
-            )
-        }
-    }
-
-    fun onConfirmEmailChange(newConfirmEmail: String) {
-        _state.update {
-            it.copy(
-                confirmEmail = newConfirmEmail
+                emailValid = true
             )
         }
     }
@@ -65,12 +49,21 @@ internal class SignUpScreenModel(
     }
 
     fun createAccount() {
+        if (emailValidator.validate(state.value.email).not()) {
+            _state.update { oldState ->
+                oldState.copy(
+                    emailValid = false
+                )
+            }
+            return
+        }
+
         if (state.value.buttonEnabled) {
             screenModelScope.launch(dispatcher) {
                 launchRequest {
                     authRepository.signUp(
                         email = state.value.email,
-                        confirmEmail = state.value.confirmEmail,
+                        confirmEmail = state.value.email,
                         password = state.value.password
                     )
                 }.collect { handleSignUpRequest(it) }

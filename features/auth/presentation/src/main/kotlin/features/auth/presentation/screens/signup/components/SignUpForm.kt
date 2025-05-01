@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component3
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import features.auth.presentation.screens.signup.SignUpScreenState
 import foundation.designsystem.tokens.Spacing
@@ -17,9 +19,7 @@ internal fun SignUpForm(
     modifier: Modifier = Modifier,
     state: SignUpScreenState,
     onEmailChange: (String) -> Unit,
-    onConfirmEmail: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onCheckValidEmail: () -> Unit,
     toggleCensorship: () -> Unit,
 ) {
     val (emailFocus, confirmEmailFocus, passwordFocus) = FocusRequester.createRefs()
@@ -32,28 +32,14 @@ internal fun SignUpForm(
         SignUpEmailField(
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(emailFocus)
-                .onFocusChanged { state ->
-                    if (state.hasFocus.not()) {
-                        onCheckValidEmail()
-                    }
-                },
+                .focusRequester(emailFocus),
             value = state.email,
             onChange = onEmailChange,
             onImeAction = { confirmEmailFocus.requestFocus() },
             isEmailValid = state.emailValid,
             enabled = state.requestLoading.not()
         )
-        SignUpConfirmEmailField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .focusRequester(confirmEmailFocus),
-            value = state.confirmEmail,
-            onChange = onConfirmEmail,
-            emailMatches = state.emailMatches,
-            onImeAction = { passwordFocus.requestFocus() },
-            enabled = state.requestLoading.not()
-        )
+
         SignUpPasswordField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -64,9 +50,6 @@ internal fun SignUpForm(
             toggleCensorship = toggleCensorship,
             onImeAction = { keyboard?.hide() },
             enabled = state.requestLoading.not()
-        )
-        PasswordStrength(
-            modifier = Modifier.fillMaxWidth()
         )
     }
 }

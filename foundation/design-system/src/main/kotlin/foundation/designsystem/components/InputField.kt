@@ -60,7 +60,7 @@ fun InputField(
         maxLines = maxLines,
         minLines = minLines,
         interactionSource = interactionSource,
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.medium,
         colors = colors,
     )
 }

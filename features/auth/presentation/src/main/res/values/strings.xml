@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Sign Up -->
-    <string name="auth_sign_up_title">Create account</string>
+    <string name="auth_sign_up_title">Sign up</string>
+    <string name="auth_sign_up_description">Create an account to continue!</string>
     <string name="auth_sign_up_submit_button">Create account</string>
-    <string name="auth_sign_up_email_label">E-mail</string>
+    <string name="auth_sign_up_email_label">Email</string>
     <string name="auth_sign_up_confirm_email_label">Confirm E-mail</string>
-    <string name="auth_sign_up_password_label">Password</string>
-    <string name="auth_sign_up_email_placeholder">john@doe.com</string>
-    <string name="auth_sign_up_confirm_email_placeholder">john@doe.com</string>
-    <string name="auth_sign_up_email_match_error">E-mails don\'t match</string>
+    <string name="auth_sign_up_password_label">Set password</string>
+    <string name="auth_sign_up_email_placeholder">loisbecket@gmail.com</string>
     <string name="auth_sign_up_email_error">E-mail invalid</string>
     <string name="auth_sign_up_password_str_title">Password must have at least</string>
     <string name="auth_sign_up_password_str_length">* 8 characters</string>
@@ -16,7 +15,8 @@
     <string name="auth_sign_up_password_str_lowercase">* one lowercase letter</string>
     <string name="auth_sign_up_password_str_number">* one number</string>
     <string name="auth_sign_up_password_str_special">* one special character</string>
-    <string name="auth_sign_up_sign_in_button">Already have an account? Sign in</string>
+    <string name="auth_sign_up_have_account_prefix">Already have an account?</string>
+    <string name="auth_sign_up_have_account_suffix">Login</string>
     <string name="auth_sign_up_error">Error creating account</string>
     <!-- Sign Up Feedback -->
     <string name="auth_sign_up_feedback_title">Account created</string>

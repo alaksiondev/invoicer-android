@@ -4,7 +4,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-import features.auth.presentation.firebase.FirebaseHelper
+import features.auth.presentation.firebase.FirebaseHelperImpl
 import features.auth.presentation.firebase.GoogleResult
 import foundation.auth.domain.repository.AuthRepository
 import foundation.auth.watchers.AuthEvent
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class AuthMenuScreenModel(
-    private val firebaseHelper: FirebaseHelper,
+    private val firebaseHelper: FirebaseHelperImpl,
     private val dispatcher: CoroutineDispatcher,
     private val authRepository: AuthRepository,
     private val authEventPublisher: AuthEventPublisher

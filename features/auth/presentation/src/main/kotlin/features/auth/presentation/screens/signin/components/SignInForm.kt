@@ -33,7 +33,7 @@ internal fun SignInForm(
             value = state.email,
             onChange = onEmailChange,
             onImeAction = { passwordFocus.requestFocus() },
-            enabled = state.signInLoading.not()
+            enabled = state.isSignInLoading.not()
         )
         SignInPasswordField(
             modifier = Modifier
@@ -44,7 +44,7 @@ internal fun SignInForm(
             onImeAction = {
                 focus.clearFocus()
             },
-            enabled = state.signInLoading.not(),
+            enabled = state.isSignInLoading.not(),
             isCensored = state.censored,
             toggleCensorship = toggleCensorship
         )

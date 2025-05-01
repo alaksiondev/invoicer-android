@@ -1,5 +1,8 @@
 package features.auth.presentation.screens.signin
 
+import android.app.Activity.RESULT_OK
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import features.auth.presentation.R
 import features.auth.presentation.screens.signin.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
@@ -59,6 +63,15 @@ internal class SignInScreen : Screen {
         val snackBarHost = remember { SnackbarHostState() }
         val genericErrorMessage = stringResource(R.string.auth_sign_in_error)
 
+        val firebaseLauncher = rememberLauncherForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                viewModel.handleGoogleTask(task)
+            }
+        }
+
         StateContent(
             state = state,
             callBacks = rememberSignInCallbacks(
@@ -70,6 +83,9 @@ internal class SignInScreen : Screen {
                 onSignUpClick = {
                     navigator?.pushToFront(SignUpScreen())
                 },
+                onLaunchGoogle = {
+                    firebaseLauncher.launch(viewModel.getGoogleClient().signInIntent)
+                }
             ),
             snackbarHostState = snackBarHost
         )
@@ -168,7 +184,7 @@ internal class SignInScreen : Screen {
                                 .padding(2.dp)
                         )
                     },
-                    isLoading = state.googleLoading,
+                    isLoading = state.isGoogleLoading,
                     isEnabled = state.googleEnabled
                 )
                 VerticalSpacer(height = SpacerSize.Medium)

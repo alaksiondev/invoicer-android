@@ -2,6 +2,10 @@ package features.auth.presentation.screens.signin
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
+import features.auth.presentation.firebase.FirebaseHelper
+import features.auth.presentation.firebase.GoogleResult
 import foundation.auth.domain.repository.AuthRepository
 import foundation.auth.watchers.AuthEvent
 import foundation.auth.watchers.AuthEventPublisher
@@ -10,6 +14,7 @@ import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import foundation.ui.events.EventAware
 import foundation.ui.events.EventPublisher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -17,7 +22,9 @@ import kotlinx.coroutines.launch
 
 internal class SignInScreenModel(
     private val authRepository: AuthRepository,
-    private val authEventPublisher: AuthEventPublisher
+    private val authEventPublisher: AuthEventPublisher,
+    private val firebaseHelper: FirebaseHelper,
+    private val dispatcher: CoroutineDispatcher
 ) : ScreenModel, EventAware<SignInEvents> by EventPublisher() {
     private val _state = MutableStateFlow(SignInScreenState())
     val state: StateFlow<SignInScreenState> = _state
@@ -38,6 +45,8 @@ internal class SignInScreenModel(
         if (_state.value.buttonEnabled) handleSignInRequest()
     }
 
+    fun getGoogleClient() = firebaseHelper.getGoogleClient()
+
     private fun handleSignInRequest() {
         screenModelScope.launch {
             launchRequest {
@@ -46,8 +55,8 @@ internal class SignInScreenModel(
                     password = _state.value.password
                 )
             }.handle(
-                onStart = { _state.update { it.copy(signInLoading = true) } },
-                onFinish = { _state.update { it.copy(signInLoading = false) } },
+                onStart = { _state.update { it.copy(isSignInLoading = true) } },
+                onFinish = { _state.update { it.copy(isSignInLoading = false) } },
                 onFailure = {
                     sendErrorEvent(it)
                 },
@@ -65,5 +74,52 @@ internal class SignInScreenModel(
             is RequestError.Other -> SignInEvents.GenericFailure
         }
         publish(message)
+    }
+
+    fun handleGoogleTask(task: Task<GoogleSignInAccount>) {
+        screenModelScope.launch(dispatcher) {
+            val result = firebaseHelper.handleGoogleResult(task)
+
+            when (result) {
+                is GoogleResult.Error -> {
+                    publish(
+                        SignInEvents.Failure(
+                            message = result.error?.message.orEmpty()
+                        )
+                    )
+                }
+
+                is GoogleResult.Success -> {
+                    launchRequest {
+                        authRepository.googleSignIn(result.token)
+                    }.handle(
+                        onSuccess = {
+                            authEventPublisher.publish(AuthEvent.SignIn)
+                        },
+                        onStart = {
+                            _state.update {
+                                it.copy(
+                                    isGoogleLoading = true
+                                )
+                            }
+                        },
+                        onFinish = {
+                            _state.update {
+                                it.copy(
+                                    isGoogleLoading = false
+                                )
+                            }
+                        },
+                        onFailure = { result ->
+                            publish(
+                                SignInEvents.Failure(
+                                    message = result.message.orEmpty()
+                                )
+                            )
+                        }
+                    )
+                }
+            }
+        }
     }
 }

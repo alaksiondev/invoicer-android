@@ -7,14 +7,14 @@ internal data class SignInScreenState(
     val email: String = "",
     val password: String = "",
     val censored: Boolean = true,
-    val signInLoading: Boolean = false,
-    val googleLoading: Boolean = false,
+    val isSignInLoading: Boolean = false,
+    val isGoogleLoading: Boolean = false,
 ) {
     val buttonEnabled: Boolean =
-        email.isNotBlank() && password.isNotBlank() && signInLoading.not() && googleLoading.not()
+        email.isNotBlank() && password.isNotBlank() && isSignInLoading.not() && isGoogleLoading.not()
 
     val googleEnabled: Boolean =
-        signInLoading.not() && googleLoading.not()
+        isSignInLoading.not() && isGoogleLoading.not()
 }
 
 internal data class SignInCallBacks(
@@ -23,7 +23,8 @@ internal data class SignInCallBacks(
     val onSubmit: () -> Unit,
     val toggleCensorship: () -> Unit,
     val onBack: () -> Unit,
-    val onSignUpClick: () -> Unit
+    val onSignUpClick: () -> Unit,
+    val onLaunchGoogle: () -> Unit
 )
 
 internal sealed interface SignInEvents {
@@ -38,7 +39,8 @@ internal fun rememberSignInCallbacks(
     onToggleCensorship: () -> Unit,
     onSubmit: () -> Unit,
     onBack: () -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
+    onLaunchGoogle: () -> Unit
 ) = remember {
     SignInCallBacks(
         onEmailChanged = onEmailChanged,
@@ -46,6 +48,7 @@ internal fun rememberSignInCallbacks(
         onSubmit = onSubmit,
         toggleCensorship = onToggleCensorship,
         onBack = onBack,
-        onSignUpClick = onSignUpClick
+        onSignUpClick = onSignUpClick,
+        onLaunchGoogle = onLaunchGoogle
     )
 }

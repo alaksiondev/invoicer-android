@@ -3,6 +3,7 @@ package features.auth.presentation.di
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import features.auth.presentation.firebase.FirebaseHelper
+import features.auth.presentation.firebase.FirebaseHelperImpl
 import features.auth.presentation.firebase.GoogleFirebaseHelper
 import features.auth.presentation.screens.menu.AuthMenuScreenModel
 import features.auth.presentation.screens.signin.SignInScreenModel
@@ -27,7 +28,9 @@ private fun Module.viewModelBindings() {
     factory {
         SignInScreenModel(
             authRepository = get(),
-            authEventPublisher = get()
+            authEventPublisher = get(),
+            firebaseHelper = get(),
+            dispatcher = Dispatchers.Default
         )
     }
 
@@ -47,8 +50,8 @@ private fun Module.viewModelBindings() {
         )
     }
 
-    factory {
-        FirebaseHelper(
+    factory<FirebaseHelper> {
+        FirebaseHelperImpl(
             googleFirebaseHelper = get()
         )
     }

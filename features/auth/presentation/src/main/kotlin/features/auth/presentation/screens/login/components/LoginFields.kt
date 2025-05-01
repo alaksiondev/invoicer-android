@@ -79,7 +79,7 @@ internal fun LoginPasswordField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not(),
+        enabled = enabled,
     )
 }
 
@@ -111,6 +111,6 @@ internal fun LoginEmailField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not(),
+        enabled = enabled,
     )
 }

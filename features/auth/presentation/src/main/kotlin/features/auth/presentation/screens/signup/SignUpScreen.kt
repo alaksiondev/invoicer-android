@@ -15,8 +15,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -32,6 +34,8 @@ import features.auth.presentation.screens.login.LoginScreen
 import features.auth.presentation.screens.signup.components.PasswordStrengthCard
 import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
+import foundation.designsystem.components.DialogVariant
+import foundation.designsystem.components.InvoicerDialog
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.Spacer
@@ -51,6 +55,7 @@ internal class SignUpScreen : Screen {
         val scope = rememberCoroutineScope()
         val genericErrorMessage = stringResource(R.string.auth_sign_up_error)
         val keyboard = LocalSoftwareKeyboardController.current
+        var showDuplicateAccountDialog by remember { mutableStateOf(false) }
 
         val snackBarState = remember {
             SnackbarHostState()
@@ -73,6 +78,8 @@ internal class SignUpScreen : Screen {
                         message = genericErrorMessage
                     )
                 }
+
+                SignUpEvents.DuplicateAccount -> showDuplicateAccountDialog = true
             }
         }
 
@@ -87,7 +94,11 @@ internal class SignUpScreen : Screen {
             toggleCensorship = viewModel::toggleCensorship,
             state = state,
             onSignInClick = { navigator?.replaceAll(LoginScreen()) },
-            snackBarState = snackBarState
+            snackBarState = snackBarState,
+            onDismissDialog = {
+                showDuplicateAccountDialog = false
+            },
+            showDuplicateAccountDialog = showDuplicateAccountDialog
         )
     }
 
@@ -101,6 +112,8 @@ internal class SignUpScreen : Screen {
         onBackClick: () -> Unit,
         onSubmitClick: () -> Unit,
         onSignInClick: () -> Unit,
+        onDismissDialog: () -> Unit,
+        showDuplicateAccountDialog: Boolean,
     ) {
         Scaffold(
             modifier = Modifier.imePadding(),
@@ -181,6 +194,18 @@ internal class SignUpScreen : Screen {
                         }
                     )
                 }
+            }
+
+            if (showDuplicateAccountDialog) {
+                InvoicerDialog(
+                    onDismiss = onDismissDialog,
+                    variant = DialogVariant.Error,
+                    title = stringResource(R.string.auth_sign_up_duplicate_account_title),
+                    description = stringResource(
+                        R.string.auth_sign_up_duplicate_account_description,
+                        state.email
+                    )
+                )
             }
         }
     }

@@ -83,7 +83,7 @@ internal fun SignUpEmailField(
                 )
             }
         } else null,
-        readOnly = enabled.not()
+        enabled = enabled
     )
 }
 
@@ -144,6 +144,6 @@ internal fun SignUpPasswordField(
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() }
         ),
-        readOnly = enabled.not()
+        enabled = enabled
     )
 }

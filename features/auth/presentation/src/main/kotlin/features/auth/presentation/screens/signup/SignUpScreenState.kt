@@ -25,4 +25,5 @@ internal sealed interface SignUpEvents {
     data object Success : SignUpEvents
     data object GenericFailure : SignUpEvents
     data class Failure(val message: String) : SignUpEvents
+    data object DuplicateAccount: SignUpEvents
 }

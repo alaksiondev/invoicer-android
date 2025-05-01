@@ -91,7 +91,15 @@ internal class SignUpScreenModel(
             }
 
             is RequestState.Error -> {
-                sendErrorEvent(state.exception)
+                when (val error = state.exception) {
+                    is RequestError.Http -> {
+                        if (error.httpCode == 409) {
+                            publish(SignUpEvents.DuplicateAccount)
+                        }
+                    }
+
+                    else -> sendErrorEvent(error)
+                }
             }
 
             RequestState.Finished -> _state.update {

@@ -12,4 +12,5 @@ object AppSize {
     val xLarge = 24.dp
     val xLarge2 = 28.dp
     val xLarge3 = 32.dp
+    val xLarge6 = 64.dp
 }

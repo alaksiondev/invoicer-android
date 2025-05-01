@@ -21,6 +21,8 @@
     <string name="auth_sign_up_have_account_prefix">Already have an account?</string>
     <string name="auth_sign_up_have_account_suffix">Login</string>
     <string name="auth_sign_up_error">Error creating account</string>
+    <string name="auth_sign_up_duplicate_account_title">Email already in use</string>
+    <string name="auth_sign_up_duplicate_account_description">%1$s is already registered in our platform</string>
     <!-- Sign Up Feedback -->
     <string name="auth_sign_up_feedback_title">Account created</string>
     <string name="auth_sign_up_feedback_message">Proceed to login to use the app</string>

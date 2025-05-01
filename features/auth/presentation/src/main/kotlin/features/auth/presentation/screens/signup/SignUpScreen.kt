@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +50,7 @@ internal class SignUpScreen : Screen {
         val state by viewModel.state.collectAsStateWithLifecycle()
         val scope = rememberCoroutineScope()
         val genericErrorMessage = stringResource(R.string.auth_sign_up_error)
+        val keyboard = LocalSoftwareKeyboardController.current
 
         val snackBarState = remember {
             SnackbarHostState()
@@ -76,7 +78,10 @@ internal class SignUpScreen : Screen {
 
         StateContent(
             onBackClick = { navigator?.pop() },
-            onSubmitClick = viewModel::createAccount,
+            onSubmitClick = {
+                keyboard?.hide()
+                viewModel.createAccount()
+            },
             onEmailChange = viewModel::onEmailChange,
             onPasswordChange = viewModel::onPasswordChange,
             toggleCensorship = viewModel::toggleCensorship,

@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
@@ -42,7 +43,6 @@ import features.auth.presentation.R
 import features.auth.presentation.screens.login.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
 import foundation.designsystem.components.TextDivider
-import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.buttons.SecondaryButton
 import foundation.designsystem.components.spacer.Spacer
@@ -62,6 +62,7 @@ internal class LoginScreen : Screen {
         val scope = rememberCoroutineScope()
         val snackBarHost = remember { SnackbarHostState() }
         val genericErrorMessage = stringResource(R.string.auth_sign_in_error)
+        val keyboard = LocalSoftwareKeyboardController.current
 
         val firebaseLauncher = rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -75,7 +76,10 @@ internal class LoginScreen : Screen {
         StateContent(
             state = state,
             callBacks = rememberLoginCallbacks(
-                onSubmit = viewModel::submit,
+                onSubmit = {
+                    keyboard?.hide()
+                    viewModel.submit()
+                },
                 onEmailChanged = viewModel::onEmailChanged,
                 onPasswordChanged = viewModel::onPasswordChanged,
                 onToggleCensorship = viewModel::toggleCensorship,

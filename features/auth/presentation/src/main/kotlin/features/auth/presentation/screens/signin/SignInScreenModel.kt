@@ -46,8 +46,8 @@ internal class SignInScreenModel(
                     password = _state.value.password
                 )
             }.handle(
-                onStart = { _state.update { it.copy(requestLoading = true) } },
-                onFinish = { _state.update { it.copy(requestLoading = false) } },
+                onStart = { _state.update { it.copy(signInLoading = true) } },
+                onFinish = { _state.update { it.copy(signInLoading = false) } },
                 onFailure = {
                     sendErrorEvent(it)
                 },

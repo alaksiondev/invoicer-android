@@ -7,10 +7,14 @@ internal data class SignInScreenState(
     val email: String = "",
     val password: String = "",
     val censored: Boolean = true,
-    val requestLoading: Boolean = false,
+    val signInLoading: Boolean = false,
+    val googleLoading: Boolean = false,
 ) {
     val buttonEnabled: Boolean =
-        email.isNotBlank() && password.isNotBlank() && requestLoading.not()
+        email.isNotBlank() && password.isNotBlank() && signInLoading.not() && googleLoading.not()
+
+    val googleEnabled: Boolean =
+        signInLoading.not() && googleLoading.not()
 }
 
 internal data class SignInCallBacks(

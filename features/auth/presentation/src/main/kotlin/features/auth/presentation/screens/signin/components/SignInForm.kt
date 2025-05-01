@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import features.auth.presentation.screens.signin.SignInScreenState
 import foundation.designsystem.tokens.Spacing
 
@@ -34,7 +33,7 @@ internal fun SignInForm(
             value = state.email,
             onChange = onEmailChange,
             onImeAction = { passwordFocus.requestFocus() },
-            enabled = state.requestLoading.not()
+            enabled = state.signInLoading.not()
         )
         SignInPasswordField(
             modifier = Modifier
@@ -45,7 +44,7 @@ internal fun SignInForm(
             onImeAction = {
                 focus.clearFocus()
             },
-            enabled = state.requestLoading.not(),
+            enabled = state.signInLoading.not(),
             isCensored = state.censored,
             toggleCensorship = toggleCensorship
         )

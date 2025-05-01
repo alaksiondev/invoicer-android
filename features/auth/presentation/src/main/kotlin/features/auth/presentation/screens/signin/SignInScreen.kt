@@ -1,12 +1,16 @@
 package features.auth.presentation.screens.signin
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -19,6 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -151,12 +157,25 @@ internal class SignInScreen : Screen {
                     modifier = Modifier.fillMaxWidth(),
                     label = stringResource(R.string.auth_sign_in_google_button),
                     onClick = {},
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(foundation.designSystem.R.drawable.google),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .background(Color.White, CircleShape)
+                                .padding(2.dp)
+                        )
+                    },
+                    isLoading = state.googleLoading,
+                    isEnabled = state.googleEnabled
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
                 Spacer(1f)
                 TextButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {}
+                    onClick = callBacks.onSignUpClick
                 ) {
                     Text(
                         text = buildAnnotatedString {

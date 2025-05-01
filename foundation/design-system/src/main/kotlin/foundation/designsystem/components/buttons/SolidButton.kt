@@ -28,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import foundation.designsystem.components.spacer.HorizontalSpacer
+import foundation.designsystem.components.spacer.SpacerSize
 
 enum class InvoicerButtonSize(
     internal val height: Dp
@@ -78,7 +80,7 @@ fun SecondaryButton(
     modifier: Modifier = Modifier,
     size: InvoicerButtonSize = InvoicerButtonSize.Large,
     isEnabled: Boolean = true,
-    trailingIcon: (@Composable () -> Unit)? = null,
+    leadingIcon: (@Composable () -> Unit)? = null,
     isLoading: Boolean = false,
     onClick: () -> Unit,
 ) {
@@ -88,7 +90,7 @@ fun SecondaryButton(
             disabledContainerColor = ButtonDefaults.outlinedButtonColors().containerColor,
         )
     } else {
-        ButtonDefaults.buttonColors()
+        ButtonDefaults.outlinedButtonColors()
     }
 
     OutlinedButton(
@@ -101,7 +103,10 @@ fun SecondaryButton(
         if (isLoading) {
             ButtonLoadingState()
         } else {
-            trailingIcon?.invoke()
+            leadingIcon?.let { icon ->
+                icon()
+                HorizontalSpacer(SpacerSize.Small)
+            }
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodyMedium

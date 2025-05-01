@@ -33,7 +33,6 @@ import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
-import foundation.navigation.extensions.pushToFront
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,7 +79,7 @@ internal class SignUpScreen : Screen {
             onConfirmEmail = viewModel::onConfirmEmailChange,
             onCheckValidEmail = viewModel::checkEmailValid,
             state = state,
-            onSignInClick = { navigator?.pushToFront(LoginScreen()) },
+            onSignInClick = { navigator?.replaceAll(LoginScreen()) },
             snackBarState = snackBarState
         )
     }

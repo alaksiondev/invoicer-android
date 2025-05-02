@@ -4,6 +4,8 @@ import foundation.watchers.AuthEvent
 import foundation.watchers.AuthEventBus
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthTokenRepository
+import io.github.alaksion.invoicer.foundation.session.Session
+import io.github.alaksion.invoicer.foundation.session.SessionTokens
 
 interface SignInCommandManager {
     suspend fun resolveCommand(type: SignInCommand)
@@ -34,6 +36,11 @@ internal class SignInCommandManagerResolver(
             accessToken = authToken.accessToken,
             refreshToken = authToken.refreshToken
         )
+        Session.tokens = SessionTokens(
+            accessToken = authToken.accessToken,
+            refreshToken = authToken.refreshToken
+        )
+
         authEventBus.publishEvent(AuthEvent.SignedIn)
     }
 }

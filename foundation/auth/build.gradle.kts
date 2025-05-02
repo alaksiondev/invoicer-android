@@ -13,9 +13,9 @@ dependencies {
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.core)
     implementation(projects.foundation.network)
-    implementation(projects.foundation.auth)
     implementation(projects.foundation.watchers)
     implementation(projects.foundation.storage.impl)
+    implementation(projects.foundation.session)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.coroutines.test)

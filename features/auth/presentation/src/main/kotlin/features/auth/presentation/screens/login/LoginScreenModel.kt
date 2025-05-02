@@ -6,14 +6,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import features.auth.presentation.firebase.FirebaseHelper
 import features.auth.presentation.firebase.GoogleResult
-import foundation.auth.domain.repository.AuthRepository
-import foundation.auth.watchers.AuthEvent
-import foundation.auth.watchers.AuthEventPublisher
 import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import foundation.ui.events.EventAware
 import foundation.ui.events.EventPublisher
+import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommand
+import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class LoginScreenModel(
-    private val authRepository: AuthRepository,
-    private val authEventPublisher: AuthEventPublisher,
+    private val signInCommander: SignInCommandManager,
     private val firebaseHelper: FirebaseHelper,
     private val dispatcher: CoroutineDispatcher
 ) : ScreenModel, EventAware<LoginScreenEvents> by EventPublisher() {
@@ -50,9 +48,11 @@ internal class LoginScreenModel(
     private fun handleSignInRequest() {
         screenModelScope.launch {
             launchRequest {
-                authRepository.signIn(
-                    email = _state.value.email,
-                    password = _state.value.password
+                signInCommander.resolveCommand(
+                    SignInCommand.Credential(
+                        userName = _state.value.email,
+                        password = _state.value.password
+                    )
                 )
             }.handle(
                 onStart = { _state.update { it.copy(isSignInLoading = true) } },
@@ -60,7 +60,9 @@ internal class LoginScreenModel(
                 onFailure = {
                     sendErrorEvent(it)
                 },
-                onSuccess = { authEventPublisher.publish(event = AuthEvent.SignIn) }
+                onSuccess = {
+                    // no-op
+                }
             )
         }
     }
@@ -91,10 +93,12 @@ internal class LoginScreenModel(
 
                 is GoogleResult.Success -> {
                     launchRequest {
-                        authRepository.googleSignIn(result.token)
+                        signInCommander.resolveCommand(
+                            SignInCommand.Google(result.token)
+                        )
                     }.handle(
                         onSuccess = {
-                            authEventPublisher.publish(AuthEvent.SignIn)
+                            // no op
                         },
                         onStart = {
                             _state.update {

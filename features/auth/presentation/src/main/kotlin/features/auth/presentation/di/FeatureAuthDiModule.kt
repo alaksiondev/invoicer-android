@@ -31,10 +31,9 @@ private fun Module.viewModelBindings() {
 
     factory {
         LoginScreenModel(
-            authRepository = get(),
-            authEventPublisher = get(),
             firebaseHelper = get(),
-            dispatcher = Dispatchers.Default
+            dispatcher = Dispatchers.Default,
+            signInCommander = get()
         )
     }
 

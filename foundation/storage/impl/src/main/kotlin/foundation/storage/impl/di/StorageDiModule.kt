@@ -1,5 +1,7 @@
 package foundation.storage.impl.di
 
+import foundation.storage.impl.KeyStoreManager
+import foundation.storage.impl.KeyStoreManagerImpl
 import foundation.storage.impl.LocalStorage
 import foundation.storage.impl.LocalStorageImpl
 import org.koin.android.ext.koin.androidContext
@@ -10,5 +12,9 @@ val storageDiModule = module {
         LocalStorageImpl(
             context = androidContext()
         )
+    }
+
+    single<KeyStoreManager> {
+        KeyStoreManagerImpl
     }
 }

@@ -59,6 +59,5 @@ dependencies {
     implementation(projects.foundation.validator.impl)
     implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
-    implementation(projects.foundation.auth.watchers)
-    implementation(projects.foundation.auth.domain)
+    implementation(projects.foundation.auth)
 }

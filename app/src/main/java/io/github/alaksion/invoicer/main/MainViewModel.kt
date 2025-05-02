@@ -22,7 +22,7 @@ internal class MainViewModel(
     fun startApp() {
         viewModelScope.launch {
             launchRequest {
-                authStorage.refreshToken()
+                authStorage.refreshSession()
             }.handle(
                 onStart = {},
                 onFinish = {},

@@ -15,6 +15,17 @@ interface KeyStoreManager {
     fun decryptValue(value: String): String
 }
 
+internal object MutedKeyStoreManagerImpl : KeyStoreManager {
+
+    override fun encryptValue(value: String): String {
+        return value
+    }
+
+    override fun decryptValue(encodedValue: String): String {
+        return encodedValue
+    }
+}
+
 internal object KeyStoreManagerImpl : KeyStoreManager {
 
     override fun encryptValue(value: String): String {

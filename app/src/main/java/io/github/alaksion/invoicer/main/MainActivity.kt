@@ -12,16 +12,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import foundation.auth.watchers.AuthEvent
-import foundation.auth.watchers.AuthEventSubscriber
 import foundation.designsystem.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
+import foundation.watchers.AuthEvent
+import foundation.watchers.AuthEventBus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val authSubscriber: AuthEventSubscriber by inject()
+    private val authEventBus: AuthEventBus by inject()
     private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,15 +39,15 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun AuthEventEffect(
-        subscriber: AuthEventSubscriber,
+        bus: AuthEventBus,
         onSignIn: () -> Unit,
         onSignOff: () -> Unit
     ) {
         LaunchedEffect(Unit) {
-            subscriber.events.collect {
+            bus.subscribe().collect {
                 when (it) {
-                    AuthEvent.SignIn -> onSignIn()
-                    is AuthEvent.SignOff -> onSignOff()
+                    AuthEvent.SignedIn -> onSignIn()
+                    AuthEvent.SignedOut -> onSignOff()
                 }
             }
         }
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                     SlideTransition(navigator)
 
                     AuthEventEffect(
-                        subscriber = authSubscriber,
+                        bus = authEventBus,
                         onSignIn = {
                             navigator.replaceAll(
                                 ScreenRegistry.get(InvoicerScreen.Home)

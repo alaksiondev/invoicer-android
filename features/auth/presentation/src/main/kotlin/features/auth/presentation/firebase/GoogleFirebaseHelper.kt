@@ -43,7 +43,7 @@ internal class GoogleFirebaseHelper(
                     account.idToken,
                     null
                 )
-                firebaseAuth.signInWithCredential(credential)
+                firebaseAuth.signInWithCredential(credential).await()
 
                 val user = firebaseAuth.currentUser ?: return@fold GoogleResult.Error(null)
                 val token = getToken(user)

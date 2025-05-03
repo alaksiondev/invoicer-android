@@ -6,8 +6,7 @@ import org.koin.dsl.module
 val homePresentationDiModule = module {
     factory<SettingsScreenModel> {
         SettingsScreenModel(
-            authRepository = get(),
-            authEventPublisher = get()
+            signOutService = get()
         )
     }
 }

@@ -4,10 +4,10 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import features.auth.presentation.utils.EmailValidator
 import features.auth.presentation.utils.PasswordStrengthValidator
-import foundation.auth.domain.repository.AuthRepository
 import foundation.network.RequestError
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

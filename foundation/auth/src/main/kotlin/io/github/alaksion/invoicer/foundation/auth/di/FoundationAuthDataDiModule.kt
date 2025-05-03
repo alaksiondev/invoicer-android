@@ -1,5 +1,7 @@
 package io.github.alaksion.invoicer.foundation.auth.di
 
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import io.github.alaksion.invoicer.foundation.auth.data.datasource.AuthRemoteDataSource
 import io.github.alaksion.invoicer.foundation.auth.data.datasource.AuthRemoteDataSourceImpl
 import io.github.alaksion.invoicer.foundation.auth.data.datasource.AuthStorage
@@ -47,7 +49,8 @@ val foundationAuthDiModule = module {
     factory<SignOutService> {
         SignOutHandler(
             authEventBus = get(),
-            authRepository = get()
+            authRepository = get(),
+            firebaseAuth = Firebase.auth
         )
     }
 }

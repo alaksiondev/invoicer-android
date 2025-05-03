@@ -8,8 +8,16 @@ android {
 }
 
 dependencies {
+
+    // Auth Providers
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
+    // Koin
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+
+    // Libs
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.core)
     implementation(projects.foundation.network)

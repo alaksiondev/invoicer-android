@@ -1,20 +1,21 @@
 package io.github.alaksion.invoicer.features.invoice.di
 
 import features.invoice.data.repository.InvoiceRepositoryImpl
+import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
+import io.github.alaksion.invoicer.features.invoice.data.datasource.InvoiceDataSource
+import io.github.alaksion.invoicer.features.invoice.data.datasource.InvoiceDataSourceImpl
+import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreenModel
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.company.InvoiceCompanyScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.externalId.InvoiceExternalIdScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreenModel
-import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.details.InvoiceDetailsScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
-import io.github.alaksion.invoicer.features.invoice.data.datasource.InvoiceDataSource
-import io.github.alaksion.invoicer.features.invoice.data.datasource.InvoiceDataSourceImpl
-import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -96,6 +97,13 @@ private fun Module.presentation() {
     factory {
         InvoiceDetailsScreenModel(
             invoiceRepository = get(),
+            dispatcher = Dispatchers.Default
+        )
+    }
+
+    factory {
+        InvoiceCompanyScreenModel(
+            manager = get(),
             dispatcher = Dispatchers.Default
         )
     }

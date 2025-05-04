@@ -15,6 +15,10 @@
     <string name="invoice_list_item_amount">Amount</string>
     <string name="invoice_list_new_invoice">New Invoice</string>
 
+    <!-- Invoice Company -->
+    <string name="invoice_company_title">Invoice company</string>
+    <string name="invoice_company_description">Sender and recipient information</string>
+
     <!-- Create Invoice -->
     <string name="invoice_create_continue_cta">Continue</string>
 

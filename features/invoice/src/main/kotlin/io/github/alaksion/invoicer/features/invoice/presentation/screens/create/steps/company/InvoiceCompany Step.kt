@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.designsystem.components.InputField
 import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
@@ -32,10 +33,15 @@ internal class InvoiceCompanyStep : Screen {
     override fun Content() {
         val viewModel = koinScreenModel<InvoiceCompanyScreenModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
 
         StateContent(
-            onBack = {},
-            state = state.value
+            onBack = { navigator?.pop() },
+            state = state.value,
+            onChangeSenderName = viewModel::onSenderNameChange,
+            onChangeSenderAddress = viewModel::onSenderAddressChange,
+            onChangeRecipientName = viewModel::onRecipientNameChange,
+            onChangeRecipientAddress = viewModel::onRecipientAddressChange
         )
     }
 
@@ -43,6 +49,10 @@ internal class InvoiceCompanyStep : Screen {
     @Composable
     fun StateContent(
         onBack: () -> Unit,
+        onChangeSenderName: (String) -> Unit,
+        onChangeSenderAddress: (String) -> Unit,
+        onChangeRecipientName: (String) -> Unit,
+        onChangeRecipientAddress: (String) -> Unit,
         state: InvoiceCompanyState
     ) {
         Scaffold(
@@ -51,7 +61,7 @@ internal class InvoiceCompanyStep : Screen {
                 TopAppBar(
                     title = { },
                     navigationIcon = {
-                        BackButton { }
+                        BackButton(onBackClick = onBack)
                     }
                 )
             },
@@ -83,8 +93,8 @@ internal class InvoiceCompanyStep : Screen {
                     placeholder = {
                         Text(stringResource(R.string.invoice_create_sender_company_name_placeholder))
                     },
-                    value = "",
-                    onValueChange = {},
+                    value = state.senderName,
+                    onValueChange = onChangeSenderName,
                     maxLines = 1
                 )
                 VerticalSpacer(SpacerSize.Medium)
@@ -96,8 +106,8 @@ internal class InvoiceCompanyStep : Screen {
                     placeholder = {
                         Text(stringResource(R.string.invoice_create_sender_company_address_placeholder))
                     },
-                    value = "",
-                    onValueChange = {},
+                    value = state.senderAddress,
+                    onValueChange = onChangeSenderAddress,
                     maxLines = 1
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
@@ -109,8 +119,8 @@ internal class InvoiceCompanyStep : Screen {
                     placeholder = {
                         Text(stringResource(R.string.invoice_create_recipient_company_name_placeholder))
                     },
-                    value = "",
-                    onValueChange = {},
+                    value = state.recipientName,
+                    onValueChange = onChangeRecipientName,
                     maxLines = 1
                 )
                 VerticalSpacer(SpacerSize.Medium)
@@ -122,8 +132,8 @@ internal class InvoiceCompanyStep : Screen {
                     placeholder = {
                         Text(stringResource(R.string.invoice_create_recipient_company_address_placeholder))
                     },
-                    value = "",
-                    onValueChange = {},
+                    value = state.recipientAddress,
+                    onValueChange = onChangeRecipientAddress,
                     maxLines = 1
                 )
             }
@@ -137,7 +147,11 @@ private fun Preview() {
     InvoicerTheme {
         InvoiceCompanyStep().StateContent(
             onBack = {},
-            state = InvoiceCompanyState()
+            state = InvoiceCompanyState(),
+            onChangeSenderName = {},
+            onChangeSenderAddress = {},
+            onChangeRecipientName = {},
+            onChangeRecipientAddress = {},
         )
     }
 }

@@ -12,4 +12,20 @@ internal class InvoiceCompanyScreenModel(
 ) : ScreenModel {
     private val _state = MutableStateFlow(InvoiceCompanyState())
     val state = _state.asStateFlow()
+
+    fun onSenderNameChange(name: String) {
+        _state.value = state.value.copy(senderName = name)
+    }
+
+    fun onSenderAddressChange(address: String) {
+        _state.value = state.value.copy(senderAddress = address)
+    }
+
+    fun onRecipientNameChange(name: String) {
+        _state.value = state.value.copy(recipientName = name)
+    }
+
+    fun onRecipientAddressChange(address: String) {
+        _state.value = state.value.copy(recipientAddress = address)
+    }
 }

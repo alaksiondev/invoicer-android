@@ -8,6 +8,12 @@
     <string name="invoice_list_error_description">Check your connection and try again</string>
     <string name="invoice_list_empty_title">Nothing to see here</string>
     <string name="invoice_list_empty_description">No invoices found</string>
+    <string name="invoice_list_item_number">Invoice number</string>
+    <string name="invoice_list_item_recipient">Recipient company</string>
+    <string name="invoice_list_item_due_date">Due date</string>
+    <string name="invoice_list_item_issue_date">Issue date</string>
+    <string name="invoice_list_item_amount">Amount</string>
+    <string name="invoice_list_new_invoice">New Invoice</string>
 
     <!-- Create Invoice -->
     <string name="invoice_create_continue_cta">Continue</string>

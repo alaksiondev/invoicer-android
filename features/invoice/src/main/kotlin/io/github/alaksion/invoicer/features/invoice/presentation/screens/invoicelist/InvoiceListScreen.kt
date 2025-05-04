@@ -108,7 +108,7 @@ internal class InvoiceListScreen : Screen {
             bottomBar = {
                 if (state.mode == InvoiceListMode.Content) {
                     PrimaryButton(
-                        label = "New Invoice",
+                        label = stringResource(R.string.invoice_list_new_invoice),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(Spacing.medium)

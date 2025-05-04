@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import foundation.designsystem.components.spacer.Spacer
 import foundation.designsystem.components.spacer.SpacerSize
@@ -23,6 +24,7 @@ import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.invoice.domain.model.InvoiceListItem
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import io.github.alaksion.invoicer.foundation.utils.money.moneyFormat
+import io.github.alasion.invoicer.features.invoice.R
 
 @Composable
 internal fun InvoiceListItem(
@@ -47,7 +49,7 @@ internal fun InvoiceListItem(
             ) {
                 InvoiceListVerticalTopic(
                     modifier = Modifier.weight(1f),
-                    title = "Invoice Number",
+                    title = stringResource(R.string.invoice_list_item_number),
                     value = item.externalId,
                 )
 
@@ -58,22 +60,22 @@ internal fun InvoiceListItem(
             }
 
             InvoiceListVerticalTopic(
-                title = "Recipient Company",
+                title = stringResource(R.string.invoice_list_item_recipient),
                 value = item.recipientCompany,
             )
 
             InvoiceListHorizontalTopic(
-                title = "Issue date",
+                title = stringResource(R.string.invoice_list_item_due_date),
                 value = item.issueDate.defaultFormat()
             )
 
             InvoiceListHorizontalTopic(
-                title = "Due date",
+                title = stringResource(R.string.invoice_list_item_issue_date),
                 value = item.dueDate.defaultFormat()
             )
 
             InvoiceListHorizontalTopic(
-                title = "Amount",
+                title = stringResource(R.string.invoice_list_item_amount),
                 value = item.totalAmount.moneyFormat()
             )
         }

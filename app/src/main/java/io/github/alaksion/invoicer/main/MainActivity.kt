@@ -6,9 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
@@ -56,36 +54,25 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun AppContent() {
         InvoicerTheme {
-            val isLogged by mainViewModel.isUserLoggedIN.collectAsStateWithLifecycle()
+            Navigator(
+                screens = listOf(MainScreen()),
+            ) { navigator ->
+                SlideTransition(navigator)
 
-            if (isLogged != null) {
-                val startScreen = if (isLogged == true) {
-                    InvoicerScreen.Home
-                } else {
-                    InvoicerScreen.Auth.AuthMenu
-                }
-
-                Navigator(
-                    screens = listOf(ScreenRegistry.get(startScreen)),
-                ) { navigator ->
-                    SlideTransition(navigator)
-
-                    AuthEventEffect(
-                        bus = authEventBus,
-                        onSignIn = {
-                            navigator.replaceAll(
-                                ScreenRegistry.get(InvoicerScreen.Home)
-                            )
-                        },
-                        onSignOff = {
-                            navigator.replaceAll(
-                                ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)
-                            )
-                        }
-                    )
-                }
+                AuthEventEffect(
+                    bus = authEventBus,
+                    onSignIn = {
+                        navigator.replaceAll(
+                            ScreenRegistry.get(InvoicerScreen.Home)
+                        )
+                    },
+                    onSignOff = {
+                        navigator.replaceAll(
+                            ScreenRegistry.get(InvoicerScreen.Auth.AuthMenu)
+                        )
+                    }
+                )
             }
-
         }
     }
 }

@@ -3,6 +3,7 @@ package features.auth.presentation.screens.login
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Task
 import features.auth.presentation.firebase.FirebaseHelper
 import features.auth.presentation.firebase.GoogleResult
@@ -43,7 +44,14 @@ internal class LoginScreenModel(
         if (_state.value.buttonEnabled) handleSignInRequest()
     }
 
-    fun getGoogleClient() = firebaseHelper.getGoogleClient()
+    fun getGoogleClient(): GoogleSignInClient {
+        _state.update {
+            it.copy(
+                isGoogleLoading = true
+            )
+        }
+        return firebaseHelper.getGoogleClient()
+    }
 
     private fun handleSignInRequest() {
         screenModelScope.launch {
@@ -78,6 +86,14 @@ internal class LoginScreenModel(
         publish(message)
     }
 
+    fun cancelGoogleSignIn() {
+        _state.update {
+            it.copy(
+                isGoogleLoading = false
+            )
+        }
+    }
+
     fun handleGoogleTask(task: Task<GoogleSignInAccount>) {
         screenModelScope.launch(dispatcher) {
             val result = firebaseHelper.handleGoogleResult(task)
@@ -99,13 +115,6 @@ internal class LoginScreenModel(
                     }.handle(
                         onSuccess = {
                             // no op
-                        },
-                        onStart = {
-                            _state.update {
-                                it.copy(
-                                    isGoogleLoading = true
-                                )
-                            }
                         },
                         onFinish = {
                             _state.update {

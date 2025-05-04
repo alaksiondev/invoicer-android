@@ -6,9 +6,9 @@ import org.koin.dsl.module
 internal val mainDiModule = module {
     viewModel {
         MainViewModel(
-            authRepository = get(),
-            authTokenRepository = get(),
-            logger = get()
+            logger = get(),
+            signInCommandManager = get(),
+            signOutService = get()
         )
     }
 }

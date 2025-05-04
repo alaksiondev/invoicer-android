@@ -47,7 +47,7 @@ internal class AuthRepositoryImpl(
 
     override suspend fun refreshSession(
         refreshToken: String
-    ): AuthToken? {
+    ): AuthToken {
         val refreshedSession = remoteDataSource.refreshToken(refreshToken)
 
         return AuthToken(

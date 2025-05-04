@@ -16,7 +16,6 @@ fun ScreenTitle(
     subTitle: String,
 ) {
     Column(modifier = modifier) {
-        VerticalSpacer(height = SpacerSize.XLarge3)
         Text(
             text = title,
             style = MaterialTheme.typography.headlineLarge,
@@ -28,6 +27,5 @@ fun ScreenTitle(
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Medium,
         )
-        VerticalSpacer(height = SpacerSize.XLarge3)
     }
 }

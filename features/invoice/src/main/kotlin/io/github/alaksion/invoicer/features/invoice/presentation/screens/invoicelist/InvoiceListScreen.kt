@@ -3,19 +3,17 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.invoic
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -33,8 +31,11 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.CloseButton
+import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.emptystate.EmptyState
 import foundation.designsystem.components.feedback.Feedback
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import foundation.navigation.InvoicerScreen
 import foundation.ui.LazyListPaginationEffect
@@ -104,16 +105,14 @@ internal class InvoiceListScreen : Screen {
                     navigationIcon = { CloseButton(onBackClick = callbacks::onClose) },
                 )
             },
-            floatingActionButton = {
+            bottomBar = {
                 if (state.mode == InvoiceListMode.Content) {
-                    FloatingActionButton(
-                        onClick = callbacks::onCreateInvoiceClick
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Add,
-                            contentDescription = null
-                        )
-                    }
+                    PrimaryButton(
+                        label = "New Invoice",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(Spacing.medium)
+                    ) { callbacks.onCreateInvoiceClick() }
                 }
             }
         ) { scaffoldPadding ->
@@ -127,6 +126,7 @@ internal class InvoiceListScreen : Screen {
                     title = stringResource(R.string.invoice_list_title),
                     subTitle = stringResource(R.string.invoice_list_subtitle),
                 )
+                VerticalSpacer(height = SpacerSize.XLarge)
 
                 when (state.mode) {
                     InvoiceListMode.Content -> {
@@ -147,18 +147,22 @@ internal class InvoiceListScreen : Screen {
                             }
 
                             LazyColumn(
-                                contentPadding = PaddingValues(Spacing.medium),
+                                modifier = Modifier.weight(1f),
                                 verticalArrangement = Arrangement.spacedBy(Spacing.medium),
                                 state = listState
                             ) {
-                                items(
+                                itemsIndexed(
                                     items = state.invoices,
-                                    key = { item -> item.id }
-                                ) { invoiceItem ->
+                                    key = { index, item -> item.id }
+                                ) { index, invoiceItem ->
                                     InvoiceListItem(
                                         item = invoiceItem,
                                         onClick = { callbacks.onClickInvoice(invoiceItem.id) }
                                     )
+                                    if (index != state.invoices.lastIndex) {
+                                        VerticalSpacer(SpacerSize.Medium)
+                                        HorizontalDivider()
+                                    }
                                 }
                             }
                         }
@@ -166,8 +170,7 @@ internal class InvoiceListScreen : Screen {
 
                     InvoiceListMode.Loading -> Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(scaffoldPadding),
+                            .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator()
@@ -175,9 +178,7 @@ internal class InvoiceListScreen : Screen {
 
                     InvoiceListMode.Error -> Feedback(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(scaffoldPadding)
-                            .padding(Spacing.medium),
+                            .fillMaxSize(),
                         primaryActionText = stringResource(R.string.invoice_list_error_retry),
                         onPrimaryAction = callbacks::onRetry,
                         icon = Icons.Outlined.ErrorOutline,

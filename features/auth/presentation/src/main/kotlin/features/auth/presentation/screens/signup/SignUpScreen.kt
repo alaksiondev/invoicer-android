@@ -135,10 +135,12 @@ internal class SignUpScreen : Screen {
                     .padding(Spacing.medium)
                     .fillMaxSize(),
             ) {
+                VerticalSpacer(height = SpacerSize.XLarge3)
                 ScreenTitle(
                     title = stringResource(R.string.auth_sign_up_title),
                     subTitle = stringResource(R.string.auth_sign_up_description)
                 )
+                VerticalSpacer(height = SpacerSize.XLarge3)
                 SignUpForm(
                     modifier = Modifier.fillMaxWidth(),
                     state = state,

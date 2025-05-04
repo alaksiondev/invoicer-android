@@ -141,10 +141,12 @@ internal class LoginScreen : Screen {
                     .padding(Spacing.medium)
                     .fillMaxSize()
             ) {
+                VerticalSpacer(height = SpacerSize.XLarge3)
                 ScreenTitle(
                     title = stringResource(R.string.auth_sign_in_title),
                     subTitle = stringResource(R.string.auth_sign_in_description)
                 )
+                VerticalSpacer(height = SpacerSize.XLarge3)
                 SignInForm(
                     state = state,
                     onPasswordChange = callBacks.onPasswordChanged,

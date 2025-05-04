@@ -29,8 +29,8 @@ fun <T> launchRequest(
 suspend fun <T> Flow<RequestState<T>>.handle(
     onStart: suspend () -> Unit = {},
     onFinish: suspend () -> Unit = {},
-    onFailure: suspend (RequestError) -> Unit,
-    onSuccess: suspend (T) -> Unit
+    onFailure: suspend (RequestError) -> Unit = {},
+    onSuccess: suspend (T) -> Unit = {}
 ) {
     collect {
         when (it) {

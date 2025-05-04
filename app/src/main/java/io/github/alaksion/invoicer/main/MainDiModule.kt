@@ -8,6 +8,7 @@ internal val mainDiModule = module {
         MainViewModel(
             logger = get(),
             signInCommandManager = get(),
+            signOutService = get()
         )
     }
 }

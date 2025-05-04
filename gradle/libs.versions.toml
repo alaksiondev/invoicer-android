@@ -1,25 +1,24 @@
 [versions]
 agp = "8.7.3"
 kotlin = "2.1.0"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
-composeBom = "2025.03.00"
+composeBom = "2025.04.01"
 koinBom = "4.1.0-Beta5"
 ktor = "3.1.1"
 voyager = "1.1.0-beta02"
 material-icons = "1.7.8"
-coroutines = "1.10.1"
+coroutines = "1.10.2"
 splashscreen = "1.0.1"
 datetime = "0.6.2"
 immutable-collections = "0.3.8"
-paging = "3.3.2"
-camerax-core = "1.4.1"
+camerax-core = "1.4.2"
 google-services = "4.4.2"
-firebase-bom = "33.12.0"
+firebase-bom = "33.13.0"
 androidX-identity = "1.5.0"
 googleId = "1.1.1"
 google-services-auth = "21.3.0"
@@ -41,10 +40,6 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
-
-# Paging
-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 # Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -112,7 +107,6 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 compose-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3"]
 compose-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 voyager = ["voyager-navigator", "voyager-screenmodel", "voyager-koin"]
-paging = ["paging-compose", "paging-runtime"]
 camerax = ["camerax-core", "camerax-camera2", "camerax-lifecycle", "camerax-view"]
 identity = ["identity-credentials-core", "identity-credentials-play", "identity-googleid"]
 

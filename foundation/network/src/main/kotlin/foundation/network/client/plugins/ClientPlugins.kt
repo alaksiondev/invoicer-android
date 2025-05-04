@@ -4,6 +4,7 @@ import foundation.network.RequestError
 import foundation.network.client.BASE_URL
 import foundation.network.client.BuildConfig
 import foundation.network.client.InvoicerHttpError
+import io.github.alaksion.invoicer.foundation.session.Session
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttpConfig
@@ -15,7 +16,9 @@ import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -74,6 +77,7 @@ private fun HttpClientConfig<OkHttpConfig>.defaultRequest() {
     defaultRequest {
         host = BASE_URL
         contentType(ContentType.Application.Json)
+        header(HttpHeaders.Authorization, "Bearer " + Session.tokens?.accessToken)
     }
 }
 

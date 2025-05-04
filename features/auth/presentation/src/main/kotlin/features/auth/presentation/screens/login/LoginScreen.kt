@@ -70,6 +70,8 @@ internal class LoginScreen : Screen {
             if (result.resultCode == RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 viewModel.handleGoogleTask(task)
+            } else {
+                viewModel.cancelGoogleSignIn()
             }
         }
 

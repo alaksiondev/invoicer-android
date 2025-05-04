@@ -22,5 +22,5 @@ interface AuthRepository {
 
     suspend fun refreshSession(
         refreshToken: String,
-    ): AuthToken?
+    ): AuthToken
 }

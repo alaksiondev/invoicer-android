@@ -104,13 +104,15 @@ internal class InvoiceListScreen : Screen {
                 )
             },
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = callbacks::onCreateInvoiceClick
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Add,
-                        contentDescription = null
-                    )
+                if (state.mode == InvoiceListMode.Content) {
+                    FloatingActionButton(
+                        onClick = callbacks::onCreateInvoiceClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Add,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         ) { scaffoldPadding ->

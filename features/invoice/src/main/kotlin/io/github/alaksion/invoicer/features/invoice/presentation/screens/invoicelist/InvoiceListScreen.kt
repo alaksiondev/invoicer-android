@@ -2,6 +2,7 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.invoic
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,9 +16,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,6 +31,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.CloseButton
 import foundation.designsystem.components.emptystate.EmptyState
 import foundation.designsystem.components.feedback.Feedback
@@ -98,8 +99,8 @@ internal class InvoiceListScreen : Screen {
     ) {
         Scaffold(
             topBar = {
-                MediumTopAppBar(
-                    title = { Text(stringResource(R.string.invoice_list_title)) },
+                TopAppBar(
+                    title = { },
                     navigationIcon = { CloseButton(onBackClick = callbacks::onClose) },
                 )
             },
@@ -116,63 +117,74 @@ internal class InvoiceListScreen : Screen {
                 }
             }
         ) { scaffoldPadding ->
-            when (state.mode) {
-                InvoiceListMode.Content -> {
-                    if (state.invoices.isEmpty()) {
-                        EmptyState(
-                            title = stringResource(R.string.invoice_list_empty_title),
-                            description = stringResource(R.string.invoice_list_empty_description),
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    } else {
-                        val listState = rememberLazyListState()
+            Column(
+                modifier = Modifier
+                    .padding(scaffoldPadding)
+                    .padding(Spacing.medium)
+                    .fillMaxSize()
+            ) {
+                ScreenTitle(
+                    title = stringResource(R.string.invoice_list_title),
+                    subTitle = stringResource(R.string.invoice_list_subtitle),
+                )
 
-                        LazyListPaginationEffect(
-                            state = listState,
-                            enabled = true
-                        ) {
-                            callbacks.onNextPage()
-                        }
+                when (state.mode) {
+                    InvoiceListMode.Content -> {
+                        if (state.invoices.isEmpty()) {
+                            EmptyState(
+                                title = stringResource(R.string.invoice_list_empty_title),
+                                description = stringResource(R.string.invoice_list_empty_description),
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        } else {
+                            val listState = rememberLazyListState()
 
-                        LazyColumn(
-                            modifier = Modifier.padding(scaffoldPadding),
-                            contentPadding = PaddingValues(Spacing.medium),
-                            verticalArrangement = Arrangement.spacedBy(Spacing.medium),
-                            state = listState
-                        ) {
-                            items(
-                                items = state.invoices,
-                                key = { item -> item.id }
-                            ) { invoiceItem ->
-                                InvoiceListItem(
-                                    item = invoiceItem,
-                                    onClick = { callbacks.onClickInvoice(invoiceItem.id) }
-                                )
+                            LazyListPaginationEffect(
+                                state = listState,
+                                enabled = true
+                            ) {
+                                callbacks.onNextPage()
+                            }
+
+                            LazyColumn(
+                                contentPadding = PaddingValues(Spacing.medium),
+                                verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+                                state = listState
+                            ) {
+                                items(
+                                    items = state.invoices,
+                                    key = { item -> item.id }
+                                ) { invoiceItem ->
+                                    InvoiceListItem(
+                                        item = invoiceItem,
+                                        onClick = { callbacks.onClickInvoice(invoiceItem.id) }
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
-                InvoiceListMode.Loading -> Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(scaffoldPadding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                    InvoiceListMode.Loading -> Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(scaffoldPadding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
 
-                InvoiceListMode.Error -> Feedback(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(scaffoldPadding)
-                        .padding(Spacing.medium),
-                    primaryActionText = stringResource(R.string.invoice_list_error_retry),
-                    onPrimaryAction = callbacks::onRetry,
-                    icon = Icons.Outlined.ErrorOutline,
-                    title = stringResource(R.string.invoice_list_error_title),
-                    description = stringResource(R.string.invoice_list_error_description)
-                )
+                    InvoiceListMode.Error -> Feedback(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(scaffoldPadding)
+                            .padding(Spacing.medium),
+                        primaryActionText = stringResource(R.string.invoice_list_error_retry),
+                        onPrimaryAction = callbacks::onRetry,
+                        icon = Icons.Outlined.ErrorOutline,
+                        title = stringResource(R.string.invoice_list_error_title),
+                        description = stringResource(R.string.invoice_list_error_description)
+                    )
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 <resources>
     <!-- Invoice List -->
     <string name="invoice_list_title">Invoices</string>
+    <string name="invoice_list_subtitle">Manage invoices</string>
     <string name="invoice_list_error_retry">Try again</string>
     <string name="invoice_list_error_title">Something went wrong</string>
     <string name="invoice_list_error_description">Check your connection and try again</string>

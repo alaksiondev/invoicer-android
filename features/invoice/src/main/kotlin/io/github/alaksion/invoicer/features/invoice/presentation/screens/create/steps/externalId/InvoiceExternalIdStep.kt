@@ -1,14 +1,17 @@
 package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.externalId
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.QrCode2
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -19,11 +22,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.spacer.Spacer
-import foundation.ui.events.EventEffect
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import foundation.designsystem.components.InputField
+import foundation.designsystem.components.ScreenTitle
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
+import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.company.InvoiceCompanyStep
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
 
 internal class InvoiceExternalIdStep : Screen {
 
@@ -33,9 +41,9 @@ internal class InvoiceExternalIdStep : Screen {
         val state by screenModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
 
-        EventEffect(screenModel) {
-            when (it) {
-                InvoiceExternalIdEvents.Continue -> navigator?.push(InvoiceCompanyStep())
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                navigator?.push(InvoiceCompanyStep())
             }
         }
 
@@ -47,6 +55,7 @@ internal class InvoiceExternalIdStep : Screen {
         )
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         onSubmit: () -> Unit,
@@ -55,50 +64,64 @@ internal class InvoiceExternalIdStep : Screen {
         state: InvoiceExternalIdState
     ) {
         val keyboard = LocalSoftwareKeyboardController.current
-
-        CreateInvoiceBaseForm(
-            title = stringResource(R.string.invoice_create_external_id_title),
-            buttonText = stringResource(R.string.invoice_create_continue_cta),
-            buttonEnabled = state.isEnabled,
-            onBack = onBack,
-            onContinue = onSubmit,
-        ) {
-            Spacer(1f)
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = state.externalId,
-                onValueChange = onUpdate,
-                maxLines = 1,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.QrCode2,
-                        contentDescription = null
-                    )
-                },
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done,
-                    autoCorrectEnabled = false,
-                    capitalization = KeyboardCapitalization.Words
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { keyboard?.hide() }
-                ),
-                placeholder = {
-                    Text(
-                        text = stringResource(
-                            R.string.invoice_create_external_id_placeholder
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {},
+                    navigationIcon = { BackButton(onBackClick = onBack) }
+                )
+            },
+            bottomBar = {
+                PrimaryButton(
+                    label = stringResource(R.string.invoice_create_continue_cta),
+                    onClick = onSubmit,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                    isEnabled = state.isButtonEnabled
+                )
+            }
+        ) { scaffoldPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(scaffoldPadding)
+                    .padding(Spacing.medium)
+            ) {
+                ScreenTitle(
+                    title = stringResource(R.string.invoice_create_external_id_title),
+                    subTitle = stringResource(R.string.invoice_create_external_id_description)
+                )
+                VerticalSpacer(SpacerSize.XLarge3)
+                InputField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.externalId,
+                    onValueChange = onUpdate,
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                        autoCorrectEnabled = false,
+                        capitalization = KeyboardCapitalization.Words
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { keyboard?.hide() }
+                    ),
+                    placeholder = {
+                        Text(
+                            text = stringResource(
+                                R.string.invoice_create_external_id_placeholder
+                            )
                         )
-                    )
-                },
-                label = {
-                    Text(
-                        text = stringResource(
-                            R.string.invoice_create_external_id_label
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(
+                                R.string.invoice_create_external_id_label
+                            )
                         )
-                    )
-                }
-            )
-            Spacer(1f)
+                    }
+                )
+            }
         }
     }
 }

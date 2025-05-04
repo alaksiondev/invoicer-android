@@ -3,21 +3,24 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class InvoiceExternalIdScreenModel(
     private val manager: CreateInvoiceManager,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, EventAware<InvoiceExternalIdEvents> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(InvoiceExternalIdState())
     val state: StateFlow<InvoiceExternalIdState> = _state
+
+    private val _events = MutableSharedFlow<Unit>()
+    val events = _events.asSharedFlow()
 
     fun initState() {
         _state.update {
@@ -36,9 +39,9 @@ internal class InvoiceExternalIdScreenModel(
     }
 
     fun submit() {
-        if (_state.value.isEnabled) screenModelScope.launch(dispatcher) {
+        if (_state.value.isButtonEnabled) screenModelScope.launch(dispatcher) {
             manager.externalId = _state.value.externalId
-            publish(InvoiceExternalIdEvents.Continue)
+            _events.emit(Unit)
         }
     }
 

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -12,7 +14,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component3
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component4
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
@@ -37,7 +47,7 @@ internal class InvoiceCompanyStep : Screen {
         val state = viewModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(viewModel) {
             viewModel.events.collect {
                 navigator?.push(InvoiceDatesScreen())
             }
@@ -49,7 +59,8 @@ internal class InvoiceCompanyStep : Screen {
             onChangeSenderName = viewModel::onSenderNameChange,
             onChangeSenderAddress = viewModel::onSenderAddressChange,
             onChangeRecipientName = viewModel::onRecipientNameChange,
-            onChangeRecipientAddress = viewModel::onRecipientAddressChange
+            onChangeRecipientAddress = viewModel::onRecipientAddressChange,
+            onSubmit = viewModel::submit
         )
     }
 
@@ -57,12 +68,16 @@ internal class InvoiceCompanyStep : Screen {
     @Composable
     fun StateContent(
         onBack: () -> Unit,
+        onSubmit: () -> Unit,
         onChangeSenderName: (String) -> Unit,
         onChangeSenderAddress: (String) -> Unit,
         onChangeRecipientName: (String) -> Unit,
         onChangeRecipientAddress: (String) -> Unit,
         state: InvoiceCompanyState
     ) {
+        val (senderName, senderAddress, recipientName, recipientAddress) = FocusRequester.createRefs()
+        val keyboard = LocalSoftwareKeyboardController.current
+
         Scaffold(
             modifier = Modifier.imePadding(),
             topBar = {
@@ -78,14 +93,16 @@ internal class InvoiceCompanyStep : Screen {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Spacing.medium),
-                    label = stringResource(R.string.invoice_create_continue_cta)
-                ) { }
+                    label = stringResource(R.string.invoice_create_continue_cta),
+                    onClick = onSubmit,
+                    isEnabled = state.isButtonEnabled
+                )
             }
-        ) { scaffoldCompany ->
+        ) { scaffoldPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(scaffoldCompany)
+                    .padding(scaffoldPadding)
                     .padding(Spacing.medium)
             ) {
                 ScreenTitle(
@@ -94,7 +111,9 @@ internal class InvoiceCompanyStep : Screen {
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 InputField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(senderName),
                     label = {
                         Text(stringResource(R.string.invoice_create_sender_company_name_label))
                     },
@@ -103,11 +122,21 @@ internal class InvoiceCompanyStep : Screen {
                     },
                     value = state.senderName,
                     onValueChange = onChangeSenderName,
-                    maxLines = 1
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            senderAddress.requestFocus()
+                        }
+                    )
                 )
                 VerticalSpacer(SpacerSize.Medium)
                 InputField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(senderAddress),
                     label = {
                         Text(stringResource(R.string.invoice_create_sender_company_address_label))
                     },
@@ -116,11 +145,21 @@ internal class InvoiceCompanyStep : Screen {
                     },
                     value = state.senderAddress,
                     onValueChange = onChangeSenderAddress,
-                    maxLines = 1
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            recipientName.requestFocus()
+                        }
+                    )
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 InputField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(recipientName),
                     label = {
                         Text(stringResource(R.string.invoice_create_recipient_company_name_label))
                     },
@@ -129,11 +168,21 @@ internal class InvoiceCompanyStep : Screen {
                     },
                     value = state.recipientName,
                     onValueChange = onChangeRecipientName,
-                    maxLines = 1
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            recipientAddress.requestFocus()
+                        }
+                    )
                 )
                 VerticalSpacer(SpacerSize.Medium)
                 InputField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(recipientAddress),
                     label = {
                         Text(stringResource(R.string.invoice_create_recipient_company_address_label))
                     },
@@ -142,7 +191,15 @@ internal class InvoiceCompanyStep : Screen {
                     },
                     value = state.recipientAddress,
                     onValueChange = onChangeRecipientAddress,
-                    maxLines = 1
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboard?.hide()
+                        }
+                    )
                 )
             }
         }
@@ -160,6 +217,7 @@ private fun Preview() {
             onChangeSenderAddress = {},
             onChangeRecipientName = {},
             onChangeRecipientAddress = {},
+            onSubmit = {}
         )
     }
 }

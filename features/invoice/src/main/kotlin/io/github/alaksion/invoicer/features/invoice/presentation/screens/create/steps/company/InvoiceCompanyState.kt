@@ -5,4 +5,10 @@ internal data class InvoiceCompanyState(
     val recipientName: String = "",
     val senderAddress: String = "",
     val senderName: String = "",
-)
+) {
+    val isButtonEnabled =
+        recipientAddress.isNotEmpty() &&
+                recipientName.isNotEmpty() &&
+                senderAddress.isNotEmpty() &&
+                senderName.isNotEmpty()
+}

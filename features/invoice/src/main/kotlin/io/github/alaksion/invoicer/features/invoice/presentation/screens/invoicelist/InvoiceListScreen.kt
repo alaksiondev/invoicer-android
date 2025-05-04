@@ -51,7 +51,6 @@ import org.koin.java.KoinJavaComponent.getKoin
 
 internal class InvoiceListScreen : Screen {
 
-
     companion object {
         val SCREEN_KEY = "invoice-list-screen"
     }
@@ -114,7 +113,7 @@ internal class InvoiceListScreen : Screen {
                     )
                 }
             }
-        ) {
+        ) { scaffoldPadding ->
             when (state.mode) {
                 InvoiceListMode.Content -> {
                     if (state.invoices.isEmpty()) {
@@ -134,7 +133,7 @@ internal class InvoiceListScreen : Screen {
                         }
 
                         LazyColumn(
-                            modifier = Modifier.padding(it),
+                            modifier = Modifier.padding(scaffoldPadding),
                             contentPadding = PaddingValues(Spacing.medium),
                             verticalArrangement = Arrangement.spacedBy(Spacing.medium),
                             state = listState
@@ -153,7 +152,9 @@ internal class InvoiceListScreen : Screen {
                 }
 
                 InvoiceListMode.Loading -> Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(scaffoldPadding),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -162,6 +163,7 @@ internal class InvoiceListScreen : Screen {
                 InvoiceListMode.Error -> Feedback(
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(scaffoldPadding)
                         .padding(Spacing.medium),
                     primaryActionText = stringResource(R.string.invoice_list_error_retry),
                     onPrimaryAction = callbacks::onRetry,

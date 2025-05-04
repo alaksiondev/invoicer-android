@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +26,7 @@ import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.theme.InvoicerTheme
 import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreen
 import io.github.alasion.invoicer.features.invoice.R
 
 internal class InvoiceCompanyStep : Screen {
@@ -34,6 +36,12 @@ internal class InvoiceCompanyStep : Screen {
         val viewModel = koinScreenModel<InvoiceCompanyScreenModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
+
+        LaunchedEffect(Unit) {
+            viewModel.events.collect {
+                navigator?.push(InvoiceDatesScreen())
+            }
+        }
 
         StateContent(
             onBack = { navigator?.pop() },

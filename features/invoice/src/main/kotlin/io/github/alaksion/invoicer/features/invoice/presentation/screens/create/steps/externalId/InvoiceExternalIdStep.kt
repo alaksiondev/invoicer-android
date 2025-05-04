@@ -19,13 +19,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreen
 import foundation.designsystem.components.spacer.Spacer
 import foundation.ui.events.EventEffect
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.CreateInvoiceBaseForm
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.company.InvoiceCompanyStep
 import io.github.alasion.invoicer.features.invoice.R
 
-internal class InvoiceExternalIdScreen : Screen {
+internal class InvoiceExternalIdStep : Screen {
 
     @Composable
     override fun Content() {
@@ -35,7 +35,7 @@ internal class InvoiceExternalIdScreen : Screen {
 
         EventEffect(screenModel) {
             when (it) {
-                InvoiceExternalIdEvents.Continue -> navigator?.push(SenderCompanyScreen())
+                InvoiceExternalIdEvents.Continue -> navigator?.push(InvoiceCompanyStep())
             }
         }
 

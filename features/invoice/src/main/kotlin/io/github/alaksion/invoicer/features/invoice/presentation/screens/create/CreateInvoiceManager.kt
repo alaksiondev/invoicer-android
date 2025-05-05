@@ -2,6 +2,7 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
 import io.github.alaksion.invoicer.foundation.utils.date.DateProvider
+import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.days
 
 internal class CreateInvoiceManager(
@@ -15,8 +16,8 @@ internal class CreateInvoiceManager(
     var recipientCompanyName: String = ""
     var recipientCompanyAddress: String = ""
 
-    var issueDate = dateProvider.get().toEpochMilliseconds()
-    var dueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
+    var issueDate: Instant = dateProvider.get()
+    var dueDate: Instant = dateProvider.get().plus(7.days)
 
     var beneficiaryId: String = ""
     var beneficiaryName: String = ""
@@ -31,8 +32,8 @@ internal class CreateInvoiceManager(
         senderCompanyName = ""
         recipientCompanyName = ""
         recipientCompanyAddress = ""
-        dueDate = dateProvider.get().toEpochMilliseconds()
-        issueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
+        dueDate = dateProvider.get()
+        issueDate = dateProvider.get().plus(7.days)
         beneficiaryId = ""
         beneficiaryName = ""
         activities = mutableListOf()

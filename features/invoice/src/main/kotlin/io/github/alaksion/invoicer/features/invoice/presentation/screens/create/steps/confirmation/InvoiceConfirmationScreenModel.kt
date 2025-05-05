@@ -12,14 +12,11 @@ import io.github.alaksion.invoicer.features.invoice.domain.model.CreateInvoiceMo
 import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
-import io.github.alaksion.invoicer.foundation.utils.date.toLocalDate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
 
 internal class InvoiceConfirmationScreenModel(
     private val manager: CreateInvoiceManager,
@@ -38,10 +35,8 @@ internal class InvoiceConfirmationScreenModel(
                 senderCompanyAddress = manager.senderCompanyAddress,
                 recipientCompanyName = manager.recipientCompanyName,
                 recipientCompanyAddress = manager.recipientCompanyAddress,
-                issueDate = manager.issueDate.toLocalDate(TimeZone.currentSystemDefault())
-                    .defaultFormat(),
-                dueDate = manager.dueDate.toLocalDate(TimeZone.currentSystemDefault())
-                    .defaultFormat(),
+                issueDate = manager.issueDate.defaultFormat(),
+                dueDate = manager.dueDate.defaultFormat(),
                 intermediaryName = manager.intermediaryName,
                 beneficiaryName = manager.beneficiaryName,
                 activities = manager.activities,
@@ -60,8 +55,8 @@ internal class InvoiceConfirmationScreenModel(
                         senderCompanyAddress = manager.senderCompanyAddress,
                         recipientCompanyName = manager.recipientCompanyName,
                         recipientCompanyAddress = manager.recipientCompanyAddress,
-                        issueDate = Instant.fromEpochMilliseconds(manager.issueDate),
-                        dueDate = Instant.fromEpochMilliseconds(manager.dueDate),
+                        issueDate = manager.issueDate,
+                        dueDate = manager.dueDate,
                         beneficiaryId = manager.beneficiaryId,
                         intermediaryId = manager.intermediaryId,
                         activities = manager.activities.map {

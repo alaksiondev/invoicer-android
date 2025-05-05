@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
 
 internal class InvoiceDatesScreenModel(
     private val dateProvider: DateProvider,
@@ -28,12 +29,12 @@ internal class InvoiceDatesScreenModel(
             it.copy(
                 dueDate = manager.dueDate,
                 issueDate = manager.issueDate,
-                now = dateProvider.get().toEpochMilliseconds()
+                now = dateProvider.get()
             )
         }
     }
 
-    fun updateIssueDate(value: Long) {
+    fun updateIssueDate(value: Instant) {
         _state.update { oldState ->
             oldState.copy(
                 issueDate = value
@@ -41,7 +42,7 @@ internal class InvoiceDatesScreenModel(
         }
     }
 
-    fun updateDueDate(value: Long) {
+    fun updateDueDate(value: Instant) {
         _state.update { oldState ->
             oldState.copy(
                 dueDate = value

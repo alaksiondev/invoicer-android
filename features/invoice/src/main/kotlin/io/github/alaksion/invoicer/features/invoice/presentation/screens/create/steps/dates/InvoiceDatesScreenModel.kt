@@ -6,12 +6,14 @@ import foundation.ui.events.EventAware
 import foundation.ui.events.EventPublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import io.github.alaksion.invoicer.foundation.utils.date.DateProvider
+import io.github.alaksion.invoicer.foundation.utils.date.toZeroHour
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
 
 internal class InvoiceDatesScreenModel(
     private val dateProvider: DateProvider,
@@ -29,7 +31,7 @@ internal class InvoiceDatesScreenModel(
             it.copy(
                 dueDate = manager.dueDate,
                 issueDate = manager.issueDate,
-                now = dateProvider.get()
+                now = dateProvider.get().toZeroHour(TimeZone.currentSystemDefault())
             )
         }
     }

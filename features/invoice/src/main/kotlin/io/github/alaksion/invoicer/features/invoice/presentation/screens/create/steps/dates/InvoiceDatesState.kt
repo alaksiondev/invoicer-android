@@ -9,7 +9,7 @@ internal data class InvoiceDatesState(
 ) {
 
     val issueDateValid = issueDate >= now
-    val dueDateValid = dueDate > issueDate
+    val dueDateValid = dueDate >= issueDate
     val formValid = dueDateValid && issueDateValid
 }
 

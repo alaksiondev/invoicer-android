@@ -5,13 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,14 +28,11 @@ import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import foundation.ui.events.EventEffect
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.components.MinSelectableDate
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.components.InvoiceDatePicker
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreen
-import io.github.alaksion.invoicer.foundation.utils.date.toZeroHour
+import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import io.github.alasion.invoicer.features.invoice.R
 import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
-import kotlinx.datetime.toLocalDateTime
 
 internal class InvoiceDatesScreen : Screen {
 
@@ -55,6 +49,10 @@ internal class InvoiceDatesScreen : Screen {
         }
 
         LaunchedEffect(Unit) { screenModel.initState() }
+
+        LaunchedEffect(state) {
+            println(state)
+        }
 
         StateContent(
             state = state,
@@ -121,97 +119,47 @@ internal class InvoiceDatesScreen : Screen {
                                 isIssueDatePickerVisible = true
                             }
                         ),
-                    text = state.dueDate.toString(),
+                    text = "Issue date ${state.issueDate.defaultFormat()}",
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = {
+                                isDueDatePickerVisible = true
+                            }
+                        ),
+                    text = "Due date ${state.dueDate.defaultFormat()}",
                 )
             }
         }
 
-        if (isIssueDatePickerVisible) {
-            val pickerState = rememberDatePickerState(
-                initialSelectedDateMillis = state.issueDate
-                    .toZeroHour(TimeZone.UTC)
-                    .toEpochMilliseconds(),
-                selectableDates = MinSelectableDate(
-                    minYear = state.now.toLocalDateTime(TimeZone.currentSystemDefault()).year,
-                    minEpoch = state.now.toZeroHour(TimeZone.UTC).toEpochMilliseconds()
-                )
-            )
-            DatePickerDialog(
-                onDismissRequest = {
-                    isIssueDatePickerVisible = false
-                },
-                confirmButton = {
-                    PrimaryButton(
-                        label = stringResource(R.string.invoice_create_dates_dialog_confirm),
-                        onClick = {
-                            pickerState.selectedDateMillis?.let { selectedDate ->
-                                val selectedInstant = Instant.fromEpochMilliseconds(selectedDate)
-                                onSetIssueDate(
-                                    selectedInstant
-                                        .toLocalDateTime(TimeZone.UTC)
-                                        .toInstant(TimeZone.currentSystemDefault())
-                                )
-                            }
-                            isIssueDatePickerVisible = false
-                        }
-                    )
-                }
-            ) {
-                DatePicker(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.invoice_issue_date_dialog_title),
-                            modifier = Modifier.padding(Spacing.medium)
-                        )
-                    },
-                    state = pickerState,
-                    showModeToggle = false
-                )
+        InvoiceDatePicker(
+            isVisible = isIssueDatePickerVisible,
+            title = stringResource(R.string.invoice_issue_date_dialog_title),
+            selectedDate = state.issueDate,
+            minimumDate = state.now,
+            onSelectDate = { newDate ->
+                onSetIssueDate(newDate)
+                isIssueDatePickerVisible = false
+            },
+            onDismissRequest = {
+                isIssueDatePickerVisible = false
             }
-        }
+        )
 
-        if (isDueDatePickerVisible) {
-            val pickerState = rememberDatePickerState(
-                initialSelectedDateMillis = state.dueDate
-                    .toZeroHour(TimeZone.UTC)
-                    .toEpochMilliseconds(),
-                selectableDates = MinSelectableDate(
-                    minYear = state.now.toLocalDateTime(TimeZone.currentSystemDefault()).year,
-                    minEpoch = state.issueDate.toZeroHour(TimeZone.UTC).toEpochMilliseconds()
-                )
-            )
-            DatePickerDialog(
-                onDismissRequest = {
-                    isDueDatePickerVisible = false
-                },
-                confirmButton = {
-                    PrimaryButton(
-                        label = stringResource(R.string.invoice_create_dates_dialog_confirm),
-                        onClick = {
-                            pickerState.selectedDateMillis?.let { selectedDate ->
-                                val selectedInstant = Instant.fromEpochMilliseconds(selectedDate)
-                                onSetDueDate(
-                                    selectedInstant
-                                        .toLocalDateTime(TimeZone.UTC)
-                                        .toInstant(TimeZone.currentSystemDefault())
-                                )
-                            }
-                            isDueDatePickerVisible = false
-                        }
-                    )
-                }
-            ) {
-                DatePicker(
-                    state = pickerState,
-                    title = {
-                        Text(
-                            text = stringResource(R.string.invoice_due_date_dialog_title),
-                            modifier = Modifier.padding(Spacing.medium)
-                        )
-                    },
-                    showModeToggle = false
-                )
+        InvoiceDatePicker(
+            isVisible = isDueDatePickerVisible,
+            title = stringResource(R.string.invoice_due_date_dialog_title),
+            selectedDate = state.dueDate,
+            minimumDate = state.issueDate,
+            onSelectDate = { newDate ->
+                onSetDueDate(newDate)
+                isDueDatePickerVisible = false
+            },
+            onDismissRequest = {
+                isDueDatePickerVisible = false
             }
-        }
+        )
     }
 }

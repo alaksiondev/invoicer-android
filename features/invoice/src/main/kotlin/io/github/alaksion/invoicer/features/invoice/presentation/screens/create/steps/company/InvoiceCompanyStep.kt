@@ -38,7 +38,7 @@ import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.theme.InvoicerTheme
 import foundation.designsystem.tokens.Spacing
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreen
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.InvoiceDatesStep
 import io.github.alasion.invoicer.features.invoice.R
 
 internal class InvoiceCompanyStep : Screen {
@@ -51,7 +51,7 @@ internal class InvoiceCompanyStep : Screen {
 
         LaunchedEffect(viewModel) {
             viewModel.events.collect {
-                navigator?.push(InvoiceDatesScreen())
+                navigator?.push(InvoiceDatesStep())
             }
         }
 

@@ -50,6 +50,7 @@
     <string name="invoice_issue_date_dialog_title">Select issue date</string>
     <string name="invoice_create_dates_due_date_label">Due date</string>
     <string name="invoice_create_dates_dialog_confirm">Confirm</string>
+    <string name="invoice_create_dates_change_cta">Change</string>
 
     <!-- Pick Beneficiary -->
     <string name="invoice_create_pick_beneficiary_title">Select beneficiary</string>

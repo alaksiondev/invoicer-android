@@ -1,6 +1,5 @@
 package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import foundation.designsystem.components.InputField
 import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.buttons.PrimaryButton
@@ -34,7 +35,7 @@ import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import io.github.alasion.invoicer.features.invoice.R
 import kotlinx.datetime.Instant
 
-internal class InvoiceDatesScreen : Screen {
+internal class InvoiceDatesStep : Screen {
 
     @Composable
     override fun Content() {
@@ -49,10 +50,6 @@ internal class InvoiceDatesScreen : Screen {
         }
 
         LaunchedEffect(Unit) { screenModel.initState() }
-
-        LaunchedEffect(state) {
-            println(state)
-        }
 
         StateContent(
             state = state,
@@ -111,25 +108,42 @@ internal class InvoiceDatesScreen : Screen {
                     subTitle = stringResource(R.string.invoice_create_dates_description)
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(
-                            onClick = {
-                                isIssueDatePickerVisible = true
-                            }
-                        ),
-                    text = "Issue date ${state.issueDate.defaultFormat()}",
+                InputField(
+                    value = state.issueDate.defaultFormat(),
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    trailingIcon = {
+                        TextButton(
+                            onClick = { isIssueDatePickerVisible = true }
+                        ) {
+                            Text(text = stringResource(R.string.invoice_create_dates_change_cta))
+                        }
+                    },
+                    readOnly = true,
+                    label = {
+                        Text(
+                            text = stringResource(R.string.invoice_create_dates_issue_date_label)
+                        )
+                    }
                 )
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(
-                            onClick = {
-                                isDueDatePickerVisible = true
-                            }
-                        ),
-                    text = "Due date ${state.dueDate.defaultFormat()}",
+                VerticalSpacer(SpacerSize.XLarge3)
+                InputField(
+                    value = state.dueDate.defaultFormat(),
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    trailingIcon = {
+                        TextButton(
+                            onClick = { isDueDatePickerVisible = true }
+                        ) {
+                            Text(text = stringResource(R.string.invoice_create_dates_change_cta))
+                        }
+                    },
+                    readOnly = true,
+                    label = {
+                        Text(
+                            text = stringResource(R.string.invoice_create_dates_due_date_label)
+                        )
+                    }
                 )
             }
         }

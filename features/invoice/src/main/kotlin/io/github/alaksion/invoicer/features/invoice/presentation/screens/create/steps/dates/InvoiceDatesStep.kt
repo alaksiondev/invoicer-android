@@ -143,6 +143,14 @@ internal class InvoiceDatesStep : Screen {
                         Text(
                             text = stringResource(R.string.invoice_create_dates_due_date_label)
                         )
+                    },
+                    isError = state.dueDateValid.not(),
+                    supportingText = {
+                        if (state.dueDateValid.not()) {
+                            Text(
+                                text = stringResource(R.string.invoice_create_dates_due_date_error)
+                            )
+                        }
                     }
                 )
             }

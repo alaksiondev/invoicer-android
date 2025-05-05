@@ -40,6 +40,7 @@ internal fun InvoiceDatePicker(
             onDismissRequest = onDismissRequest,
             confirmButton = {
                 PrimaryButton(
+                    modifier = Modifier.padding(Spacing.medium),
                     label = stringResource(R.string.invoice_create_dates_dialog_confirm),
                     onClick = {
                         pickerState.selectedDateMillis?.let { selectedDate ->

@@ -12,8 +12,6 @@ import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.InvoiceDatesScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.externalId.InvoiceExternalIdScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreenModel
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.recipientcompany.RecipientCompanyScreenModel
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.sendercompany.SenderCompanyScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.details.InvoiceDetailsScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import kotlinx.coroutines.Dispatchers
@@ -33,19 +31,6 @@ private fun Module.presentation() {
         )
     }
 
-    factory {
-        SenderCompanyScreenModel(
-            manager = get(),
-            dispatcher = Dispatchers.Default
-        )
-    }
-
-    factory {
-        RecipientCompanyScreenModel(
-            manager = get(),
-            dispatcher = Dispatchers.Default
-        )
-    }
 
     factory {
         InvoiceDatesScreenModel(

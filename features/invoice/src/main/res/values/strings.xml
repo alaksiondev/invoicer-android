@@ -55,6 +55,7 @@
 
     <!-- Pick Beneficiary -->
     <string name="invoice_create_pick_beneficiary_title">Select beneficiary</string>
+    <string name="invoice_create_pick_beneficiary_subtitle">Bank account to receive payments</string>
     <string name="invoice_create_pick_beneficiary_retry_title">Something went wrong</string>
     <string name="invoice_create_pick_beneficiary_retry_description">Check your connection and try again</string>
     <string name="invoice_create_pick_beneficiary_retry_cta">Try again</string>

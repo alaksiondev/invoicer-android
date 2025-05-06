@@ -7,7 +7,7 @@ import kotlinx.collections.immutable.persistentListOf
 internal data class PickBeneficiaryState(
     val beneficiaries: ImmutableList<BeneficiaryModel> = persistentListOf(),
     val uiMode: PickBeneficiaryUiMode = PickBeneficiaryUiMode.Content,
-    val selection: BeneficiarySelection = BeneficiarySelection.None
+    val selection: BeneficiarySelection = BeneficiarySelection.None,
 ) {
     val buttonEnabled: Boolean = selection != BeneficiarySelection.None
 }

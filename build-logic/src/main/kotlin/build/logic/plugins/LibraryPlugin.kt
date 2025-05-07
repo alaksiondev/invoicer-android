@@ -1,7 +1,6 @@
 package build.logic.plugins
 
 import build.logic.configs.AppConfig
-import build.logic.extensions.configureDetekt
 import build.logic.extensions.getPlugin
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
@@ -67,6 +66,6 @@ class LibraryPlugin : Plugin<Project> {
     }
 
     private fun configureDetektPlugin(target: Project) {
-        target.configureDetekt()
+//        target.configureDetekt()
     }
 }

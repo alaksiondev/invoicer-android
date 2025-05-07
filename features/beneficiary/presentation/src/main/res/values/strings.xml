@@ -17,6 +17,7 @@
     <string name="create_beneficiary_document_title">Beneficiary documents</string>
     <string name="create_beneficiary_document_subtitle">Inform SWIFT and IBAN codes</string>
     <string name="create_beneficiary_bank_info_title">Bank Information</string>
+    <string name="create_beneficiary_bank_info_subtitle">Inform bank name and address</string>
     <string name="create_beneficiary_confirm_title">Confirm Beneficiary data</string>
     <string name="create_beneficiary_bank_name_label">Bank Name</string>
     <string name="create_beneficiary_bank_name_placeholder">Bank of America</string>

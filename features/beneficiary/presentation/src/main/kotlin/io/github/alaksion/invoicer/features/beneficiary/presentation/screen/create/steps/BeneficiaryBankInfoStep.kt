@@ -1,10 +1,16 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -20,12 +26,15 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import foundation.designsystem.components.spacer.Spacer
+import foundation.designsystem.components.InputField
+import foundation.designsystem.components.ScreenTitle
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
+import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
-import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm
 
 internal class BeneficiaryBankInfoStep : Screen {
     @Composable
@@ -45,6 +54,7 @@ internal class BeneficiaryBankInfoStep : Screen {
         )
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         address: String,
@@ -58,65 +68,89 @@ internal class BeneficiaryBankInfoStep : Screen {
         val (nameFocus, addressFocus) = FocusRequester.createRefs()
         val keyboard = LocalSoftwareKeyboardController.current
 
-        BeneficiaryBaseForm(
-            title = stringResource(R.string.create_beneficiary_bank_info_title),
-            buttonText = stringResource(R.string.create_beneficiary_continue_cta),
-            buttonEnabled = buttonEnabled,
-            onBack = onBack,
-            onContinue = {
-                keyboard?.hide()
-                onContinue()
+        Scaffold(
+            modifier = Modifier.imePadding(),
+            topBar = {
+                TopAppBar(
+                    title = {},
+                    navigationIcon = {
+                        BackButton(onBackClick = onBack)
+                    }
+                )
             },
-        ) {
-            Spacer(1f)
-            OutlinedTextField(
+            bottomBar = {
+                PrimaryButton(
+                    label = stringResource(R.string.create_beneficiary_continue_cta),
+                    onClick = {
+                        keyboard?.hide()
+                        onContinue()
+                    },
+                    isEnabled = buttonEnabled,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                )
+            }
+        ) { scaffoldPadding ->
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(nameFocus),
-                value = bankName,
-                onValueChange = onBankNameChange,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { addressFocus.requestFocus() }
-                ),
-                label = {
-                    Text(
-                        text = stringResource(R.string.create_beneficiary_bank_name_label)
-                    )
-                },
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.create_beneficiary_bank_name_placeholder)
-                    )
-                }
-            )
-            VerticalSpacer(SpacerSize.Medium)
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(addressFocus),
-                value = address,
-                onValueChange = onAddressChange,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { keyboard?.hide() }
-                ),
-                label = {
-                    Text(
-                        text = stringResource(R.string.create_beneficiary_bank_address_label)
-                    )
-                },
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.create_beneficiary_bank_address_placeholder)
-                    )
-                }
-            )
-            Spacer(1f)
+                    .fillMaxSize()
+                    .padding(Spacing.medium)
+                    .padding(scaffoldPadding)
+            ) {
+                ScreenTitle(
+                    title = stringResource(R.string.create_beneficiary_bank_info_title),
+                    subTitle = stringResource(R.string.create_beneficiary_bank_info_subtitle)
+                )
+                VerticalSpacer(SpacerSize.XLarge3)
+                InputField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(nameFocus),
+                    value = bankName,
+                    onValueChange = onBankNameChange,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = { addressFocus.requestFocus() }
+                    ),
+                    label = {
+                        Text(
+                            text = stringResource(R.string.create_beneficiary_bank_name_label)
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.create_beneficiary_bank_name_placeholder)
+                        )
+                    }
+                )
+                VerticalSpacer(SpacerSize.Medium)
+                InputField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(addressFocus),
+                    value = address,
+                    onValueChange = onAddressChange,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { keyboard?.hide() }
+                    ),
+                    label = {
+                        Text(
+                            text = stringResource(R.string.create_beneficiary_bank_address_label)
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.create_beneficiary_bank_address_placeholder)
+                        )
+                    }
+                )
+            }
         }
     }
 }

@@ -16,8 +16,8 @@
     <string name="create_intermediary_submit_cta">Create Intermediary</string>
     <string name="create_intermediary_name_title">Intermediary name</string>
     <string name="create_intermediary_name_subtitle">Set intermediary name</string>
-    <string name="create_intermediary_swift_title">Intermediary Swift Code</string>
-    <string name="create_intermediary_iban_title">Intermediary Iban Code</string>
+    <string name="create_intermediary_document_title">Beneficiary documents</string>
+    <string name="create_intermediary_document_subtitle">Inform SWIFT and IBAN codes</string>
     <string name="create_intermediary_bank_info_title">Bank Information</string>
     <string name="create_intermediary_confirm_title">Confirm Intermediary data</string>
     <string name="create_intermediary_bank_name_label">Bank Name</string>

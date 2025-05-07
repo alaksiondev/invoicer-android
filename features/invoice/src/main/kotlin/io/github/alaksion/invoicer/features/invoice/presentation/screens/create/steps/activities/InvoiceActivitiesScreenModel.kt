@@ -3,24 +3,26 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class InvoiceActivitiesScreenModel(
     private val dispatcher: CoroutineDispatcher,
     private val createInvoiceManager: CreateInvoiceManager
-) : ScreenModel,
-    EventAware<InvoiceActivitiesEvent> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(InvoiceActivitiesState())
     val state: StateFlow<InvoiceActivitiesState> = _state
+
+    private val _events = MutableSharedFlow<InvoiceActivitiesEvent>()
+    val events = _events.asSharedFlow()
 
     fun initState() {
         _state.update {
@@ -74,12 +76,12 @@ internal class InvoiceActivitiesScreenModel(
             val quantity = _state.value.formState.quantityParsed
 
             if (unitPrice <= 0) {
-                publish(InvoiceActivitiesEvent.ActivityUnitPriceError)
+                _events.emit(InvoiceActivitiesEvent.ActivityUnitPriceError)
                 return@launch
             }
 
             if (quantity !in 1..100) {
-                publish(InvoiceActivitiesEvent.ActivityQuantityError)
+                _events.emit(InvoiceActivitiesEvent.ActivityQuantityError)
                 return@launch
             }
 

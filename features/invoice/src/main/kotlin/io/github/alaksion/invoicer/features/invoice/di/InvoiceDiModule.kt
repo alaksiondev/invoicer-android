@@ -1,7 +1,7 @@
 package io.github.alaksion.invoicer.features.invoice.di
 
 import features.invoice.data.repository.InvoiceRepositoryImpl
-import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
 import io.github.alaksion.invoicer.features.invoice.data.datasource.InvoiceDataSource
 import io.github.alaksion.invoicer.features.invoice.data.datasource.InvoiceDataSourceImpl
 import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository

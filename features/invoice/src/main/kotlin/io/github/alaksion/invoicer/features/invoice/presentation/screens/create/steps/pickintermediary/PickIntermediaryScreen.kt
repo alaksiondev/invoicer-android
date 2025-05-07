@@ -26,7 +26,6 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreenModel
 import foundation.designsystem.components.LoadingState
 import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
@@ -41,6 +40,7 @@ import foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.SelectableItem
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class PickIntermediaryScreen : Screen {
@@ -54,15 +54,17 @@ internal class PickIntermediaryScreen : Screen {
 
         LaunchedEffect(Unit) { screenModel.initState() }
 
-        EventEffect(screenModel) {
-            when (it) {
-                PickIntermediaryEvents.StartNewIntermediary -> navigator?.push(
-                    ScreenRegistry.get(
-                        InvoicerScreen.Intermediary.Create
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    PickIntermediaryEvents.StartNewIntermediary -> navigator?.push(
+                        ScreenRegistry.get(
+                            InvoicerScreen.Intermediary.Create
+                        )
                     )
-                )
 
-                PickIntermediaryEvents.Continue -> navigator?.push(InvoiceActivitiesScreen())
+                    PickIntermediaryEvents.Continue -> navigator?.push(InvoiceActivitiesScreen())
+                }
             }
         }
 

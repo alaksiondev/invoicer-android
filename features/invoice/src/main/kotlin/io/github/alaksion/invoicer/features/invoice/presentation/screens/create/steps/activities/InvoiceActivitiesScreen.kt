@@ -46,7 +46,6 @@ import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
-import foundation.ui.events.EventEffect
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.InvoiceActivityCard
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.ADD_ACTIVITY
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.LIST_ITEM
@@ -54,6 +53,7 @@ import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.rememberSnackMessages
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreen
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal class InvoiceActivitiesScreen : Screen {
@@ -81,19 +81,21 @@ internal class InvoiceActivitiesScreen : Screen {
         val messages = rememberSnackMessages()
         val scope = rememberCoroutineScope()
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(screenModel) {
             screenModel.initState()
         }
 
-        EventEffect(screenModel) {
-            when (it) {
-                InvoiceActivitiesEvent.ActivityQuantityError ->
-                    scope.launch {
-                        snackbarState.showSnackbar(message = messages.quantityError)
-                    }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    InvoiceActivitiesEvent.ActivityQuantityError ->
+                        scope.launch {
+                            snackbarState.showSnackbar(message = messages.quantityError)
+                        }
 
-                InvoiceActivitiesEvent.ActivityUnitPriceError -> scope.launch {
-                    snackbarState.showSnackbar(message = messages.unitPriceError)
+                    InvoiceActivitiesEvent.ActivityUnitPriceError -> scope.launch {
+                        snackbarState.showSnackbar(message = messages.unitPriceError)
+                    }
                 }
             }
         }

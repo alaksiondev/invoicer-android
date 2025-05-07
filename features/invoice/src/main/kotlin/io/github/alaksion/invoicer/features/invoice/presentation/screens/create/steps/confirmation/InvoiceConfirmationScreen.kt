@@ -57,9 +57,9 @@ internal class InvoiceConfirmationScreen : Screen {
         val snackbarHostState = remember { SnackbarHostState() }
         val navigator = LocalNavigator.current
 
-        LaunchedEffect(Unit) { screenModel.initState() }
+        LaunchedEffect(screenModel) { screenModel.initState() }
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(screenModel) {
             screenModel.events.collectLatest {
                 when (it) {
                     is InvoiceConfirmationEvent.Error -> scope.launch {

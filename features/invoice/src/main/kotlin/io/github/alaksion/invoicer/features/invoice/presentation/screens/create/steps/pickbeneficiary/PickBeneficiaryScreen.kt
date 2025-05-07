@@ -39,6 +39,7 @@ import foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.SelectableItem
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryScreen
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class PickBeneficiaryScreen : Screen {
@@ -52,15 +53,17 @@ internal class PickBeneficiaryScreen : Screen {
 
         LaunchedEffect(Unit) { screenModel.initState() }
 
-        EventEffect(screenModel) {
-            when (it) {
-                PickBeneficiaryEvents.StartNewBeneficiary -> navigator?.push(
-                    ScreenRegistry.get(
-                        InvoicerScreen.Beneficiary.Create
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    PickBeneficiaryEvents.StartNewBeneficiary -> navigator?.push(
+                        ScreenRegistry.get(
+                            InvoicerScreen.Beneficiary.Create
+                        )
                     )
-                )
 
-                PickBeneficiaryEvents.Continue -> navigator?.push(PickIntermediaryScreen())
+                    PickBeneficiaryEvents.Continue -> navigator?.push(PickIntermediaryScreen())
+                }
             }
         }
 

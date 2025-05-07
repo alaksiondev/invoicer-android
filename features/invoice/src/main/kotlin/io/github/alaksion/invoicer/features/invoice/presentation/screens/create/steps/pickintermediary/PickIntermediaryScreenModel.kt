@@ -1,19 +1,17 @@
-package features.invoice.presentation.screens.create.steps.pickintermediary
+package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary.IntermediarySelection
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryEvents
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryState
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickintermediary.PickIntermediaryUiMode
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,12 +19,15 @@ internal class PickIntermediaryScreenModel(
     private val createInvoiceManager: CreateInvoiceManager,
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, foundation.ui.events.EventAware<PickIntermediaryEvents> by foundation.ui.events.EventPublisher() {
+) : ScreenModel {
 
     private var isInitialized = false
 
     private val _state = MutableStateFlow(PickIntermediaryState())
     val state: StateFlow<PickIntermediaryState> = _state
+
+    private val _events = MutableSharedFlow<PickIntermediaryEvents>()
+    val events = _events.asSharedFlow()
 
     fun initState(
         force: Boolean = false
@@ -118,7 +119,7 @@ internal class PickIntermediaryScreenModel(
     }
 
     private suspend fun submitNewBeneficiary() {
-        publish(PickIntermediaryEvents.StartNewIntermediary)
+        _events.emit(PickIntermediaryEvents.StartNewIntermediary)
     }
 
     private suspend fun submitBeneficiary(
@@ -127,12 +128,12 @@ internal class PickIntermediaryScreenModel(
     ) {
         createInvoiceManager.intermediaryId = intermediaryId
         createInvoiceManager.intermediaryName = intermediaryName
-        publish(PickIntermediaryEvents.Continue)
+        _events.emit(PickIntermediaryEvents.Continue)
     }
 
     private suspend fun submitIgnoringBeneficiary() {
         createInvoiceManager.intermediaryId = null
         createInvoiceManager.intermediaryName = null
-        publish(PickIntermediaryEvents.Continue)
+        _events.emit(PickIntermediaryEvents.Continue)
     }
 }

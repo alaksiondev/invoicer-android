@@ -28,11 +28,11 @@ import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
-import foundation.ui.events.EventEffect
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.dates.components.InvoiceDatePicker
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreen
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.datetime.Instant
 
 internal class InvoiceDatesStep : Screen {
@@ -43,9 +43,11 @@ internal class InvoiceDatesStep : Screen {
         val screenModel = koinScreenModel<InvoiceDatesScreenModel>()
         val state by screenModel.state.collectAsStateWithLifecycle()
 
-        EventEffect(screenModel) {
-            when (it) {
-                InvoiceDateEvents.Continue -> navigator?.push(PickBeneficiaryScreen())
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    InvoiceDateEvents.Continue -> navigator?.push(PickBeneficiaryScreen())
+                }
             }
         }
 

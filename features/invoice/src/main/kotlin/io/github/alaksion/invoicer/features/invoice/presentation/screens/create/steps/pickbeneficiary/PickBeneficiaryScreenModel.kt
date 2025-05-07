@@ -2,16 +2,16 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -19,12 +19,15 @@ internal class PickBeneficiaryScreenModel(
     private val createInvoiceManager: CreateInvoiceManager,
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher
-) : ScreenModel, EventAware<PickBeneficiaryEvents> by EventPublisher() {
+) : ScreenModel {
 
     private var isInitialized = false
 
     private val _state = MutableStateFlow(PickBeneficiaryState())
     val state: StateFlow<PickBeneficiaryState> = _state
+
+    private val _events = MutableSharedFlow<PickBeneficiaryEvents>()
+    val events = _events.asSharedFlow()
 
     fun initState(
         force: Boolean = false
@@ -109,7 +112,7 @@ internal class PickBeneficiaryScreenModel(
     }
 
     private suspend fun submitNewBeneficiary() {
-        publish(PickBeneficiaryEvents.StartNewBeneficiary)
+        _events.emit(PickBeneficiaryEvents.StartNewBeneficiary)
     }
 
     private suspend fun submitBeneficiary(
@@ -118,6 +121,6 @@ internal class PickBeneficiaryScreenModel(
     ) {
         createInvoiceManager.beneficiaryId = beneficiaryId
         createInvoiceManager.beneficiaryName = beneficiaryName
-        publish(PickBeneficiaryEvents.Continue)
+        _events.emit(PickBeneficiaryEvents.Continue)
     }
 }

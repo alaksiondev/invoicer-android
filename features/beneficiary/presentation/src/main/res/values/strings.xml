@@ -18,7 +18,6 @@
     <string name="create_beneficiary_document_subtitle">Inform SWIFT and IBAN codes</string>
     <string name="create_beneficiary_bank_info_title">Bank Information</string>
     <string name="create_beneficiary_bank_info_subtitle">Inform bank name and address</string>
-    <string name="create_beneficiary_confirm_title">Confirm Beneficiary data</string>
     <string name="create_beneficiary_bank_name_label">Bank Name</string>
     <string name="create_beneficiary_bank_name_placeholder">Bank of America</string>
     <string name="create_beneficiary_bank_address_label">Bank Address</string>
@@ -31,6 +30,8 @@
     <string name="create_beneficiary_iban_placeholder">PT80 0408 0591 0071 1161 8226 7</string>
 
     <!-- Confirm Beneficiary -->
+    <string name="confirm_beneficiary_title">Confirm details</string>
+    <string name="confirm_beneficiary_subtitle">Preview beneficiary before submitting</string>
     <string name="confirm_beneficiary_name">Name</string>
     <string name="confirm_beneficiary_swift">Swift</string>
     <string name="confirm_beneficiary_iban">Iban</string>

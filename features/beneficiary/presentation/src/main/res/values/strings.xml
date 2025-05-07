@@ -3,11 +3,13 @@
 
     <!-- List Beneficiary -->
     <string name="beneficiary_list_title">Beneficiaries</string>
+    <string name="beneficiary_list_subtitle">Manage beneficiaries</string>
     <string name="beneficiary_list_error_retry">Try again</string>
     <string name="beneficiary_list_error_title">Something went wrong</string>
     <string name="beneficiary_list_error_description">Check your connection and try again</string>
     <string name="beneficiary_list_empty_title">Nothing to see here</string>
     <string name="beneficiary_list_empty_description">No beneficiaries found</string>
+    <string name="beneficiary_list_item_swift">SWIFT code: %1$s</string>
 
     <!-- Create Beneficiary -->
     <string name="create_beneficiary_continue_cta">Continue</string>

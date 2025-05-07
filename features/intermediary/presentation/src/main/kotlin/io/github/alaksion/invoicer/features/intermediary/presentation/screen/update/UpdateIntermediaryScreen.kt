@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -23,6 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component3
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component4
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component5
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -31,10 +39,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import foundation.designsystem.components.InputField
+import foundation.designsystem.components.LoadingState
+import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.spacer.Spacer
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.feedback.Feedback
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal data class UpdateIntermediaryScreen(
@@ -51,12 +66,14 @@ internal data class UpdateIntermediaryScreen(
 
         LaunchedEffect(Unit) { screenModel.initState(id) }
 
-        foundation.ui.events.EventEffect(screenModel) {
-            when (it) {
-                is UpdateIntermediaryEvent.Error ->
-                    scope.launch { snackbarHostState.showSnackbar(it.message) }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is UpdateIntermediaryEvent.Error ->
+                        scope.launch { snackbarHostState.showSnackbar(it.message) }
 
-                UpdateIntermediaryEvent.Success -> navigator?.pop()
+                    UpdateIntermediaryEvent.Success -> navigator?.pop()
+                }
             }
         }
 
@@ -71,7 +88,10 @@ internal data class UpdateIntermediaryScreen(
             onSubmit = {
                 screenModel.submit(id)
             },
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackbarHostState,
+            onRetry = {
+                screenModel.initState(id)
+            }
         )
     }
 
@@ -86,142 +106,174 @@ internal data class UpdateIntermediaryScreen(
         onChangeBankAddress: (String) -> Unit,
         onChangeSwift: (String) -> Unit,
         onChangeIban: (String) -> Unit,
-        onSubmit: () -> Unit
+        onSubmit: () -> Unit,
+        onRetry: () -> Unit,
     ) {
+        val scrollState = rememberScrollState()
+
         Scaffold(
             modifier = Modifier.imePadding(),
             topBar = {
                 TopAppBar(
                     navigationIcon = { BackButton(onBackClick = onBack) },
-                    title = { Text(text = stringResource(R.string.update_intermediary_title)) }
+                    title = { }
                 )
             },
             snackbarHost = {
                 SnackbarHost(snackbarHostState)
+            },
+            bottomBar = {
+                PrimaryButton(
+                    onClick = onSubmit,
+                    isEnabled = state.isButtonEnabled,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                    label = stringResource(R.string.intermediary_update_cta),
+                    isLoading = state.isButtonLoading
+                )
             }
         ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+                    .padding(Spacing.medium)
+            ) {
+
+            }
             val (
                 nameRef, bankNameRef, bankAddressRef, swiftRef, ibanRef
             ) = FocusRequester.createRefs()
 
             val keyboard = LocalSoftwareKeyboardController.current
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(Spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(nameRef),
-                    value = state.name,
-                    onValueChange = onChangeName,
-                    label = {
-                        Text(
-                            text = stringResource(R.string.intermediary_update_name_label)
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { bankNameRef.requestFocus() }
-                    ),
-                    maxLines = 1
+            when (state.mode) {
+                UpdateIntermediaryMode.Loading -> LoadingState(
+                    modifier = Modifier.fillMaxSize()
                 )
 
-                OutlinedTextField(
+                UpdateIntermediaryMode.Content -> Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(bankNameRef),
-                    value = state.bankName,
-                    onValueChange = onChangeBankName,
-                    label = {
-                        Text(
-                            text = stringResource(R.string.intermediary_update_bank_name_label)
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { bankAddressRef.requestFocus() }
-                    ),
-                    maxLines = 1
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(bankAddressRef),
-                    value = state.bankAddress,
-                    onValueChange = onChangeBankAddress,
-                    label = {
-                        Text(
-                            text = stringResource(R.string.intermediary_update_bank_address_label)
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { swiftRef.requestFocus() }
-                    ),
-                    maxLines = 1
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(swiftRef),
-                    value = state.swift,
-                    onValueChange = onChangeSwift,
-                    label = {
-                        Text(
-                            text = stringResource(R.string.intermediary_update_swift_label)
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { ibanRef.requestFocus() }
-                    ),
-                    maxLines = 1
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(ibanRef),
-                    value = state.iban,
-                    onValueChange = onChangeIban,
-                    label = {
-                        Text(
-                            text = stringResource(R.string.intermediary_update_iban_label)
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { keyboard?.hide() }
-                    ),
-                    maxLines = 1
-                )
-
-                Spacer(1f)
-
-                Button(
-                    onClick = onSubmit,
-                    enabled = state.isButtonEnabled,
-                    modifier = Modifier.fillMaxWidth()
+                        .fillMaxSize()
+                        .verticalScroll(scrollState),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
                 ) {
-                    Text(text = stringResource(R.string.intermediary_update_cta))
+                    ScreenTitle(
+                        title = stringResource(R.string.update_intermediary_title),
+                        subTitle = null
+                    )
+                    VerticalSpacer(SpacerSize.XLarge3)
+
+                    InputField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .focusRequester(nameRef),
+                        value = state.name,
+                        onValueChange = onChangeName,
+                        label = {
+                            Text(
+                                text = stringResource(R.string.intermediary_update_name_label)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { bankNameRef.requestFocus() }
+                        ),
+                        maxLines = 1
+                    )
+
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .focusRequester(bankNameRef),
+                        value = state.bankName,
+                        onValueChange = onChangeBankName,
+                        label = {
+                            Text(
+                                text = stringResource(R.string.intermediary_update_bank_name_label)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { bankAddressRef.requestFocus() }
+                        ),
+                        maxLines = 1
+                    )
+
+                    InputField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .focusRequester(bankAddressRef),
+                        value = state.bankAddress,
+                        onValueChange = onChangeBankAddress,
+                        label = {
+                            Text(
+                                text = stringResource(R.string.intermediary_update_bank_address_label)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { swiftRef.requestFocus() }
+                        ),
+                        maxLines = 1
+                    )
+
+                    InputField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .focusRequester(swiftRef),
+                        value = state.swift,
+                        onValueChange = onChangeSwift,
+                        label = {
+                            Text(
+                                text = stringResource(R.string.intermediary_update_swift_label)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { ibanRef.requestFocus() }
+                        ),
+                        maxLines = 1
+                    )
+
+                    InputField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .focusRequester(ibanRef),
+                        value = state.iban,
+                        onValueChange = onChangeIban,
+                        label = {
+                            Text(
+                                text = stringResource(R.string.intermediary_update_iban_label)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { keyboard?.hide() }
+                        ),
+                        maxLines = 1
+                    )
                 }
+
+                UpdateIntermediaryMode.Error -> Feedback(
+                    title = stringResource(R.string.intermediary_update_load_error_title),
+                    description = stringResource(R.string.intermediary_update_load_error_description),
+                    primaryActionText = stringResource(R.string.intermediary_update_load_error_cta),
+                    onPrimaryAction = onRetry,
+                    modifier = Modifier.fillMaxSize(),
+                    icon = Icons.Outlined.ErrorOutline
+                )
             }
         }
     }

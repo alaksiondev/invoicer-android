@@ -13,6 +13,7 @@
     <string name="create_beneficiary_continue_cta">Continue</string>
     <string name="create_beneficiary_submit_cta">Create Beneficiary</string>
     <string name="create_beneficiary_name_title">Beneficiary name</string>
+    <string name="create_beneficiary_name_subtitle">Set a name</string>
     <string name="create_beneficiary_swift_title">Beneficiary Swift Code</string>
     <string name="create_beneficiary_iban_title">Beneficiary Iban Code</string>
     <string name="create_beneficiary_bank_info_title">Bank Information</string>

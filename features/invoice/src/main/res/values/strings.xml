@@ -72,6 +72,7 @@
     <string name="invoice_create_pick_intermediary_ignore">Proceed without intermediary</string>
 
     <!-- Activites -->
+    <string name="invoice_activity_new_title">New activity</string>
     <string name="invoice_create_activity_title">Invoice activities</string>
     <string name="invoice_create_activity_subtitle">Set invoice components</string>
     <string name="invoice_create_activity_list_quantity">Quantity</string>

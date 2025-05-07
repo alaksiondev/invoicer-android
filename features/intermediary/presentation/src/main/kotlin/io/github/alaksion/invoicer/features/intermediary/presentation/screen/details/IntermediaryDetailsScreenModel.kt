@@ -5,14 +5,14 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,10 +20,13 @@ internal class IntermediaryDetailsScreenModel(
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshIntermediaryPublisher: RefreshIntermediaryPublisher
-) : ScreenModel, EventAware<IntermediaryDetailsEvent> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(IntermediaryDetailsState())
     val state: StateFlow<IntermediaryDetailsState> = _state
+
+    private val _events = MutableSharedFlow<IntermediaryDetailsEvent>()
+    val events = _events.asSharedFlow()
 
     fun initState(id: String) {
         screenModelScope.launch(dispatcher) {
@@ -58,17 +61,17 @@ internal class IntermediaryDetailsScreenModel(
         }
     }
 
-    fun deleteBeneficiary(id: String) {
+    fun deleteIntermediary(id: String) {
         screenModelScope.launch(dispatcher) {
             launchRequest {
-                intermediaryRepository.deleteBeneficiary(id)
+                intermediaryRepository.deleteIntermediary(id)
             }.handle(
                 onFailure = { error ->
-                    publish(IntermediaryDetailsEvent.DeleteError(error.message ?: ""))
+                    _events.emit(IntermediaryDetailsEvent.DeleteError(error.message ?: ""))
                 },
                 onSuccess = {
                     refreshIntermediaryPublisher.publish(Unit)
-                    publish(IntermediaryDetailsEvent.DeleteSuccess)
+                    _events.emit(IntermediaryDetailsEvent.DeleteSuccess)
                 },
                 onStart = {
                     _state.update {

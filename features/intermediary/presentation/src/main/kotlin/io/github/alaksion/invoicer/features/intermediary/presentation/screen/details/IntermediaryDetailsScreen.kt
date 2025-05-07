@@ -11,9 +11,9 @@ import androidx.compose.material.icons.automirrored.filled.Subject
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,13 +37,17 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.designsystem.components.LoadingState
+import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.dialog.DefaultInvoicerDialog
 import foundation.designsystem.components.feedback.Feedback
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.intermediary.presentation.R
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.details.components.IntermediaryDetailsField
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal data class IntermediaryDetailsScreen(
@@ -60,15 +63,17 @@ internal data class IntermediaryDetailsScreen(
         var showDialog by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
 
-        foundation.ui.events.EventEffect(screenModel) {
-            when (it) {
-                is IntermediaryDetailsEvent.DeleteError -> scope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = it.message
-                    )
-                }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is IntermediaryDetailsEvent.DeleteError -> scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = it.message
+                        )
+                    }
 
-                IntermediaryDetailsEvent.DeleteSuccess -> navigator?.pop()
+                    IntermediaryDetailsEvent.DeleteSuccess -> navigator?.pop()
+                }
             }
         }
 
@@ -82,7 +87,7 @@ internal data class IntermediaryDetailsScreen(
             showDeleteDialog = showDialog,
             onConfirmDelete = {
                 showDialog = false
-                screenModel.deleteBeneficiary(id)
+                screenModel.deleteIntermediary(id)
             },
             onDismissDelete = { showDialog = false },
             onRequestDelete = { showDialog = true },
@@ -109,9 +114,7 @@ internal data class IntermediaryDetailsScreen(
             },
             topBar = {
                 TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.intermediary_details_title))
-                    },
+                    title = {},
                     navigationIcon = {
                         BackButton(onBackClick = onBack)
                     },
@@ -121,7 +124,7 @@ internal data class IntermediaryDetailsScreen(
                                 onClick = onRequestEdit
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Edit,
+                                    imageVector = Icons.Outlined.Edit,
                                     contentDescription = null,
                                 )
                             }
@@ -130,7 +133,7 @@ internal data class IntermediaryDetailsScreen(
                                 onClick = onRequestDelete
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Delete,
+                                    imageVector = Icons.Outlined.Delete,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.error
                                 )
@@ -139,90 +142,103 @@ internal data class IntermediaryDetailsScreen(
                     }
                 )
             }
-        ) {
-            when (val mode = state.mode) {
-                IntermediaryDetailsMode.Loading -> LoadingState(Modifier.fillMaxSize())
+        ) { scaffoldPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(scaffoldPadding)
+                    .padding(Spacing.medium)
+            ) {
+                ScreenTitle(
+                    title = stringResource(R.string.intermediary_details_title),
+                    subTitle = null
+                )
+                VerticalSpacer(SpacerSize.XLarge3)
 
-                IntermediaryDetailsMode.Content -> {
-                    val scrollState = rememberScrollState()
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(it)
-                            .padding(Spacing.medium)
-                            .verticalScroll(scrollState),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-                    ) {
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_name_label),
-                            value = state.name,
-                            icon = Icons.Default.Business,
-                        )
-
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_bank_name_label),
-                            value = state.bankName,
-                            icon = Icons.Default.AccountBalance
-                        )
-
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_bank_address_label),
-                            value = state.bankAddress,
-                            icon = Icons.Default.LocationOn
-                        )
-
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_swift_label),
-                            value = state.swift,
-                            icon = Icons.AutoMirrored.Default.Subject
-                        )
-
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_iban_label),
-                            value = state.iban,
-                            icon = Icons.AutoMirrored.Default.Subject
-                        )
-
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_created_at_label),
-                            value = state.createdAt,
-                            icon = Icons.Default.CalendarMonth
-                        )
-
-                        IntermediaryDetailsField(
-                            label = stringResource(R.string.intermediary_details_updated_at_label),
-                            value = state.updatedAt,
-                            icon = Icons.Default.CalendarMonth
-                        )
-                    }
-
-                    if (showDeleteDialog) {
-                        DefaultInvoicerDialog(
-                            onDismiss = onDismissDelete,
-                            title = stringResource(R.string.intermediary_details_delete_title),
-                            description = stringResource(R.string.intermediary_details_delete_description),
-                            confirmButtonText = stringResource(R.string.intermediary_details_delete_cta),
-                            cancelButtonText = stringResource(R.string.intermediary_details_delete_cancel_cta),
-                            confirmButtonClick = onConfirmDelete,
-                            icon = Icons.Rounded.WarningAmber
-                        )
-                    }
-                }
-
-                is IntermediaryDetailsMode.Error -> {
-                    Feedback(
-                        modifier = Modifier.fillMaxSize(),
-                        title = stringResource(mode.type.titleResource),
-                        description = mode.type.descriptionResource?.let { stringResource(it) },
-                        icon = mode.type.icon,
-                        primaryActionText = stringResource(mode.type.ctaResource),
-                        onPrimaryAction = {
-                            when (mode.type) {
-                                IntermediaryErrorType.NotFound -> onBack()
-                                IntermediaryErrorType.Generic -> onRetry()
-                            }
-                        }
+                when (val mode = state.mode) {
+                    IntermediaryDetailsMode.Loading -> LoadingState(
+                        Modifier.fillMaxSize()
                     )
+
+                    IntermediaryDetailsMode.Content -> {
+                        val scrollState = rememberScrollState()
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(scrollState),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                        ) {
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_name_label),
+                                value = state.name,
+                                icon = Icons.Default.Business,
+                            )
+
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_bank_name_label),
+                                value = state.bankName,
+                                icon = Icons.Default.AccountBalance
+                            )
+
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_bank_address_label),
+                                value = state.bankAddress,
+                                icon = Icons.Default.LocationOn
+                            )
+
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_swift_label),
+                                value = state.swift,
+                                icon = Icons.AutoMirrored.Default.Subject
+                            )
+
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_iban_label),
+                                value = state.iban,
+                                icon = Icons.AutoMirrored.Default.Subject
+                            )
+
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_created_at_label),
+                                value = state.createdAt,
+                                icon = Icons.Default.CalendarMonth
+                            )
+
+                            IntermediaryDetailsField(
+                                label = stringResource(R.string.intermediary_details_updated_at_label),
+                                value = state.updatedAt,
+                                icon = Icons.Default.CalendarMonth
+                            )
+                        }
+
+                        if (showDeleteDialog) {
+                            DefaultInvoicerDialog(
+                                onDismiss = onDismissDelete,
+                                title = stringResource(R.string.intermediary_details_delete_title),
+                                description = stringResource(R.string.intermediary_details_delete_description),
+                                confirmButtonText = stringResource(R.string.intermediary_details_delete_cta),
+                                cancelButtonText = stringResource(R.string.intermediary_details_delete_cancel_cta),
+                                confirmButtonClick = onConfirmDelete,
+                                icon = Icons.Rounded.WarningAmber
+                            )
+                        }
+                    }
+
+                    is IntermediaryDetailsMode.Error -> {
+                        Feedback(
+                            modifier = Modifier.fillMaxSize(),
+                            title = stringResource(mode.type.titleResource),
+                            description = mode.type.descriptionResource?.let { stringResource(it) },
+                            icon = mode.type.icon,
+                            primaryActionText = stringResource(mode.type.ctaResource),
+                            onPrimaryAction = {
+                                when (mode.type) {
+                                    IntermediaryErrorType.NotFound -> onBack()
+                                    IntermediaryErrorType.Generic -> onRetry()
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }

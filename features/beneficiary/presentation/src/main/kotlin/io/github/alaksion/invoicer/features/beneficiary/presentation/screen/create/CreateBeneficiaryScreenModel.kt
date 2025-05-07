@@ -2,16 +2,16 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.cre
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.watchers.RefreshBeneficiaryPublisher
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -19,10 +19,15 @@ internal class CreateBeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher,
-) : ScreenModel, EventAware<CreateBeneficiaryEvents> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(CreateBeneficiaryState())
     val state: StateFlow<CreateBeneficiaryState> = _state
+
+    private val _events = MutableSharedFlow<CreateBeneficiaryEvents>(
+        replay = 1
+    )
+    val events = _events.asSharedFlow()
 
     private var submitJob: Job? = null
 
@@ -78,13 +83,13 @@ internal class CreateBeneficiaryScreenModel(
                     }
                 },
                 onFailure = {
-                    publish(
+                    _events.emit(
                         CreateBeneficiaryEvents.Error(message = it.message.orEmpty())
                     )
                 },
                 onSuccess = {
                     refreshBeneficiaryPublisher.publish(Unit)
-                    publish(CreateBeneficiaryEvents.Success)
+                    _events.emit((CreateBeneficiaryEvents.Success))
                 }
             )
         }

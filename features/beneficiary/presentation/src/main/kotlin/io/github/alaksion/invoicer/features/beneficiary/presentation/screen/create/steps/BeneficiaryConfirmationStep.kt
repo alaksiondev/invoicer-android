@@ -10,6 +10,7 @@ import androidx.compose.material.icons.outlined.Business
 import androidx.compose.material.icons.outlined.MapsHomeWork
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,6 +30,7 @@ import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.crea
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryFieldCard
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal class BeneficiaryConfirmationStep : Screen {
@@ -44,20 +46,21 @@ internal class BeneficiaryConfirmationStep : Screen {
             SnackbarHostState()
         }
 
-        foundation.ui.events.EventEffect(
-            publisher = screenModel
-        ) {
-            when (it) {
-                is CreateBeneficiaryEvents.Error -> scope.launch {
-                    snackbarHostState.showSnackbar(message = it.message)
-                }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is CreateBeneficiaryEvents.Error -> scope.launch {
+                        snackbarHostState.showSnackbar(message = it.message)
+                    }
 
-                CreateBeneficiaryEvents.Success -> navigator.push(
-                    BeneficiaryFeedbackScreen(
-                        type = BeneficiaryFeedbackType.CreateSuccess
+                    CreateBeneficiaryEvents.Success -> navigator.push(
+                        BeneficiaryFeedbackScreen(
+                            type = BeneficiaryFeedbackType.CreateSuccess
+                        )
                     )
-                )
+                }
             }
+
         }
 
         StateContent(

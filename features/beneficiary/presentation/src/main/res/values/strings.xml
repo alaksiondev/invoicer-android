@@ -14,8 +14,8 @@
     <string name="create_beneficiary_submit_cta">Create Beneficiary</string>
     <string name="create_beneficiary_name_title">Beneficiary name</string>
     <string name="create_beneficiary_name_subtitle">Set a name</string>
-    <string name="create_beneficiary_swift_title">Beneficiary Swift Code</string>
-    <string name="create_beneficiary_iban_title">Beneficiary Iban Code</string>
+    <string name="create_beneficiary_document_title">Beneficiary documents</string>
+    <string name="create_beneficiary_document_subtitle">Inform SWIFT and IBAN codes</string>
     <string name="create_beneficiary_bank_info_title">Bank Information</string>
     <string name="create_beneficiary_confirm_title">Confirm Beneficiary data</string>
     <string name="create_beneficiary_bank_name_label">Bank Name</string>

@@ -35,8 +35,9 @@ import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
+import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryState
 
-internal class BeneficiaryBankInfoStep : Screen {
+internal class BeneficiaryDocumentStep : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -44,29 +45,27 @@ internal class BeneficiaryBankInfoStep : Screen {
         val state by screenModel.state.collectAsStateWithLifecycle()
 
         StateContent(
-            address = state.bankAddress,
-            bankName = state.bankName,
-            onAddressChange = screenModel::updateBankAddress,
-            onBankNameChange = screenModel::updateBankName,
+            state = state,
+            onSwiftChange = screenModel::updateSwift,
+            onIbanChange = screenModel::updateIban,
+            buttonEnabled = state.ibanIsValid && state.swiftIsValid,
             onBack = { navigator.pop() },
-            onContinue = { navigator.push(BeneficiaryConfirmationStep()) },
-            buttonEnabled = state.bankInfoIsValid
+            onContinue = { navigator.push(BeneficiaryBankInfoStep()) }
         )
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
-        address: String,
-        bankName: String,
+        state: CreateBeneficiaryState,
         buttonEnabled: Boolean,
-        onAddressChange: (String) -> Unit,
-        onBankNameChange: (String) -> Unit,
+        onIbanChange: (String) -> Unit,
+        onSwiftChange: (String) -> Unit,
         onBack: () -> Unit,
         onContinue: () -> Unit,
     ) {
-        val (nameFocus, addressFocus) = FocusRequester.createRefs()
         val keyboard = LocalSoftwareKeyboardController.current
+        val (ibanFocus, swiftFocus) = FocusRequester.createRefs()
 
         Scaffold(
             modifier = Modifier.imePadding(),
@@ -99,40 +98,40 @@ internal class BeneficiaryBankInfoStep : Screen {
                     .padding(scaffoldPadding)
             ) {
                 ScreenTitle(
-                    title = stringResource(R.string.create_beneficiary_bank_info_title),
-                    subTitle = stringResource(R.string.create_beneficiary_bank_info_subtitle)
+                    title = stringResource(R.string.create_beneficiary_document_title),
+                    subTitle = stringResource(R.string.create_beneficiary_document_subtitle)
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 InputField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(nameFocus),
-                    value = bankName,
-                    onValueChange = onBankNameChange,
+                        .focusRequester(ibanFocus),
+                    value = state.iban,
+                    onValueChange = onIbanChange,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = { addressFocus.requestFocus() }
+                        onNext = { swiftFocus.requestFocus() }
                     ),
                     label = {
                         Text(
-                            text = stringResource(R.string.create_beneficiary_bank_name_label)
+                            text = stringResource(R.string.create_beneficiary_iban_label)
                         )
                     },
                     placeholder = {
                         Text(
-                            text = stringResource(R.string.create_beneficiary_bank_name_placeholder)
+                            text = stringResource(R.string.create_beneficiary_iban_placeholder)
                         )
-                    }
+                    },
                 )
-                VerticalSpacer(SpacerSize.Medium)
+                VerticalSpacer(SpacerSize.Large)
                 InputField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(addressFocus),
-                    value = address,
-                    onValueChange = onAddressChange,
+                        .focusRequester(swiftFocus),
+                    value = state.swift,
+                    onValueChange = onSwiftChange,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
                     ),
@@ -141,14 +140,14 @@ internal class BeneficiaryBankInfoStep : Screen {
                     ),
                     label = {
                         Text(
-                            text = stringResource(R.string.create_beneficiary_bank_address_label)
+                            text = stringResource(R.string.create_beneficiary_swift_label)
                         )
                     },
                     placeholder = {
                         Text(
-                            text = stringResource(R.string.create_beneficiary_bank_address_placeholder)
+                            text = stringResource(R.string.create_beneficiary_swift_placeholder)
                         )
-                    }
+                    },
                 )
             }
         }

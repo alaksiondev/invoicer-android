@@ -6,7 +6,8 @@ internal data class UpdateBeneficiaryState(
     val bankName: String = "",
     val bankAddress: String = "",
     val swift: String = "",
-    val iban: String = ""
+    val iban: String = "",
+    val isButtonLoading: Boolean = false,
 ) {
     val isButtonEnabled =
         name.isNotBlank() &&

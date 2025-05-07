@@ -1,6 +1,10 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -8,8 +12,13 @@ import androidx.compose.material.icons.outlined.AccountBalance
 import androidx.compose.material.icons.outlined.Ballot
 import androidx.compose.material.icons.outlined.Business
 import androidx.compose.material.icons.outlined.MapsHomeWork
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -20,15 +29,19 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import foundation.designsystem.components.ScreenTitle
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
+import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryEvents
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
-import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryFieldCard
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal class BeneficiaryConfirmationStep : Screen {
@@ -44,20 +57,21 @@ internal class BeneficiaryConfirmationStep : Screen {
             SnackbarHostState()
         }
 
-        foundation.ui.events.EventEffect(
-            publisher = screenModel
-        ) {
-            when (it) {
-                is CreateBeneficiaryEvents.Error -> scope.launch {
-                    snackbarHostState.showSnackbar(message = it.message)
-                }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is CreateBeneficiaryEvents.Error -> scope.launch {
+                        snackbarHostState.showSnackbar(message = it.message)
+                    }
 
-                CreateBeneficiaryEvents.Success -> navigator.push(
-                    BeneficiaryFeedbackScreen(
-                        type = BeneficiaryFeedbackType.CreateSuccess
+                    CreateBeneficiaryEvents.Success -> navigator.push(
+                        BeneficiaryFeedbackScreen(
+                            type = BeneficiaryFeedbackType.CreateSuccess
+                        )
                     )
-                )
+                }
             }
+
         }
 
         StateContent(
@@ -73,6 +87,7 @@ internal class BeneficiaryConfirmationStep : Screen {
         )
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         name: String,
@@ -87,45 +102,75 @@ internal class BeneficiaryConfirmationStep : Screen {
     ) {
         val scrollState = rememberScrollState()
 
-        BeneficiaryBaseForm(
-            title = stringResource(R.string.create_beneficiary_confirm_title),
-            buttonText = stringResource(R.string.create_beneficiary_submit_cta),
-            buttonEnabled = buttonEnabled,
-            onContinue = onContinue,
-            onBack = onBack,
-            snackbarHostState = snackbarHostState
-        ) {
+        Scaffold(
+            modifier = Modifier.imePadding(),
+            snackbarHost = {
+                SnackbarHost(snackbarHostState)
+            },
+            topBar = {
+                TopAppBar(
+                    title = {},
+                    navigationIcon = {
+                        BackButton(onBackClick = onBack)
+                    }
+                )
+            },
+            bottomBar = {
+                PrimaryButton(
+                    label = stringResource(R.string.create_beneficiary_submit_cta),
+                    onClick = {
+                        onContinue()
+                    },
+                    isEnabled = buttonEnabled,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                )
+            }
+        ) { scaffoldPadding ->
             Column(
                 modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(scrollState)
+                    .fillMaxSize()
+                    .padding(Spacing.medium)
+                    .padding(scaffoldPadding)
             ) {
-                VerticalSpacer(SpacerSize.Medium)
-                BeneficiaryFieldCard(
-                    title = stringResource(R.string.confirm_beneficiary_name),
-                    value = name,
-                    icon = Icons.Outlined.Business
+                ScreenTitle(
+                    title = stringResource(R.string.confirm_beneficiary_title),
+                    subTitle = stringResource(R.string.confirm_beneficiary_subtitle)
                 )
-                BeneficiaryFieldCard(
-                    title = stringResource(R.string.confirm_beneficiary_swift),
-                    value = swift,
-                    icon = Icons.Outlined.Ballot
-                )
-                BeneficiaryFieldCard(
-                    title = stringResource(R.string.confirm_beneficiary_iban),
-                    value = iban,
-                    icon = Icons.Outlined.Ballot
-                )
-                BeneficiaryFieldCard(
-                    title = stringResource(R.string.confirm_beneficiary_bank_name),
-                    value = bankName,
-                    icon = Icons.Outlined.AccountBalance
-                )
-                BeneficiaryFieldCard(
-                    title = stringResource(R.string.confirm_beneficiary_bank_address),
-                    value = bankAddress,
-                    icon = Icons.Outlined.MapsHomeWork
-                )
+                VerticalSpacer(SpacerSize.XLarge3)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(scrollState)
+                ) {
+                    VerticalSpacer(SpacerSize.Medium)
+                    BeneficiaryFieldCard(
+                        title = stringResource(R.string.confirm_beneficiary_name),
+                        value = name,
+                        icon = Icons.Outlined.Business
+                    )
+                    BeneficiaryFieldCard(
+                        title = stringResource(R.string.confirm_beneficiary_swift),
+                        value = swift,
+                        icon = Icons.Outlined.Ballot
+                    )
+                    BeneficiaryFieldCard(
+                        title = stringResource(R.string.confirm_beneficiary_iban),
+                        value = iban,
+                        icon = Icons.Outlined.Ballot
+                    )
+                    BeneficiaryFieldCard(
+                        title = stringResource(R.string.confirm_beneficiary_bank_name),
+                        value = bankName,
+                        icon = Icons.Outlined.AccountBalance
+                    )
+                    BeneficiaryFieldCard(
+                        title = stringResource(R.string.confirm_beneficiary_bank_address),
+                        value = bankAddress,
+                        icon = Icons.Outlined.MapsHomeWork
+                    )
+                }
             }
         }
     }

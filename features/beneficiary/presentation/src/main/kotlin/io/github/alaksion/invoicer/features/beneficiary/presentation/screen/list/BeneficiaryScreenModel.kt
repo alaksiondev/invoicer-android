@@ -2,21 +2,23 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.lis
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiariesModel
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiariesModel
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class BeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
-) : ScreenModel, foundation.ui.events.EventAware<BeneficiaryListEvents> by foundation.ui.events.EventPublisher() {
+) : ScreenModel {
 
     private var page: Long = 0
     private var isFirstPageLoaded = false
@@ -24,6 +26,9 @@ internal class BeneficiaryScreenModel(
 
     private val _state = MutableStateFlow(BeneficiaryListState())
     val state: StateFlow<BeneficiaryListState> = _state
+
+    private val _events = MutableSharedFlow<BeneficiaryListEvents>()
+    val events = _events.asSharedFlow()
 
     fun loadPage(
         force: Boolean = false
@@ -76,7 +81,7 @@ internal class BeneficiaryScreenModel(
                             )
                         },
                         onFailure = {
-                            publish(BeneficiaryListEvents.LoadMoreError)
+                            _events.emit(BeneficiaryListEvents.LoadMoreError)
                         },
                         onSuccess = { result ->
                             paginationEnabled = result.nextPage != null

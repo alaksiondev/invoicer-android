@@ -2,15 +2,15 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.upd
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.watchers.RefreshBeneficiaryPublisher
+import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -18,10 +18,13 @@ internal class UpdateBeneficiaryScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher
-) : ScreenModel, EventAware<UpdateBeneficiaryEvent> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(UpdateBeneficiaryState())
     val state: StateFlow<UpdateBeneficiaryState> = _state
+
+    private val _events = MutableSharedFlow<UpdateBeneficiaryEvent>()
+    val events = _events.asSharedFlow()
 
     fun initState(beneficiaryId: String) {
         screenModelScope.launch(dispatcher) {
@@ -88,19 +91,19 @@ internal class UpdateBeneficiaryScreenModel(
             }.handle(
                 onSuccess = {
                     refreshBeneficiaryPublisher.publish(Unit)
-                    publish(UpdateBeneficiaryEvent.Success)
+                    _events.emit(UpdateBeneficiaryEvent.Success)
                 },
                 onFailure = {
-                    publish(UpdateBeneficiaryEvent.Error(it.message.orEmpty()))
+                    _events.emit((UpdateBeneficiaryEvent.Error(it.message.orEmpty())))
                 },
                 onStart = {
                     _state.update {
-                        it.copy(mode = UpdateBeneficiaryMode.Loading)
+                        it.copy(isButtonLoading = true)
                     }
                 },
                 onFinish = {
                     _state.update {
-                        it.copy(mode = UpdateBeneficiaryMode.Content)
+                        it.copy(isButtonLoading = false)
                     }
                 }
             )

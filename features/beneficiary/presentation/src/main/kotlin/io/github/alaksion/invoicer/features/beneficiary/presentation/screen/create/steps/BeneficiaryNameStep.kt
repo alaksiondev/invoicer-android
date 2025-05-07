@@ -1,10 +1,17 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,10 +23,15 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import foundation.designsystem.components.spacer.Spacer
+import foundation.designsystem.components.InputField
+import foundation.designsystem.components.ScreenTitle
+import foundation.designsystem.components.buttons.BackButton
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
+import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
-import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryBaseForm
 
 internal class BeneficiaryNameStep : Screen {
     @Composable
@@ -33,10 +45,11 @@ internal class BeneficiaryNameStep : Screen {
             onNameChange = screenModel::updateName,
             buttonEnabled = state.nameIsValid,
             onBack = { navigator.parent?.pop() },
-            onContinue = { navigator.push(BeneficiarySwiftStep()) }
+            onContinue = { navigator.push(BeneficiaryDocumentStep()) }
         )
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
         name: String,
@@ -46,40 +59,63 @@ internal class BeneficiaryNameStep : Screen {
         onContinue: () -> Unit,
     ) {
         val keyboard = LocalSoftwareKeyboardController.current
-
-        BeneficiaryBaseForm(
-            title = stringResource(R.string.create_beneficiary_name_title),
-            buttonText = stringResource(R.string.create_beneficiary_continue_cta),
-            buttonEnabled = buttonEnabled,
-            onContinue = {
-                keyboard?.hide()
-                onContinue()
+        Scaffold(
+            modifier = Modifier.imePadding(),
+            topBar = {
+                TopAppBar(
+                    title = {},
+                    navigationIcon = {
+                        BackButton(onBackClick = onBack)
+                    }
+                )
             },
-            onBack = onBack
-        ) {
-            Spacer(1f)
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = name,
-                onValueChange = onNameChange,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { keyboard?.hide() }
-                ),
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.create_beneficiary_name_placeholder)
-                    )
-                },
-                label = {
-                    Text(
-                        text = stringResource(R.string.create_beneficiary_name_label)
-                    )
-                }
-            )
-            Spacer(1f)
+            bottomBar = {
+                PrimaryButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                    label = stringResource(R.string.create_beneficiary_continue_cta),
+                    onClick = {
+                        keyboard?.hide()
+                        onContinue()
+                    },
+                    isEnabled = buttonEnabled
+                )
+            }
+        ) { scaffoldPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(Spacing.medium)
+                    .padding(scaffoldPadding)
+            ) {
+                ScreenTitle(
+                    title = stringResource(R.string.create_beneficiary_name_title),
+                    subTitle = stringResource(R.string.create_beneficiary_name_subtitle)
+                )
+                VerticalSpacer(SpacerSize.XLarge3)
+                InputField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = name,
+                    onValueChange = onNameChange,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { keyboard?.hide() }
+                    ),
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.create_beneficiary_name_placeholder)
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.create_beneficiary_name_label)
+                        )
+                    }
+                )
+            }
         }
     }
 }

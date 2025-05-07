@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -36,10 +37,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import foundation.designsystem.components.InputField
+import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.spacer.Spacer
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.spacer.SpacerSize
+import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal data class UpdateBeneficiaryScreen(
@@ -56,12 +62,14 @@ internal data class UpdateBeneficiaryScreen(
 
         LaunchedEffect(Unit) { screenModel.initState(id) }
 
-        foundation.ui.events.EventEffect(screenModel) {
-            when (it) {
-                is UpdateBeneficiaryEvent.Error ->
-                    scope.launch { snackbarHostState.showSnackbar(it.message) }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is UpdateBeneficiaryEvent.Error ->
+                        scope.launch { snackbarHostState.showSnackbar(it.message) }
 
-                UpdateBeneficiaryEvent.Success -> navigator?.pop()
+                    UpdateBeneficiaryEvent.Success -> navigator?.pop()
+                }
             }
         }
 
@@ -93,16 +101,29 @@ internal data class UpdateBeneficiaryScreen(
         onChangeIban: (String) -> Unit,
         onSubmit: () -> Unit
     ) {
+        val scrollState = rememberScrollState()
+
         Scaffold(
             modifier = Modifier.imePadding(),
             topBar = {
                 TopAppBar(
                     navigationIcon = { BackButton(onBackClick = onBack) },
-                    title = { Text(text = stringResource(R.string.update_beneficiary_title)) }
+                    title = { }
                 )
             },
             snackbarHost = {
                 SnackbarHost(snackbarHostState)
+            },
+            bottomBar = {
+                PrimaryButton(
+                    onClick = onSubmit,
+                    isEnabled = state.isButtonEnabled,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                    label = stringResource(R.string.beneficiary_update_cta),
+                    isLoading = state.isButtonLoading
+                )
             }
         ) {
             val (
@@ -115,10 +136,17 @@ internal data class UpdateBeneficiaryScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
-                    .padding(Spacing.medium),
+                    .padding(Spacing.medium)
+                    .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
-                OutlinedTextField(
+                ScreenTitle(
+                    title = stringResource(R.string.update_beneficiary_title),
+                    subTitle = null
+                )
+                VerticalSpacer(SpacerSize.XLarge3)
+
+                InputField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(nameRef),
@@ -158,7 +186,7 @@ internal data class UpdateBeneficiaryScreen(
                     maxLines = 1
                 )
 
-                OutlinedTextField(
+                InputField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(bankAddressRef),
@@ -178,7 +206,7 @@ internal data class UpdateBeneficiaryScreen(
                     maxLines = 1
                 )
 
-                OutlinedTextField(
+                InputField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(swiftRef),
@@ -198,7 +226,7 @@ internal data class UpdateBeneficiaryScreen(
                     maxLines = 1
                 )
 
-                OutlinedTextField(
+                InputField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(ibanRef),
@@ -217,16 +245,6 @@ internal data class UpdateBeneficiaryScreen(
                     ),
                     maxLines = 1
                 )
-
-                Spacer(1f)
-
-                Button(
-                    onClick = onSubmit,
-                    enabled = state.isButtonEnabled,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = stringResource(R.string.beneficiary_update_cta))
-                }
             }
         }
     }

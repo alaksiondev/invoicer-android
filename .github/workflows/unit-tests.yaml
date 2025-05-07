@@ -19,12 +19,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Create Google Services JSON
+        run: |
+          echo '${{ secrets.GOOGLE_SERVICES }}' >> app/google-services.json
+
       - name: Create local.properties file
         run: |
           echo "sdk.dir=$ANDROID_HOME" >> local.properties
-          echo "DEBUG_APP_URL=${{ secrets.DEBUG_APP_URL }}" >> local.properties
-          echo "PROD_APP_URL=${{ secrets.PROD_APP_URL }}" >> local.properties
-          echo "FIREBASE_WEB_ID=${{ secrets.FIREBASE_WEB_ID }}" >> local.properties
+          echo "DEBUG_APP_URL=\"${{ secrets.DEBUG_APP_URL }}\"" >> local.properties
+          echo "PROD_APP_URL=\"${{ secrets.PROD_APP_URL }}\"" >> local.properties
+          echo "FIREBASE_WEB_ID=\"${{ secrets.FIREBASE_WEB_ID }}\"" >> local.properties
 
       - name: Cache Gradle packages
         uses: actions/cache@v3

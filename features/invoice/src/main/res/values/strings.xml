@@ -73,8 +73,10 @@
 
     <!-- Activites -->
     <string name="invoice_create_activity_title">Invoice activities</string>
-    <string name="invoice_create_activity_list_quantity">Qtd</string>
-    <string name="invoice_create_activity_list_unitprice">Unit price</string>
+    <string name="invoice_create_activity_subtitle">Set invoice components</string>
+    <string name="invoice_create_activity_list_quantity">Quantity</string>
+    <string name="invoice_create_activity_list_unitprice">Unit value</string>
+    <string name="invoice_create_activity_list_total_price">Total price</string>
     <string name="invoice_create_activity_list_description">Description</string>
     <string name="invoice_create_activity_add_cta">Add activity</string>
     <string name="invoice_create_activity_form_description_label">Description</string>

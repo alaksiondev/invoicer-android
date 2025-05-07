@@ -40,7 +40,8 @@ internal fun SelectableItem(
     Card(
         modifier = modifier.border(
             width = 2.dp,
-            color = borderTint
+            color = borderTint,
+            shape = MaterialTheme.shapes.medium
         ),
         shape = MaterialTheme.shapes.medium
     ) {

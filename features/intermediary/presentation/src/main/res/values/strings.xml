@@ -15,6 +15,7 @@
     <string name="create_intermediary_continue_cta">Continue</string>
     <string name="create_intermediary_submit_cta">Create Intermediary</string>
     <string name="create_intermediary_name_title">Intermediary name</string>
+    <string name="create_intermediary_name_subtitle">Set intermediary name</string>
     <string name="create_intermediary_swift_title">Intermediary Swift Code</string>
     <string name="create_intermediary_iban_title">Intermediary Iban Code</string>
     <string name="create_intermediary_bank_info_title">Bank Information</string>

@@ -14,6 +14,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -31,8 +35,9 @@ import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.intermediary.presentation.R
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
+import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryState
 
-internal class IntermediaryNameStep : Screen {
+internal class IntermediaryDocumentStep : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -40,24 +45,27 @@ internal class IntermediaryNameStep : Screen {
         val state by screenModel.state.collectAsStateWithLifecycle()
 
         StateContent(
-            name = state.name,
-            onNameChange = screenModel::updateName,
-            buttonEnabled = state.nameIsValid,
-            onBack = { navigator.parent?.pop() },
-            onContinue = { navigator.push(IntermediaryDocumentStep()) }
+            state = state,
+            onSwiftChange = screenModel::updateSwift,
+            onIbanChange = screenModel::updateIban,
+            buttonEnabled = state.ibanIsValid && state.swiftIsValid,
+            onBack = { navigator.pop() },
+            onContinue = { navigator.push(IntermediaryBankInfoStep()) }
         )
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
-        name: String,
+        state: CreateIntermediaryState,
         buttonEnabled: Boolean,
-        onNameChange: (String) -> Unit,
+        onIbanChange: (String) -> Unit,
+        onSwiftChange: (String) -> Unit,
         onBack: () -> Unit,
         onContinue: () -> Unit,
     ) {
         val keyboard = LocalSoftwareKeyboardController.current
+        val (ibanFocus, swiftFocus) = FocusRequester.createRefs()
 
         Scaffold(
             modifier = Modifier.imePadding(),
@@ -71,15 +79,15 @@ internal class IntermediaryNameStep : Screen {
             },
             bottomBar = {
                 PrimaryButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Spacing.medium),
                     label = stringResource(R.string.create_intermediary_continue_cta),
                     onClick = {
                         keyboard?.hide()
                         onContinue()
                     },
-                    isEnabled = buttonEnabled
+                    isEnabled = buttonEnabled,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
                 )
             }
         ) { scaffoldPadding ->
@@ -90,30 +98,56 @@ internal class IntermediaryNameStep : Screen {
                     .padding(scaffoldPadding)
             ) {
                 ScreenTitle(
-                    title = stringResource(R.string.create_intermediary_name_title),
-                    subTitle = stringResource(R.string.create_intermediary_name_subtitle)
+                    title = stringResource(R.string.create_intermediary_document_title),
+                    subTitle = stringResource(R.string.create_intermediary_document_subtitle)
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 InputField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = name,
-                    onValueChange = onNameChange,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(ibanFocus),
+                    value = state.iban,
+                    onValueChange = onIbanChange,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = { swiftFocus.requestFocus() }
+                    ),
+                    label = {
+                        Text(
+                            text = stringResource(R.string.create_intermediary_iban_label)
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.create_intermediary_iban_placeholder)
+                        )
+                    },
+                )
+                VerticalSpacer(SpacerSize.Large)
+                InputField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(swiftFocus),
+                    value = state.swift,
+                    onValueChange = onSwiftChange,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
                     ),
                     keyboardActions = KeyboardActions(
                         onDone = { keyboard?.hide() }
                     ),
-                    placeholder = {
-                        Text(
-                            text = stringResource(R.string.create_intermediary_name_placeholder)
-                        )
-                    },
                     label = {
                         Text(
-                            text = stringResource(R.string.create_intermediary_name_label)
+                            text = stringResource(R.string.create_intermediary_swift_label)
                         )
-                    }
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.create_intermediary_swift_placeholder)
+                        )
+                    },
                 )
             }
         }

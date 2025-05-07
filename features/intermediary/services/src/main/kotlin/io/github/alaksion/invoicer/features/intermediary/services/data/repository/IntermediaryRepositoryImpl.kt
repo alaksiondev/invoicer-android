@@ -59,7 +59,7 @@ internal class IntermediaryRepositoryImpl(
         }
     }
 
-    override suspend fun deleteBeneficiary(id: String) {
+    override suspend fun deleteIntermediary(id: String) {
         dataSource.deleteIntermediary(id)
     }
 

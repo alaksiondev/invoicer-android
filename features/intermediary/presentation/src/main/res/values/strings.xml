@@ -3,19 +3,23 @@
 
     <!-- List Intermediary -->
     <string name="intermediary_list_title">Intermediaries</string>
+    <string name="intermediary_list_subtitle">Manage intermediaries</string>
     <string name="intermediary_list_error_retry">Try again</string>
     <string name="intermediary_list_error_title">Something went wrong</string>
     <string name="intermediary_list_error_description">Check your connection and try again</string>
     <string name="intermediary_list_empty_title">Nothing to see here</string>
     <string name="intermediary_list_empty_description">No Intermediaries found</string>
+    <string name="intermediary_list_item_swift">SWIFT code: %1$s</string>
 
     <!-- Create Intermediary -->
     <string name="create_intermediary_continue_cta">Continue</string>
     <string name="create_intermediary_submit_cta">Create Intermediary</string>
     <string name="create_intermediary_name_title">Intermediary name</string>
-    <string name="create_intermediary_swift_title">Intermediary Swift Code</string>
-    <string name="create_intermediary_iban_title">Intermediary Iban Code</string>
+    <string name="create_intermediary_name_subtitle">Set intermediary name</string>
+    <string name="create_intermediary_document_title">Beneficiary documents</string>
+    <string name="create_intermediary_document_subtitle">Inform SWIFT and IBAN codes</string>
     <string name="create_intermediary_bank_info_title">Bank Information</string>
+    <string name="create_intermediary_bank_info_subtitle">Inform bank name and address</string>
     <string name="create_intermediary_confirm_title">Confirm Intermediary data</string>
     <string name="create_intermediary_bank_name_label">Bank Name</string>
     <string name="create_intermediary_bank_name_placeholder">Bank of America</string>
@@ -29,6 +33,8 @@
     <string name="create_intermediary_iban_placeholder">PT80 0408 0591 0071 1161 8226 7</string>
 
     <!-- Confirm Intermediary -->
+    <string name="confirm_intermediary_title">Confirm details</string>
+    <string name="confirm_intermediary_subtitle">Preview intermediary before submitting</string>
     <string name="confirm_intermediary_name">Name</string>
     <string name="confirm_intermediary_swift">Swift</string>
     <string name="confirm_intermediary_iban">Iban</string>
@@ -67,6 +73,9 @@
     <string name="intermediary_update_swift_label">Swift Code</string>
     <string name="intermediary_update_iban_label">Iban Code</string>
     <string name="intermediary_update_cta">Update beneficiary</string>
+    <string name="intermediary_update_load_error_title">Something went wrong</string>
+    <string name="intermediary_update_load_error_description">Check your internet connection and try again</string>
+    <string name="intermediary_update_load_error_cta">Retry</string>
 
 
 </resources>

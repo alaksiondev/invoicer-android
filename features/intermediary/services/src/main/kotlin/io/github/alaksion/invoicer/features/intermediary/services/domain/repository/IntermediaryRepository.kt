@@ -21,7 +21,7 @@ interface IntermediaryRepository {
         id: String
     ): IntermediaryModel
 
-    suspend fun deleteBeneficiary(
+    suspend fun deleteIntermediary(
         id: String
     )
 

@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Create local.properties file
-        uses: ./.github/actions/write-debug-local-properties.yaml
+        uses: ./.github/actions/write-debug-local-properties
 
       - name: Cache Gradle packages
         uses: actions/cache@v3

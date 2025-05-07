@@ -83,7 +83,8 @@ internal class BeneficiaryConfirmationStep : Screen {
             swift = state.swift,
             iban = state.iban,
             buttonEnabled = state.isSubmitting.not(),
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackbarHostState,
+            isLoading = state.isSubmitting
         )
     }
 
@@ -99,6 +100,7 @@ internal class BeneficiaryConfirmationStep : Screen {
         onContinue: () -> Unit,
         onBack: () -> Unit,
         snackbarHostState: SnackbarHostState,
+        isLoading: Boolean,
     ) {
         val scrollState = rememberScrollState()
 
@@ -125,6 +127,7 @@ internal class BeneficiaryConfirmationStep : Screen {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Spacing.medium),
+                    isLoading = isLoading
                 )
             }
         ) { scaffoldPadding ->

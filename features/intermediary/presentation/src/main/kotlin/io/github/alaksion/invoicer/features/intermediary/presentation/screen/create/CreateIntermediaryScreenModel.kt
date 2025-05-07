@@ -2,16 +2,16 @@ package io.github.alaksion.invoicer.features.intermediary.presentation.screen.cr
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.watchers.RefreshIntermediaryPublisher
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -19,10 +19,13 @@ internal class CreateIntermediaryScreenModel(
     private val intermediaryRepository: IntermediaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshIntermediaryPublisher: RefreshIntermediaryPublisher,
-) : ScreenModel, EventAware<CreateIntermediaryEvents> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(CreateIntermediaryState())
     val state: StateFlow<CreateIntermediaryState> = _state
+
+    private val _events = MutableSharedFlow<CreateIntermediaryEvents>()
+    val events = _events.asSharedFlow()
 
     private var submitJob: Job? = null
 
@@ -78,13 +81,13 @@ internal class CreateIntermediaryScreenModel(
                     }
                 },
                 onFailure = {
-                    publish(
+                    _events.emit(
                         CreateIntermediaryEvents.Error(message = it.message.orEmpty())
                     )
                 },
                 onSuccess = {
                     refreshIntermediaryPublisher.publish(Unit)
-                    publish(CreateIntermediaryEvents.Success)
+                    _events.emit(CreateIntermediaryEvents.Success)
                 }
             )
         }

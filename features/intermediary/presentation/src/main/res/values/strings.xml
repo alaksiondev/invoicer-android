@@ -33,6 +33,8 @@
     <string name="create_intermediary_iban_placeholder">PT80 0408 0591 0071 1161 8226 7</string>
 
     <!-- Confirm Intermediary -->
+    <string name="confirm_intermediary_title">Confirm details</string>
+    <string name="confirm_intermediary_subtitle">Preview intermediary before submitting</string>
     <string name="confirm_intermediary_name">Name</string>
     <string name="confirm_intermediary_swift">Swift</string>
     <string name="confirm_intermediary_iban">Iban</string>

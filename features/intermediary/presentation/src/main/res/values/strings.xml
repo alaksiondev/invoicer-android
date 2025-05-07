@@ -3,11 +3,13 @@
 
     <!-- List Intermediary -->
     <string name="intermediary_list_title">Intermediaries</string>
+    <string name="intermediary_list_subtitle">Manage intermediaries</string>
     <string name="intermediary_list_error_retry">Try again</string>
     <string name="intermediary_list_error_title">Something went wrong</string>
     <string name="intermediary_list_error_description">Check your connection and try again</string>
     <string name="intermediary_list_empty_title">Nothing to see here</string>
     <string name="intermediary_list_empty_description">No Intermediaries found</string>
+    <string name="intermediary_list_item_swift">SWIFT code: %1$s</string>
 
     <!-- Create Intermediary -->
     <string name="create_intermediary_continue_cta">Continue</string>

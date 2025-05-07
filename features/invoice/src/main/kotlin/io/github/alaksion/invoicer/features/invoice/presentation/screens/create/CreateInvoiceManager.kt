@@ -2,6 +2,9 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
 import io.github.alaksion.invoicer.foundation.utils.date.DateProvider
+import io.github.alaksion.invoicer.foundation.utils.date.toZeroHour
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
 import kotlin.time.Duration.Companion.days
 
 internal class CreateInvoiceManager(
@@ -15,8 +18,14 @@ internal class CreateInvoiceManager(
     var recipientCompanyName: String = ""
     var recipientCompanyAddress: String = ""
 
-    var issueDate = dateProvider.get().toEpochMilliseconds()
-    var dueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
+    var issueDate: Instant = dateProvider
+        .get()
+        .toZeroHour(TimeZone.currentSystemDefault())
+
+    var dueDate: Instant = dateProvider
+        .get()
+        .toZeroHour(TimeZone.currentSystemDefault())
+        .plus(7.days)
 
     var beneficiaryId: String = ""
     var beneficiaryName: String = ""
@@ -31,8 +40,13 @@ internal class CreateInvoiceManager(
         senderCompanyName = ""
         recipientCompanyName = ""
         recipientCompanyAddress = ""
-        dueDate = dateProvider.get().toEpochMilliseconds()
-        issueDate = dateProvider.get().plus(7.days).toEpochMilliseconds()
+        dueDate = dateProvider
+            .get()
+            .toZeroHour(TimeZone.currentSystemDefault())
+        issueDate = dateProvider
+            .get()
+            .toZeroHour(TimeZone.currentSystemDefault())
+            .plus(7.days)
         beneficiaryId = ""
         beneficiaryName = ""
         activities = mutableListOf()

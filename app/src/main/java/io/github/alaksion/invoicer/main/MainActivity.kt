@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         forceLightStatusBar()
         mainViewModel.startApp()
         setContent { AppContent() }

@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
@@ -36,6 +35,7 @@ import features.auth.presentation.screens.signup.components.SignUpForm
 import features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
 import foundation.designsystem.components.DialogVariant
 import foundation.designsystem.components.InvoicerDialog
+import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.Spacer
@@ -136,16 +136,9 @@ internal class SignUpScreen : Screen {
                     .fillMaxSize(),
             ) {
                 VerticalSpacer(height = SpacerSize.XLarge3)
-                Text(
-                    text = stringResource(R.string.auth_sign_up_title),
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
-                VerticalSpacer(height = SpacerSize.Small)
-                Text(
-                    text = stringResource(R.string.auth_sign_up_description),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Medium,
+                ScreenTitle(
+                    title = stringResource(R.string.auth_sign_up_title),
+                    subTitle = stringResource(R.string.auth_sign_up_description)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 SignUpForm(

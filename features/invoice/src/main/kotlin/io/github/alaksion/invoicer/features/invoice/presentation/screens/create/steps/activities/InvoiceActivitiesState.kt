@@ -8,7 +8,7 @@ internal data class InvoiceActivitiesState(
     val activities: ImmutableList<CreateInvoiceActivityUiModel> = persistentListOf(),
     val formState: AddActivityFormState = AddActivityFormState()
 ) {
-    val continueEnabled = activities.isNotEmpty()
+    val isButtonEnabled = activities.isNotEmpty()
 }
 
 internal data class AddActivityFormState(

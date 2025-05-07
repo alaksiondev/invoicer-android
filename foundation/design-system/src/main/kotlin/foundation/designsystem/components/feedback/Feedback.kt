@@ -17,12 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.buttons.SecondaryButton
 import foundation.designsystem.components.spacer.Spacer
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
+import foundation.designsystem.tokens.AppSize
 import foundation.designsystem.tokens.Spacing
 
 @Composable
@@ -57,14 +57,15 @@ fun Feedback(
                 imageVector = icon,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.size(128.dp)
+                modifier = Modifier.size(AppSize.Jumbo)
             )
         }
         VerticalSpacer(height = SpacerSize.Medium)
         Text(
             text = title,
             style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Center
         )
         VerticalSpacer(height = SpacerSize.XSmall)
         if (description != null) {

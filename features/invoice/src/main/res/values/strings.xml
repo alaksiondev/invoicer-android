@@ -2,51 +2,69 @@
 <resources>
     <!-- Invoice List -->
     <string name="invoice_list_title">Invoices</string>
+    <string name="invoice_list_subtitle">Manage invoices</string>
     <string name="invoice_list_error_retry">Try again</string>
     <string name="invoice_list_error_title">Something went wrong</string>
     <string name="invoice_list_error_description">Check your connection and try again</string>
     <string name="invoice_list_empty_title">Nothing to see here</string>
     <string name="invoice_list_empty_description">No invoices found</string>
+    <string name="invoice_list_item_number">Invoice number</string>
+    <string name="invoice_list_item_recipient">Recipient company</string>
+    <string name="invoice_list_item_due_date">Due date</string>
+    <string name="invoice_list_item_issue_date">Issue date</string>
+    <string name="invoice_list_item_amount">Amount</string>
+    <string name="invoice_list_new_invoice">New Invoice</string>
+
+    <!-- Invoice Company -->
+    <string name="invoice_company_title">Invoice company</string>
+    <string name="invoice_company_description">Sender and recipient information</string>
 
     <!-- Create Invoice -->
     <string name="invoice_create_continue_cta">Continue</string>
 
     <!-- External Id -->
-    <string name="invoice_create_external_id_title">External ID</string>
+    <string name="invoice_create_external_id_title">Invoice ID</string>
+    <string name="invoice_create_external_id_description">Set Invoice unique ID</string>
     <string name="invoice_create_external_id_placeholder">Invoice #123</string>
-    <string name="invoice_create_external_id_label">External ID</string>
+    <string name="invoice_create_external_id_label">Id</string>
 
     <!-- Create Sender Company -->
     <string name="invoice_create_sender_company_title">Sender Company Info</string>
-    <string name="invoice_create_sender_company_name_label">Name</string>
-    <string name="invoice_create_sender_company_address_label">Address</string>
+    <string name="invoice_create_sender_company_name_label">Sender name</string>
+    <string name="invoice_create_sender_company_address_label">Sender Address</string>
     <string name="invoice_create_sender_company_name_placeholder">John\'s Pizzaria</string>
     <string name="invoice_create_sender_company_address_placeholder">St Saint Louis 115</string>
 
     <!-- Create Recipient Company -->
     <string name="invoice_create_recipient_company_title">Recipient Company Info</string>
-    <string name="invoice_create_recipient_company_name_label">Name</string>
-    <string name="invoice_create_recipient_company_address_label">Address</string>
-    <string name="invoice_create_recipient_company_name_placeholder">John\'s Pizzaria</string>
-    <string name="invoice_create_recipient_company_address_placeholder">St Saint Louis 115</string>
+    <string name="invoice_create_recipient_company_name_label">Recipient Name</string>
+    <string name="invoice_create_recipient_company_address_label">Recipient Address</string>
+    <string name="invoice_create_recipient_company_name_placeholder">Matts\'s Pizzaria</string>
+    <string name="invoice_create_recipient_company_address_placeholder">St Saint Louis 116</string>
 
     <!-- Create Dates -->
-    <string name="invoice_create_dates_title">Invoice Schedule</string>
+    <string name="invoice_create_dates_title">Invoice dates</string>
+    <string name="invoice_create_dates_description">Set invoice schedule</string>
     <string name="invoice_create_dates_issue_date_label">Issue date</string>
+    <string name="invoice_due_date_dialog_title">Select due date</string>
+    <string name="invoice_issue_date_dialog_title">Select issue date</string>
     <string name="invoice_create_dates_due_date_label">Due date</string>
-    <string name="invoice_create_dates_change_button">Change</string>
     <string name="invoice_create_dates_dialog_confirm">Confirm</string>
-    <string name="invoice_create_dates_dialog_cancel">Cancel</string>
+    <string name="invoice_create_dates_change_cta">Change</string>
+    <string name="invoice_create_dates_due_date_error">Issue date must not precede due date</string>
 
     <!-- Pick Beneficiary -->
     <string name="invoice_create_pick_beneficiary_title">Select beneficiary</string>
+    <string name="invoice_create_pick_beneficiary_subtitle">Bank account to receive payments</string>
     <string name="invoice_create_pick_beneficiary_retry_title">Something went wrong</string>
     <string name="invoice_create_pick_beneficiary_retry_description">Check your connection and try again</string>
     <string name="invoice_create_pick_beneficiary_retry_cta">Try again</string>
     <string name="invoice_create_pick_beneficiary_add_new">New Beneficiary</string>
+    <string name="invoice_pick_beneficiary_swift_label">Swift: %1$s</string>
 
     <!-- Pick Intermediary -->
     <string name="invoice_create_pick_intermediary_title">Select intermediary</string>
+    <string name="invoice_create_pick_intermediary_subtitle">Bank account to intermediate payments</string>
     <string name="invoice_create_pick_intermediary_retry_title">Something went wrong</string>
     <string name="invoice_create_pick_intermediary_retry_description">Check your connection and try again</string>
     <string name="invoice_create_pick_intermediary_retry_cta">Try again</string>
@@ -54,9 +72,12 @@
     <string name="invoice_create_pick_intermediary_ignore">Proceed without intermediary</string>
 
     <!-- Activites -->
+    <string name="invoice_activity_new_title">New activity</string>
     <string name="invoice_create_activity_title">Invoice activities</string>
-    <string name="invoice_create_activity_list_quantity">Qtd</string>
-    <string name="invoice_create_activity_list_unitprice">Unit price</string>
+    <string name="invoice_create_activity_subtitle">Set invoice components</string>
+    <string name="invoice_create_activity_list_quantity">Quantity</string>
+    <string name="invoice_create_activity_list_unitprice">Unit value</string>
+    <string name="invoice_create_activity_list_total_price">Total price</string>
     <string name="invoice_create_activity_list_description">Description</string>
     <string name="invoice_create_activity_add_cta">Add activity</string>
     <string name="invoice_create_activity_form_description_label">Description</string>
@@ -71,7 +92,8 @@
     <string name="invoice_add_activity_error_unit_price">Invalid unit price, must be 1 cent or higher</string>
 
     <!-- Invoice Confirmation -->
-    <string name="invoice_create_confirmation_title">Invoice Summary</string>
+    <string name="invoice_create_confirmation_title">Confirm details</string>
+    <string name="invoice_create_confirmation_subtitle">Preview invoice before submitting</string>
     <string name="invoice_create_confirmation_continue_cta">Submit invoice</string>
     <string name="confirmation_sender_company_name_label">Sender company</string>
     <string name="confirmation_sender_company_name_address">Sender address</string>
@@ -79,8 +101,9 @@
     <string name="confirmation_recipient_company_name_address">Sender address</string>
     <string name="confirmation_issue_date_label">Issue date</string>
     <string name="confirmation_due_date_label">Due date</string>
-    <string name="confirmation_beneficiary_label">Due date</string>
-    <string name="confirmation_intermediary_label">Issue date</string>
+    <string name="confirmation_beneficiary_label">Beneficiary</string>
+    <string name="confirmation_intermediary_label">Intermediary</string>
+    <string name="confirmation_amount_label">Invoice total amount</string>
     <string name="confirmation_activities_label">Activities</string>
     <string name="confirmation_external_id_label">External ID</string>
 

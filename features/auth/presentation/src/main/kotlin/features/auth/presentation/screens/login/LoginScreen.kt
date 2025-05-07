@@ -31,7 +31,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -42,6 +41,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import features.auth.presentation.R
 import features.auth.presentation.screens.login.components.SignInForm
 import features.auth.presentation.screens.signup.SignUpScreen
+import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.TextDivider
 import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.buttons.SecondaryButton
@@ -142,16 +142,9 @@ internal class LoginScreen : Screen {
                     .fillMaxSize()
             ) {
                 VerticalSpacer(height = SpacerSize.XLarge3)
-                Text(
-                    text = stringResource(R.string.auth_sign_in_title),
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
-                VerticalSpacer(height = SpacerSize.Small)
-                Text(
-                    text = stringResource(R.string.auth_sign_in_description),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Medium,
+                ScreenTitle(
+                    title = stringResource(R.string.auth_sign_in_title),
+                    subTitle = stringResource(R.string.auth_sign_in_description)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 SignInForm(

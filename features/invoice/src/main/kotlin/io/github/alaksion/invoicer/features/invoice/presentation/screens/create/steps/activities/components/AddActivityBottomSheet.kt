@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetState
@@ -22,11 +23,13 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.AddActivityFormState
+import foundation.designsystem.components.InputField
 import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.AddActivityFormState
 import io.github.alasion.invoicer.features.invoice.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,6 +47,7 @@ internal fun AddActivityBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         modifier = Modifier.testTag(AddActivityBottomSheetTestTag.CONTENT)
+
     ) {
         Column(
             modifier = Modifier
@@ -54,7 +58,13 @@ internal fun AddActivityBottomSheet(
             val (descriptionFocus, unitPriceFocus, quantityFocus) = FocusRequester.createRefs()
             val keyboard = LocalSoftwareKeyboardController.current
 
-            OutlinedTextField(
+            Text(
+                text = stringResource(R.string.invoice_activity_new_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            InputField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(descriptionFocus)
@@ -78,10 +88,10 @@ internal fun AddActivityBottomSheet(
                     Text(
                         text = stringResource(R.string.invoice_create_activity_form_description_label)
                     )
-                }
+                },
             )
 
-            OutlinedTextField(
+            InputField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(unitPriceFocus)

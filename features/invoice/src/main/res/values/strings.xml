@@ -60,9 +60,11 @@
     <string name="invoice_create_pick_beneficiary_retry_description">Check your connection and try again</string>
     <string name="invoice_create_pick_beneficiary_retry_cta">Try again</string>
     <string name="invoice_create_pick_beneficiary_add_new">New Beneficiary</string>
+    <string name="invoice_pick_beneficiary_swift_label">Swift: %1$s</string>
 
     <!-- Pick Intermediary -->
     <string name="invoice_create_pick_intermediary_title">Select intermediary</string>
+    <string name="invoice_create_pick_intermediary_subtitle">Bank account to intermediate payments</string>
     <string name="invoice_create_pick_intermediary_retry_title">Something went wrong</string>
     <string name="invoice_create_pick_intermediary_retry_description">Check your connection and try again</string>
     <string name="invoice_create_pick_intermediary_retry_cta">Try again</string>

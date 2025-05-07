@@ -135,8 +135,8 @@ internal class BeneficiaryConfirmationStep : Screen {
                     .padding(scaffoldPadding)
             ) {
                 ScreenTitle(
-                    title = stringResource(R.string.create_beneficiary_bank_info_title),
-                    subTitle = stringResource(R.string.create_beneficiary_bank_info_subtitle)
+                    title = stringResource(R.string.confirm_beneficiary_title),
+                    subTitle = stringResource(R.string.confirm_beneficiary_subtitle)
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 Column(

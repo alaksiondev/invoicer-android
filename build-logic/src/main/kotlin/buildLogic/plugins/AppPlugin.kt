@@ -1,7 +1,7 @@
-package build.logic.plugins
+package buildLogic.plugins
 
-import build.logic.configs.AppConfig
-import build.logic.extensions.getPlugin
+import buildLogic.configs.AppConfig
+import buildLogic.extensions.getPlugin
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project

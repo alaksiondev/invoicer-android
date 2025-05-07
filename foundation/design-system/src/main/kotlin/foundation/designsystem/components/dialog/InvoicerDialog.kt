@@ -5,19 +5,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.window.Dialog
+import foundation.designsystem.components.buttons.PrimaryButton
+import foundation.designsystem.components.buttons.SecondaryButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
+import foundation.designsystem.tokens.AppSize
 import foundation.designsystem.tokens.Spacing
 
 @Composable
@@ -51,12 +54,15 @@ fun DefaultInvoicerDialog(
     ) {
         Icon(
             imageVector = icon,
-            contentDescription = null
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.error,
+            modifier = Modifier.size(AppSize.xLarge3)
         )
         VerticalSpacer(SpacerSize.Medium)
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.SemiBold
         )
         VerticalSpacer(SpacerSize.XSmall)
         Text(
@@ -68,22 +74,17 @@ fun DefaultInvoicerDialog(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            Button(
-                modifier = Modifier.weight(1f),
-                onClick = onDismiss
-            ) {
-                Text(
-                    text = cancelButtonText
-                )
-            }
-            OutlinedButton(
-                modifier = Modifier.weight(1f),
-                onClick = confirmButtonClick
-            ) {
-                Text(
-                    text = confirmButtonText
-                )
-            }
+            PrimaryButton(
+                label = cancelButtonText,
+                onClick = onDismiss,
+                modifier = Modifier.weight(1f)
+            )
+
+            SecondaryButton(
+                label = confirmButtonText,
+                onClick = confirmButtonClick,
+                modifier = Modifier.weight(1f)
+            )
         }
     }
 }

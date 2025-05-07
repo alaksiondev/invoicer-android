@@ -13,7 +13,7 @@ import foundation.designsystem.components.spacer.VerticalSpacer
 fun ScreenTitle(
     modifier: Modifier = Modifier,
     title: String,
-    subTitle: String,
+    subTitle: String?,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -21,11 +21,13 @@ fun ScreenTitle(
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )
-        VerticalSpacer(height = SpacerSize.Small)
-        Text(
-            text = subTitle,
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = FontWeight.Medium,
-        )
+        subTitle?.let {
+            VerticalSpacer(height = SpacerSize.Small)
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Medium,
+            )
+        }
     }
 }

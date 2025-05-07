@@ -60,7 +60,7 @@
     <string name="beneficiary_details_error_generic_cta">Try again</string>
     <string name="beneficiary_details_error_not_found_cta">Go back</string>
     <string name="beneficiary_details_delete_title">Delete beneficiary</string>
-    <string name="beneficiary_details_delete_description">This operation is terminal and cannot be undone. Note that it\'s not possible to delete beneficiaries attached to active invoices</string>
+    <string name="beneficiary_details_delete_description">This operation is terminal and cannot be undone. Note that it\'s not possible to delete beneficiaries attached to active invoices.</string>
     <string name="beneficiary_details_delete_cta">Delete</string>
     <string name="beneficiary_details_delete_cancel_cta">Cancel</string>
 

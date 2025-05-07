@@ -18,6 +18,7 @@ internal data class InvoiceConfirmationState(
 ) {
     val totalAmount = activities
         .map { it.unitPrice * it.quantity }
+        .ifEmpty { listOf(0L) }
         .reduce { acc, amount -> acc + amount }
         .moneyFormat()
 }

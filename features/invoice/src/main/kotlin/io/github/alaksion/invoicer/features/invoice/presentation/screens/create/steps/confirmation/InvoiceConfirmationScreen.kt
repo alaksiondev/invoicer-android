@@ -104,6 +104,7 @@ internal class InvoiceConfirmationScreen : Screen {
                         .padding(Spacing.medium),
                     label = stringResource(R.string.invoice_create_confirmation_continue_cta),
                     onClick = onSubmit,
+                    isLoading = state.isLoading
                 )
             },
             snackbarHost = {

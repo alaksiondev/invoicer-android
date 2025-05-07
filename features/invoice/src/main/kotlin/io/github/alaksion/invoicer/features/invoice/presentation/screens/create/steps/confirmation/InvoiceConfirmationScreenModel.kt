@@ -4,8 +4,6 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.watchers.NewInvoicePublisher
 import io.github.alaksion.invoicer.features.invoice.domain.model.CreateInvoiceActivityModel
 import io.github.alaksion.invoicer.features.invoice.domain.model.CreateInvoiceModel
@@ -13,8 +11,10 @@ import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRep
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.CreateInvoiceManager
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,10 +23,13 @@ internal class InvoiceConfirmationScreenModel(
     private val repository: InvoiceRepository,
     private val dispatcher: CoroutineDispatcher,
     private val newInvoicePublisher: NewInvoicePublisher
-) : ScreenModel, EventAware<InvoiceConfirmationEvent> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(InvoiceConfirmationState())
     val state: StateFlow<InvoiceConfirmationState> = _state
+
+    private val _events = MutableSharedFlow<InvoiceConfirmationEvent>()
+    val events = _events.asSharedFlow()
 
     fun initState() {
         _state.update {
@@ -78,10 +81,10 @@ internal class InvoiceConfirmationScreenModel(
                 onSuccess = {
                     manager.clear()
                     newInvoicePublisher.publish(Unit)
-                    publish(InvoiceConfirmationEvent.Success)
+                    _events.emit(InvoiceConfirmationEvent.Success)
                 },
                 onFailure = {
-                    publish(InvoiceConfirmationEvent.Error(it.message.orEmpty()))
+                    _events.emit((InvoiceConfirmationEvent.Error(it.message.orEmpty())))
                 }
             )
         }

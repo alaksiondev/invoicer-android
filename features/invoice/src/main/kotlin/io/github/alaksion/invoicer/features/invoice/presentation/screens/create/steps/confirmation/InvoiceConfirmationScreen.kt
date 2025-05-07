@@ -40,11 +40,11 @@ import foundation.designsystem.components.buttons.PrimaryButton
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
-import foundation.ui.events.EventEffect
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.InvoiceActivityCard
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.confirmation.components.ConfirmationCard
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.feedback.InvoiceFeedbackScreen
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal class InvoiceConfirmationScreen : Screen {
@@ -59,13 +59,15 @@ internal class InvoiceConfirmationScreen : Screen {
 
         LaunchedEffect(Unit) { screenModel.initState() }
 
-        EventEffect(screenModel) {
-            when (it) {
-                is InvoiceConfirmationEvent.Error -> scope.launch {
-                    snackbarHostState.showSnackbar(it.message)
-                }
+        LaunchedEffect(Unit) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is InvoiceConfirmationEvent.Error -> scope.launch {
+                        snackbarHostState.showSnackbar(it.message)
+                    }
 
-                InvoiceConfirmationEvent.Success -> navigator?.push(InvoiceFeedbackScreen())
+                    InvoiceConfirmationEvent.Success -> navigator?.push(InvoiceFeedbackScreen())
+                }
             }
         }
 

@@ -72,6 +72,9 @@
     <string name="beneficiary_update_swift_label">Swift Code</string>
     <string name="beneficiary_update_iban_label">Iban Code</string>
     <string name="beneficiary_update_cta">Update beneficiary</string>
+    <string name="beneficiary_update_load_error_title">Something went wrong</string>
+    <string name="beneficiary_update_load_error_description">Check your internet connection and try again</string>
+    <string name="beneficiary_update_load_error_cta">Retry</string>
 
 </resources>
 

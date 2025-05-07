@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.components
+package io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,8 +24,7 @@ import io.github.alaksion.invoicer.foundation.utils.money.moneyFormat
 import io.github.alasion.invoicer.features.invoice.R
 
 @Composable
-internal fun NewActivityCard(
-    onDeleteClick: () -> Unit,
+internal fun InvoiceActivityCard(
     quantity: Int,
     description: String,
     unitPrice: Long,
@@ -106,11 +105,10 @@ private fun FieldCard(
 @Composable
 private fun Preview() {
     ThemeContainer {
-        NewActivityCard(
+        InvoiceActivityCard(
             quantity = 1,
             description = "Hello world",
             unitPrice = 1000,
-            onDeleteClick = {}
         )
     }
 }

@@ -92,7 +92,8 @@
     <string name="invoice_add_activity_error_unit_price">Invalid unit price, must be 1 cent or higher</string>
 
     <!-- Invoice Confirmation -->
-    <string name="invoice_create_confirmation_title">Invoice Summary</string>
+    <string name="invoice_create_confirmation_title">Confirm details</string>
+    <string name="invoice_create_confirmation_subtitle">Preview invoice before submitting</string>
     <string name="invoice_create_confirmation_continue_cta">Submit invoice</string>
     <string name="confirmation_sender_company_name_label">Sender company</string>
     <string name="confirmation_sender_company_name_address">Sender address</string>
@@ -100,8 +101,9 @@
     <string name="confirmation_recipient_company_name_address">Sender address</string>
     <string name="confirmation_issue_date_label">Issue date</string>
     <string name="confirmation_due_date_label">Due date</string>
-    <string name="confirmation_beneficiary_label">Due date</string>
-    <string name="confirmation_intermediary_label">Issue date</string>
+    <string name="confirmation_beneficiary_label">Beneficiary</string>
+    <string name="confirmation_intermediary_label">Intermediary</string>
+    <string name="confirmation_amount_label">Invoice total amount</string>
     <string name="confirmation_activities_label">Activities</string>
     <string name="confirmation_external_id_label">External ID</string>
 

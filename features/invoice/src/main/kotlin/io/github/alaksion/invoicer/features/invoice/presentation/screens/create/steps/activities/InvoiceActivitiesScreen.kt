@@ -47,10 +47,10 @@ import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import foundation.ui.events.EventEffect
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.InvoiceActivityCard
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.ADD_ACTIVITY
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen.TestTags.LIST_ITEM
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.components.AddActivityBottomSheet
-import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.components.NewActivityCard
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.rememberSnackMessages
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.confirmation.InvoiceConfirmationScreen
 import io.github.alasion.invoicer.features.invoice.R
@@ -195,16 +195,13 @@ internal class InvoiceActivitiesScreen : Screen {
                         var isRevealed by remember { mutableStateOf(false) }
                         SwipeableCard(
                             content = {
-                                NewActivityCard(
+                                InvoiceActivityCard(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .testTag(LIST_ITEM),
                                     quantity = activity.quantity,
                                     description = activity.description,
                                     unitPrice = activity.unitPrice,
-                                    onDeleteClick = {
-                                        onDelete(activity.id)
-                                    }
                                 )
                             },
                             extraContent = {
@@ -234,7 +231,6 @@ internal class InvoiceActivitiesScreen : Screen {
                         )
                     }
                 }
-
                 if (showSheet) {
                     AddActivityBottomSheet(
                         sheetState = sheetState,

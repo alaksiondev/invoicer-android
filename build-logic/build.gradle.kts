@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.android.library.gradle.plugin)
     implementation(libs.android.application.gradle.plugin)
+    implementation(libs.detekt.gradle.plugin)
 }
 
 gradlePlugin {

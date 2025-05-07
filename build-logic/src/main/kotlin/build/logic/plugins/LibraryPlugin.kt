@@ -1,6 +1,7 @@
 package build.logic.plugins
 
 import build.logic.configs.AppConfig
+import build.logic.extensions.configureDetekt
 import build.logic.extensions.getPlugin
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
@@ -15,6 +16,7 @@ class LibraryPlugin : Plugin<Project> {
             installPlugins(this)
             androidSettings(this)
             configureKotlin(this)
+            configureDetektPlugin(this)
         }
     }
 
@@ -24,6 +26,9 @@ class LibraryPlugin : Plugin<Project> {
         )
         target.pluginManager.apply(
             target.getPlugin(alias = "kotlin-android").pluginId
+        )
+        target.pluginManager.apply(
+            target.getPlugin(alias = "detekt").pluginId
         )
     }
 
@@ -59,5 +64,9 @@ class LibraryPlugin : Plugin<Project> {
                 jvmTarget = AppConfig.jvmTarget
             }
         }
+    }
+
+    private fun configureDetektPlugin(target: Project) {
+        target.configureDetekt()
     }
 }

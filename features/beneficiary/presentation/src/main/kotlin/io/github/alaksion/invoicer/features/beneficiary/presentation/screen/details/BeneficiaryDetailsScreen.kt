@@ -47,6 +47,7 @@ import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.components.BeneficiaryDetailsField
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryScreen
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal data class BeneficiaryDetailsScreen(
@@ -62,15 +63,17 @@ internal data class BeneficiaryDetailsScreen(
         var showDialog by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
 
-        foundation.ui.events.EventEffect(screenModel) {
-            when (it) {
-                is BeneficiaryDetailsEvent.DeleteError -> scope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = it.message
-                    )
-                }
+        LaunchedEffect(screenModel) {
+            screenModel.events.collectLatest {
+                when (it) {
+                    is BeneficiaryDetailsEvent.DeleteError -> scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = it.message
+                        )
+                    }
 
-                BeneficiaryDetailsEvent.DeleteSuccess -> navigator?.pop()
+                    BeneficiaryDetailsEvent.DeleteSuccess -> navigator?.pop()
+                }
             }
         }
 

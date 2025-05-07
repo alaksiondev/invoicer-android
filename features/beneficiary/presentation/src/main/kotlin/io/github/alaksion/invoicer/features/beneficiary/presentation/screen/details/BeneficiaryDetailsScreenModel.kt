@@ -5,14 +5,14 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,10 +20,13 @@ internal class BeneficiaryDetailsScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
     private val refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher
-) : ScreenModel, EventAware<BeneficiaryDetailsEvent> by EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(BeneficiaryDetailsState())
     val state: StateFlow<BeneficiaryDetailsState> = _state
+
+    private val _events = MutableSharedFlow<BeneficiaryDetailsEvent>()
+    val events = _events.asSharedFlow()
 
     fun initState(id: String) {
         screenModelScope.launch(dispatcher) {
@@ -64,11 +67,11 @@ internal class BeneficiaryDetailsScreenModel(
                 beneficiaryRepository.deleteBeneficiary(id)
             }.handle(
                 onFailure = { error ->
-                    publish(BeneficiaryDetailsEvent.DeleteError(error.message ?: ""))
+                    _events.emit(BeneficiaryDetailsEvent.DeleteError(error.message ?: ""))
                 },
                 onSuccess = {
                     refreshBeneficiaryPublisher.publish(Unit)
-                    publish(BeneficiaryDetailsEvent.DeleteSuccess)
+                    _events.emit((BeneficiaryDetailsEvent.DeleteSuccess))
                 },
                 onStart = {
                     _state.update {

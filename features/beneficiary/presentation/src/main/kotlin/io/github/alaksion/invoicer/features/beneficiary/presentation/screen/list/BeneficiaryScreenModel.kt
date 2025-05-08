@@ -110,5 +110,4 @@ internal class BeneficiaryScreenModel(
     companion object {
         const val PAGE_LIMIT = 20L
     }
-
 }

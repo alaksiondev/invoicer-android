@@ -11,3 +11,4 @@ local.properties
 .kotlin
 app/google-services.json
 **/build/
+/app/release

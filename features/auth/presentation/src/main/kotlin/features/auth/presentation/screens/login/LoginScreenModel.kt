@@ -12,6 +12,7 @@ import foundation.network.request.handle
 import foundation.network.request.launchRequest
 import foundation.ui.events.EventAware
 import foundation.ui.events.EventPublisher
+import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
 import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommand
 import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManager
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,7 +24,8 @@ import kotlinx.coroutines.launch
 internal class LoginScreenModel(
     private val signInCommander: SignInCommandManager,
     private val firebaseHelper: FirebaseHelper,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val analyticsTracker: AnalyticsTracker
 ) : ScreenModel, EventAware<LoginScreenEvents> by EventPublisher() {
     private val _state = MutableStateFlow(LoginScreenState())
     val state: StateFlow<LoginScreenState> = _state
@@ -45,6 +47,7 @@ internal class LoginScreenModel(
     }
 
     fun getGoogleClient(): GoogleSignInClient {
+        analyticsTracker.track(LoginAnalytics.GoogleLoginStarted)
         _state.update {
             it.copy(
                 isGoogleLoading = true
@@ -63,13 +66,19 @@ internal class LoginScreenModel(
                     )
                 )
             }.handle(
-                onStart = { _state.update { it.copy(isSignInLoading = true) } },
+                onStart = {
+                    analyticsTracker.track(LoginAnalytics.IdentityLoginStarted)
+                    _state.update {
+                        it.copy(isSignInLoading = true)
+                    }
+                },
                 onFinish = { _state.update { it.copy(isSignInLoading = false) } },
                 onFailure = {
+                    analyticsTracker.track(LoginAnalytics.IdentityLoginFailure)
                     sendErrorEvent(it)
                 },
                 onSuccess = {
-                    // no-op
+                    analyticsTracker.track(LoginAnalytics.IdentityLoginSuccess)
                 }
             )
         }
@@ -87,6 +96,7 @@ internal class LoginScreenModel(
     }
 
     fun cancelGoogleSignIn() {
+        analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
         _state.update {
             it.copy(
                 isGoogleLoading = false
@@ -100,6 +110,7 @@ internal class LoginScreenModel(
 
             when (result) {
                 is GoogleResult.Error -> {
+                    analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
                     publish(
                         LoginScreenEvents.Failure(
                             message = result.error?.message.orEmpty()
@@ -114,7 +125,7 @@ internal class LoginScreenModel(
                         )
                     }.handle(
                         onSuccess = {
-                            // no op
+                            analyticsTracker.track(LoginAnalytics.GoogleLoginSuccess)
                         },
                         onFinish = {
                             _state.update {
@@ -124,6 +135,7 @@ internal class LoginScreenModel(
                             }
                         },
                         onFailure = { result ->
+                            analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
                             publish(
                                 LoginScreenEvents.Failure(
                                     message = result.message.orEmpty()

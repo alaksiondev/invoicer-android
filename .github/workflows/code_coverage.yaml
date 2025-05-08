@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: branch-coverage
-          path: server/build/reports/kover/branch-report.xml
+          path: build/reports/kover/branch-report.xml
 
   main-coverage:
     name: Generate main coverage report
@@ -93,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: main-coverage
-          path: server/build/reports/kover/main-report.xml
+          path: build/reports/kover/main-report.xml
 
   write-report:
     name: Compare report

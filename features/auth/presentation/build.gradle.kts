@@ -60,4 +60,5 @@ dependencies {
     implementation(projects.foundation.ui)
     implementation(projects.foundation.exception)
     implementation(projects.foundation.auth)
+    implementation(projects.foundation.analytics)
 }

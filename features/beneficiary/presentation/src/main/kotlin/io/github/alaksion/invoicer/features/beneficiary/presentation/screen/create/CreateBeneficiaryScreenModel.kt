@@ -94,9 +94,4 @@ internal class CreateBeneficiaryScreenModel(
             )
         }
     }
-
-    fun cancelSubmit() {
-        submitJob?.cancel()
-        submitJob = null
-    }
 }

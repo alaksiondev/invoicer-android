@@ -74,6 +74,7 @@ Use the same Firebase project used by the Invoicer API.
 4. Enable Google Analytics
 5. Enable Firebase Authentication
 6. Enable Google Sign in method
+7. Go to Authentication -> Sign-in-method -> Google -> Web SDK Config -> Copy WebClient ID and set it in the `local.properties` file as `FIREBASE_WEB_ID`. This is required for the Google Sign in to work properly.
 
 ## Run the app
 Once the setup is done install the app on your device or emulator and run it. You should be able to interact and test it.

@@ -36,7 +36,6 @@ import foundation.designsystem.components.InvoicerDialog
 import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.buttons.PrimaryButton
-import foundation.designsystem.components.spacer.Spacer
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
@@ -137,40 +136,16 @@ internal class SignUpScreen : Screen {
                 SnackbarHost(snackBarState)
             },
             bottomBar = {
-                Column(Modifier.fillMaxWidth().padding(Spacing.medium)) {
-                    PrimaryButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(R.string.auth_sign_up_submit_button),
-                        onClick = onSubmitClick,
-                        isEnabled = state.buttonEnabled,
-                        isLoading = state.requestLoading
-                    )
-                    VerticalSpacer(height = SpacerSize.Medium)
-                    TextButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = onSignInClick
-                    ) {
-                        Text(
-                            text = buildAnnotatedString {
-                                withStyle(
-                                    style = MaterialTheme.typography.bodyMedium
-                                        .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                        .toSpanStyle()
-                                ) {
-                                    append(text = stringResource(R.string.auth_sign_up_have_account_prefix))
-                                }
-                                append(" ")
-                                withStyle(
-                                    style = MaterialTheme.typography.bodyMedium
-                                        .copy(color = MaterialTheme.colorScheme.primary)
-                                        .toSpanStyle()
-                                ) {
-                                    append(text = stringResource(R.string.auth_sign_up_have_account_suffix))
-                                }
-                            }
-                        )
-                    }
-                }
+                PrimaryButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                    label = stringResource(R.string.auth_sign_up_submit_button),
+                    onClick = onSubmitClick,
+                    isEnabled = state.buttonEnabled,
+                    isLoading = state.requestLoading
+                )
+
             }
         ) { scaffoldPadding ->
             Column(
@@ -199,6 +174,30 @@ internal class SignUpScreen : Screen {
                     modifier = Modifier.fillMaxWidth()
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)
+                TextButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onSignInClick
+                ) {
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = MaterialTheme.typography.bodyMedium
+                                    .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    .toSpanStyle()
+                            ) {
+                                append(text = stringResource(R.string.auth_sign_up_have_account_prefix))
+                            }
+                            append(" ")
+                            withStyle(
+                                style = MaterialTheme.typography.bodyMedium
+                                    .copy(color = MaterialTheme.colorScheme.primary)
+                                    .toSpanStyle()
+                            ) {
+                                append(text = stringResource(R.string.auth_sign_up_have_account_suffix))
+                            }
+                        }
+                    )
+                }
             }
 
             if (showDuplicateAccountDialog) {

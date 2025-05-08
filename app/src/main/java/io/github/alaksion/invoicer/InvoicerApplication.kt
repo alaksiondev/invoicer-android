@@ -20,6 +20,7 @@ import io.github.alaksion.invoicer.features.intermediary.presentation.navigation
 import io.github.alaksion.invoicer.features.intermediary.services.di.intermediaryServicesDiModule
 import io.github.alaksion.invoicer.features.invoice.di.invoiceDiModule
 import io.github.alaksion.invoicer.features.invoice.presentation.navigation.invoiceScreens
+import io.github.alaksion.invoicer.foundation.analytics.di.analyticsDiModule
 import io.github.alaksion.invoicer.foundation.auth.di.foundationAuthDiModule
 import io.github.alaksion.invoicer.foundation.utils.di.utilsDiModule
 import io.github.alaksion.invoicer.main.mainDiModule
@@ -57,7 +58,8 @@ class InvoicerApplication : Application() {
                 intermediaryPresentationModule,
                 intermediaryServicesDiModule,
                 qrCodeSessionDi,
-                watchersDiModule
+                watchersDiModule,
+                analyticsDiModule
             )
         }
     }

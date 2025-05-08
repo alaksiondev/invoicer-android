@@ -7,14 +7,17 @@ android {
 }
 
 dependencies {
-
-    // Auth Providers
+    // Analytics
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
+    implementation(libs.firebase.analytics)
 
     // Koin
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+
+
+    // Project
+    implementation(projects.foundation.utils)
 
     // Test
     testImplementation(kotlin("test"))

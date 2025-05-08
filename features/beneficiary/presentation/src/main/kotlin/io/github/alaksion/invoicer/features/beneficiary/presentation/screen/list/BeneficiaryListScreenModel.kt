@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class BeneficiaryScreenModel(
+internal class BeneficiaryListScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
 ) : ScreenModel {
@@ -65,42 +65,6 @@ internal class BeneficiaryScreenModel(
         }
     }
 
-    fun nextPage() {
-        if (isFirstPageLoaded && _state.value.isNextPageLoading.not() && paginationEnabled) {
-            screenModelScope.launch(dispatcher) {
-                launchRequest { getBeneficiaries() }
-                    .handle(
-                        onStart = {
-                            _state.value = _state.value.copy(
-                                isNextPageLoading = true
-                            )
-                        },
-                        onFinish = {
-                            _state.value = _state.value.copy(
-                                isNextPageLoading = false
-                            )
-                        },
-                        onFailure = {
-                            _events.emit(BeneficiaryListEvents.LoadMoreError)
-                        },
-                        onSuccess = { result ->
-                            paginationEnabled = result.nextPage != null
-                            result.nextPage?.let {
-                                page = it
-                            }
-
-                            _state.update { oldState ->
-                                oldState.copy(
-                                    beneficiaries = (oldState.beneficiaries + result.items)
-                                        .toPersistentList()
-                                )
-                            }
-                        },
-                    )
-            }
-        }
-    }
-
     private suspend fun getBeneficiaries(): BeneficiariesModel =
         beneficiaryRepository.getBeneficiaries(
             page = page,
@@ -108,6 +72,6 @@ internal class BeneficiaryScreenModel(
         )
 
     companion object {
-        const val PAGE_LIMIT = 20L
+        const val PAGE_LIMIT = 100L
     }
 }

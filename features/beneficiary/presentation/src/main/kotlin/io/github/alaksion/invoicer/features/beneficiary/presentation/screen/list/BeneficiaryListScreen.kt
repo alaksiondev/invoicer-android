@@ -47,7 +47,7 @@ internal class BeneficiaryListScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val viewModel = koinScreenModel<BeneficiaryScreenModel>()
+        val viewModel = koinScreenModel<BeneficiaryListScreenModel>()
         val refreshBeneficiaryPublisher by remember { getKoin().inject<RefreshBeneficiaryPublisher>() }
         val state by viewModel.state.collectAsStateWithLifecycle()
 

@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -139,11 +141,13 @@ internal class LoginScreen : Screen {
                 SnackbarHost(snackbarHostState)
             }
         ) {
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
                     .padding(it)
                     .padding(Spacing.medium)
                     .fillMaxSize()
+                    .verticalScroll(scrollState)
             ) {
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 ScreenTitle(

@@ -25,7 +25,8 @@ private fun Module.viewModelBindings() {
             authRepository = get(),
             dispatcher = Dispatchers.Default,
             emailValidator = get(),
-            passwordStrengthValidator = get()
+            passwordStrengthValidator = get(),
+            analyticsTracker = get()
         )
     }
 
@@ -33,7 +34,8 @@ private fun Module.viewModelBindings() {
         LoginScreenModel(
             firebaseHelper = get(),
             dispatcher = Dispatchers.Default,
-            signInCommander = get()
+            signInCommander = get(),
+            analyticsTracker = get()
         )
     }
 

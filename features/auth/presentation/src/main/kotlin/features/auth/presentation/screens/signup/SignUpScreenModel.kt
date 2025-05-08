@@ -7,6 +7,7 @@ import features.auth.presentation.utils.PasswordStrengthValidator
 import foundation.network.RequestError
 import foundation.network.request.RequestState
 import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ internal class SignUpScreenModel(
     private val dispatcher: CoroutineDispatcher,
     private val emailValidator: EmailValidator,
     private val passwordStrengthValidator: PasswordStrengthValidator,
+    private val analyticsTracker: AnalyticsTracker
 ) : ScreenModel,
     foundation.ui.events.EventAware<SignUpEvents> by foundation.ui.events.EventPublisher() {
 
@@ -79,6 +81,7 @@ internal class SignUpScreenModel(
     ) {
         when (state) {
             is RequestState.Started -> {
+                analyticsTracker.track(SignUpAnalytics.Started)
                 _state.update {
                     it.copy(
                         requestLoading = true
@@ -87,10 +90,12 @@ internal class SignUpScreenModel(
             }
 
             is RequestState.Success -> {
+                analyticsTracker.track(SignUpAnalytics.Success)
                 publish(SignUpEvents.Success)
             }
 
             is RequestState.Error -> {
+                analyticsTracker.track(SignUpAnalytics.Failure)
                 when (val error = state.exception) {
                     is RequestError.Http -> {
                         if (error.httpCode == 409) {

@@ -11,7 +11,7 @@ internal class FirebaseAnalyticsTracker(
     private val tracker: FirebaseAnalytics
 ) : AnalyticsTracker {
 
-    override suspend fun track(event: AnalyticsEvent) {
+    override fun track(event: AnalyticsEvent) {
         tracker.logEvent(event.name) {
             event.params.keys.forEach { key ->
                 val value = event.params[key]

@@ -15,7 +15,7 @@ jobs:
 
       - name: Decode Play Services Json
         env:
-          ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
         run: |
             echo $ENCODED_STRING > play_services-b64.txt
             base64 -d play_services-b64.txt > app/google-services.json

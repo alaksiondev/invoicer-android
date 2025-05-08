@@ -43,7 +43,8 @@ class AppPlugin : Plugin<Project> {
 
             buildTypes {
                 release {
-                    isMinifyEnabled = false
+                    isMinifyEnabled = true
+                    isShrinkResources = true
                 }
 
                 debug {

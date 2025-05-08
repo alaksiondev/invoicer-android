@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
-import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component3
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import foundation.designsystem.components.spacer.SpacerSize
@@ -22,7 +21,7 @@ internal fun SignUpForm(
     onPasswordChange: (String) -> Unit,
     toggleCensorship: () -> Unit,
 ) {
-    val (emailFocus, confirmEmailFocus, passwordFocus) = FocusRequester.createRefs()
+    val (emailFocus, passwordFocus) = FocusRequester.createRefs()
     val keyboard = LocalSoftwareKeyboardController.current
 
     Column(
@@ -34,7 +33,7 @@ internal fun SignUpForm(
                 .focusRequester(emailFocus),
             value = state.email,
             onChange = onEmailChange,
-            onImeAction = { confirmEmailFocus.requestFocus() },
+            onImeAction = { passwordFocus.requestFocus() },
             isEmailValid = state.emailValid,
             enabled = state.requestLoading.not()
         )

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -120,6 +122,7 @@ internal class SignUpScreen : Screen {
         onDismissDialog: () -> Unit,
         showDuplicateAccountDialog: Boolean,
     ) {
+        val scrollState = rememberScrollState()
         Scaffold(
             modifier = Modifier.imePadding(),
             topBar = {
@@ -133,12 +136,49 @@ internal class SignUpScreen : Screen {
             snackbarHost = {
                 SnackbarHost(snackBarState)
             },
+            bottomBar = {
+                Column(Modifier.fillMaxWidth().padding(Spacing.medium)) {
+                    PrimaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = stringResource(R.string.auth_sign_up_submit_button),
+                        onClick = onSubmitClick,
+                        isEnabled = state.buttonEnabled,
+                        isLoading = state.requestLoading
+                    )
+                    VerticalSpacer(height = SpacerSize.Medium)
+                    TextButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = onSignInClick
+                    ) {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = MaterialTheme.typography.bodyMedium
+                                        .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                        .toSpanStyle()
+                                ) {
+                                    append(text = stringResource(R.string.auth_sign_up_have_account_prefix))
+                                }
+                                append(" ")
+                                withStyle(
+                                    style = MaterialTheme.typography.bodyMedium
+                                        .copy(color = MaterialTheme.colorScheme.primary)
+                                        .toSpanStyle()
+                                ) {
+                                    append(text = stringResource(R.string.auth_sign_up_have_account_suffix))
+                                }
+                            }
+                        )
+                    }
+                }
+            }
         ) { scaffoldPadding ->
             Column(
                 modifier = Modifier
                     .padding(scaffoldPadding)
                     .padding(Spacing.medium)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
             ) {
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 ScreenTitle(
@@ -159,39 +199,6 @@ internal class SignUpScreen : Screen {
                     modifier = Modifier.fillMaxWidth()
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)
-                PrimaryButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = stringResource(R.string.auth_sign_up_submit_button),
-                    onClick = onSubmitClick,
-                    isEnabled = state.buttonEnabled,
-                    isLoading = state.requestLoading
-                )
-                VerticalSpacer(height = SpacerSize.Medium)
-                Spacer(1f)
-                TextButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onSignInClick
-                ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = MaterialTheme.typography.bodyMedium
-                                    .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                    .toSpanStyle()
-                            ) {
-                                append(text = stringResource(R.string.auth_sign_up_have_account_prefix))
-                            }
-                            append(" ")
-                            withStyle(
-                                style = MaterialTheme.typography.bodyMedium
-                                    .copy(color = MaterialTheme.colorScheme.primary)
-                                    .toSpanStyle()
-                            ) {
-                                append(text = stringResource(R.string.auth_sign_up_have_account_suffix))
-                            }
-                        }
-                    )
-                }
             }
 
             if (showDuplicateAccountDialog) {

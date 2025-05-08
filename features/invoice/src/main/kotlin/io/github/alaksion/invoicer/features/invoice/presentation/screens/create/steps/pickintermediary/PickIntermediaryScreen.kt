@@ -158,7 +158,7 @@ internal class PickIntermediaryScreen : Screen {
                         }
 
                         items(
-                            items = state.beneficiaries,
+                            items = state.intermediaries,
                             key = { it.id }
                         ) { intermediary ->
                             val isSelected = remember(state.selection) {

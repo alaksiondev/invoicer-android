@@ -26,11 +26,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Create local.properties file
-        run: |
-          echo "sdk.dir=$ANDROID_HOME" >> local.properties
-          echo "DEBUG_APP_URL=\"${{ secrets.DEBUG_APP_URL }}\"" >> local.properties
-          echo "PROD_APP_URL=\"${{ secrets.PROD_APP_URL }}\"" >> local.properties
-          echo "FIREBASE_WEB_ID=\"${{ secrets.FIREBASE_WEB_ID }}\"" >> local.properties
+        uses: ./.github/actions/write-secrets
+        with:
+          firebase-web-id: ${{ secrets.FIREBASE_WEB_ID }}
+          debug-api-url: ${{ secrets.DEBUG_APP_URL }}
+          prod-api-url: ${{ secrets.PROD_APP_URL }}
 
       - name: Cache Gradle packages
         uses: actions/cache@v3

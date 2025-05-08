@@ -36,4 +36,9 @@ dependencies {
     // Feature
     implementation(projects.features.intermediary.services)
     implementation(projects.foundation.watchers)
+
+    // Test
+    testImplementation(kotlin("test"))
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
 }

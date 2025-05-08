@@ -1,0 +1,24 @@
+name: 'Write secrets'
+description: 'Write repository secrets into local properties file'
+inputs:
+  firebase-web-id:
+    description: 'Firebase project Web id'
+    required: true
+  debug-api-url:
+    description: 'Debug API url'
+    required: true
+  prod-api-url:
+    description: 'Prod API url'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Create local.properties file
+      shell: bash
+      run: |
+        echo "Using secret ${{ inputs.secret-name }}"
+        # Use ${{ inputs.secret-value }} here
+        echo "sdk.dir=$ANDROID_HOME" >> local.properties
+        echo "DEBUG_APP_URL=\"${{ inputs.debug-api-url }}\"" >> local.properties
+        echo "PROD_APP_URL=\"${{ inputs.prod-api-url }}\"" >> local.properties
+        echo "FIREBASE_WEB_ID=\"${{ inputs.firebase-web-id }}\"" >> local.properties

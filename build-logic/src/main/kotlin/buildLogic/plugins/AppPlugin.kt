@@ -1,15 +1,15 @@
-package build.logic.plugins
+package buildLogic.plugins
 
-import build.logic.configs.AppConfig
-import build.logic.extensions.getPlugin
-import com.android.build.gradle.LibraryExtension
+import buildLogic.configs.AppConfig
+import buildLogic.extensions.getPlugin
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-class LibraryPlugin : Plugin<Project> {
+class AppPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             installPlugins(this)
@@ -20,7 +20,7 @@ class LibraryPlugin : Plugin<Project> {
 
     private fun installPlugins(target: Project) {
         target.pluginManager.apply(
-            target.getPlugin(alias = "android-library").pluginId
+            target.getPlugin(alias = "android-application").pluginId
         )
         target.pluginManager.apply(
             target.getPlugin(alias = "kotlin-android").pluginId
@@ -28,17 +28,17 @@ class LibraryPlugin : Plugin<Project> {
     }
 
     private fun androidSettings(target: Project) {
-        target.extensions.configure<LibraryExtension> {
+        target.extensions.configure<BaseAppModuleExtension> {
+            namespace = AppConfig.appId
+
             compileSdk = AppConfig.compileSdk
 
             defaultConfig {
-                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                applicationId = AppConfig.appId
                 minSdk = AppConfig.minSdk
-            }
-
-            compileOptions {
-                sourceCompatibility = AppConfig.javaVersion
-                targetCompatibility = AppConfig.javaVersion
+                targetSdk = AppConfig.targetSdk
+                versionCode = AppConfig.versionCode
+                versionName = AppConfig.versionName
             }
 
             buildTypes {
@@ -49,6 +49,11 @@ class LibraryPlugin : Plugin<Project> {
                 debug {
 
                 }
+            }
+
+            compileOptions {
+                sourceCompatibility = AppConfig.javaVersion
+                targetCompatibility = AppConfig.javaVersion
             }
         }
     }

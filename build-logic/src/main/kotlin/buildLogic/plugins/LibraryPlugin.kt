@@ -1,44 +1,49 @@
-package build.logic.plugins
+package buildLogic.plugins
 
-import build.logic.configs.AppConfig
-import build.logic.extensions.getPlugin
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import buildLogic.configs.AppConfig
+import buildLogic.extensions.configureDetekt
+import buildLogic.extensions.getPlugin
+import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-class AppPlugin : Plugin<Project> {
+class LibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             installPlugins(this)
             androidSettings(this)
             configureKotlin(this)
+            configureDetektPlugin(this)
         }
     }
 
     private fun installPlugins(target: Project) {
         target.pluginManager.apply(
-            target.getPlugin(alias = "android-application").pluginId
+            target.getPlugin(alias = "android-library").pluginId
         )
         target.pluginManager.apply(
             target.getPlugin(alias = "kotlin-android").pluginId
         )
+        target.pluginManager.apply(
+            target.getPlugin(alias = "detekt").pluginId
+        )
     }
 
     private fun androidSettings(target: Project) {
-        target.extensions.configure<BaseAppModuleExtension> {
-            namespace = AppConfig.appId
-
+        target.extensions.configure<LibraryExtension> {
             compileSdk = AppConfig.compileSdk
 
             defaultConfig {
-                applicationId = AppConfig.appId
+                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 minSdk = AppConfig.minSdk
-                targetSdk = AppConfig.targetSdk
-                versionCode = AppConfig.versionCode
-                versionName = AppConfig.versionName
+            }
+
+            compileOptions {
+                sourceCompatibility = AppConfig.javaVersion
+                targetCompatibility = AppConfig.javaVersion
             }
 
             buildTypes {
@@ -50,11 +55,6 @@ class AppPlugin : Plugin<Project> {
 
                 }
             }
-
-            compileOptions {
-                sourceCompatibility = AppConfig.javaVersion
-                targetCompatibility = AppConfig.javaVersion
-            }
         }
     }
 
@@ -64,5 +64,9 @@ class AppPlugin : Plugin<Project> {
                 jvmTarget = AppConfig.jvmTarget
             }
         }
+    }
+
+    private fun configureDetektPlugin(target: Project) {
+        target.configureDetekt()
     }
 }

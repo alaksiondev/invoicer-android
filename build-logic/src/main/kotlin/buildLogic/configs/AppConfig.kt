@@ -1,4 +1,4 @@
-package build.logic.configs
+package buildLogic.configs
 
 import org.gradle.api.JavaVersion
 

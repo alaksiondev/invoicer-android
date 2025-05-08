@@ -1,0 +1,132 @@
+name: Test Coverage Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  branch-coverage:
+    name: Generate branch coverage report
+    runs-on: ubuntu-latest
+    environment: App_Debug
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Create local.properties file
+        uses: ./.github/actions/write-secrets
+        with:
+          firebase-web-id: ${{ secrets.FIREBASE_WEB_ID }}
+          debug-api-url: ${{ secrets.DEBUG_APP_URL }}
+          prod-api-url: ${{ secrets.PROD_APP_URL }}
+
+      - name: Load Google Service file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $DATA | base64 -di > app/google-services.json
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate branch coverage report
+        run: ./gradlew test -Pkover koverXmlReport
+
+      - name: Rename file
+        run: |
+          mv build/reports/kover/report.xml build/reports/kover/branch-report.xml
+
+      - name: Store branch report
+        uses: actions/upload-artifact@v4
+        with:
+          name: branch-coverage
+          path: server/build/reports/kover/branch-report.xml
+
+  main-coverage:
+    name: Generate main coverage report
+    runs-on: ubuntu-latest
+    environment: App_Debug
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Create local.properties file
+        uses: ./.github/actions/write-secrets
+        with:
+          firebase-web-id: ${{ secrets.FIREBASE_WEB_ID }}
+          debug-api-url: ${{ secrets.DEBUG_APP_URL }}
+          prod-api-url: ${{ secrets.PROD_APP_URL }}
+
+      - name: Load Google Service file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $DATA | base64 -di > app/google-services.json
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate main coverage report
+        run: ./gradlew test -Pkover koverXmlReport
+
+      - name: Rename file
+        run: |
+          mv build/reports/kover/report.xml build/reports/kover/main-report.xml
+
+      - name: Store Main report
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-coverage
+          path: server/build/reports/kover/main-report.xml
+
+  write-report:
+    name: Compare report
+    runs-on: ubuntu-latest
+    environment: App_Debug
+    needs: [ main-coverage, branch-coverage ]
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download branch report
+        uses: actions/download-artifact@v4
+        with:
+          name: branch-coverage
+
+      - name: Download main report
+        uses: actions/download-artifact@v4
+        with:
+          name: main-coverage
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Run comparison script
+        run: |
+          python scripts/parse_coverage.py branch-report.xml main-report.xml > report.md
+
+      - name: Comment on PR
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-path: report.md
+          message-id: coverage-report
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -9,5 +9,5 @@
 local.properties
 .idea
 .kotlin
-**build
 app/google-services.json
+**/build/

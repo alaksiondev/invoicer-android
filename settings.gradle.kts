@@ -14,11 +14,26 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+plugins {
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.9.1"
+}
+
+kover {
+    enableCoverage()
+
+    reports {
+        excludesAnnotatedBy = setOf(
+            "io.github.alaksion.invoicer.foundation.utils.notations.IgnoreCoverage",
+        )
     }
 }
 

@@ -9,7 +9,7 @@ val properties = Properties()
 properties.load(rootProject.file("local.properties").inputStream())
 
 android {
-    namespace = "features.auth.presentation"
+    namespace = "io.github.alaksion.invoicer.features.auth.presentation"
 
     buildFeatures {
         buildConfig = true
@@ -61,4 +61,9 @@ dependencies {
     implementation(projects.foundation.exception)
     implementation(projects.foundation.auth)
     implementation(projects.foundation.analytics)
+
+    // Test
+    testImplementation(kotlin("test"))
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
 }

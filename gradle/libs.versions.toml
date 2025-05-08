@@ -24,6 +24,7 @@ googleId = "1.1.1"
 google-services-auth = "21.3.0"
 crashlytics-plugin = "3.0.3"
 detekt = "1.23.8"
+mockk = "1.14.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -99,6 +100,9 @@ identity-googleid = { module = "com.google.android.libraries.identity.googleid:g
 
 # Google Services
 google-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "google-services-auth" }
+
+# Mock
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -54,7 +54,7 @@ internal class PickIntermediaryScreenModel(
                         _state.update {
                             it.copy(
                                 uiMode = PickIntermediaryUiMode.Content,
-                                beneficiaries = data.toPersistentList(),
+                                intermediaries = data.toPersistentList(),
                                 selection = createInvoiceManager
                                     .intermediaryId?.let { selectedIntermediaryId ->
                                         IntermediarySelection.Existing(selectedIntermediaryId)
@@ -81,7 +81,7 @@ internal class PickIntermediaryScreenModel(
                 _state.update { it.copy(selection = selection) }
 
             is IntermediarySelection.Existing -> {
-                val item = _state.value.beneficiaries.firstOrNull { it.id == selection.id }
+                val item = _state.value.intermediaries.firstOrNull { it.id == selection.id }
                 item?.let { beneficiary ->
                     _state.update {
                         it.copy(
@@ -100,7 +100,7 @@ internal class PickIntermediaryScreenModel(
 
         when (val selection = _state.value.selection) {
             is IntermediarySelection.Existing -> screenModelScope.launch(dispatcher) {
-                val beneficiary = _state.value.beneficiaries.firstOrNull { selection.id == it.id }
+                val beneficiary = _state.value.intermediaries.firstOrNull { selection.id == it.id }
                 beneficiary?.let {
                     submitBeneficiary(
                         intermediaryId = beneficiary.id,

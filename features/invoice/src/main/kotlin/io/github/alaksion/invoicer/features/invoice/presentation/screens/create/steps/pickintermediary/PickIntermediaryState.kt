@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 internal data class PickIntermediaryState(
-    val beneficiaries: ImmutableList<IntermediaryModel> = persistentListOf(),
+    val intermediaries: ImmutableList<IntermediaryModel> = persistentListOf(),
     val uiMode: PickIntermediaryUiMode = PickIntermediaryUiMode.Content,
     val selection: IntermediarySelection = IntermediarySelection.None
 ) {

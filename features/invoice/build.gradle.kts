@@ -49,5 +49,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Test
+    testImplementation(kotlin("test"))
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
 }

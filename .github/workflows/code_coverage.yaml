@@ -12,6 +12,7 @@ jobs:
   branch-coverage:
     name: Generate branch coverage report
     runs-on: ubuntu-latest
+    environment: App_Debug
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -53,6 +54,7 @@ jobs:
   main-coverage:
     name: Generate main coverage report
     runs-on: ubuntu-latest
+    environment: App_Debug
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -96,6 +98,7 @@ jobs:
   write-report:
     name: Compare report
     runs-on: ubuntu-latest
+    environment: App_Debug
     needs: [ main-coverage, branch-coverage ]
     steps:
 

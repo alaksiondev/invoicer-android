@@ -8,6 +8,7 @@ on:
 jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
+    environment: App_Debug
 
     steps:
       - name: Checkout repository

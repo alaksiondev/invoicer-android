@@ -1,8 +1,8 @@
-package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create
+package io.github.alaksion.invoicer.features.intermediary.presentation.screen.create
 
 import foundation.network.RequestError
-import foundation.watchers.RefreshBeneficiaryPublisher
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
+import foundation.watchers.RefreshIntermediaryPublisher
+import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -21,23 +22,23 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CreateBeneficiaryScreenModelTest {
+class CreateIntermediaryScreenModelTest {
 
-    private val beneficiaryRepository = mockk<BeneficiaryRepository>()
-    private lateinit var refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher
+    private val intermediaryRepository = mockk<IntermediaryRepository>()
+    private lateinit var refreshIntermediaryPublisher: RefreshIntermediaryPublisher
     private val dispatcher = StandardTestDispatcher()
 
-    private lateinit var viewModel: CreateBeneficiaryScreenModel
+    private lateinit var viewModel: CreateIntermediaryScreenModel
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        refreshBeneficiaryPublisher = RefreshBeneficiaryPublisher()
+        refreshIntermediaryPublisher = RefreshIntermediaryPublisher()
         clearAllMocks()
-        viewModel = CreateBeneficiaryScreenModel(
-            beneficiaryRepository = beneficiaryRepository,
+        viewModel = CreateIntermediaryScreenModel(
+            intermediaryRepository = intermediaryRepository,
             dispatcher = dispatcher,
-            refreshBeneficiaryPublisher = refreshBeneficiaryPublisher
+            refreshIntermediaryPublisher = refreshIntermediaryPublisher
         )
     }
 
@@ -79,7 +80,7 @@ class CreateBeneficiaryScreenModelTest {
     @Test
     fun `should emit success event on successful submission`() = runTest {
         coEvery {
-            beneficiaryRepository.createBeneficiary(
+            intermediaryRepository.createIntermediary(
                 any(),
                 any(),
                 any(),
@@ -96,13 +97,13 @@ class CreateBeneficiaryScreenModelTest {
 
         viewModel.submit()
 
-        assertEquals(CreateBeneficiaryEvents.Success, viewModel.events.first())
+        assertEquals(CreateIntermediaryEvents.Success, viewModel.events.first())
     }
 
     @Test
     fun `should emit error event on submission failure`() = runTest {
         coEvery {
-            beneficiaryRepository.createBeneficiary(
+            intermediaryRepository.createIntermediary(
                 any(),
                 any(),
                 any(),
@@ -116,7 +117,7 @@ class CreateBeneficiaryScreenModelTest {
         viewModel.submit()
 
         assertEquals(
-            CreateBeneficiaryEvents.Error(""),
+            CreateIntermediaryEvents.Error(""),
             viewModel.events.first()
         )
     }

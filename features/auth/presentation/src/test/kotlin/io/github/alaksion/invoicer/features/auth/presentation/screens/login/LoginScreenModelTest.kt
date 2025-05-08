@@ -3,6 +3,7 @@ package io.github.alaksion.invoicer.features.auth.presentation.screens.login
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Task
+import foundation.network.RequestError
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelper
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.GoogleResult
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
@@ -17,6 +18,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -26,6 +28,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginScreenModelTest {
@@ -126,6 +129,71 @@ class LoginScreenModelTest {
 
         advanceUntilIdle()
         coVerify { analyticsTracker.track(LoginAnalytics.GoogleLoginFailure) }
+    }
+
+    @Test
+    fun `handleGoogleTask success but login request fails`() = runTest {
+        val task: Task<GoogleSignInAccount> = mockk()
+        val googleResult = GoogleResult.Success("123")
+
+        coEvery { firebaseHelper.handleGoogleResult(task) } returns googleResult
+        coEvery { analyticsTracker.track(any()) } just Runs
+        coEvery { signInCommander.resolveCommand(any()) } throws IllegalStateException()
+
+        viewModel.handleGoogleTask(task)
+
+        assertIs<LoginScreenEvents.Failure>(viewModel.events.first())
+    }
+
+    @Test
+    fun `handle signin request fails with http error`() = runTest {
+        viewModel.onEmailChanged("test@example.com")
+        viewModel.onPasswordChanged("password123")
+
+        coEvery { signInCommander.resolveCommand(any()) } throws
+                RequestError.Http(
+                    httpCode = 401,
+                    message = "Unauthorized",
+                )
+
+        coEvery { analyticsTracker.track(any()) } just Runs
+
+        viewModel.submit()
+
+        assertIs<LoginScreenEvents.Failure>(viewModel.events.first())
+    }
+
+    @Test
+    fun `handle signin request fails with http error without message`() = runTest {
+        viewModel.onEmailChanged("test@example.com")
+        viewModel.onPasswordChanged("password123")
+
+        coEvery { signInCommander.resolveCommand(any()) } throws
+                RequestError.Http(
+                    httpCode = 401,
+                    message = null,
+                )
+
+        coEvery { analyticsTracker.track(any()) } just Runs
+
+        viewModel.submit()
+
+        assertIs<LoginScreenEvents.GenericFailure>(viewModel.events.first())
+    }
+
+    @Test
+    fun `handle signin request fails with untracked exception error`() = runTest {
+        viewModel.onEmailChanged("test@example.com")
+        viewModel.onPasswordChanged("password123")
+
+        coEvery { signInCommander.resolveCommand(any()) } throws
+                RequestError.Other(IllegalStateException())
+
+        coEvery { analyticsTracker.track(any()) } just Runs
+
+        viewModel.submit()
+
+        assertIs<LoginScreenEvents.GenericFailure>(viewModel.events.first())
     }
 
     @Test

@@ -9,7 +9,7 @@ val properties = Properties()
 properties.load(rootProject.file("local.properties").inputStream())
 
 android {
-    namespace = "io.github.alasion.invoicer.features.auth.presentation"
+    namespace = "io.github.alaksion.invoicer.features.auth.presentation"
 
     buildFeatures {
         buildConfig = true

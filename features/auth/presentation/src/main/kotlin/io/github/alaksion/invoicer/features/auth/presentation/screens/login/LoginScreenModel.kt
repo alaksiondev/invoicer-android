@@ -8,16 +8,16 @@ import com.google.android.gms.tasks.Task
 import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelper
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.GoogleResult
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
 import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommand
 import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManager
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -26,9 +26,13 @@ internal class LoginScreenModel(
     private val firebaseHelper: FirebaseHelper,
     private val dispatcher: CoroutineDispatcher,
     private val analyticsTracker: AnalyticsTracker
-) : ScreenModel, EventAware<LoginScreenEvents> by EventPublisher() {
+) : ScreenModel {
+
     private val _state = MutableStateFlow(LoginScreenState())
     val state: StateFlow<LoginScreenState> = _state
+
+    private val _events = MutableSharedFlow<LoginScreenEvents>()
+    val events = _events.asSharedFlow()
 
     fun onEmailChanged(email: String) {
         _state.value = _state.value.copy(email = email)
@@ -92,7 +96,7 @@ internal class LoginScreenModel(
 
             is RequestError.Other -> LoginScreenEvents.GenericFailure
         }
-        publish(message)
+        _events.emit(message)
     }
 
     fun cancelGoogleSignIn() {
@@ -111,7 +115,7 @@ internal class LoginScreenModel(
             when (result) {
                 is GoogleResult.Error -> {
                     analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
-                    publish(
+                    _events.emit(
                         LoginScreenEvents.Failure(
                             message = result.error?.message.orEmpty()
                         )
@@ -136,7 +140,7 @@ internal class LoginScreenModel(
                         },
                         onFailure = { result ->
                             analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
-                            publish(
+                            _events.emit(
                                 LoginScreenEvents.Failure(
                                     message = result.message.orEmpty()
                                 )

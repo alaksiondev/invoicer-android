@@ -22,7 +22,7 @@ import foundation.designsystem.components.feedback.Feedback
 import foundation.designsystem.components.preview.ThemeContainer
 import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreen
-import io.github.alasion.invoicer.features.auth.presentation.R
+import io.github.alaksion.invoicer.features.auth.presentation.R
 
 internal class SignUpFeedbackScreen : Screen {
 

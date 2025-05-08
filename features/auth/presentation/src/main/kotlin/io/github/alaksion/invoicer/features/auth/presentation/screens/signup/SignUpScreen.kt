@@ -41,7 +41,7 @@ import io.github.alaksion.invoicer.features.auth.presentation.screens.login.Logi
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.PasswordStrengthCard
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.SignUpForm
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
-import io.github.alasion.invoicer.features.auth.presentation.R
+import io.github.alaksion.invoicer.features.auth.presentation.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

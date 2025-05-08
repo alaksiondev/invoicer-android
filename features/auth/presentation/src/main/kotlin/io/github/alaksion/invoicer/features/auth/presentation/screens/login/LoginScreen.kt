@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -47,9 +48,10 @@ import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
 import foundation.navigation.extensions.pushToFront
+import io.github.alaksion.invoicer.features.auth.presentation.R
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.components.SignInForm
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreen
-import io.github.alasion.invoicer.features.auth.presentation.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal class LoginScreen : Screen {
@@ -96,20 +98,22 @@ internal class LoginScreen : Screen {
             snackbarHostState = snackBarHost
         )
 
-        foundation.ui.events.EventEffect(viewModel) {
-            when (it) {
-                is LoginScreenEvents.Failure -> {
-                    scope.launch {
+        LaunchedEffect(viewModel.events) {
+            viewModel.events.collectLatest {
+                when (it) {
+                    is LoginScreenEvents.Failure -> {
+                        scope.launch {
+                            snackBarHost.showSnackbar(
+                                message = it.message
+                            )
+                        }
+                    }
+
+                    LoginScreenEvents.GenericFailure -> scope.launch {
                         snackBarHost.showSnackbar(
-                            message = it.message
+                            message = genericErrorMessage
                         )
                     }
-                }
-
-                LoginScreenEvents.GenericFailure -> scope.launch {
-                    snackBarHost.showSnackbar(
-                        message = genericErrorMessage
-                    )
                 }
             }
         }

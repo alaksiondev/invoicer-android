@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import foundation.designsystem.components.InputField
-import io.github.alasion.invoicer.features.auth.presentation.R
+import io.github.alaksion.invoicer.features.auth.presentation.R
 
 @Composable
 internal fun LoginPasswordField(

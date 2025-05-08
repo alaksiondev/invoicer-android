@@ -22,7 +22,7 @@ import foundation.designsystem.tokens.AppColor
 import foundation.designsystem.tokens.AppSize
 import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
-import io.github.alasion.invoicer.features.auth.presentation.R
+import io.github.alaksion.invoicer.features.auth.presentation.R
 
 @Composable
 internal fun StrengthStepper(

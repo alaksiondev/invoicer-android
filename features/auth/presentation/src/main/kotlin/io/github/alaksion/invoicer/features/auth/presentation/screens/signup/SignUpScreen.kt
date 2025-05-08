@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,11 +38,12 @@ import foundation.designsystem.components.spacer.Spacer
 import foundation.designsystem.components.spacer.SpacerSize
 import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.features.auth.presentation.R
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreen
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.PasswordStrengthCard
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.SignUpForm
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
-import io.github.alaksion.invoicer.features.auth.presentation.R
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,26 +63,29 @@ internal class SignUpScreen : Screen {
             SnackbarHostState()
         }
 
-        foundation.ui.events.EventEffect(viewModel) {
-            when (it) {
-                SignUpEvents.Success -> navigator?.push(SignUpFeedbackScreen())
+        LaunchedEffect(viewModel.events) {
+            viewModel.events.collectLatest {
+                when (it) {
+                    SignUpEvents.Success -> navigator?.push(SignUpFeedbackScreen())
 
-                is SignUpEvents.Failure -> {
-                    scope.launch {
+                    is SignUpEvents.Failure -> {
+                        scope.launch {
+                            snackBarState.showSnackbar(
+                                message = it.message
+                            )
+                        }
+                    }
+
+                    SignUpEvents.GenericFailure -> scope.launch {
                         snackBarState.showSnackbar(
-                            message = it.message
+                            message = genericErrorMessage
                         )
                     }
-                }
 
-                SignUpEvents.GenericFailure -> scope.launch {
-                    snackBarState.showSnackbar(
-                        message = genericErrorMessage
-                    )
+                    SignUpEvents.DuplicateAccount -> showDuplicateAccountDialog = true
                 }
-
-                SignUpEvents.DuplicateAccount -> showDuplicateAccountDialog = true
             }
+
         }
 
         StateContent(

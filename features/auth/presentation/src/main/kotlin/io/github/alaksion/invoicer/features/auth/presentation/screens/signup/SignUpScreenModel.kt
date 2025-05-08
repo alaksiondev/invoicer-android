@@ -10,8 +10,10 @@ import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStre
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,11 +23,13 @@ internal class SignUpScreenModel(
     private val emailValidator: EmailValidator,
     private val passwordStrengthValidator: PasswordStrengthValidator,
     private val analyticsTracker: AnalyticsTracker
-) : ScreenModel,
-    foundation.ui.events.EventAware<SignUpEvents> by foundation.ui.events.EventPublisher() {
+) : ScreenModel {
 
     private val _state = MutableStateFlow(SignUpScreenState())
     val state: StateFlow<SignUpScreenState> = _state
+
+    private val _events = MutableSharedFlow<SignUpEvents>()
+    val events = _events.asSharedFlow()
 
     fun onEmailChange(newEmail: String) {
         _state.update { oldState ->
@@ -91,20 +95,12 @@ internal class SignUpScreenModel(
 
             is RequestState.Success -> {
                 analyticsTracker.track(SignUpAnalytics.Success)
-                publish(SignUpEvents.Success)
+                _events.emit(SignUpEvents.Success)
             }
 
             is RequestState.Error -> {
                 analyticsTracker.track(SignUpAnalytics.Failure)
-                when (val error = state.exception) {
-                    is RequestError.Http -> {
-                        if (error.httpCode == 409) {
-                            publish(SignUpEvents.DuplicateAccount)
-                        }
-                    }
-
-                    else -> sendErrorEvent(error)
-                }
+                sendErrorEvent(state.exception)
             }
 
             RequestState.Finished -> _state.update {
@@ -117,12 +113,18 @@ internal class SignUpScreenModel(
 
     private suspend fun sendErrorEvent(error: RequestError) {
         val message = when (error) {
-            is RequestError.Http -> error.message?.let {
-                SignUpEvents.Failure(it)
-            } ?: SignUpEvents.GenericFailure
+            is RequestError.Http -> {
+                if (error.httpCode == 409) {
+                    SignUpEvents.DuplicateAccount
+                } else {
+                    error.message?.let { message ->
+                        SignUpEvents.Failure(message)
+                    } ?: SignUpEvents.GenericFailure
+                }
+            }
 
             is RequestError.Other -> SignUpEvents.GenericFailure
         }
-        publish(message)
+        _events.emit(message)
     }
 }

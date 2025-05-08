@@ -4,26 +4,31 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
 import io.github.alaksion.invoicer.features.invoice.domain.model.InvoiceList
 import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class InvoiceListScreenModel(
     private val invoiceRepository: InvoiceRepository,
     private val dispatcher: CoroutineDispatcher,
-) : ScreenModel, EventAware<InvoiceListEvent> by EventPublisher() {
+) : ScreenModel {
 
-    private val _state = MutableStateFlow(InvoiceListState())
     private var page = 0
     private var isFirstPageLoaded = false
 
+    private val _state = MutableStateFlow(InvoiceListState())
     val state: StateFlow<InvoiceListState> get() = _state
+
+    private val _events = MutableSharedFlow<InvoiceListEvent>()
+    val events = _events.asSharedFlow()
 
     fun loadPage(force: Boolean = false) {
         if (isFirstPageLoaded.not() || force) {
@@ -70,9 +75,15 @@ internal class InvoiceListScreenModel(
                             )
                         },
                         onFailure = {
-                            publish(InvoiceListEvent.Error(it.message.orEmpty()))
+                            _events.emit(InvoiceListEvent.Error(it.message.orEmpty()))
                         },
-                        onSuccess = {},
+                        onSuccess = {
+                            _state.update { oldState ->
+                                oldState.copy(
+                                    invoices = (oldState.invoices + it.items).toImmutableList(),
+                                )
+                            }
+                        },
                     )
             }
         }

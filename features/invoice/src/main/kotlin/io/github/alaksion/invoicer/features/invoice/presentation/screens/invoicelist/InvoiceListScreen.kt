@@ -15,11 +15,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -44,11 +47,14 @@ import foundation.watchers.NewInvoicePublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.details.InvoiceDetailsScreen
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.components.InvoiceListItem
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListCallbacks
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListEvent
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.rememberInvoiceListCallbacks
 import io.github.alasion.invoicer.features.invoice.R
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class InvoiceListScreen : Screen {
@@ -65,6 +71,8 @@ internal class InvoiceListScreen : Screen {
         val viewModel = koinScreenModel<InvoiceListScreenModel>()
         val state by viewModel.state.collectAsStateWithLifecycle()
         val newInvoicePublisher = remember { getKoin().get<NewInvoicePublisher>() }
+        val snackBar = remember { SnackbarHostState() }
+        val scope = rememberCoroutineScope()
 
         val callbacks = rememberInvoiceListCallbacks(
             onClose = { navigator?.pop() },
@@ -86,9 +94,24 @@ internal class InvoiceListScreen : Screen {
             viewModel.loadPage()
         }
 
+        LaunchedEffect(viewModel.events) {
+            viewModel.events.collectLatest {
+                when (it) {
+                    is InvoiceListEvent.Error -> {
+                        scope.launch {
+                            snackBar.showSnackbar(
+                                message = it.message,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
         StateContent(
             callbacks = callbacks,
-            state = state
+            state = state,
+            snackbarHostState = snackBar
         )
     }
 
@@ -96,7 +119,8 @@ internal class InvoiceListScreen : Screen {
     @Composable
     fun StateContent(
         state: InvoiceListState,
-        callbacks: InvoiceListCallbacks
+        callbacks: InvoiceListCallbacks,
+        snackbarHostState: SnackbarHostState
     ) {
         Scaffold(
             topBar = {
@@ -114,6 +138,9 @@ internal class InvoiceListScreen : Screen {
                             .padding(Spacing.medium)
                     ) { callbacks.onCreateInvoiceClick() }
                 }
+            },
+            snackbarHost = {
+                SnackbarHost(snackbarHostState)
             }
         ) { scaffoldPadding ->
             Column(

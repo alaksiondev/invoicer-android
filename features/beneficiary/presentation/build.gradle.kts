@@ -1,7 +1,7 @@
 plugins {
     id("invoicer.library")
     id("invoicer.compose")
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.paparazzi)
 }
 
 android {

@@ -21,11 +21,10 @@ class LoginScreenScreenshotTest {
     @Test
     fun loginScreen_default() {
         paparazzi.snapshot {
-            InvoicerTheme {
-                TestContent(
-                    state = LoginScreenState()
-                )
-            }
+            TestContent(
+                state = LoginScreenState()
+            )
+
         }
     }
 

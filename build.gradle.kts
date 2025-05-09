@@ -9,3 +9,11 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.paparazzi) apply false
 }
+
+allprojects {
+    tasks.withType<Test> {
+        if (project.hasProperty("excludeTests")) {
+            exclude(project.property("excludeTests") as String)
+        }
+    }
+}

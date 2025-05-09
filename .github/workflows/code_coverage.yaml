@@ -39,7 +39,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Generate branch coverage report
-        run: ./gradlew test -Pkover koverXmlReport
+        run: ./gradlew test -Pkover -PexcludeTests='**/screenshots/**' koverXmlReport
 
       - name: Rename file
         run: |
@@ -83,7 +83,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Generate main coverage report
-        run: ./gradlew test -Pkover koverXmlReport
+        run: ./gradlew test -Pkover -PexcludeTests='**/screenshots/**' koverXmlReport
 
       - name: Rename file
         run: |

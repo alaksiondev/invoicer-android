@@ -77,7 +77,7 @@ class BeneficiaryListScreenScreenshotTest {
                             swift = "1231312",
                             bankName = "Bank Name",
                             bankAddress = "Bank Address",
-                            id = "123",
+                            id = "1-$it",
                             createdAt = Instant.parse("2023-01-01T00:00:00Z"),
                             updatedAt = Instant.parse("2023-01-01T00:00:00Z")
                         )

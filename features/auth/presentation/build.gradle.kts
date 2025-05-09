@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("invoicer.library")
     id("invoicer.compose")
+    alias(libs.plugins.paparazzi)
 }
 
 val properties = Properties()

@@ -1,4 +1,4 @@
-package foundation.designSystem.configs
+package foundation.designSystem.screenshots.configs
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi

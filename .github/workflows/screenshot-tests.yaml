@@ -1,0 +1,42 @@
+name: Screenshot tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: pr-main-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshot-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          lfs: true # remove if Git LFS is not used
+          fetch-depth: 0
+
+      - name: Create local.properties file
+        uses: ./.github/actions/write-secrets
+        with:
+          firebase-web-id: ${{ secrets.FIREBASE_WEB_ID }}
+          debug-api-url: ${{ secrets.DEBUG_APP_URL }}
+          prod-api-url: ${{ secrets.PROD_APP_URL }}
+
+      - name: Load Google Service file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $DATA | base64 -di > app/google-services.json
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Run screenshot tests
+        id: screenshot-tests
+        run: ./gradlew verifyPaparazziDebug

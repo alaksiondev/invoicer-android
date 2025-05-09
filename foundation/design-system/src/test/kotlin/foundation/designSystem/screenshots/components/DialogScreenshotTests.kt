@@ -1,7 +1,7 @@
-package foundation.designSystem.components
+package foundation.designSystem.screenshots.components
 
-import foundation.designSystem.configs.InvoicerPaparazziConfig
-import foundation.designSystem.configs.invoicerSnapshot
+import foundation.designSystem.screenshots.configs.InvoicerPaparazziConfig
+import foundation.designSystem.screenshots.configs.invoicerSnapshot
 import foundation.designsystem.components.DialogVariant
 import foundation.designsystem.components.InvoicerDialog
 import org.junit.Rule

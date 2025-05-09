@@ -168,6 +168,7 @@ internal class LoginScreen : Screen {
                         .height(48.dp),
                     onClick = callBacks.onSubmit,
                     isEnabled = state.buttonEnabled,
+                    isLoading = state.isSignInLoading,
                     label = stringResource(R.string.auth_sign_in_submit_button)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)

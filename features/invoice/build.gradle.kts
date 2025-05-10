@@ -2,6 +2,7 @@ plugins {
     id("invoicer.library")
     id("invoicer.compose")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.paparazzi)
 }
 
 android {

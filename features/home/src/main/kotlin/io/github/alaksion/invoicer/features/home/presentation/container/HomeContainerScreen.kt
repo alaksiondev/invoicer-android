@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.WelcomeTab
+import io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.HomeTab
 
 internal class HomeContainerScreen : Screen {
     @Composable
     override fun Content() {
-        TabNavigator(WelcomeTab) { navigator ->
+        TabNavigator(HomeTab) { navigator ->
             Scaffold(
                 bottomBar = {
                     HomeBottomBar(

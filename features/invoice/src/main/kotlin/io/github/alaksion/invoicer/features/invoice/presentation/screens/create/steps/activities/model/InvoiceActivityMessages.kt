@@ -5,18 +5,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import io.github.alasion.invoicer.features.invoice.R
 
-internal data class SnackMessages(
+internal data class InvoiceActivityMessages(
     val unitPriceError: String,
     val quantityError: String
 )
 
 @Composable
-internal fun rememberSnackMessages(): SnackMessages {
+internal fun rememberSnackMessages(): InvoiceActivityMessages {
     val unitPriceMsg = stringResource(R.string.invoice_add_activity_error_unit_price)
     val quantityMsg = stringResource(R.string.invoice_add_activity_error_quantity)
 
     return remember {
-        SnackMessages(
+        InvoiceActivityMessages(
             unitPriceError = unitPriceMsg,
             quantityError = quantityMsg
         )

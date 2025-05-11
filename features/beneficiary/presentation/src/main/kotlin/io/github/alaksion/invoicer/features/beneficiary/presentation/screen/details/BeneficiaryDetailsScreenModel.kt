@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val NotFound = 404
+private const val Forbidden = 403
+
 internal class BeneficiaryDetailsScreenModel(
     private val beneficiaryRepository: BeneficiaryRepository,
     private val dispatcher: CoroutineDispatcher,
@@ -91,7 +94,7 @@ internal class BeneficiaryDetailsScreenModel(
         return when (error) {
             is RequestError.Http -> {
                 when (error.httpCode) {
-                    404, 403 -> BeneficiaryErrorType.NotFound
+                    NotFound, Forbidden -> BeneficiaryErrorType.NotFound
                     else -> BeneficiaryErrorType.Generic
                 }
             }

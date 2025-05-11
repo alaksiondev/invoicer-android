@@ -13,5 +13,4 @@ class MinSelectableDate(
         utcTimeMillis >= minEpoch
 
     override fun isSelectableYear(year: Int) = year >= minYear
-
 }

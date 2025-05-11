@@ -51,7 +51,7 @@ class IntermediaryConfirmationStepScreenshotTest {
                     isLoading = isLoading,
                     onContinue = { },
                     onBack = { },
-                    snackbarHostState = SnackbarHostState(),
+                    snackBarHostState = SnackbarHostState(),
                 )
         }
     }

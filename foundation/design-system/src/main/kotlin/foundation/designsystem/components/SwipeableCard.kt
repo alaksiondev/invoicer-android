@@ -1,4 +1,4 @@
-package com.plcoding.composeswipetoreveal
+package foundation.designsystem.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures

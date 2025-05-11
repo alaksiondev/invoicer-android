@@ -60,7 +60,7 @@ import org.koin.java.KoinJavaComponent.getKoin
 internal class InvoiceListScreen : Screen {
 
     companion object {
-        val SCREEN_KEY = "invoice-list-screen"
+        const val SCREEN_KEY = "invoice-list-screen"
     }
 
     override val key: ScreenKey = SCREEN_KEY

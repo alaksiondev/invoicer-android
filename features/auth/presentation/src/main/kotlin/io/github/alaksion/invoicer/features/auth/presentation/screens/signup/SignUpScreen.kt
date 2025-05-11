@@ -89,22 +89,28 @@ internal class SignUpScreen : Screen {
 
         }
 
+        val callBacks = remember {
+            SignUpCallbacks(
+                onBackClick = { navigator?.pop() },
+                onSubmitClick = {
+                    keyboard?.hide()
+                    viewModel.createAccount()
+                },
+                onEmailChange = viewModel::onEmailChange,
+                onPasswordChange = viewModel::onPasswordChange,
+                toggleCensorship = viewModel::toggleCensorship,
+                onDismissDialog = {
+                    showDuplicateAccountDialog = false
+                },
+                onSignInClick = { navigator?.replaceAll(LoginScreen()) },
+            )
+        }
+
         StateContent(
-            onBackClick = { navigator?.pop() },
-            onSubmitClick = {
-                keyboard?.hide()
-                viewModel.createAccount()
-            },
-            onEmailChange = viewModel::onEmailChange,
-            onPasswordChange = viewModel::onPasswordChange,
-            toggleCensorship = viewModel::toggleCensorship,
             state = state,
-            onSignInClick = { navigator?.replaceAll(LoginScreen()) },
             snackBarState = snackBarState,
-            onDismissDialog = {
-                showDuplicateAccountDialog = false
-            },
-            showDuplicateAccountDialog = showDuplicateAccountDialog
+            showDuplicateAccountDialog = showDuplicateAccountDialog,
+            callbacks = callBacks
         )
     }
 
@@ -112,13 +118,7 @@ internal class SignUpScreen : Screen {
     fun StateContent(
         state: SignUpScreenState,
         snackBarState: SnackbarHostState,
-        onEmailChange: (String) -> Unit,
-        onPasswordChange: (String) -> Unit,
-        toggleCensorship: () -> Unit,
-        onBackClick: () -> Unit,
-        onSubmitClick: () -> Unit,
-        onSignInClick: () -> Unit,
-        onDismissDialog: () -> Unit,
+        callbacks: SignUpCallbacks,
         showDuplicateAccountDialog: Boolean,
     ) {
         val scrollState = rememberScrollState()
@@ -128,7 +128,7 @@ internal class SignUpScreen : Screen {
                 TopAppBar(
                     title = {},
                     navigationIcon = {
-                        BackButton(onBackClick = onBackClick)
+                        BackButton(onBackClick = callbacks.onBackClick)
                     }
                 )
             },
@@ -141,7 +141,7 @@ internal class SignUpScreen : Screen {
                         .fillMaxWidth()
                         .padding(Spacing.medium),
                     label = stringResource(R.string.auth_sign_up_submit_button),
-                    onClick = onSubmitClick,
+                    onClick = callbacks.onSubmitClick,
                     isEnabled = state.buttonEnabled,
                     isLoading = state.requestLoading
                 )
@@ -164,9 +164,9 @@ internal class SignUpScreen : Screen {
                 SignUpForm(
                     modifier = Modifier.fillMaxWidth(),
                     state = state,
-                    onPasswordChange = onPasswordChange,
-                    onEmailChange = onEmailChange,
-                    toggleCensorship = toggleCensorship
+                    onPasswordChange = callbacks.onPasswordChange,
+                    onEmailChange = callbacks.onEmailChange,
+                    toggleCensorship = callbacks.toggleCensorship
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)
                 PasswordStrengthCard(
@@ -176,7 +176,7 @@ internal class SignUpScreen : Screen {
                 VerticalSpacer(height = SpacerSize.XLarge)
                 TextButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = onSignInClick
+                    onClick = callbacks.onSignInClick
                 ) {
                     Text(
                         text = buildAnnotatedString {
@@ -202,7 +202,7 @@ internal class SignUpScreen : Screen {
 
             if (showDuplicateAccountDialog) {
                 InvoicerDialog(
-                    onDismiss = onDismissDialog,
+                    onDismiss = callbacks.onDismissDialog,
                     variant = DialogVariant.Error,
                     title = stringResource(R.string.auth_sign_up_duplicate_account_title),
                     description = stringResource(

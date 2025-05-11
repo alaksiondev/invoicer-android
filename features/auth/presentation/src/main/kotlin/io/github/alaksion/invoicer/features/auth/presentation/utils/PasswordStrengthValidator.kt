@@ -15,7 +15,7 @@ data class PasswordStrengthResult(
 internal object PasswordStrengthValidatorImpl : PasswordStrengthValidator {
 
     override fun validate(password: String): PasswordStrengthResult {
-        var lengthValid = password.length >= 8
+        var lengthValid = password.length >= MIN_PASSWORD_LENGTH
         var upperCaseValid = false
         var lowerCaseValid = false
         var digitValid = false
@@ -38,4 +38,6 @@ internal object PasswordStrengthValidatorImpl : PasswordStrengthValidator {
             specialCharacterValid = specialCharacterValid,
         )
     }
+
+    private const val MIN_PASSWORD_LENGTH = 8
 }

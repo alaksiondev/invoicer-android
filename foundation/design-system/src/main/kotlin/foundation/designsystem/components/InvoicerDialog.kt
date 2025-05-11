@@ -25,10 +25,6 @@ import foundation.designsystem.components.spacer.VerticalSpacer
 import foundation.designsystem.tokens.AppSize
 import foundation.designsystem.tokens.Spacing
 
-enum class DialogVariant {
-    Error
-}
-
 @Composable
 fun InvoicerDialog(
     onDismiss: () -> Unit,
@@ -95,4 +91,8 @@ private fun DialogIcon(
         tint = tint,
         modifier = modifier
     )
+}
+
+enum class DialogVariant {
+    Error
 }

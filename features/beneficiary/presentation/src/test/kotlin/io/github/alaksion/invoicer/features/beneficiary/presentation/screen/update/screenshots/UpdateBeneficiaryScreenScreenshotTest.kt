@@ -79,7 +79,7 @@ class UpdateBeneficiaryScreenScreenshotTest {
             UpdateBeneficiaryScreen("")
                 .StateContent(
                     state = state,
-                    snackbarHostState = SnackbarHostState(),
+                    snackBarHostState = SnackbarHostState(),
                     onBack = { },
                     onChangeName = { },
                     onChangeBankName = { },

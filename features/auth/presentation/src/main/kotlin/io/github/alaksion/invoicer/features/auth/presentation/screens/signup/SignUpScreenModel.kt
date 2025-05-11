@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val DuplicateAccountErrorCode = 409
+
 internal class SignUpScreenModel(
     private val authRepository: AuthRepository,
     private val dispatcher: CoroutineDispatcher,
@@ -114,7 +116,7 @@ internal class SignUpScreenModel(
     private suspend fun sendErrorEvent(error: RequestError) {
         val message = when (error) {
             is RequestError.Http -> {
-                if (error.httpCode == 409) {
+                if (error.httpCode == DuplicateAccountErrorCode) {
                     SignUpEvents.DuplicateAccount
                 } else {
                     error.message?.let { message ->

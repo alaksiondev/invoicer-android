@@ -38,6 +38,7 @@ import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryEvents
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
+import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryState
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryFieldCard
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
@@ -75,32 +76,20 @@ internal class BeneficiaryConfirmationStep : Screen {
         }
 
         StateContent(
-            bankAddress = state.bankAddress,
-            bankName = state.bankName,
             onBack = navigator::pop,
             onContinue = screenModel::submit,
-            name = state.name,
-            swift = state.swift,
-            iban = state.iban,
-            buttonEnabled = state.isSubmitting.not(),
             snackbarHostState = snackbarHostState,
-            isLoading = state.isSubmitting
+            state = state
         )
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
-        name: String,
-        swift: String,
-        iban: String,
-        bankName: String,
-        bankAddress: String,
-        buttonEnabled: Boolean,
-        onContinue: () -> Unit,
-        onBack: () -> Unit,
+        state: CreateBeneficiaryState,
         snackbarHostState: SnackbarHostState,
-        isLoading: Boolean,
+        onContinue: () -> Unit,
+        onBack: () -> Unit
     ) {
         val scrollState = rememberScrollState()
 
@@ -123,11 +112,11 @@ internal class BeneficiaryConfirmationStep : Screen {
                     onClick = {
                         onContinue()
                     },
-                    isEnabled = buttonEnabled,
+                    isEnabled = state.isSubmitting.not(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Spacing.medium),
-                    isLoading = isLoading
+                    isLoading = state.isSubmitting
                 )
             }
         ) { scaffoldPadding ->
@@ -150,27 +139,27 @@ internal class BeneficiaryConfirmationStep : Screen {
                     VerticalSpacer(SpacerSize.Medium)
                     BeneficiaryFieldCard(
                         title = stringResource(R.string.confirm_beneficiary_name),
-                        value = name,
+                        value = state.name,
                         icon = Icons.Outlined.Business
                     )
                     BeneficiaryFieldCard(
                         title = stringResource(R.string.confirm_beneficiary_swift),
-                        value = swift,
+                        value = state.swift,
                         icon = Icons.Outlined.Ballot
                     )
                     BeneficiaryFieldCard(
                         title = stringResource(R.string.confirm_beneficiary_iban),
-                        value = iban,
+                        value = state.iban,
                         icon = Icons.Outlined.Ballot
                     )
                     BeneficiaryFieldCard(
                         title = stringResource(R.string.confirm_beneficiary_bank_name),
-                        value = bankName,
+                        value = state.bankName,
                         icon = Icons.Outlined.AccountBalance
                     )
                     BeneficiaryFieldCard(
                         title = stringResource(R.string.confirm_beneficiary_bank_address),
-                        value = bankAddress,
+                        value = state.bankAddress,
                         icon = Icons.Outlined.MapsHomeWork
                     )
                 }

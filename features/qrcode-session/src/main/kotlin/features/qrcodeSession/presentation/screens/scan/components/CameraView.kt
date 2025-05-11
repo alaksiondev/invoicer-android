@@ -96,6 +96,7 @@ internal fun CameraView(
                             .also {
                                 it.setAnalyzer(cameraExecutor, qrCodeAnalyzer)
                             }
+                        @Suppress("TooGenericExceptionCaught")
                         try {
                             cameraProvider.unbindAll()
                             cameraProvider.bindToLifecycle(
@@ -119,5 +120,4 @@ internal fun CameraView(
             }
         }
     }
-
 }

@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
 import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryCallbacks
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryMode
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryState
@@ -79,15 +80,17 @@ class UpdateBeneficiaryScreenScreenshotTest {
             UpdateBeneficiaryScreen("")
                 .StateContent(
                     state = state,
-                    snackbarHostState = SnackbarHostState(),
-                    onBack = { },
-                    onChangeName = { },
-                    onChangeBankName = { },
-                    onChangeBankAddress = { },
-                    onChangeSwift = { },
-                    onChangeIban = { },
-                    onSubmit = { },
-                    onRetry = { },
+                    snackBarHostState = SnackbarHostState(),
+                    callBacks = UpdateBeneficiaryCallbacks(
+                        onBack = { },
+                        onChangeName = { },
+                        onChangeBankName = { },
+                        onChangeBankAddress = { },
+                        onChangeSwift = { },
+                        onChangeIban = { },
+                        onSubmit = { },
+                        onRetry = { },
+                    ),
                 )
         }
     }

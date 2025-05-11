@@ -1,5 +1,11 @@
 package io.github.alaksion.invoicer.foundation.utils.money
 
-fun Long.moneyFormat(): String {
-    return "$${String.format("%.2f", this / 100.0)}"
+import java.util.Locale
+
+private const val MoneyMultiplier = 100.0
+
+fun Long.moneyFormat(
+    locale: Locale = Locale.getDefault()
+): String {
+    return "$${String.format(locale, "%.2f", this / MoneyMultiplier)}"
 }

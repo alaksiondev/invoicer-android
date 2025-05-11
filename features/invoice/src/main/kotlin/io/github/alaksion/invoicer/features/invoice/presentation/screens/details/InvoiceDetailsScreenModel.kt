@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val NotFound = 400
+private const val Forbidden = 403
+
 internal class InvoiceDetailsScreenModel(
     private val invoiceRepository: InvoiceRepository,
     private val dispatcher: CoroutineDispatcher
@@ -67,11 +70,10 @@ internal class InvoiceDetailsScreenModel(
             is RequestError.Http -> {
 
                 when (this.errorCode) {
-                    404, 403 -> InvoiceDetailsErrorType.NotFound
+                    NotFound, Forbidden -> InvoiceDetailsErrorType.NotFound
                     else -> InvoiceDetailsErrorType.Generic
                 }
             }
         }
     }
-
 }

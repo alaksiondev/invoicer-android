@@ -57,7 +57,6 @@ internal object WelcomeTab : Tab {
             ) {
                 item {
                     WelcomeActions(
-                        modifier = Modifier.fillParentMaxWidth(),
                         onBeneficiaryClick = callbacks.onBeneficiaryClick,
                         onInvoiceClick = callbacks.onInvoiceClick,
                         onIntermediaryClick = callbacks.onIntermediaryClick
@@ -66,5 +65,4 @@ internal object WelcomeTab : Tab {
             }
         }
     }
-
 }

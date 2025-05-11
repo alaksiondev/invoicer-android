@@ -4,13 +4,6 @@ import foundation.network.RequestError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-sealed interface RequestState<out T> {
-    data object Started : RequestState<Nothing>
-    data class Success<T>(val data: T) : RequestState<T>
-    data class Error(val exception: RequestError) : RequestState<Nothing>
-    data object Finished : RequestState<Nothing>
-}
-
 fun <T> launchRequest(
     block: suspend () -> T,
 ): Flow<RequestState<T>> = flow {
@@ -25,6 +18,14 @@ fun <T> launchRequest(
     }
     emit(RequestState.Finished)
 }
+
+sealed interface RequestState<out T> {
+    data object Started : RequestState<Nothing>
+    data class Success<T>(val data: T) : RequestState<T>
+    data class Error(val exception: RequestError) : RequestState<Nothing>
+    data object Finished : RequestState<Nothing>
+}
+
 
 suspend fun <T> Flow<RequestState<T>>.handle(
     onStart: suspend () -> Unit = {},

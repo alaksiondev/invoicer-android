@@ -50,11 +50,8 @@ private enum class WelcomeItems(
     )
 }
 
-private val CardSize = 150.dp
-
 @Composable
 internal fun WelcomeActions(
-    modifier: Modifier = Modifier,
     onInvoiceClick: () -> Unit,
     onIntermediaryClick: () -> Unit,
     onBeneficiaryClick: () -> Unit,
@@ -115,7 +112,6 @@ internal fun WelcomeActions(
 private fun Preview() {
     ThemeContainer {
         WelcomeActions(
-            modifier = Modifier.fillMaxWidth(),
             onInvoiceClick = {},
             onIntermediaryClick = {},
             onBeneficiaryClick = {}

@@ -39,7 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.plcoding.composeswipetoreveal.SwipeableCard
+import foundation.designsystem.components.SwipeableCard
 import foundation.designsystem.components.ScreenTitle
 import foundation.designsystem.components.buttons.BackButton
 import foundation.designsystem.components.buttons.PrimaryButton
@@ -100,17 +100,23 @@ internal class InvoiceActivitiesScreen : Screen {
             }
         }
 
+        val callbacks = remember {
+            InvoiceActivitiesCallbacks(
+                onContinue = onContinue,
+                onBack = onBack,
+                onChangeDescription = screenModel::updateFormDescription,
+                onChangeUnitPrice = screenModel::updateFormUnitPrice,
+                onChangeQuantity = screenModel::updateFormQuantity,
+                onClearForm = screenModel::clearForm,
+                onAddActivity = screenModel::addActivity,
+                onDelete = screenModel::removeActivity,
+            )
+        }
+
         StateContent(
             state = state,
-            onChangeDescription = screenModel::updateFormDescription,
-            onChangeUnitPrice = screenModel::updateFormUnitPrice,
-            onChangeQuantity = screenModel::updateFormQuantity,
-            onClearForm = screenModel::clearForm,
-            onAddActivity = screenModel::addActivity,
             snackbarHostState = snackbarState,
-            onDelete = screenModel::removeActivity,
-            onContinue = onContinue,
-            onBack = onBack
+            callbacks = callbacks
         )
     }
 
@@ -119,14 +125,7 @@ internal class InvoiceActivitiesScreen : Screen {
     fun StateContent(
         state: InvoiceActivitiesState,
         snackbarHostState: SnackbarHostState,
-        onChangeDescription: (String) -> Unit,
-        onChangeUnitPrice: (String) -> Unit,
-        onChangeQuantity: (String) -> Unit,
-        onDelete: (String) -> Unit,
-        onClearForm: () -> Unit,
-        onAddActivity: () -> Unit,
-        onBack: () -> Unit,
-        onContinue: () -> Unit,
+        callbacks: InvoiceActivitiesCallbacks
     ) {
         val sheetState = rememberModalBottomSheetState()
         var showSheet by remember {
@@ -140,7 +139,7 @@ internal class InvoiceActivitiesScreen : Screen {
                 TopAppBar(
                     title = { },
                     navigationIcon = {
-                        BackButton(onBackClick = onBack)
+                        BackButton(onBackClick = callbacks.onBack)
                     }
                 )
             },
@@ -150,7 +149,7 @@ internal class InvoiceActivitiesScreen : Screen {
                         .fillMaxWidth()
                         .padding(Spacing.medium),
                     label = stringResource(R.string.invoice_create_continue_cta),
-                    onClick = onContinue,
+                    onClick = callbacks.onContinue,
                     isEnabled = state.isButtonEnabled
                 )
             },
@@ -215,7 +214,7 @@ internal class InvoiceActivitiesScreen : Screen {
                                 ) {
                                     IconButton(
                                         onClick = {
-                                            onDelete(activity.id)
+                                            callbacks.onDelete(activity.id)
                                         }
                                     ) {
                                         Icon(
@@ -237,19 +236,19 @@ internal class InvoiceActivitiesScreen : Screen {
                     AddActivityBottomSheet(
                         sheetState = sheetState,
                         formState = state.formState,
-                        onChangeQuantity = onChangeQuantity,
-                        onChangeUnitPrice = onChangeUnitPrice,
-                        onChangeDescription = onChangeDescription,
+                        onChangeQuantity = callbacks.onChangeQuantity,
+                        onChangeUnitPrice = callbacks.onChangeUnitPrice,
+                        onChangeDescription = callbacks.onChangeDescription,
                         onDismiss = {
                             showSheet = false
-                            onClearForm()
+                            callbacks.onClearForm()
                         },
                         onAddActivity = {
                             scope.launch {
                                 sheetState.hide()
                             }.invokeOnCompletion {
                                 showSheet = false
-                                onAddActivity()
+                                callbacks.onAddActivity()
                             }
                         }
                     )

@@ -31,13 +31,6 @@ import androidx.compose.ui.unit.dp
 import foundation.designsystem.components.spacer.HorizontalSpacer
 import foundation.designsystem.components.spacer.SpacerSize
 
-enum class InvoicerButtonSize(
-    internal val height: Dp
-) {
-    Regular(40.dp),
-    Large(48.dp),
-}
-
 @Composable
 fun PrimaryButton(
     label: String,
@@ -115,6 +108,13 @@ fun SecondaryButton(
     }
 }
 
+enum class InvoicerButtonSize(
+    internal val height: Dp
+) {
+    Regular(40.dp),
+    Large(48.dp),
+}
+
 @Composable
 private fun LoadingDot(
     offset: Float
@@ -130,8 +130,10 @@ private fun LoadingDot(
     )
 }
 
+
+@Suppress("MagicNumber")
 @Composable
-fun animateOffsetWithDelay(
+private fun animateOffsetWithDelay(
     delay: Int,
     delayUnit: Int,
     maxOffset: Float
@@ -151,10 +153,13 @@ fun animateOffsetWithDelay(
     )
 }
 
+private const val DelayUnit = 300
+private const val MaxOffset = 6f
+
 @Composable
 private fun ButtonLoadingState() {
-    val delayUnit = 300
-    val maxOffset = 6f
+    val delayUnit = DelayUnit
+    val maxOffset = MaxOffset
 
     val offset1 by animateOffsetWithDelay(delay = 0, maxOffset = maxOffset, delayUnit = delayUnit)
     val offset2 by animateOffsetWithDelay(

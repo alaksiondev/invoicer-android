@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private val VALID_ACTIVITY_QUANTITY_RANGE = 1..100
+
 internal class InvoiceActivitiesScreenModel(
     private val dispatcher: CoroutineDispatcher,
     private val createInvoiceManager: CreateInvoiceManager
@@ -80,7 +82,7 @@ internal class InvoiceActivitiesScreenModel(
                 return@launch
             }
 
-            if (quantity !in 1..100) {
+            if (quantity !in VALID_ACTIVITY_QUANTITY_RANGE) {
                 _events.emit(InvoiceActivitiesEvent.ActivityQuantityError)
                 return@launch
             }

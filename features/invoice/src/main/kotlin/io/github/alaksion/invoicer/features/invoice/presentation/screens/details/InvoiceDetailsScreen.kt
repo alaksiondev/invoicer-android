@@ -14,20 +14,7 @@ internal data class InvoiceDetailsScreen(
     @Composable
     override fun Content() {
         val screenModel = koinScreenModel<InvoiceDetailsScreenModel>()
-        val state by screenModel.state.collectAsStateWithLifecycle()
 
         LaunchedEffect(Unit) { screenModel.initState(invoiceId = id) }
-
-        StateContent(
-            state = state
-        )
     }
-
-    @Composable
-    fun StateContent(
-        state: InvoiceDetailsState
-    ) {
-
-    }
-
 }

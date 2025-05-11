@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
 import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryCallbacks
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryMode
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryState
@@ -80,14 +81,16 @@ class UpdateIntermediaryScreenScreenshotTest {
                 .StateContent(
                     state = state,
                     snackbarHostState = SnackbarHostState(),
-                    onBack = { },
-                    onChangeName = { },
-                    onChangeBankName = { },
-                    onChangeBankAddress = { },
-                    onChangeSwift = { },
-                    onChangeIban = { },
-                    onSubmit = { },
-                    onRetry = { },
+                    callbacks = UpdateIntermediaryCallbacks(
+                        onBack = { },
+                        onChangeName = { },
+                        onChangeBankName = { },
+                        onChangeBankAddress = { },
+                        onChangeSwift = { },
+                        onChangeIban = { },
+                        onSubmit = { },
+                        onRetry = { },
+                    ),
                 )
         }
     }

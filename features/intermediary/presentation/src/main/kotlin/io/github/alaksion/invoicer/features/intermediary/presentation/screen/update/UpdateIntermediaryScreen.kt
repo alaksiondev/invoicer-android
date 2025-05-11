@@ -29,8 +29,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component3
-import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component4
-import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component5
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -77,21 +75,27 @@ internal data class UpdateIntermediaryScreen(
             }
         }
 
+        val callBacks = remember {
+            UpdateIntermediaryCallbacks(
+                onBack = { navigator?.pop() },
+                onChangeName = screenModel::updateName,
+                onChangeBankName = screenModel::updateBankName,
+                onChangeBankAddress = screenModel::updateBankAddress,
+                onChangeSwift = screenModel::updateSwift,
+                onChangeIban = screenModel::updateIban,
+                onSubmit = {
+                    screenModel.submit(id)
+                },
+                onRetry = {
+                    screenModel.initState(id)
+                }
+            )
+        }
+
         StateContent(
             state = state,
-            onBack = { navigator?.pop() },
-            onChangeName = screenModel::updateName,
-            onChangeBankName = screenModel::updateBankName,
-            onChangeBankAddress = screenModel::updateBankAddress,
-            onChangeSwift = screenModel::updateSwift,
-            onChangeIban = screenModel::updateIban,
-            onSubmit = {
-                screenModel.submit(id)
-            },
-            snackbarHostState = snackbarHostState,
-            onRetry = {
-                screenModel.initState(id)
-            }
+            callbacks = callBacks,
+            snackbarHostState = snackbarHostState
         )
     }
 
@@ -100,14 +104,7 @@ internal data class UpdateIntermediaryScreen(
     fun StateContent(
         state: UpdateIntermediaryState,
         snackbarHostState: SnackbarHostState,
-        onBack: () -> Unit,
-        onChangeName: (String) -> Unit,
-        onChangeBankName: (String) -> Unit,
-        onChangeBankAddress: (String) -> Unit,
-        onChangeSwift: (String) -> Unit,
-        onChangeIban: (String) -> Unit,
-        onSubmit: () -> Unit,
-        onRetry: () -> Unit,
+        callbacks: UpdateIntermediaryCallbacks,
     ) {
         val scrollState = rememberScrollState()
 
@@ -115,7 +112,7 @@ internal data class UpdateIntermediaryScreen(
             modifier = Modifier.imePadding(),
             topBar = {
                 TopAppBar(
-                    navigationIcon = { BackButton(onBackClick = onBack) },
+                    navigationIcon = { BackButton(onBackClick = callbacks.onBack) },
                     title = { }
                 )
             },
@@ -124,7 +121,7 @@ internal data class UpdateIntermediaryScreen(
             },
             bottomBar = {
                 PrimaryButton(
-                    onClick = onSubmit,
+                    onClick = callbacks.onSubmit,
                     isEnabled = state.isButtonEnabled,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -147,9 +144,8 @@ internal data class UpdateIntermediaryScreen(
                     )
 
                     UpdateIntermediaryMode.Content -> {
-                        val (
-                            nameRef, bankNameRef, bankAddressRef, swiftRef, ibanRef
-                        ) = FocusRequester.createRefs()
+                        val (nameRef, bankNameRef, bankAddressRef) = FocusRequester.createRefs()
+                        val (swiftRef, ibanRef) = FocusRequester.createRefs()
 
                         val keyboard = LocalSoftwareKeyboardController.current
                         Column(
@@ -169,7 +165,7 @@ internal data class UpdateIntermediaryScreen(
                                     .fillMaxWidth()
                                     .focusRequester(nameRef),
                                 value = state.name,
-                                onValueChange = onChangeName,
+                                onValueChange = callbacks.onChangeName,
                                 label = {
                                     Text(
                                         text = stringResource(R.string.intermediary_update_name_label)
@@ -189,7 +185,7 @@ internal data class UpdateIntermediaryScreen(
                                     .fillMaxWidth()
                                     .focusRequester(bankNameRef),
                                 value = state.bankName,
-                                onValueChange = onChangeBankName,
+                                onValueChange = callbacks.onChangeBankName,
                                 label = {
                                     Text(
                                         text = stringResource(R.string.intermediary_update_bank_name_label)
@@ -209,7 +205,7 @@ internal data class UpdateIntermediaryScreen(
                                     .fillMaxWidth()
                                     .focusRequester(bankAddressRef),
                                 value = state.bankAddress,
-                                onValueChange = onChangeBankAddress,
+                                onValueChange = callbacks.onChangeBankAddress,
                                 label = {
                                     Text(
                                         text = stringResource(R.string.intermediary_update_bank_address_label)
@@ -229,7 +225,7 @@ internal data class UpdateIntermediaryScreen(
                                     .fillMaxWidth()
                                     .focusRequester(swiftRef),
                                 value = state.swift,
-                                onValueChange = onChangeSwift,
+                                onValueChange = callbacks.onChangeSwift,
                                 label = {
                                     Text(
                                         text = stringResource(R.string.intermediary_update_swift_label)
@@ -249,7 +245,7 @@ internal data class UpdateIntermediaryScreen(
                                     .fillMaxWidth()
                                     .focusRequester(ibanRef),
                                 value = state.iban,
-                                onValueChange = onChangeIban,
+                                onValueChange = callbacks.onChangeIban,
                                 label = {
                                     Text(
                                         text = stringResource(R.string.intermediary_update_iban_label)
@@ -270,7 +266,7 @@ internal data class UpdateIntermediaryScreen(
                         title = stringResource(R.string.intermediary_update_load_error_title),
                         description = stringResource(R.string.intermediary_update_load_error_description),
                         primaryActionText = stringResource(R.string.intermediary_update_load_error_cta),
-                        onPrimaryAction = onRetry,
+                        onPrimaryAction = callbacks.onRetry,
                         modifier = Modifier.fillMaxSize(),
                         icon = Icons.Outlined.ErrorOutline
                     )

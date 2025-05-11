@@ -38,6 +38,7 @@ import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.intermediary.presentation.R
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryEvents
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
+import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryState
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.components.IntermediaryFieldCard
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.feedback.IntermediaryFeedbackScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.feedback.IntermediaryFeedbackType
@@ -75,39 +76,27 @@ internal class IntermediaryConfirmationStep : Screen {
         }
 
         StateContent(
-            bankAddress = state.bankAddress,
-            bankName = state.bankName,
             onBack = navigator::pop,
             onContinue = screenModel::submit,
-            name = state.name,
-            swift = state.swift,
-            iban = state.iban,
-            buttonEnabled = state.isSubmitting.not(),
-            snackbarHostState = snackbarHostState,
-            isLoading = state.isSubmitting
+            snackBarHostState = snackbarHostState,
+            state = state,
         )
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StateContent(
-        name: String,
-        swift: String,
-        iban: String,
-        bankName: String,
-        bankAddress: String,
-        buttonEnabled: Boolean,
+        state: CreateIntermediaryState,
+        snackBarHostState: SnackbarHostState,
         onContinue: () -> Unit,
         onBack: () -> Unit,
-        snackbarHostState: SnackbarHostState,
-        isLoading: Boolean,
     ) {
         val scrollState = rememberScrollState()
 
         Scaffold(
             modifier = Modifier.imePadding(),
             snackbarHost = {
-                SnackbarHost(snackbarHostState)
+                SnackbarHost(snackBarHostState)
             },
             topBar = {
                 TopAppBar(
@@ -123,11 +112,11 @@ internal class IntermediaryConfirmationStep : Screen {
                     onClick = {
                         onContinue()
                     },
-                    isEnabled = buttonEnabled,
+                    isEnabled = state.isSubmitting.not(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Spacing.medium),
-                    isLoading = isLoading
+                    isLoading = state.isSubmitting
                 )
             }
         ) { scaffoldPadding ->
@@ -150,27 +139,27 @@ internal class IntermediaryConfirmationStep : Screen {
                     VerticalSpacer(SpacerSize.Medium)
                     IntermediaryFieldCard(
                         title = stringResource(R.string.confirm_intermediary_name),
-                        value = name,
+                        value = state.name,
                         icon = Icons.Outlined.Business
                     )
                     IntermediaryFieldCard(
                         title = stringResource(R.string.confirm_intermediary_swift),
-                        value = swift,
+                        value = state.swift,
                         icon = Icons.Outlined.Ballot
                     )
                     IntermediaryFieldCard(
                         title = stringResource(R.string.confirm_intermediary_iban),
-                        value = iban,
+                        value = state.iban,
                         icon = Icons.Outlined.Ballot
                     )
                     IntermediaryFieldCard(
                         title = stringResource(R.string.confirm_intermediary_bank_name),
-                        value = bankName,
+                        value = state.bankName,
                         icon = Icons.Outlined.AccountBalance
                     )
                     IntermediaryFieldCard(
                         title = stringResource(R.string.confirm_intermediary_bank_address),
-                        value = bankAddress,
+                        value = state.bankAddress,
                         icon = Icons.Outlined.MapsHomeWork
                     )
                 }

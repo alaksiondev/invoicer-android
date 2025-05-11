@@ -77,7 +77,8 @@ internal class InvoiceCompanyStep : Screen {
         onChangeRecipientAddress: (String) -> Unit,
         state: InvoiceCompanyState
     ) {
-        val (senderName, senderAddress, recipientName, recipientAddress) = FocusRequester.createRefs()
+        val (senderName, senderAddress) = FocusRequester.createRefs()
+        val (recipientName, recipientAddress) = FocusRequester.createRefs()
         val keyboard = LocalSoftwareKeyboardController.current
 
         Scaffold(

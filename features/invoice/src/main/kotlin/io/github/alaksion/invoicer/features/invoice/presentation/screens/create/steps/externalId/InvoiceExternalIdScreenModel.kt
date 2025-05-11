@@ -44,5 +44,4 @@ internal class InvoiceExternalIdScreenModel(
             _events.emit(Unit)
         }
     }
-
 }

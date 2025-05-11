@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
 import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryState
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.steps.IntermediaryConfirmationStep
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +25,7 @@ class IntermediaryConfirmationStepScreenshotTest {
     fun confirmationScreen_loading() {
         paparazzi.snapshot {
             TestContent(
-                isLoading = true
+                isSubmitting = true
             )
         }
     }
@@ -36,19 +37,19 @@ class IntermediaryConfirmationStepScreenshotTest {
         iban: String = "GB29NWBK60161331926819",
         bankName: String = "Bank Name",
         bankAddress: String = "Bank Address",
-        buttonEnabled: Boolean = false,
-        isLoading: Boolean = false,
+        isSubmitting: Boolean = false,
     ) {
         InvoicerTheme {
             IntermediaryConfirmationStep()
                 .StateContent(
-                    name = name,
-                    swift = swift,
-                    iban = iban,
-                    bankName = bankName,
-                    bankAddress = bankAddress,
-                    buttonEnabled = buttonEnabled,
-                    isLoading = isLoading,
+                    state = CreateIntermediaryState(
+                        name = name,
+                        swift = swift,
+                        iban = iban,
+                        bankName = bankName,
+                        bankAddress = bankAddress,
+                        isSubmitting = isSubmitting,
+                    ),
                     onContinue = { },
                     onBack = { },
                     snackBarHostState = SnackbarHostState(),

@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
 import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryState
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps.BeneficiaryConfirmationStep
 import org.junit.Rule
 import org.junit.Test
@@ -21,11 +22,18 @@ class BeneficiaryConfirmationStepScreenshotTest {
     }
 
     @Test
-    fun confirmationScreen_loading() {
+    fun confirmationScreen_submit() {
         paparazzi.snapshot {
             TestContent(
-                isLoading = true
+                isSubmitting = true
             )
+        }
+    }
+
+    @Test
+    fun confirmationScreen_loading() {
+        paparazzi.snapshot {
+            TestContent()
         }
     }
 
@@ -36,19 +44,19 @@ class BeneficiaryConfirmationStepScreenshotTest {
         iban: String = "GB29NWBK60161331926819",
         bankName: String = "Bank Name",
         bankAddress: String = "Bank Address",
-        buttonEnabled: Boolean = false,
-        isLoading: Boolean = false,
+        isSubmitting: Boolean = false,
     ) {
         InvoicerTheme {
             BeneficiaryConfirmationStep()
                 .StateContent(
-                    name = name,
-                    swift = swift,
-                    iban = iban,
-                    bankName = bankName,
-                    bankAddress = bankAddress,
-                    buttonEnabled = buttonEnabled,
-                    isLoading = isLoading,
+                    state = CreateBeneficiaryState(
+                        name = name,
+                        swift = swift,
+                        iban = iban,
+                        bankName = bankName,
+                        bankAddress = bankAddress,
+                        isSubmitting = isSubmitting
+                    ),
                     onContinue = { },
                     onBack = { },
                     snackbarHostState = SnackbarHostState(),

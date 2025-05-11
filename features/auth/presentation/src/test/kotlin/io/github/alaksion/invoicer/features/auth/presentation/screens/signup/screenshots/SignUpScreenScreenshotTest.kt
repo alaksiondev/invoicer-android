@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
 import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpCallbacks
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreen
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreenState
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
@@ -128,13 +129,15 @@ class SignUpScreenScreenshotTest {
             SignUpScreen().StateContent(
                 state = state,
                 snackBarState = SnackbarHostState(),
-                onEmailChange = { TODO() },
-                onPasswordChange = { TODO() },
-                toggleCensorship = { TODO() },
-                onBackClick = { TODO() },
-                onSubmitClick = { TODO() },
-                onSignInClick = { TODO() },
-                onDismissDialog = { TODO() },
+                callbacks = SignUpCallbacks(
+                    onEmailChange = { },
+                    onPasswordChange = { },
+                    toggleCensorship = { },
+                    onBackClick = { },
+                    onSubmitClick = { },
+                    onSignInClick = { },
+                    onDismissDialog = { },
+                ),
                 showDuplicateAccountDialog = showDuplicateAccountDialog
             )
         }

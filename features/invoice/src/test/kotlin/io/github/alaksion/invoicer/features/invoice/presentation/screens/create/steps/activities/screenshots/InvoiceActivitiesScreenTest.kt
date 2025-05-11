@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
 import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesCallbacks
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesState
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.model.CreateInvoiceActivityUiModel
@@ -51,14 +52,16 @@ internal class InvoiceActivitiesScreenTest {
                 .StateContent(
                     state = state,
                     snackbarHostState = SnackbarHostState(),
-                    onChangeDescription = { },
-                    onChangeUnitPrice = { },
-                    onChangeQuantity = { },
-                    onDelete = { },
-                    onClearForm = { },
-                    onAddActivity = { },
-                    onBack = { },
-                    onContinue = { }
+                    callbacks = InvoiceActivitiesCallbacks(
+                        onChangeDescription = { },
+                        onChangeUnitPrice = { },
+                        onChangeQuantity = { },
+                        onDelete = { },
+                        onClearForm = { },
+                        onAddActivity = { },
+                        onBack = { },
+                        onContinue = { }
+                    ),
                 )
         }
     }

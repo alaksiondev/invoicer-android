@@ -6,9 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.core.view.WindowCompat
+import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
 import foundation.designsystem.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
@@ -24,14 +25,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        forceLightStatusBar()
+        enableEdgeToEdge()
         mainViewModel.startApp()
         setContent { AppContent() }
-    }
-
-    private fun forceLightStatusBar() {
-        WindowCompat.getInsetsController(window, window.decorView)
-            .isAppearanceLightStatusBars = false
     }
 
     @Composable
@@ -50,13 +46,18 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalVoyagerApi::class)
     @Composable
     private fun AppContent() {
         InvoicerTheme {
             Navigator(
                 screens = listOf(MainScreen()),
+                disposeBehavior = NavigatorDisposeBehavior(disposeSteps = false)
             ) { navigator ->
-                SlideTransition(navigator)
+                SlideTransition(
+                    navigator = navigator,
+                    disposeScreenAfterTransitionEnd = true
+                )
 
                 AuthEventEffect(
                     bus = authEventBus,

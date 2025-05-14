@@ -11,10 +11,10 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
-import foundation.designsystem.theme.InvoicerTheme
 import foundation.navigation.InvoicerScreen
 import foundation.watchers.AuthEvent
 import foundation.watchers.AuthEventBus
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -4,8 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import foundation.designsystem.components.dialog.DefaultInvoicerDialog
 import features.home.presentation.R
+import io.github.alaksion.invoicer.foundation.designSystem.components.dialog.DefaultInvoicerDialog
 
 
 @Composable

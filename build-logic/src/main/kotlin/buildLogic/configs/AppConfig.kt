@@ -1,6 +1,7 @@
 package buildLogic.configs
 
 import org.gradle.api.JavaVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 internal object AppConfig {
     val compileSdk = 35
@@ -11,5 +12,6 @@ internal object AppConfig {
     val appId = "io.github.alaksion.invoicer"
 
     val javaVersion = JavaVersion.VERSION_11
+    val jvmTargetMp = JvmTarget.JVM_11
     val jvmTarget = "11"
 }

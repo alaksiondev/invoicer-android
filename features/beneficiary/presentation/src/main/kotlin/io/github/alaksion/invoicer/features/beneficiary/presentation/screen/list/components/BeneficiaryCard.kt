@@ -18,9 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 @Composable
 internal fun BeneficiaryCard(

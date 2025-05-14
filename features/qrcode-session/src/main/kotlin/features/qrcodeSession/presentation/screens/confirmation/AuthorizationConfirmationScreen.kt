@@ -21,11 +21,11 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import feature.qrcodeSession.R
 import features.qrcodeSession.presentation.screens.confirmation.components.CodeDetails
 import features.qrcodeSession.presentation.screens.success.AuthorizationSuccessScreen
-import foundation.designsystem.components.LoadingState
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.feedback.Feedback
-import foundation.designsystem.tokens.Spacing
 import foundation.ui.events.EventEffect
+import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.Feedback
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 internal data class AuthorizationConfirmationScreen(
     private val codeContentId: String

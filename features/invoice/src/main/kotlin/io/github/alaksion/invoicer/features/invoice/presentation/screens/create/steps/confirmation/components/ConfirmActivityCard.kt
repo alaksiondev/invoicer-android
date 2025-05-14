@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.NewActivityCardTestTags
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import io.github.alasion.invoicer.features.invoice.R
 
 @Composable

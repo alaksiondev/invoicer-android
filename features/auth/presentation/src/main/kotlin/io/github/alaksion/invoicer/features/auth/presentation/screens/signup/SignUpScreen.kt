@@ -31,19 +31,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.DialogVariant
-import foundation.designsystem.components.InvoicerDialog
-import foundation.designsystem.components.ScreenTitle
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.buttons.PrimaryButton
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.auth.presentation.R
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreen
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.PasswordStrengthCard
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.SignUpForm
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signupfeedback.SignUpFeedbackScreen
+import io.github.alaksion.invoicer.foundation.designSystem.components.DialogVariant
+import io.github.alaksion.invoicer.foundation.designSystem.components.InvoicerDialog
+import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.PrimaryButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

@@ -18,7 +18,10 @@ class ComposePlugin : Plugin<Project> {
 
     private fun Project.installPlugins() {
         pluginManager.apply(
-            getPlugin(alias = "kotlin-compose").pluginId
+            getPlugin(alias = "composeMultiplatform").pluginId
+        )
+        pluginManager.apply(
+            getPlugin(alias = "composeCompiler").pluginId
         )
     }
 

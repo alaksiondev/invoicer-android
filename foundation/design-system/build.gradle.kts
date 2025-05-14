@@ -1,16 +1,29 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     id("invoicer.compose")
     alias(libs.plugins.paparazzi)
 }
 
 android {
-    namespace = "foundation.designSystem"
+    namespace = "io.github.alaksion.invoicer.foundation.designSystem"
 }
 
-dependencies {
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.material3)
-    api(libs.androidx.material.icons)
-    testImplementation(kotlin("test"))
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(compose.ui)
+                implementation(compose.material3)
+                implementation(compose.components.resources)
+                api(compose.materialIconsExtended)
+            }
+        }
+        commonTest {
+//            implementation(libs.kotlin.test)
+        }
+    }
+}
+
+compose.resources {
+    publicResClass = true
 }

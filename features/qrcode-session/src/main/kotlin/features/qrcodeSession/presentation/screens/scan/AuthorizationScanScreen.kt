@@ -25,9 +25,9 @@ import features.qrcodeSession.presentation.barcodeanalyzer.QrCodeAnalyzer
 import features.qrcodeSession.presentation.barcodeanalyzer.rememberQrCodeAnalyzer
 import features.qrcodeSession.presentation.screens.confirmation.AuthorizationConfirmationScreen
 import features.qrcodeSession.presentation.screens.scan.components.CameraView
-import foundation.designsystem.components.LoadingState
-import foundation.designsystem.components.buttons.BackButton
 import foundation.ui.events.EventEffect
+import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
 import kotlinx.coroutines.launch
 
 internal class AuthorizationScanScreen : Screen {

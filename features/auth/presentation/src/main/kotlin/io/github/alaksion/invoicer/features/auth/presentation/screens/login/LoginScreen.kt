@@ -31,7 +31,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -41,20 +40,23 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import foundation.designsystem.components.ScreenTitle
-import foundation.designsystem.components.TextDivider
-import foundation.designsystem.components.buttons.PrimaryButton
-import foundation.designsystem.components.buttons.SecondaryButton
-import foundation.designsystem.components.spacer.Spacer
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import foundation.navigation.extensions.pushToFront
+import invoicer.foundation.design_system.generated.resources.Res
+import invoicer.foundation.design_system.generated.resources.google
 import io.github.alaksion.invoicer.features.auth.presentation.R
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.components.SignInForm
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreen
+import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
+import io.github.alaksion.invoicer.foundation.designSystem.components.TextDivider
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.PrimaryButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.SecondaryButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Spacer
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 
 internal class LoginScreen : Screen {
 
@@ -183,7 +185,7 @@ internal class LoginScreen : Screen {
                     onClick = callBacks.onLaunchGoogle,
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(foundation.designSystem.R.drawable.google),
+                            painter = painterResource(Res.drawable.google),
                             contentDescription = null,
                             tint = Color.Unspecified,
                             modifier = Modifier

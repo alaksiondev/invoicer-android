@@ -17,12 +17,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.feedback.Feedback
-import foundation.designsystem.components.preview.ThemeContainer
-import foundation.designsystem.tokens.Spacing
-import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreen
 import io.github.alaksion.invoicer.features.auth.presentation.R
+import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreen
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.Feedback
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 internal class SignUpFeedbackScreen : Screen {
 
@@ -87,7 +87,7 @@ internal class SignUpFeedbackScreen : Screen {
 @Composable
 @Preview
 private fun Preview() {
-    ThemeContainer {
+    InvoicerTheme {
         SignUpFeedbackScreen().StateContent(onBack = {}, onSubmit = {})
     }
 }

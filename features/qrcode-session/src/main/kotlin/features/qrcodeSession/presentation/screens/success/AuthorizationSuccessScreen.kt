@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import features.qrcodeSession.presentation.screens.home.AuthorizationHomeScreen
-import foundation.designsystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
 
 internal class AuthorizationSuccessScreen : Screen {
 

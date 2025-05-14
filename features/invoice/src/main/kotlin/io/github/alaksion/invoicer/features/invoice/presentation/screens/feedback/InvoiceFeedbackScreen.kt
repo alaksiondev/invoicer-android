@@ -12,8 +12,8 @@ import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.InvoiceListScreen
-import foundation.designsystem.components.feedback.Feedback
-import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.Feedback
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import io.github.alasion.invoicer.features.invoice.R
 
 internal class InvoiceFeedbackScreen : Screen {

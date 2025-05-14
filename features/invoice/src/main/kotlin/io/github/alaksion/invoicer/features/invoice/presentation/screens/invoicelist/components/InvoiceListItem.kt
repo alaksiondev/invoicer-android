@@ -17,11 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import foundation.designsystem.components.spacer.Spacer
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.invoice.domain.model.InvoiceListItem
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Spacer
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import io.github.alaksion.invoicer.foundation.utils.money.moneyFormat
 import io.github.alasion.invoicer.features.invoice.R

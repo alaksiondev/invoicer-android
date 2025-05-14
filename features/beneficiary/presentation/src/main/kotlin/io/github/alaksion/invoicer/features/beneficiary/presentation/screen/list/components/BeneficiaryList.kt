@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import foundation.designsystem.components.emptystate.EmptyState
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
+import io.github.alaksion.invoicer.foundation.designSystem.components.emptystate.EmptyState
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

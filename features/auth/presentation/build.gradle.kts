@@ -36,7 +36,10 @@ android {
 
 dependencies {
     // Compose
-    implementation(libs.bundles.compose.ui)
+    implementation(compose.ui)
+    implementation(compose.components.uiToolingPreview)
+    implementation(compose.material3)
+    implementation(compose.components.resources)
     debugImplementation(libs.bundles.compose.debug)
     implementation(libs.androidx.activity.compose)
 

@@ -15,8 +15,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import feature.qrcodeSession.R
 import features.qrcodeSession.presentation.screens.scan.AuthorizationScanScreen
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 internal class AuthorizationHomeScreen : Screen {
 

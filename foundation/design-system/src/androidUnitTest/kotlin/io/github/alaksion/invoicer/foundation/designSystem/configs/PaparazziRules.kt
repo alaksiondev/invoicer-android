@@ -2,7 +2,7 @@ package io.github.alaksion.invoicer.foundation.designSystem.configs
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 
 val InvoicerPaparazziConfig = Paparazzi(
     maxPercentDifference = 0.0

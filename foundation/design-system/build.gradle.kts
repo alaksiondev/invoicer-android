@@ -10,16 +10,19 @@ android {
 
 kotlin {
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(compose.ui)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                api(compose.materialIconsExtended)
-            }
+        commonMain.dependencies {
+            implementation(compose.ui)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            api(compose.materialIconsExtended)
         }
-        commonTest {
-//            implementation(libs.kotlin.test)
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+
+        androidUnitTest.dependencies {
+            implementation(projects.foundation.testUtil)
         }
     }
 }

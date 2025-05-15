@@ -3,11 +3,11 @@ package io.github.alaksion.invoicer.features.intermediary.presentation.screen.up
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryCallbacks
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryMode
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryState
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import org.junit.Rule
 import kotlin.test.Test
 

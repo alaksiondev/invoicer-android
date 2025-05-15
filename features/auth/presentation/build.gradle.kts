@@ -42,6 +42,7 @@ dependencies {
     implementation(compose.components.resources)
     debugImplementation(libs.bundles.compose.debug)
     implementation(libs.androidx.activity.compose)
+    implementation(projects.foundation.testUtil)
 
     // Koin
     implementation(platform(libs.koin.bom))

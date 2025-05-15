@@ -2,7 +2,7 @@ package io.github.alaksion.invoicer.features.intermediary.presentation.screen.li
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListMode
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListState

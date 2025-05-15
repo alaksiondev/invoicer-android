@@ -3,11 +3,11 @@ package io.github.alaksion.invoicer.features.auth.presentation.screens.signup.sc
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpCallbacks
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreen
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreenState
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import org.junit.Rule
 import org.junit.Test
 

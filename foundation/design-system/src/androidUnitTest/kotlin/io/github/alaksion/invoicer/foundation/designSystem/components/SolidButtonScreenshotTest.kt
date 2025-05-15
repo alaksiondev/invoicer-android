@@ -1,10 +1,10 @@
 package io.github.alaksion.invoicer.foundation.designSystem.components
 
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.InvoicerButtonSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.PrimaryButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.SecondaryButton
 import io.github.alaksion.invoicer.foundation.designSystem.configs.InvoicerPaparazziConfig
 import io.github.alaksion.invoicer.foundation.designSystem.configs.invoicerSnapshot
-import foundation.designsystem.components.buttons.InvoicerButtonSize
-import foundation.designsystem.components.buttons.PrimaryButton
-import foundation.designsystem.components.buttons.SecondaryButton
 import org.junit.Rule
 import kotlin.test.Test
 

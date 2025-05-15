@@ -2,9 +2,9 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.externalId.InvoiceExternalIdState
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.externalId.InvoiceExternalIdStep
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import org.junit.Rule
 import kotlin.test.Test
 

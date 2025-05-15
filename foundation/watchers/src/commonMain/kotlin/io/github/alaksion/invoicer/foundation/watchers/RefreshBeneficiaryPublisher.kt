@@ -1,4 +1,4 @@
-package foundation.watchers
+package io.github.alaksion.invoicer.foundation.watchers
 
 import io.github.alaksion.invoicer.foundation.ui.events.EventAware
 import io.github.alaksion.invoicer.foundation.ui.events.EventPublisher

@@ -1,4 +1,4 @@
-package foundation.watchers
+package io.github.alaksion.invoicer.foundation.watchers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

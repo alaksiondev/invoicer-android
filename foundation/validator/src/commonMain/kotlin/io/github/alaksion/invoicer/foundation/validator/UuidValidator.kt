@@ -1,4 +1,4 @@
-package foundation.validator.impl
+package io.github.alaksion.invoicer.foundation.validator
 
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid

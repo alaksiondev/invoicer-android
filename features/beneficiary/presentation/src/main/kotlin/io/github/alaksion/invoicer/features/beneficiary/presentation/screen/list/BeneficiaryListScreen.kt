@@ -30,7 +30,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.foundation.ui.LazyListPaginationEffect
-import foundation.watchers.RefreshBeneficiaryPublisher
+import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.components.BeneficiaryList

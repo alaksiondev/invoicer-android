@@ -28,7 +28,7 @@ dependencies {
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.ui)
-    implementation(projects.foundation.validator.impl)
+    implementation(projects.foundation.validator)
 
     implementation(libs.bundles.voyager)
 

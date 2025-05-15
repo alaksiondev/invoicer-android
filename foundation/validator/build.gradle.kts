@@ -1,0 +1,16 @@
+plugins {
+    id("invoicer.multiplatform.library")
+}
+
+android {
+    namespace = "io.github.alaksion.invoicer.foundation.validator"
+}
+
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+        }
+    }
+}

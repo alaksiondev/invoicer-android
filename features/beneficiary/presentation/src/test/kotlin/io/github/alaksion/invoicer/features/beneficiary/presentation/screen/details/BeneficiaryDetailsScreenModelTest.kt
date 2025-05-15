@@ -1,7 +1,7 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details
 
 import foundation.network.RequestError
-import foundation.watchers.RefreshBeneficiaryPublisher
+import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat

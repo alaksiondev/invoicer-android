@@ -35,7 +35,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.foundation.ui.LazyListPaginationEffect
 import io.github.alaksion.invoicer.foundation.ui.events.EventEffect
-import foundation.watchers.NewInvoicePublisher
+import io.github.alaksion.invoicer.foundation.watchers.NewInvoicePublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.details.InvoiceDetailsScreen
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.components.InvoiceListItem
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListCallbacks

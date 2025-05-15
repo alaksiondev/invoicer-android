@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import features.qrcodeSession.util.executeWithMinDelay
 import io.github.alaksion.invoicer.foundation.ui.events.EventAware
 import io.github.alaksion.invoicer.foundation.ui.events.EventPublisher
-import foundation.validator.impl.UuidValidator
+import io.github.alaksion.invoicer.foundation.validator.UuidValidator
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

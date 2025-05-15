@@ -28,7 +28,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.foundation.ui.events.EventEffect
-import foundation.watchers.RefreshIntermediaryPublisher
+import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.components.SelectableItem
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.InvoiceActivitiesScreen
 import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState

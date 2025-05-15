@@ -5,8 +5,8 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import features.qrcodeSession.domain.repository.QrCodeTokenRepository
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
+import io.github.alaksion.invoicer.foundation.ui.events.EventAware
+import io.github.alaksion.invoicer.foundation.ui.events.EventPublisher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package foundation.ui.events
+package io.github.alaksion.invoicer.foundation.ui.events
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package foundation.ui.events
+package io.github.alaksion.invoicer.foundation.ui.events
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

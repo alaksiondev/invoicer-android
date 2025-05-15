@@ -1,6 +1,6 @@
 package foundation.watchers
 
-import foundation.ui.events.EventAware
-import foundation.ui.events.EventPublisher
+import io.github.alaksion.invoicer.foundation.ui.events.EventAware
+import io.github.alaksion.invoicer.foundation.ui.events.EventPublisher
 
 class NewInvoicePublisher : EventAware<Unit> by EventPublisher()

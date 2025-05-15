@@ -1,4 +1,4 @@
-package foundation.ui
+package io.github.alaksion.invoicer.foundation.ui
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable

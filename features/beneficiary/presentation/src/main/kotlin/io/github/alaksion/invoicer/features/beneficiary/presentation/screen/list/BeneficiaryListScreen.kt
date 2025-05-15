@@ -29,7 +29,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import foundation.navigation.InvoicerScreen
-import foundation.ui.LazyListPaginationEffect
+import io.github.alaksion.invoicer.foundation.ui.LazyListPaginationEffect
 import foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
@@ -40,6 +40,7 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.F
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.ui.events.EventEffect
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class BeneficiaryListScreen : Screen {
@@ -66,7 +67,7 @@ internal class BeneficiaryListScreen : Screen {
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
 
-        foundation.ui.events.EventEffect(refreshBeneficiaryPublisher) {
+        EventEffect(refreshBeneficiaryPublisher) {
             viewModel.loadPage(force = true)
         }
 

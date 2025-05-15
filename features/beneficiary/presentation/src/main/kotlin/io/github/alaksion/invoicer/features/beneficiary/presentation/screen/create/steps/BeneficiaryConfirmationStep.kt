@@ -29,12 +29,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import foundation.designsystem.components.ScreenTitle
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.buttons.PrimaryButton
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryEvents
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryScreenModel
@@ -42,6 +36,12 @@ import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.crea
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.components.BeneficiaryFieldCard
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.feedback.BeneficiaryFeedbackType
+import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.PrimaryButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

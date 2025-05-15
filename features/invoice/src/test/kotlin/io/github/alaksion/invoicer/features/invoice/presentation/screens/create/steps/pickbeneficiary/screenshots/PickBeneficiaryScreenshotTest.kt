@@ -2,11 +2,11 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.create
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.BeneficiarySelection
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryScreen
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.pickbeneficiary.PickBeneficiaryState
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import org.junit.Rule

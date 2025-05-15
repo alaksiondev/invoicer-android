@@ -2,7 +2,7 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.lis
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.BeneficiaryListMode
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.BeneficiaryListScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.BeneficiaryListState

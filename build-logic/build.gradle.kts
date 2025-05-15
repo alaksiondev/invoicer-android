@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.android.library.gradle.plugin)
     implementation(libs.android.application.gradle.plugin)
+    implementation(libs.kotlin.multiplatform.gradle.plugin)
     implementation(libs.detekt.gradle.plugin)
 }
 
@@ -21,6 +22,11 @@ gradlePlugin {
         create("invoicer-library") {
             id = "invoicer.library"
             implementationClass = "buildLogic.plugins.LibraryPlugin"
+        }
+
+        create("invoicer-multiplatform-library") {
+            id = "invoicer.multiplatform.library"
+            implementationClass = "buildLogic.plugins.KmpLibraryPlugin"
         }
 
         create("invoicer-compose") {

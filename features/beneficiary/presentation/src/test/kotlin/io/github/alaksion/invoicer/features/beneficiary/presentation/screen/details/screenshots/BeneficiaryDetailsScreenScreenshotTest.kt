@@ -3,7 +3,7 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.det
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsMode
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsState

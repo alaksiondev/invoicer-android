@@ -28,18 +28,18 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.ScreenTitle
-import foundation.designsystem.components.buttons.CloseButton
-import foundation.designsystem.components.feedback.Feedback
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import foundation.navigation.InvoicerScreen
 import foundation.ui.LazyListPaginationEffect
 import foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.presentation.R
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.components.BeneficiaryList
+import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.CloseButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.Feedback
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import org.koin.mp.KoinPlatform.getKoin
 
 internal class BeneficiaryListScreen : Screen {

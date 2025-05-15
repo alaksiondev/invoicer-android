@@ -27,9 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import foundation.designsystem.components.InputField
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.activities.AddActivityFormState
+import io.github.alaksion.invoicer.foundation.designSystem.components.InputField
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import io.github.alasion.invoicer.features.invoice.R
 
 @OptIn(ExperimentalMaterial3Api::class)

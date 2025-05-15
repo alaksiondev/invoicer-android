@@ -22,14 +22,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.InputField
-import foundation.designsystem.components.ScreenTitle
-import foundation.designsystem.components.buttons.BackButton
-import foundation.designsystem.components.buttons.PrimaryButton
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.steps.company.InvoiceCompanyStep
+import io.github.alaksion.invoicer.foundation.designSystem.components.InputField
+import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.PrimaryButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import io.github.alasion.invoicer.features.invoice.R
 import kotlinx.coroutines.flow.collectLatest
 

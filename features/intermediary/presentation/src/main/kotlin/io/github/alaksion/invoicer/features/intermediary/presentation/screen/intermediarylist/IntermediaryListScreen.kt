@@ -23,19 +23,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.designsystem.components.LoadingState
-import foundation.designsystem.components.ScreenTitle
-import foundation.designsystem.components.buttons.CloseButton
-import foundation.designsystem.components.feedback.Feedback
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.Spacing
 import foundation.ui.LazyListPaginationEffect
 import foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.intermediary.presentation.R
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryFlow
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.details.IntermediaryDetailsScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.components.IntermediaryList
+import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState
+import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
+import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.CloseButton
+import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.Feedback
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class IntermediaryListScreen : Screen {

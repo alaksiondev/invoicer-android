@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import foundation.designsystem.components.preview.ThemeContainer
-import foundation.designsystem.tokens.AppColor
-import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppColor
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import io.github.alaksion.invoicer.foundation.utils.money.moneyFormat
 import io.github.alasion.invoicer.features.invoice.R
 
@@ -104,7 +104,7 @@ private fun FieldCard(
 @Preview
 @Composable
 private fun Preview() {
-    ThemeContainer {
+    InvoicerTheme {
         InvoiceActivityCard(
             quantity = 1,
             description = "Hello world",

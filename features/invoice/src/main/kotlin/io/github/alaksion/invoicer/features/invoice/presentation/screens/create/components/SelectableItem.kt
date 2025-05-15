@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import foundation.designsystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 @Composable
 internal fun SelectableItem(

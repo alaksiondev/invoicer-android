@@ -3,12 +3,12 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.invoic
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import foundation.designsystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.invoice.domain.model.InvoiceListItem
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.InvoiceListScreen
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListMode
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListState
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.rememberInvoiceListCallbacks
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import org.junit.Rule

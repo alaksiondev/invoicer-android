@@ -16,13 +16,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import foundation.designsystem.components.spacer.SpacerSize
-import foundation.designsystem.components.spacer.VerticalSpacer
-import foundation.designsystem.tokens.AppColor
-import foundation.designsystem.tokens.AppSize
-import foundation.designsystem.tokens.Spacing
-import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
 import io.github.alaksion.invoicer.features.auth.presentation.R
+import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
+import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppColor
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppSize
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 @Composable
 internal fun StrengthStepper(

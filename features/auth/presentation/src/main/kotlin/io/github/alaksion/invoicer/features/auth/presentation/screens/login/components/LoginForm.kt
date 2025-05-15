@@ -10,8 +10,8 @@ import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import foundation.designsystem.tokens.Spacing
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreenState
+import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 
 @Composable
 internal fun SignInForm(

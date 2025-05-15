@@ -23,8 +23,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.ui.LazyListPaginationEffect
-import foundation.watchers.RefreshIntermediaryPublisher
+import io.github.alaksion.invoicer.foundation.ui.LazyListPaginationEffect
+import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.intermediary.presentation.R
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryFlow
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.details.IntermediaryDetailsScreen
@@ -36,6 +36,7 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.F
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.ui.events.EventEffect
 import org.koin.java.KoinJavaComponent.getKoin
 
 internal class IntermediaryListScreen : Screen {
@@ -56,7 +57,7 @@ internal class IntermediaryListScreen : Screen {
 
         LaunchedEffect(Unit) { viewModel.loadPage() }
 
-        foundation.ui.events.EventEffect(newBeneficiaryPublisher) {
+        EventEffect(newBeneficiaryPublisher) {
             viewModel.loadPage(force = true)
         }
 

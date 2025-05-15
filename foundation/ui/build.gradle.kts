@@ -1,14 +1,18 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     id("invoicer.compose")
 }
 
 android {
-    namespace = "foundation.ui"
+    namespace = "io.github.alaksion.invoicer.foundation.ui"
 }
 
-dependencies {
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.material3)
-    implementation(libs.coroutines.core)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(libs.coroutines.core)
+        }
+    }
 }

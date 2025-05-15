@@ -1,8 +1,8 @@
 package io.github.alaksion.invoicer.foundation.auth.domain.service
 
 import com.google.firebase.auth.FirebaseAuth
-import foundation.watchers.AuthEvent
-import foundation.watchers.AuthEventBus
+import io.github.alaksion.invoicer.foundation.watchers.AuthEvent
+import io.github.alaksion.invoicer.foundation.watchers.AuthEventBus
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
 import io.github.alaksion.invoicer.foundation.session.Session
 

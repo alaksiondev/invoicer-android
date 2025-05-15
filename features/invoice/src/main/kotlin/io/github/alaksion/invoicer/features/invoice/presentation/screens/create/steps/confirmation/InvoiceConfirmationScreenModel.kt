@@ -4,7 +4,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.watchers.NewInvoicePublisher
+import io.github.alaksion.invoicer.foundation.watchers.NewInvoicePublisher
 import io.github.alaksion.invoicer.features.invoice.domain.model.CreateInvoiceActivityModel
 import io.github.alaksion.invoicer.features.invoice.domain.model.CreateInvoiceModel
 import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository

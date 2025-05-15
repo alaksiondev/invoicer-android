@@ -6,8 +6,8 @@ import features.qrcodeSession.di.qrCodeSessionDi
 import features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import foundation.network.di.networkDiModule
 import foundation.storage.impl.di.storageDiModule
-import foundation.validator.impl.di.validatorDiModule
-import foundation.watchers.di.watchersDiModule
+import io.github.alaksion.invoicer.foundation.validator.di.validatorDiModule
+import io.github.alaksion.invoicer.foundation.watchers.di.watchersDiModule
 import io.github.alaksion.invoicer.features.auth.presentation.di.featureAuthPresentationDiModule
 import io.github.alaksion.invoicer.features.auth.presentation.navigation.authScreens
 import io.github.alaksion.invoicer.features.beneficiary.presentation.di.beneficiaryPresentationModule

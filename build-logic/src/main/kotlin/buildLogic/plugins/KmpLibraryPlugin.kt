@@ -72,8 +72,16 @@ class KmpLibraryPlugin : Plugin<Project> {
                     }
                 }
             }
-
-            // TODO: Add IOS targets
+            listOf(
+                iosX64(),
+                iosArm64(),
+                iosSimulatorArm64()
+            ).forEach { iosTarget ->
+                iosTarget.binaries.framework {
+                    baseName = "Invoicer"
+                    isStatic = true
+                }
+            }
         }
     }
 }

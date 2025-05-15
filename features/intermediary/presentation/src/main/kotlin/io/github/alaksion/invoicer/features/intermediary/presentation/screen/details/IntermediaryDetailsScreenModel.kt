@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import foundation.network.RequestError
 import foundation.network.request.handle
 import foundation.network.request.launchRequest
-import foundation.watchers.RefreshIntermediaryPublisher
+import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
 import kotlinx.coroutines.CoroutineDispatcher

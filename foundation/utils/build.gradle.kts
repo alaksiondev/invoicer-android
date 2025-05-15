@@ -1,5 +1,5 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
 }
 
 android {
@@ -10,8 +10,12 @@ android {
     }
 }
 
-dependencies {
-    implementation(libs.datetime)
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.core)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.datetime)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+        }
+    }
 }

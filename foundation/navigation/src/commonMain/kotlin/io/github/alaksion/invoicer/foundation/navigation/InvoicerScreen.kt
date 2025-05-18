@@ -1,4 +1,4 @@
-package foundation.navigation
+package io.github.alaksion.invoicer.foundation.navigation
 
 import cafe.adriel.voyager.core.registry.ScreenProvider
 

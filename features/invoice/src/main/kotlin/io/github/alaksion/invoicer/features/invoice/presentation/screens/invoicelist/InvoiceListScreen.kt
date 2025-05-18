@@ -32,7 +32,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import foundation.navigation.InvoicerScreen
+import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.foundation.ui.LazyListPaginationEffect
 import io.github.alaksion.invoicer.foundation.ui.events.EventEffect
 import io.github.alaksion.invoicer.foundation.watchers.NewInvoicePublisher

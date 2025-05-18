@@ -40,7 +40,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import foundation.navigation.extensions.pushToFront
+import io.github.alaksion.invoicer.foundation.navigation.extensions.pushToFront
 import invoicer.foundation.design_system.generated.resources.Res
 import invoicer.foundation.design_system.generated.resources.google
 import io.github.alaksion.invoicer.features.auth.presentation.R

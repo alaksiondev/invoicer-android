@@ -10,7 +10,7 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import foundation.navigation.InvoicerScreen
+import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.components.WelcomeActions
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 

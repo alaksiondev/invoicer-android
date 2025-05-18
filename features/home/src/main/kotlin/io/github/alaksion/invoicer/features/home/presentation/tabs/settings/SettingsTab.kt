@@ -28,7 +28,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import features.home.presentation.R
-import foundation.navigation.InvoicerScreen
+import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.features.home.presentation.tabs.settings.components.SettingsItem
 import io.github.alaksion.invoicer.features.home.presentation.tabs.settings.components.SignOutDialog
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Spacer

@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.foundation.auth.domain.service
+package io.github.alaksion.invoicer.foundation.auth.domain.services
 
 import io.github.alaksion.invoicer.foundation.watchers.AuthEvent
 import io.github.alaksion.invoicer.foundation.watchers.AuthEventBus

@@ -1,7 +1,5 @@
 package io.github.alaksion.invoicer.foundation.auth.di
 
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import io.github.alaksion.invoicer.foundation.auth.data.datasource.AuthRemoteDataSource
 import io.github.alaksion.invoicer.foundation.auth.data.datasource.AuthRemoteDataSourceImpl
 import io.github.alaksion.invoicer.foundation.auth.data.datasource.AuthStorage
@@ -10,14 +8,18 @@ import io.github.alaksion.invoicer.foundation.auth.data.repository.AuthRepositor
 import io.github.alaksion.invoicer.foundation.auth.data.repository.AuthTokenRepositoryImpl
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthTokenRepository
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManager
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManagerResolver
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignOutHandler
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignOutService
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommandManager
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommandManagerResolver
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignOutHandler
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignOutService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val foundationAuthDiModule = module {
+    includes(authPlatformModule)
+
     factory<AuthStorage> {
         AuthStorageImpl(
             localStorage = get(),
@@ -49,7 +51,9 @@ val foundationAuthDiModule = module {
         SignOutHandler(
             authEventBus = get(),
             authRepository = get(),
-            firebaseAuth = Firebase.auth
+            firebaseHelper = get()
         )
     }
 }
+
+internal expect val authPlatformModule: Module

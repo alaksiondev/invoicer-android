@@ -8,8 +8,8 @@ import com.google.android.gms.tasks.Task
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelper
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.GoogleResult
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommand
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManager
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommand
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommandManager
 import io.github.alaksion.invoicer.foundation.network.RequestError
 import io.github.alaksion.invoicer.foundation.network.request.handle
 import io.github.alaksion.invoicer.foundation.network.request.launchRequest

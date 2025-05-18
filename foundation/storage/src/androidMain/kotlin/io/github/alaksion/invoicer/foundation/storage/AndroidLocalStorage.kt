@@ -1,25 +1,21 @@
-package foundation.storage.impl
+package io.github.alaksion.invoicer.foundation.storage
 
 import android.content.Context
+import androidx.core.content.edit
 
-interface LocalStorage {
-    fun setString(value: String, key: String)
-    fun getString(key: String): String?
-    fun clear(key: String)
-}
-
-internal class LocalStorageImpl(
+internal class AndroidLocalStorage(
     private val context: Context
 ) : LocalStorage {
-    val preferences by lazy {
+
+    private val preferences by lazy {
         context.getSharedPreferences("invoicer", Context.MODE_PRIVATE)
     }
 
     override fun setString(value: String, key: String) {
         preferences
-            .edit()
-            .putString(key, value)
-            .apply()
+            .edit {
+                putString(key, value)
+            }
     }
 
     override fun getString(key: String): String? {
@@ -27,7 +23,7 @@ internal class LocalStorageImpl(
     }
 
     override fun clear(key: String) {
-        preferences.edit().remove(key).apply()
+        preferences.edit { remove(key) }
     }
 
 }

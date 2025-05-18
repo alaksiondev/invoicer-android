@@ -21,7 +21,6 @@ val foundationAuthDiModule = module {
     factory<AuthStorage> {
         AuthStorageImpl(
             localStorage = get(),
-            keyStoreManager = get()
         )
     }
     factory<AuthRemoteDataSource> {

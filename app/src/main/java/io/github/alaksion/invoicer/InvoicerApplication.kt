@@ -5,9 +5,6 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import features.qrcodeSession.di.qrCodeSessionDi
 import features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import foundation.network.di.networkDiModule
-import foundation.storage.impl.di.storageDiModule
-import io.github.alaksion.invoicer.foundation.validator.di.validatorDiModule
-import io.github.alaksion.invoicer.foundation.watchers.di.watchersDiModule
 import io.github.alaksion.invoicer.features.auth.presentation.di.featureAuthPresentationDiModule
 import io.github.alaksion.invoicer.features.auth.presentation.navigation.authScreens
 import io.github.alaksion.invoicer.features.beneficiary.presentation.di.beneficiaryPresentationModule
@@ -22,7 +19,10 @@ import io.github.alaksion.invoicer.features.invoice.di.invoiceDiModule
 import io.github.alaksion.invoicer.features.invoice.presentation.navigation.invoiceScreens
 import io.github.alaksion.invoicer.foundation.analytics.di.analyticsDiModule
 import io.github.alaksion.invoicer.foundation.auth.di.foundationAuthDiModule
+import io.github.alaksion.invoicer.foundation.storage.di.localStorageDiModule
 import io.github.alaksion.invoicer.foundation.utils.di.utilsDiModule
+import io.github.alaksion.invoicer.foundation.validator.di.validatorDiModule
+import io.github.alaksion.invoicer.foundation.watchers.di.watchersDiModule
 import io.github.alaksion.invoicer.main.mainDiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -48,7 +48,7 @@ class InvoicerApplication : Application() {
                 featureAuthPresentationDiModule,
                 networkDiModule,
                 validatorDiModule,
-                storageDiModule,
+                localStorageDiModule,
                 foundationAuthDiModule,
                 homePresentationDiModule,
                 utilsDiModule,

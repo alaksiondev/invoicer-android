@@ -1,8 +1,7 @@
 package io.github.alaksion.invoicer.foundation.auth.data.datasource
 
-import foundation.storage.impl.KeyStoreManager
-import foundation.storage.impl.LocalStorage
 import io.github.alaksion.invoicer.foundation.auth.domain.model.AuthToken
+import io.github.alaksion.invoicer.foundation.storage.LocalStorage
 
 internal interface AuthStorage {
     suspend fun storeAuthTokens(
@@ -17,20 +16,17 @@ internal interface AuthStorage {
 
 internal class AuthStorageImpl(
     private val localStorage: LocalStorage,
-    private val keyStoreManager: KeyStoreManager
 ) : AuthStorage {
 
     override suspend fun storeAuthTokens(accessToken: String, refreshToken: String) {
-        val encryptAccessToken = keyStoreManager.encryptValue(accessToken)
-        val encryptRefreshToken = keyStoreManager.encryptValue(refreshToken)
         localStorage.setString(
             key = REFRESH_TOKEN_KEY,
-            value = encryptRefreshToken
+            value = refreshToken
         )
 
         localStorage.setString(
             key = ACCESS_TOKEN_KEY,
-            value = encryptAccessToken
+            value = accessToken
         )
     }
 
@@ -42,12 +38,9 @@ internal class AuthStorageImpl(
             return null
         }
 
-        val decryptAccessToken = keyStoreManager.decryptValue(accessToken)
-        val decryptRefreshToken = keyStoreManager.encryptValue(refreshToken)
-
         return AuthToken(
-            refreshToken = decryptRefreshToken,
-            accessToken = decryptAccessToken
+            refreshToken = refreshToken,
+            accessToken = accessToken
         )
     }
 

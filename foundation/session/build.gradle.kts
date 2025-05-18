@@ -1,5 +1,5 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     alias(libs.plugins.kotlin.serialization)
 }
 

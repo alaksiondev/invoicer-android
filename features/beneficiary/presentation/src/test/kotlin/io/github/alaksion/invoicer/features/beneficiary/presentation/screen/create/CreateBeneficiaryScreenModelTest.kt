@@ -1,6 +1,6 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create
 
-import foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.RequestError
 import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import io.mockk.Runs

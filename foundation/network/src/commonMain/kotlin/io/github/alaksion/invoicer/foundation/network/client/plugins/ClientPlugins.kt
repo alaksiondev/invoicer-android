@@ -1,20 +1,15 @@
-package foundation.network.client.plugins
+package io.github.alaksion.invoicer.foundation.network.client.plugins
 
-import foundation.network.RequestError
-import foundation.network.client.BASE_URL
-import foundation.network.client.BuildConfig
-import foundation.network.client.InvoicerHttpError
+import io.github.alaksion.invoicer.foundation.network.NetworkBuildConfig
+import io.github.alaksion.invoicer.foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.client.InvoicerHttpError
 import io.github.alaksion.invoicer.foundation.session.Session
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.body
-import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.logging.DEFAULT
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
@@ -23,7 +18,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-internal fun HttpClientConfig<OkHttpConfig>.setupClient() {
+internal fun HttpClientConfig<*>.setupClient() {
     expectSuccess = true
     contentNegotiation()
     log()
@@ -31,7 +26,7 @@ internal fun HttpClientConfig<OkHttpConfig>.setupClient() {
     responseValidation()
 }
 
-private fun HttpClientConfig<OkHttpConfig>.contentNegotiation() {
+private fun HttpClientConfig<*>.contentNegotiation() {
     install(ContentNegotiation) {
         json(
             Json {
@@ -43,15 +38,11 @@ private fun HttpClientConfig<OkHttpConfig>.contentNegotiation() {
     }
 }
 
-private fun HttpClientConfig<OkHttpConfig>.log() {
-    install(Logging) {
-        val logLevel = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
-        logger = Logger.DEFAULT
-        level = logLevel
-    }
+private fun HttpClientConfig<*>.log() {
+    install(Logging)
 }
 
-private fun HttpClientConfig<OkHttpConfig>.responseValidation() {
+private fun HttpClientConfig<*>.responseValidation() {
     HttpResponseValidator {
         handleResponseExceptionWithRequest { exception, request ->
             val clientException =
@@ -73,9 +64,9 @@ private fun HttpClientConfig<OkHttpConfig>.responseValidation() {
     }
 }
 
-private fun HttpClientConfig<OkHttpConfig>.defaultRequest() {
+private fun HttpClientConfig<*>.defaultRequest() {
     defaultRequest {
-        host = BASE_URL
+        host = NetworkBuildConfig.API_URL
         contentType(ContentType.Application.Json)
         header(HttpHeaders.Authorization, "Bearer " + Session.tokens?.accessToken)
     }

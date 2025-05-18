@@ -4,8 +4,7 @@ import io.github.alaksion.invoicer.features.intermediary.services.data.model.Cre
 import io.github.alaksion.invoicer.features.intermediary.services.data.model.IntermediariesData
 import io.github.alaksion.invoicer.features.intermediary.services.data.model.IntermediaryData
 import io.github.alaksion.invoicer.features.intermediary.services.data.model.UpdateIntermediaryData
-import foundation.network.client.BASE_URL
-import foundation.network.client.HttpWrapper
+import io.github.alaksion.invoicer.foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -109,7 +108,6 @@ internal class IntermediaryRemoteDataSourceImpl(
             httpWrapper.client.delete(
                 url = buildUrl
                 {
-                    host = BASE_URL
                     path("/v1/intermediary/${id}")
                 },
                 block = {
@@ -130,7 +128,6 @@ internal class IntermediaryRemoteDataSourceImpl(
         withContext(dispatcher) {
             httpWrapper.client.put(
                 url = buildUrl {
-                    host = BASE_URL
                     path("/v1/intermediary/${id}")
                 },
                 block = {

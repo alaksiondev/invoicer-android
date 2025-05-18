@@ -3,7 +3,7 @@ package io.github.alaksion.invoicer.features.invoice.data.datasource
 import io.github.alaksion.invoicer.features.invoice.data.model.CreateInvoiceRequest
 import io.github.alaksion.invoicer.features.invoice.data.model.InvoiceDetailsResponse
 import io.github.alaksion.invoicer.features.invoice.data.model.InvoiceListResponse
-import foundation.network.client.HttpWrapper
+import io.github.alaksion.invoicer.foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post

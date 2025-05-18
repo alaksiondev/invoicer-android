@@ -3,7 +3,7 @@ package io.github.alaksion.invoicer.features.auth.presentation.screens.login
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Task
-import foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.RequestError
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelper
 import io.github.alaksion.invoicer.features.auth.presentation.firebase.GoogleResult
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker

@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.buildKonfig) apply false
 }
 
 allprojects {

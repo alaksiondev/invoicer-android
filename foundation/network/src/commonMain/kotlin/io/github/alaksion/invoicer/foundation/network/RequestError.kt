@@ -1,4 +1,4 @@
-package foundation.network
+package io.github.alaksion.invoicer.foundation.network
 
 sealed class RequestError : Throwable() {
     data class Http(

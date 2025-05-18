@@ -1,11 +1,11 @@
 package io.github.alaksion.invoicer.foundation.auth.data.datasource
 
+import io.github.alaksion.invoicer.foundation.auth.data.model.AuthTokenResponse
 import io.github.alaksion.invoicer.foundation.auth.data.model.GoogleSignInRequest
 import io.github.alaksion.invoicer.foundation.auth.data.model.RefreshRequest
 import io.github.alaksion.invoicer.foundation.auth.data.model.SignInRequest
-import io.github.alaksion.invoicer.foundation.auth.data.model.AuthTokenResponse
 import io.github.alaksion.invoicer.foundation.auth.data.model.SignUpRequest
-import foundation.network.client.HttpWrapper
+import io.github.alaksion.invoicer.foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody

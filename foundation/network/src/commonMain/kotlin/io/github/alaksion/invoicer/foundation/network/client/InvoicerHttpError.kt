@@ -1,4 +1,4 @@
-package foundation.network.client
+package io.github.alaksion.invoicer.foundation.network.client
 
 import kotlinx.serialization.Serializable
 

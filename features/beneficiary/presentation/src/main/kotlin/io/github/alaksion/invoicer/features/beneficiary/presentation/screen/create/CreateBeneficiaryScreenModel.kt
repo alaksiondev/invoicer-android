@@ -2,8 +2,8 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.cre
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import foundation.network.request.handle
-import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.foundation.network.request.handle
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
 import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import kotlinx.coroutines.CoroutineDispatcher

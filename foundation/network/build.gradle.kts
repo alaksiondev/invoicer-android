@@ -1,40 +1,59 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import java.util.Properties
 
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.buildKonfig)
 }
 
 val properties = Properties()
 properties.load(rootProject.file("local.properties").inputStream())
 
 android {
-    namespace = "foundation.network.client"
+    namespace = "io.github.alaksion.invoicer.foundation.network"
+}
 
-    buildTypes {
-        release {
-            buildConfigField("String", "API_URL", properties.getProperty("PROD_APP_URL"))
-        }
-        debug {
-            buildConfigField("String", "API_URL", properties.getProperty("DEBUG_APP_URL"))
-        }
-    }
+buildkonfig {
+    packageName = "io.github.alaksion.invoicer.foundation.network"
+    objectName = "NetworkBuildConfig"
+    defaultConfigs {
 
-    buildFeatures {
-        buildConfig = true
+        buildConfigField(
+            type = FieldSpec.Type.STRING,
+            value = properties.getProperty("DEBUG_APP_URL"),
+            name = "API_URL"
+        )
     }
 }
 
-dependencies {
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.engine.okhttp)
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.ktor.client.negotiation)
-    implementation(libs.ktor.client.log)
-    implementation(libs.ktor.client.auth)
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.core)
-    implementation(projects.foundation.exception)
-    implementation(projects.foundation.session)
-    implementation(libs.coroutines.core)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+
+            // Foundation
+            implementation(projects.foundation.session)
+
+            // Ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.negotiation)
+            implementation(libs.ktor.client.log)
+            implementation(libs.ktor.client.auth)
+
+            // KotlinX
+            implementation(libs.coroutines.core)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.ktor.engine.okhttp)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.engine.darwin)
+        }
+    }
 }

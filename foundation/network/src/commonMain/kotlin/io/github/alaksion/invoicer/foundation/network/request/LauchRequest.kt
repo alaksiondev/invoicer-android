@@ -1,6 +1,6 @@
-package foundation.network.request
+package io.github.alaksion.invoicer.foundation.network.request
 
-import foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.RequestError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

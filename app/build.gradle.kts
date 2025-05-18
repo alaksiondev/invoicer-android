@@ -59,7 +59,6 @@ dependencies {
     implementation(projects.foundation.storage)
     implementation(projects.foundation.auth)
     implementation(projects.foundation.network)
-    implementation(projects.foundation.exception)
     implementation(projects.foundation.utils)
 
     // Features

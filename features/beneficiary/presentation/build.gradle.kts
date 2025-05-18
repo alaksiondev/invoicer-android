@@ -31,7 +31,6 @@ dependencies {
     implementation(projects.foundation.navigation)
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.ui)
-    implementation(projects.foundation.exception)
     implementation(projects.foundation.utils)
 
     // Feature

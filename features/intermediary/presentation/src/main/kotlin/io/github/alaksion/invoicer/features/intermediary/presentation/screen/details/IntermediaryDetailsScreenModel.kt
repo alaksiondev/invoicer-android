@@ -2,9 +2,9 @@ package io.github.alaksion.invoicer.features.intermediary.presentation.screen.de
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import foundation.network.RequestError
-import foundation.network.request.handle
-import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.request.handle
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
 import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat

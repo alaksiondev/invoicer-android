@@ -1,6 +1,6 @@
 package io.github.alaksion.invoicer.features.intermediary.presentation.screen.update
 
-import foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.RequestError
 import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
 import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository

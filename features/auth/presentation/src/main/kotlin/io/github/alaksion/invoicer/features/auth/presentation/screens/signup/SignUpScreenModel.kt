@@ -2,13 +2,13 @@ package io.github.alaksion.invoicer.features.auth.presentation.screens.signup
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import foundation.network.RequestError
-import foundation.network.request.RequestState
-import foundation.network.request.launchRequest
 import io.github.alaksion.invoicer.features.auth.presentation.utils.EmailValidator
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthValidator
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
 import io.github.alaksion.invoicer.foundation.auth.domain.repository.AuthRepository
+import io.github.alaksion.invoicer.foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.request.RequestState
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -2,10 +2,10 @@ package io.github.alaksion.invoicer.features.invoice.presentation.screens.invoic
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import foundation.network.request.handle
-import foundation.network.request.launchRequest
 import io.github.alaksion.invoicer.features.invoice.domain.model.InvoiceList
 import io.github.alaksion.invoicer.features.invoice.domain.repository.InvoiceRepository
+import io.github.alaksion.invoicer.foundation.network.request.handle
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,6 +1,6 @@
 package io.github.alaksion.invoicer.features.auth.presentation.screens.signup
 
-import foundation.network.RequestError
+import io.github.alaksion.invoicer.foundation.network.RequestError
 import io.github.alaksion.invoicer.features.auth.presentation.utils.EmailValidator
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthValidator

@@ -2,7 +2,7 @@ package io.github.alaksion.invoicer.features.home.presentation.tabs.settings
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignOutService
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignOutService
 import kotlinx.coroutines.launch
 
 internal class SettingsScreenModel(

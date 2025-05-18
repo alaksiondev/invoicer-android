@@ -4,7 +4,7 @@ import io.github.alaksion.invoicer.features.beneficiary.services.data.model.Bene
 import io.github.alaksion.invoicer.features.beneficiary.services.data.model.BeneficiaryData
 import io.github.alaksion.invoicer.features.beneficiary.services.data.model.CreateBeneficiaryData
 import io.github.alaksion.invoicer.features.beneficiary.services.data.model.UpdateBeneficiaryData
-import foundation.network.client.HttpWrapper
+import io.github.alaksion.invoicer.foundation.network.client.HttpWrapper
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get

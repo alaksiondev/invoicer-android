@@ -64,7 +64,6 @@ dependencies {
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.validator)
     implementation(projects.foundation.ui)
-    implementation(projects.foundation.exception)
     implementation(projects.foundation.auth)
     implementation(projects.foundation.analytics)
 

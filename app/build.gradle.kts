@@ -56,10 +56,9 @@ dependencies {
     implementation(projects.foundation.designSystem)
     implementation(projects.foundation.network)
     implementation(projects.foundation.validator)
-    implementation(projects.foundation.storage.impl)
+    implementation(projects.foundation.storage)
     implementation(projects.foundation.auth)
     implementation(projects.foundation.network)
-    implementation(projects.foundation.exception)
     implementation(projects.foundation.utils)
 
     // Features

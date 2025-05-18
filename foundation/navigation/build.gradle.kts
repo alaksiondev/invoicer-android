@@ -1,11 +1,15 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
 }
 
 android {
-    namespace = "foundation.navigation"
+    namespace = "io.github.alaksion.invoicer.foundation.navigation"
 }
 
-dependencies {
-    implementation(libs.voyager.navigator)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.voyager.navigator)
+        }
+    }
 }

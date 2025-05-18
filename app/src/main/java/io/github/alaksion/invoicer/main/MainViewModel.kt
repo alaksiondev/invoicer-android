@@ -2,11 +2,11 @@ package io.github.alaksion.invoicer.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import foundation.network.request.handle
-import foundation.network.request.launchRequest
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommand
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignInCommandManager
-import io.github.alaksion.invoicer.foundation.auth.domain.service.SignOutService
+import io.github.alaksion.invoicer.foundation.network.request.handle
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommand
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommandManager
+import io.github.alaksion.invoicer.foundation.auth.domain.services.SignOutService
 import io.github.alaksion.invoicer.foundation.utils.logger.InvoicerLogger
 import kotlinx.coroutines.launch
 

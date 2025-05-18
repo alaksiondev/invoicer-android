@@ -4,8 +4,8 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
-import foundation.network.request.handle
-import foundation.network.request.launchRequest
+import io.github.alaksion.invoicer.foundation.network.request.handle
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow

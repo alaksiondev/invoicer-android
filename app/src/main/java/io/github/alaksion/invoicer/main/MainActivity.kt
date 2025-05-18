@@ -11,7 +11,7 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.SlideTransition
-import foundation.navigation.InvoicerScreen
+import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
 import io.github.alaksion.invoicer.foundation.watchers.AuthEvent
 import io.github.alaksion.invoicer.foundation.watchers.AuthEventBus
 import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme

@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,13 +32,21 @@ import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component3
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_bank_address_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_bank_name_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_cta
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_iban_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_load_error_cta
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_load_error_description
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_load_error_title
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_name_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_update_swift_label
+import invoicer.features.intermediary.presentation.generated.resources.update_intermediary_title
 import io.github.alaksion.invoicer.foundation.designSystem.components.InputField
 import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState
 import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
@@ -49,6 +58,7 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Ver
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 internal data class UpdateIntermediaryScreen(
     private val id: String
@@ -57,9 +67,9 @@ internal data class UpdateIntermediaryScreen(
     @Composable
     override fun Content() {
         val screenModel = koinScreenModel<UpdateIntermediaryScreenModel>()
-        val state by screenModel.state.collectAsStateWithLifecycle()
+        val state by screenModel.state.collectAsState()
         val navigator = LocalNavigator.current
-        val snackbarHostState = remember { SnackbarHostState() }
+        val snackBarHostState = remember { SnackbarHostState() }
         val scope = rememberCoroutineScope()
 
         LaunchedEffect(Unit) { screenModel.initState(id) }
@@ -68,7 +78,7 @@ internal data class UpdateIntermediaryScreen(
             screenModel.events.collectLatest {
                 when (it) {
                     is UpdateIntermediaryEvent.Error ->
-                        scope.launch { snackbarHostState.showSnackbar(it.message) }
+                        scope.launch { snackBarHostState.showSnackbar(it.message) }
 
                     UpdateIntermediaryEvent.Success -> navigator?.pop()
                 }
@@ -95,7 +105,7 @@ internal data class UpdateIntermediaryScreen(
         StateContent(
             state = state,
             callbacks = callBacks,
-            snackbarHostState = snackbarHostState
+            snackbarHostState = snackBarHostState
         )
     }
 
@@ -126,7 +136,7 @@ internal data class UpdateIntermediaryScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Spacing.medium),
-                    label = stringResource(R.string.intermediary_update_cta),
+                    label = stringResource(Res.string.intermediary_update_cta),
                     isLoading = state.isButtonLoading
                 )
             }
@@ -155,7 +165,7 @@ internal data class UpdateIntermediaryScreen(
                             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
                         ) {
                             ScreenTitle(
-                                title = stringResource(R.string.update_intermediary_title),
+                                title = stringResource(Res.string.update_intermediary_title),
                                 subTitle = null
                             )
                             VerticalSpacer(SpacerSize.XLarge3)
@@ -168,7 +178,7 @@ internal data class UpdateIntermediaryScreen(
                                 onValueChange = callbacks.onChangeName,
                                 label = {
                                     Text(
-                                        text = stringResource(R.string.intermediary_update_name_label)
+                                        text = stringResource(Res.string.intermediary_update_name_label)
                                     )
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -188,7 +198,7 @@ internal data class UpdateIntermediaryScreen(
                                 onValueChange = callbacks.onChangeBankName,
                                 label = {
                                     Text(
-                                        text = stringResource(R.string.intermediary_update_bank_name_label)
+                                        text = stringResource(Res.string.intermediary_update_bank_name_label)
                                     )
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -208,7 +218,7 @@ internal data class UpdateIntermediaryScreen(
                                 onValueChange = callbacks.onChangeBankAddress,
                                 label = {
                                     Text(
-                                        text = stringResource(R.string.intermediary_update_bank_address_label)
+                                        text = stringResource(Res.string.intermediary_update_bank_address_label)
                                     )
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -228,7 +238,7 @@ internal data class UpdateIntermediaryScreen(
                                 onValueChange = callbacks.onChangeSwift,
                                 label = {
                                     Text(
-                                        text = stringResource(R.string.intermediary_update_swift_label)
+                                        text = stringResource(Res.string.intermediary_update_swift_label)
                                     )
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -248,7 +258,7 @@ internal data class UpdateIntermediaryScreen(
                                 onValueChange = callbacks.onChangeIban,
                                 label = {
                                     Text(
-                                        text = stringResource(R.string.intermediary_update_iban_label)
+                                        text = stringResource(Res.string.intermediary_update_iban_label)
                                     )
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -263,9 +273,9 @@ internal data class UpdateIntermediaryScreen(
                     }
 
                     UpdateIntermediaryMode.Error -> Feedback(
-                        title = stringResource(R.string.intermediary_update_load_error_title),
-                        description = stringResource(R.string.intermediary_update_load_error_description),
-                        primaryActionText = stringResource(R.string.intermediary_update_load_error_cta),
+                        title = stringResource(Res.string.intermediary_update_load_error_title),
+                        description = stringResource(Res.string.intermediary_update_load_error_description),
+                        primaryActionText = stringResource(Res.string.intermediary_update_load_error_cta),
                         onPrimaryAction = callbacks.onRetry,
                         modifier = Modifier.fillMaxSize(),
                         icon = Icons.Outlined.ErrorOutline

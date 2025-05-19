@@ -25,18 +25,29 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_bank_address_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_bank_name_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_created_at_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_delete_cancel_cta
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_delete_cta
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_delete_description
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_delete_title
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_iban_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_name_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_swift_label
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_title
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_updated_at_label
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.details.components.IntermediaryDetailsField
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
 import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState
@@ -49,6 +60,7 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Ver
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 internal data class IntermediaryDetailsScreen(
     private val id: String
@@ -57,7 +69,7 @@ internal data class IntermediaryDetailsScreen(
     @Composable
     override fun Content() {
         val screenModel = koinScreenModel<IntermediaryDetailsScreenModel>()
-        val state by screenModel.state.collectAsStateWithLifecycle()
+        val state by screenModel.state.collectAsState()
         val navigator = LocalNavigator.current
         val snackbarHostState = remember { SnackbarHostState() }
         var showDialog by remember { mutableStateOf(false) }
@@ -150,7 +162,7 @@ internal data class IntermediaryDetailsScreen(
                     .padding(Spacing.medium)
             ) {
                 ScreenTitle(
-                    title = stringResource(R.string.intermediary_details_title),
+                    title = stringResource(Res.string.intermediary_details_title),
                     subTitle = null
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
@@ -169,43 +181,43 @@ internal data class IntermediaryDetailsScreen(
                             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
                         ) {
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_name_label),
+                                label = stringResource(Res.string.intermediary_details_name_label),
                                 value = state.name,
                                 icon = Icons.Default.Business,
                             )
 
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_bank_name_label),
+                                label = stringResource(Res.string.intermediary_details_bank_name_label),
                                 value = state.bankName,
                                 icon = Icons.Default.AccountBalance
                             )
 
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_bank_address_label),
+                                label = stringResource(Res.string.intermediary_details_bank_address_label),
                                 value = state.bankAddress,
                                 icon = Icons.Default.LocationOn
                             )
 
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_swift_label),
+                                label = stringResource(Res.string.intermediary_details_swift_label),
                                 value = state.swift,
                                 icon = Icons.AutoMirrored.Default.Subject
                             )
 
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_iban_label),
+                                label = stringResource(Res.string.intermediary_details_iban_label),
                                 value = state.iban,
                                 icon = Icons.AutoMirrored.Default.Subject
                             )
 
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_created_at_label),
+                                label = stringResource(Res.string.intermediary_details_created_at_label),
                                 value = state.createdAt,
                                 icon = Icons.Default.CalendarMonth
                             )
 
                             IntermediaryDetailsField(
-                                label = stringResource(R.string.intermediary_details_updated_at_label),
+                                label = stringResource(Res.string.intermediary_details_updated_at_label),
                                 value = state.updatedAt,
                                 icon = Icons.Default.CalendarMonth
                             )
@@ -214,10 +226,10 @@ internal data class IntermediaryDetailsScreen(
                         if (showDeleteDialog) {
                             DefaultInvoicerDialog(
                                 onDismiss = onDismissDelete,
-                                title = stringResource(R.string.intermediary_details_delete_title),
-                                description = stringResource(R.string.intermediary_details_delete_description),
-                                confirmButtonText = stringResource(R.string.intermediary_details_delete_cta),
-                                cancelButtonText = stringResource(R.string.intermediary_details_delete_cancel_cta),
+                                title = stringResource(Res.string.intermediary_details_delete_title),
+                                description = stringResource(Res.string.intermediary_details_delete_description),
+                                confirmButtonText = stringResource(Res.string.intermediary_details_delete_cta),
+                                cancelButtonText = stringResource(Res.string.intermediary_details_delete_cancel_cta),
                                 confirmButtonClick = onConfirmDelete,
                                 icon = Icons.Rounded.WarningAmber
                             )

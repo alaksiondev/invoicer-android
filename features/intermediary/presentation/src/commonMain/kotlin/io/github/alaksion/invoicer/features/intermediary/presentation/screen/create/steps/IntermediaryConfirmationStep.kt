@@ -19,17 +19,24 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_bank_address
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_bank_name
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_iban
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_name
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_subtitle
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_swift
+import invoicer.features.intermediary.presentation.generated.resources.confirm_intermediary_title
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_submit_cta
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryEvents
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryState
@@ -44,13 +51,14 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Ver
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 internal class IntermediaryConfirmationStep : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val screenModel = navigator.koinNavigatorScreenModel<CreateIntermediaryScreenModel>()
-        val state by screenModel.state.collectAsStateWithLifecycle()
+        val state by screenModel.state.collectAsState()
         val scope = rememberCoroutineScope(
 
         )
@@ -108,7 +116,7 @@ internal class IntermediaryConfirmationStep : Screen {
             },
             bottomBar = {
                 PrimaryButton(
-                    label = stringResource(R.string.create_intermediary_submit_cta),
+                    label = stringResource(Res.string.create_intermediary_submit_cta),
                     onClick = {
                         onContinue()
                     },
@@ -127,8 +135,8 @@ internal class IntermediaryConfirmationStep : Screen {
                     .padding(scaffoldPadding)
             ) {
                 ScreenTitle(
-                    title = stringResource(R.string.confirm_intermediary_title),
-                    subTitle = stringResource(R.string.confirm_intermediary_subtitle)
+                    title = stringResource(Res.string.confirm_intermediary_title),
+                    subTitle = stringResource(Res.string.confirm_intermediary_subtitle)
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 Column(
@@ -138,27 +146,27 @@ internal class IntermediaryConfirmationStep : Screen {
                 ) {
                     VerticalSpacer(SpacerSize.Medium)
                     IntermediaryFieldCard(
-                        title = stringResource(R.string.confirm_intermediary_name),
+                        title = stringResource(Res.string.confirm_intermediary_name),
                         value = state.name,
                         icon = Icons.Outlined.Business
                     )
                     IntermediaryFieldCard(
-                        title = stringResource(R.string.confirm_intermediary_swift),
+                        title = stringResource(Res.string.confirm_intermediary_swift),
                         value = state.swift,
                         icon = Icons.Outlined.Ballot
                     )
                     IntermediaryFieldCard(
-                        title = stringResource(R.string.confirm_intermediary_iban),
+                        title = stringResource(Res.string.confirm_intermediary_iban),
                         value = state.iban,
                         icon = Icons.Outlined.Ballot
                     )
                     IntermediaryFieldCard(
-                        title = stringResource(R.string.confirm_intermediary_bank_name),
+                        title = stringResource(Res.string.confirm_intermediary_bank_name),
                         value = state.bankName,
                         icon = Icons.Outlined.AccountBalance
                     )
                     IntermediaryFieldCard(
-                        title = stringResource(R.string.confirm_intermediary_bank_address),
+                        title = stringResource(Res.string.confirm_intermediary_bank_address),
                         value = state.bankAddress,
                         icon = Icons.Outlined.MapsHomeWork
                     )

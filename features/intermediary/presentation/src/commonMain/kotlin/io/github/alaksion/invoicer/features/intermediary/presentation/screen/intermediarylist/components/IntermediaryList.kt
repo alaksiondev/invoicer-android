@@ -11,12 +11,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_list_empty_description
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_list_empty_title
 import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import io.github.alaksion.invoicer.foundation.designSystem.components.emptystate.EmptyState
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.collections.immutable.ImmutableList
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun IntermediaryList(
@@ -29,8 +31,8 @@ internal fun IntermediaryList(
     if (items.isEmpty()) {
         EmptyState(
             modifier = modifier.padding(Spacing.medium),
-            title = stringResource(R.string.intermediary_list_empty_title),
-            description = stringResource(R.string.intermediary_list_empty_description),
+            title = stringResource(Res.string.intermediary_list_empty_title),
+            description = stringResource(Res.string.intermediary_list_empty_description),
         )
     } else {
         LazyColumn(

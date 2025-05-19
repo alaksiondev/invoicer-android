@@ -1,7 +1,5 @@
 package io.github.alaksion.invoicer.features.intermediary.presentation.screen.feedback
 
-import androidx.activity.compose.BackHandler
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -10,24 +8,29 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.create_success_cta
+import invoicer.features.intermediary.presentation.generated.resources.create_success_description
+import invoicer.features.intermediary.presentation.generated.resources.create_success_title
 import io.github.alaksion.invoicer.foundation.designSystem.components.feedback.Feedback
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 internal enum class IntermediaryFeedbackType(
-    @StringRes val primaryActionText: Int,
-    @StringRes val description: Int,
-    @StringRes val title: Int,
+    val primaryActionText: StringResource,
+    val description: StringResource,
+    val title: StringResource,
     val icon: ImageVector
 
 ) {
     CreateSuccess(
-        primaryActionText = R.string.create_success_cta,
-        description = R.string.create_success_description,
-        title = R.string.create_success_title,
+        primaryActionText = Res.string.create_success_cta,
+        description = Res.string.create_success_description,
+        title = Res.string.create_success_title,
         icon = Icons.Outlined.Check
     )
 }
@@ -35,6 +38,8 @@ internal enum class IntermediaryFeedbackType(
 internal class IntermediaryFeedbackScreen(
     private val type: IntermediaryFeedbackType
 ) : Screen {
+
+    override val key: ScreenKey = SCREEN_KEY
 
     @Composable
     override fun Content() {
@@ -46,10 +51,6 @@ internal class IntermediaryFeedbackScreen(
     fun StateContent(
         onClearFlow: () -> Unit
     ) {
-        BackHandler {
-            // no-op: Disable back button
-        }
-
         Scaffold {
             Feedback(
                 modifier = Modifier
@@ -69,4 +70,7 @@ internal class IntermediaryFeedbackScreen(
         }
     }
 
+    companion object {
+        const val SCREEN_KEY = "IntermediaryFeedbackScreen"
+    }
 }

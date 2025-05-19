@@ -16,11 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_list_item_swift
 import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun IntermediaryCard(
@@ -49,7 +50,7 @@ internal fun IntermediaryCard(
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = stringResource(R.string.intermediary_list_item_swift, data.swift),
+                    text = stringResource(Res.string.intermediary_list_item_swift, data.swift),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }

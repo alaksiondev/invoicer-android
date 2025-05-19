@@ -1,11 +1,17 @@
 package io.github.alaksion.invoicer.features.intermediary.presentation.screen.details
 
-import androidx.annotation.StringRes
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.QuestionMark
 import androidx.compose.ui.graphics.vector.ImageVector
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_error_generic_cta
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_error_generic_description
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_error_generic_title
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_error_not_found_cta
+import invoicer.features.intermediary.presentation.generated.resources.intermediary_details_error_not_found_title
+import org.jetbrains.compose.resources.StringResource
 
 internal data class IntermediaryDetailsState(
     val name: String = "",
@@ -30,22 +36,22 @@ internal sealed interface IntermediaryDetailsMode {
 }
 
 internal enum class IntermediaryErrorType(
-    @StringRes val titleResource: Int,
-    @StringRes val descriptionResource: Int?,
-    @StringRes val ctaResource: Int,
+    val titleResource: StringResource,
+    val descriptionResource: StringResource?,
+    val ctaResource: StringResource,
     val icon: ImageVector
 ) {
     NotFound(
-        titleResource = R.string.intermediary_details_error_not_found_title,
+        titleResource = Res.string.intermediary_details_error_not_found_title,
         descriptionResource = null,
         icon = Icons.Outlined.ErrorOutline,
-        ctaResource = R.string.intermediary_details_error_not_found_cta
+        ctaResource = Res.string.intermediary_details_error_not_found_cta
 
     ),
     Generic(
-        titleResource = R.string.intermediary_details_error_generic_title,
-        descriptionResource = R.string.intermediary_details_error_generic_description,
+        titleResource = Res.string.intermediary_details_error_generic_title,
+        descriptionResource = Res.string.intermediary_details_error_generic_description,
         icon = Icons.Outlined.QuestionMark,
-        ctaResource = R.string.intermediary_details_error_generic_cta
+        ctaResource = Res.string.intermediary_details_error_generic_cta
     )
 }

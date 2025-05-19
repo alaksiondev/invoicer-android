@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -19,14 +20,19 @@ import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.
 import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import io.github.alaksion.invoicer.features.intermediary.presentation.R
+import invoicer.features.intermediary.presentation.generated.resources.Res
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_bank_address_label
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_bank_address_placeholder
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_bank_info_subtitle
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_bank_info_title
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_bank_name_label
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_bank_name_placeholder
+import invoicer.features.intermediary.presentation.generated.resources.create_intermediary_continue_cta
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.CreateIntermediaryScreenModel
 import io.github.alaksion.invoicer.foundation.designSystem.components.InputField
 import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
@@ -35,13 +41,14 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.Pr
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import org.jetbrains.compose.resources.stringResource
 
 internal class IntermediaryBankInfoStep : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val screenModel = navigator.koinNavigatorScreenModel<CreateIntermediaryScreenModel>()
-        val state by screenModel.state.collectAsStateWithLifecycle()
+        val state by screenModel.state.collectAsState()
 
         StateContent(
             address = state.bankAddress,
@@ -80,7 +87,7 @@ internal class IntermediaryBankInfoStep : Screen {
             },
             bottomBar = {
                 PrimaryButton(
-                    label = stringResource(R.string.create_intermediary_continue_cta),
+                    label = stringResource(Res.string.create_intermediary_continue_cta),
                     onClick = {
                         keyboard?.hide()
                         onContinue()
@@ -99,8 +106,8 @@ internal class IntermediaryBankInfoStep : Screen {
                     .padding(scaffoldPadding)
             ) {
                 ScreenTitle(
-                    title = stringResource(R.string.create_intermediary_bank_info_title),
-                    subTitle = stringResource(R.string.create_intermediary_bank_info_subtitle)
+                    title = stringResource(Res.string.create_intermediary_bank_info_title),
+                    subTitle = stringResource(Res.string.create_intermediary_bank_info_subtitle)
                 )
                 VerticalSpacer(SpacerSize.XLarge3)
                 InputField(
@@ -117,12 +124,12 @@ internal class IntermediaryBankInfoStep : Screen {
                     ),
                     label = {
                         Text(
-                            text = stringResource(R.string.create_intermediary_bank_name_label)
+                            text = stringResource(Res.string.create_intermediary_bank_name_label)
                         )
                     },
                     placeholder = {
                         Text(
-                            text = stringResource(R.string.create_intermediary_bank_name_placeholder)
+                            text = stringResource(Res.string.create_intermediary_bank_name_placeholder)
                         )
                     }
                 )
@@ -141,12 +148,12 @@ internal class IntermediaryBankInfoStep : Screen {
                     ),
                     label = {
                         Text(
-                            text = stringResource(R.string.create_intermediary_bank_address_label)
+                            text = stringResource(Res.string.create_intermediary_bank_address_label)
                         )
                     },
                     placeholder = {
                         Text(
-                            text = stringResource(R.string.create_intermediary_bank_address_placeholder)
+                            text = stringResource(Res.string.create_intermediary_bank_address_placeholder)
                         )
                     }
                 )

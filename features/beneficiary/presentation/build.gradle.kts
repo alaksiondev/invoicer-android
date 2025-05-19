@@ -40,10 +40,6 @@ kotlin {
             implementation(projects.foundation.watchers)
         }
 
-        androidMain.dependencies {
-            implementation(libs.androidx.activity.compose)
-        }
-
         androidUnitTest.dependencies {
             implementation(projects.foundation.testUtil)
         }

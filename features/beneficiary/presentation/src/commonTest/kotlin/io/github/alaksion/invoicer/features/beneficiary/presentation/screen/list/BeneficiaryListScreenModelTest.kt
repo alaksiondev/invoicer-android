@@ -1,9 +1,7 @@
-package io.github.alaksion.invoicer.features.intermediary.presentation.screen.list
+package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list
 
-import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository
-import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository.Companion.DEFAULT_INTERMEDIARIES
-import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListMode
-import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListScreenModel
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository.Companion.DEFAULT_BENEFICIARIES
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -18,19 +16,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class IntermediaryListScreenModelTest {
+class BeneficiaryListScreenModelTest {
 
-    private lateinit var intermediaryRepository: FakeIntermediaryRepository
+    private lateinit var beneficiaryRepository: FakeBeneficiaryRepository
     private val dispatcher = StandardTestDispatcher()
 
-    private lateinit var viewModel: IntermediaryListScreenModel
+    private lateinit var viewModel: BeneficiaryListScreenModel
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        intermediaryRepository = FakeIntermediaryRepository()
-        viewModel = IntermediaryListScreenModel(
-            intermediaryRepository = intermediaryRepository,
+        beneficiaryRepository = FakeBeneficiaryRepository()
+        viewModel = BeneficiaryListScreenModel(
+            beneficiaryRepository = beneficiaryRepository,
             dispatcher = dispatcher
         )
     }
@@ -46,19 +44,19 @@ class IntermediaryListScreenModelTest {
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals(IntermediaryListMode.Content, state.mode)
-        assertEquals(DEFAULT_INTERMEDIARIES, state.beneficiaries)
+        assertEquals(BeneficiaryListMode.Content, state.mode)
+        assertEquals(DEFAULT_BENEFICIARIES.items, state.beneficiaries)
         assertTrue(viewModel.state.value.isNextPageLoading.not())
     }
 
     @Test
     fun `should handle error when loading first page`() = runTest {
-        intermediaryRepository.listFails = true
+        beneficiaryRepository.beneficiariesFails = true
 
         viewModel.loadPage()
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals(IntermediaryListMode.Error, state.mode)
+        assertEquals(BeneficiaryListMode.Error, state.mode)
     }
 }

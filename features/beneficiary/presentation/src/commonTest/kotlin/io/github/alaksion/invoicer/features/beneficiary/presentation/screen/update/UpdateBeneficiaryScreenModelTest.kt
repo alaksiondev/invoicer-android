@@ -1,8 +1,8 @@
-package io.github.alaksion.invoicer.features.intermediary.presentation.screen.update
+package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update
 
-import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository
-import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository.Companion.DEFAULT_INTERMEDIARY
-import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository.Companion.DEFAULT_BENEFICIARY
+import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -17,22 +17,22 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class UpdateIntermediaryScreenModelTest {
+class UpdateBeneficiaryScreenModelTest {
 
-    private lateinit var intermediaryRepository: FakeIntermediaryRepository
-    private val refreshIntermediaryPublisher = RefreshIntermediaryPublisher()
+    private lateinit var beneficiaryRepository: FakeBeneficiaryRepository
+    private val refreshBeneficiaryPublisher = RefreshBeneficiaryPublisher()
     private val dispatcher = StandardTestDispatcher()
 
-    private lateinit var viewModel: UpdateIntermediaryScreenModel
+    private lateinit var viewModel: UpdateBeneficiaryScreenModel
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        intermediaryRepository = FakeIntermediaryRepository()
-        viewModel = UpdateIntermediaryScreenModel(
-            intermediaryRepository = intermediaryRepository,
+        beneficiaryRepository = FakeBeneficiaryRepository()
+        viewModel = UpdateBeneficiaryScreenModel(
+            beneficiaryRepository = beneficiaryRepository,
             dispatcher = dispatcher,
-            refreshIntermediaryPublisher = refreshIntermediaryPublisher
+            refreshBeneficiaryPublisher = refreshBeneficiaryPublisher
         )
     }
 
@@ -47,23 +47,23 @@ class UpdateIntermediaryScreenModelTest {
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals(DEFAULT_INTERMEDIARY.name, state.name)
-        assertEquals(DEFAULT_INTERMEDIARY.iban, state.iban)
-        assertEquals(DEFAULT_INTERMEDIARY.swift, state.swift)
-        assertEquals(DEFAULT_INTERMEDIARY.bankName, state.bankName)
-        assertEquals(DEFAULT_INTERMEDIARY.bankAddress, state.bankAddress)
-        assertEquals(UpdateIntermediaryMode.Content, state.mode)
+        assertEquals(DEFAULT_BENEFICIARY.name, state.name)
+        assertEquals(DEFAULT_BENEFICIARY.iban, state.iban)
+        assertEquals(DEFAULT_BENEFICIARY.swift, state.swift)
+        assertEquals(DEFAULT_BENEFICIARY.bankName, state.bankName)
+        assertEquals(DEFAULT_BENEFICIARY.bankAddress, state.bankAddress)
+        assertEquals(UpdateBeneficiaryMode.Content, state.mode)
     }
 
     @Test
     fun `should handle error during state initialization`() = runTest {
-        intermediaryRepository.detailsError = IllegalStateException()
+        beneficiaryRepository.detailsError = IllegalStateException()
 
         viewModel.initState("1")
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals(UpdateIntermediaryMode.Error, state.mode)
+        assertEquals(UpdateBeneficiaryMode.Error, state.mode)
     }
 
     @Test
@@ -106,17 +106,17 @@ class UpdateIntermediaryScreenModelTest {
 
         viewModel.submit("1")
 
-        assertEquals(UpdateIntermediaryEvent.Success, viewModel.events.first())
+        assertEquals(UpdateBeneficiaryEvent.Success, viewModel.events.first())
     }
 
     @Test
     fun `should handle error during submission`() = runTest {
-        intermediaryRepository.updateFails = true
+        beneficiaryRepository.updateFails = true
 
         viewModel.submit("1")
 
         assertEquals(
-            UpdateIntermediaryEvent.Error(""),
+            UpdateBeneficiaryEvent.Error(""),
             viewModel.events.first()
         )
     }

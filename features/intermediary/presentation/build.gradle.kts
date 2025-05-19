@@ -1,5 +1,5 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     id("invoicer.compose")
     alias(libs.plugins.paparazzi)
 }
@@ -8,37 +8,45 @@ android {
     namespace = "io.github.alaksion.invoicer.features.intermediary.presentation"
 }
 
-dependencies {
-    // Compose
-    implementation(libs.bundles.compose.ui)
-    implementation(libs.androidx.activity.compose)
-    debugImplementation(libs.bundles.compose.debug)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            // Compose
+            implementation(compose.ui)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
 
-    // Koin
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.core)
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
 
-    // Voyager
-    implementation(libs.bundles.voyager)
-    implementation(libs.voyager.transitions)
+            // Voyager
+            implementation(libs.bundles.voyager)
+            implementation(libs.voyager.transitions)
 
-    // Kotlin
-    implementation(libs.immutable.collections)
-    implementation(libs.datetime)
+            // Kotlin
+            implementation(libs.immutable.collections)
+            implementation(libs.datetime)
 
-    // Foundation
-    implementation(projects.foundation.network)
-    implementation(projects.foundation.navigation)
-    implementation(projects.foundation.designSystem)
-    implementation(projects.foundation.ui)
-    implementation(projects.foundation.utils)
+            // Foundation
+            implementation(projects.foundation.network)
+            implementation(projects.foundation.navigation)
+            implementation(projects.foundation.designSystem)
+            implementation(projects.foundation.ui)
+            implementation(projects.foundation.utils)
 
-    // Feature
-    implementation(projects.features.intermediary.services)
-    implementation(projects.foundation.watchers)
+            // Libs
+            implementation(projects.features.intermediary.services)
+            implementation(projects.foundation.watchers)
+        }
 
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.mockk)
+        androidUnitTest.dependencies {
+            implementation(projects.foundation.testUtil)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+        }
+    }
 }

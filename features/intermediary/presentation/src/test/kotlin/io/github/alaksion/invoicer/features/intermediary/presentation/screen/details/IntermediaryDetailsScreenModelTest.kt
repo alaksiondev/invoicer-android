@@ -1,15 +1,10 @@
 package io.github.alaksion.invoicer.features.intermediary.presentation.screen.details
 
+import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository
+import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository.Companion.DEFAULT_INTERMEDIARY
 import io.github.alaksion.invoicer.foundation.network.RequestError
-import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
-import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
-import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
-import io.mockk.Runs
-import io.mockk.clearAllMocks
-import io.mockk.coEvery
-import io.mockk.just
-import io.mockk.mockk
+import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -18,7 +13,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.datetime.Instant
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -28,7 +22,7 @@ import kotlin.test.assertIs
 @OptIn(ExperimentalCoroutinesApi::class)
 class IntermediaryDetailsScreenModelTest {
 
-    private val intermediaryRepository = mockk<IntermediaryRepository>()
+    private lateinit var intermediaryRepository: FakeIntermediaryRepository
     private val refreshIntermediaryPublisher = RefreshIntermediaryPublisher()
     private val dispatcher = StandardTestDispatcher()
 
@@ -37,7 +31,7 @@ class IntermediaryDetailsScreenModelTest {
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        clearAllMocks()
+        intermediaryRepository = FakeIntermediaryRepository()
         viewModel = IntermediaryDetailsScreenModel(
             intermediaryRepository = intermediaryRepository,
             dispatcher = dispatcher,
@@ -52,39 +46,23 @@ class IntermediaryDetailsScreenModelTest {
 
     @Test
     fun `should initialize state successfully`() = runTest {
-        val createdAt = Instant.parse("2023-01-01T00:00:00Z")
-        val updatedAt = Instant.parse("2023-01-02T00:00:00Z")
-        val mockResponse = IntermediaryModel(
-            name = "John Doe",
-            iban = "IBAN123",
-            swift = "SWIFT123",
-            bankName = "Bank Name",
-            bankAddress = "123 Bank St",
-            createdAt = createdAt,
-            updatedAt = updatedAt,
-            id = "123"
-        )
-        coEvery { intermediaryRepository.getIntermediaryDetails("1") } returns mockResponse
-
         viewModel.initState("1")
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals("John Doe", state.name)
-        assertEquals("IBAN123", state.iban)
-        assertEquals("SWIFT123", state.swift)
-        assertEquals("Bank Name", state.bankName)
-        assertEquals("123 Bank St", state.bankAddress)
-        assertEquals(createdAt.defaultFormat(), state.createdAt)
-        assertEquals(updatedAt.defaultFormat(), state.updatedAt)
+        assertEquals(DEFAULT_INTERMEDIARY.name, state.name)
+        assertEquals(DEFAULT_INTERMEDIARY.iban, state.iban)
+        assertEquals(DEFAULT_INTERMEDIARY.swift, state.swift)
+        assertEquals(DEFAULT_INTERMEDIARY.bankName, state.bankName)
+        assertEquals(DEFAULT_INTERMEDIARY.bankAddress, state.bankAddress)
+        assertEquals(DEFAULT_INTERMEDIARY.createdAt.defaultFormat(), state.createdAt)
+        assertEquals(DEFAULT_INTERMEDIARY.updatedAt.defaultFormat(), state.updatedAt)
         assertEquals(IntermediaryDetailsMode.Content, state.mode)
     }
 
     @Test
     fun `should set error state if request fails`() = runTest {
-        coEvery { intermediaryRepository.getIntermediaryDetails("1") } throws
-                IllegalStateException()
-
+        intermediaryRepository.detailsError = IllegalStateException()
         viewModel.initState("1")
         advanceUntilIdle()
 
@@ -93,7 +71,6 @@ class IntermediaryDetailsScreenModelTest {
 
     @Test
     fun `should delete intermediary if request succeeds`() = runTest {
-        coEvery { intermediaryRepository.deleteIntermediary(any()) } just Runs
         viewModel.deleteIntermediary("1")
 
         assertEquals(
@@ -104,7 +81,7 @@ class IntermediaryDetailsScreenModelTest {
 
     @Test
     fun `should send error event if delete intermediary fails`() = runTest {
-        coEvery { intermediaryRepository.deleteIntermediary(any()) } throws IllegalStateException()
+        intermediaryRepository.deleteFails = true
         viewModel.deleteIntermediary("1")
 
         assertIs<IntermediaryDetailsEvent.DeleteError>(viewModel.events.first())
@@ -113,7 +90,7 @@ class IntermediaryDetailsScreenModelTest {
     @Test
     fun `should display not found error event if get details fails with error code 403`() =
         runTest {
-            coEvery { intermediaryRepository.getIntermediaryDetails(any()) } throws RequestError.Http(
+            intermediaryRepository.detailsError = RequestError.Http(
                 403,
                 null,
                 null
@@ -133,8 +110,8 @@ class IntermediaryDetailsScreenModelTest {
     @Test
     fun `should display not found error event if get details fails with error code 404`() =
         runTest {
-            coEvery { intermediaryRepository.getIntermediaryDetails(any()) } throws RequestError.Http(
-                403,
+            intermediaryRepository.detailsError = RequestError.Http(
+                404,
                 null,
                 null
             )
@@ -153,7 +130,7 @@ class IntermediaryDetailsScreenModelTest {
     @Test
     fun `should display not found error event if get details fails with unmapped error code`() =
         runTest {
-            coEvery { intermediaryRepository.getIntermediaryDetails(any()) } throws RequestError.Http(
+            intermediaryRepository.detailsError = RequestError.Http(
                 400,
                 null,
                 null

@@ -1,13 +1,7 @@
 package io.github.alaksion.invoicer.features.intermediary.presentation.screen.create
 
-import io.github.alaksion.invoicer.foundation.network.RequestError
+import io.github.alaksion.invoicer.features.intermediary.presentation.fakes.FakeIntermediaryRepository
 import io.github.alaksion.invoicer.foundation.watchers.RefreshIntermediaryPublisher
-import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
-import io.mockk.Runs
-import io.mockk.clearAllMocks
-import io.mockk.coEvery
-import io.mockk.just
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -23,7 +17,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class CreateIntermediaryScreenModelTest {
 
-    private val intermediaryRepository = mockk<IntermediaryRepository>()
+    private lateinit var intermediaryRepository: FakeIntermediaryRepository
     private lateinit var refreshIntermediaryPublisher: RefreshIntermediaryPublisher
     private val dispatcher = StandardTestDispatcher()
 
@@ -33,7 +27,7 @@ class CreateIntermediaryScreenModelTest {
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         refreshIntermediaryPublisher = RefreshIntermediaryPublisher()
-        clearAllMocks()
+        intermediaryRepository = FakeIntermediaryRepository()
         viewModel = CreateIntermediaryScreenModel(
             intermediaryRepository = intermediaryRepository,
             dispatcher = dispatcher,
@@ -78,16 +72,6 @@ class CreateIntermediaryScreenModelTest {
 
     @Test
     fun `should emit success event on successful submission`() = runTest {
-        coEvery {
-            intermediaryRepository.createIntermediary(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } just Runs
-
         viewModel.updateName("John Doe")
         viewModel.updateSwift("SWIFT123")
         viewModel.updateIban("IBAN123")
@@ -101,17 +85,7 @@ class CreateIntermediaryScreenModelTest {
 
     @Test
     fun `should emit error event on submission failure`() = runTest {
-        coEvery {
-            intermediaryRepository.createIntermediary(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } throws RequestError.Other(
-            IllegalStateException("")
-        )
+        intermediaryRepository.createFails = true
 
         viewModel.submit()
 

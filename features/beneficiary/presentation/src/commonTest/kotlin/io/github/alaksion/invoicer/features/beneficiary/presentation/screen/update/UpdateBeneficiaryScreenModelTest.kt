@@ -1,14 +1,8 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update
 
-import io.github.alaksion.invoicer.foundation.network.RequestError
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository.Companion.DEFAULT_BENEFICIARY
 import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
-import io.mockk.Runs
-import io.mockk.clearAllMocks
-import io.mockk.coEvery
-import io.mockk.just
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -17,7 +11,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.datetime.Instant
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -26,7 +19,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class UpdateBeneficiaryScreenModelTest {
 
-    private val beneficiaryRepository = mockk<BeneficiaryRepository>()
+    private lateinit var beneficiaryRepository: FakeBeneficiaryRepository
     private val refreshBeneficiaryPublisher = RefreshBeneficiaryPublisher()
     private val dispatcher = StandardTestDispatcher()
 
@@ -35,7 +28,7 @@ class UpdateBeneficiaryScreenModelTest {
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        clearAllMocks()
+        beneficiaryRepository = FakeBeneficiaryRepository()
         viewModel = UpdateBeneficiaryScreenModel(
             beneficiaryRepository = beneficiaryRepository,
             dispatcher = dispatcher,
@@ -50,37 +43,21 @@ class UpdateBeneficiaryScreenModelTest {
 
     @Test
     fun `should initialize state successfully`() = runTest {
-        val mockResponse = BeneficiaryModel(
-            name = "John Doe",
-            iban = "IBAN123",
-            swift = "SWIFT123",
-            bankName = "Bank Name",
-            bankAddress = "123 Bank St",
-            id = "1",
-            createdAt = Instant.parse("2023-01-01T00:00:00Z"),
-            updatedAt = Instant.parse("2023-01-02T00:00:00Z")
-        )
-        coEvery { beneficiaryRepository.getBeneficiaryDetails("1") } returns mockResponse
-
         viewModel.initState("1")
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals("John Doe", state.name)
-        assertEquals("IBAN123", state.iban)
-        assertEquals("SWIFT123", state.swift)
-        assertEquals("Bank Name", state.bankName)
-        assertEquals("123 Bank St", state.bankAddress)
+        assertEquals(DEFAULT_BENEFICIARY.name, state.name)
+        assertEquals(DEFAULT_BENEFICIARY.iban, state.iban)
+        assertEquals(DEFAULT_BENEFICIARY.swift, state.swift)
+        assertEquals(DEFAULT_BENEFICIARY.bankName, state.bankName)
+        assertEquals(DEFAULT_BENEFICIARY.bankAddress, state.bankAddress)
         assertEquals(UpdateBeneficiaryMode.Content, state.mode)
     }
 
     @Test
     fun `should handle error during state initialization`() = runTest {
-        coEvery { beneficiaryRepository.getBeneficiaryDetails("1") } throws RequestError.Http(
-            404,
-            null,
-            "Not Found"
-        )
+        beneficiaryRepository.detailsError = IllegalStateException()
 
         viewModel.initState("1")
         advanceUntilIdle()
@@ -121,17 +98,6 @@ class UpdateBeneficiaryScreenModelTest {
 
     @Test
     fun `should submit successfully`() = runTest {
-        coEvery {
-            beneficiaryRepository.updateBeneficiary(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } just Runs
-
         viewModel.updateName("John Doe")
         viewModel.updateBankName("Bank Name")
         viewModel.updateBankAddress("123 Bank St")
@@ -145,18 +111,7 @@ class UpdateBeneficiaryScreenModelTest {
 
     @Test
     fun `should handle error during submission`() = runTest {
-        coEvery {
-            beneficiaryRepository.updateBeneficiary(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } throws RequestError.Other(
-            Exception("")
-        )
+        beneficiaryRepository.updateFails = true
 
         viewModel.submit("1")
 

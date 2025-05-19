@@ -1,13 +1,7 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create
 
-import io.github.alaksion.invoicer.foundation.network.RequestError
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository
 import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
-import io.mockk.Runs
-import io.mockk.clearAllMocks
-import io.mockk.coEvery
-import io.mockk.just
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -23,7 +17,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class CreateBeneficiaryScreenModelTest {
 
-    private val beneficiaryRepository = mockk<BeneficiaryRepository>()
+    private lateinit var beneficiaryRepository: FakeBeneficiaryRepository
     private lateinit var refreshBeneficiaryPublisher: RefreshBeneficiaryPublisher
     private val dispatcher = StandardTestDispatcher()
 
@@ -33,7 +27,7 @@ class CreateBeneficiaryScreenModelTest {
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         refreshBeneficiaryPublisher = RefreshBeneficiaryPublisher()
-        clearAllMocks()
+        beneficiaryRepository = FakeBeneficiaryRepository()
         viewModel = CreateBeneficiaryScreenModel(
             beneficiaryRepository = beneficiaryRepository,
             dispatcher = dispatcher,
@@ -78,16 +72,6 @@ class CreateBeneficiaryScreenModelTest {
 
     @Test
     fun `should emit success event on successful submission`() = runTest {
-        coEvery {
-            beneficiaryRepository.createBeneficiary(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } just Runs
-
         viewModel.updateName("John Doe")
         viewModel.updateSwift("SWIFT123")
         viewModel.updateIban("IBAN123")
@@ -101,17 +85,7 @@ class CreateBeneficiaryScreenModelTest {
 
     @Test
     fun `should emit error event on submission failure`() = runTest {
-        coEvery {
-            beneficiaryRepository.createBeneficiary(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } throws RequestError.Other(
-            IllegalStateException("")
-        )
+        beneficiaryRepository.createFails = true
 
         viewModel.submit()
 

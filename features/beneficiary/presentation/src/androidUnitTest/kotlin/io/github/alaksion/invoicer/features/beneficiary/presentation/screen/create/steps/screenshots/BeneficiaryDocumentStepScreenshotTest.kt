@@ -2,9 +2,10 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.cre
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryState
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps.BeneficiaryDocumentStep
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import org.junit.Test
 
@@ -37,17 +38,18 @@ class BeneficiaryDocumentStepScreenshotTest {
         state: CreateBeneficiaryState = CreateBeneficiaryState(),
         buttonEnabled: Boolean = true,
     ) {
-        InvoicerTheme {
-            BeneficiaryDocumentStep()
-                .StateContent(
-                    state = state,
-                    onBack = { },
-                    onContinue = { },
-                    buttonEnabled = buttonEnabled,
-                    onIbanChange = {},
-                    onSwiftChange = {},
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                BeneficiaryDocumentStep()
+                    .StateContent(
+                        state = state,
+                        onBack = { },
+                        onContinue = { },
+                        buttonEnabled = buttonEnabled,
+                        onIbanChange = {},
+                        onSwiftChange = {},
+                    )
+            }
         }
     }
-
 }

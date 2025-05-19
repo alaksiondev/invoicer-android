@@ -3,11 +3,12 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.upd
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryCallbacks
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryMode
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.update.UpdateBeneficiaryState
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import kotlin.test.Test
 
@@ -76,22 +77,24 @@ class UpdateBeneficiaryScreenScreenshotTest {
     private fun TestContent(
         state: UpdateBeneficiaryState
     ) {
-        InvoicerTheme {
-            UpdateBeneficiaryScreen("")
-                .StateContent(
-                    state = state,
-                    snackBarHostState = SnackbarHostState(),
-                    callBacks = UpdateBeneficiaryCallbacks(
-                        onBack = { },
-                        onChangeName = { },
-                        onChangeBankName = { },
-                        onChangeBankAddress = { },
-                        onChangeSwift = { },
-                        onChangeIban = { },
-                        onSubmit = { },
-                        onRetry = { },
-                    ),
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                UpdateBeneficiaryScreen("")
+                    .StateContent(
+                        state = state,
+                        snackBarHostState = SnackbarHostState(),
+                        callBacks = UpdateBeneficiaryCallbacks(
+                            onBack = { },
+                            onChangeName = { },
+                            onChangeBankName = { },
+                            onChangeBankAddress = { },
+                            onChangeSwift = { },
+                            onChangeIban = { },
+                            onSubmit = { },
+                            onRetry = { },
+                        ),
+                    )
+            }
         }
     }
 }

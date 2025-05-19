@@ -2,8 +2,9 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.cre
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps.BeneficiaryNameStep
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import org.junit.Test
 
@@ -34,15 +35,17 @@ class BeneficiaryNameStepScreenshotTest {
     private fun TestContent(
         name: String
     ) {
-        InvoicerTheme {
-            BeneficiaryNameStep()
-                .StateContent(
-                    name = name,
-                    onNameChange = { },
-                    onBack = { },
-                    onContinue = { },
-                    buttonEnabled = false,
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                BeneficiaryNameStep()
+                    .StateContent(
+                        name = name,
+                        onNameChange = { },
+                        onBack = { },
+                        onContinue = { },
+                        buttonEnabled = false,
+                    )
+            }
         }
     }
 }

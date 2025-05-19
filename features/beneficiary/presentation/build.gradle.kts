@@ -43,13 +43,14 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
         }
+
+        androidUnitTest.dependencies {
+            implementation(projects.foundation.testUtil)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+        }
     }
-}
-
-dependencies {
-
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.mockk)
 }

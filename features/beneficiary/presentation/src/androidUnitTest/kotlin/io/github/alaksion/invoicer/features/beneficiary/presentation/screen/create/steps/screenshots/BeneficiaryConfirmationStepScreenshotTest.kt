@@ -3,9 +3,10 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.cre
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.CreateBeneficiaryState
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps.BeneficiaryConfirmationStep
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import org.junit.Test
 
@@ -46,21 +47,23 @@ class BeneficiaryConfirmationStepScreenshotTest {
         bankAddress: String = "Bank Address",
         isSubmitting: Boolean = false,
     ) {
-        InvoicerTheme {
-            BeneficiaryConfirmationStep()
-                .StateContent(
-                    state = CreateBeneficiaryState(
-                        name = name,
-                        swift = swift,
-                        iban = iban,
-                        bankName = bankName,
-                        bankAddress = bankAddress,
-                        isSubmitting = isSubmitting
-                    ),
-                    onContinue = { },
-                    onBack = { },
-                    snackbarHostState = SnackbarHostState(),
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                BeneficiaryConfirmationStep()
+                    .StateContent(
+                        state = CreateBeneficiaryState(
+                            name = name,
+                            swift = swift,
+                            iban = iban,
+                            bankName = bankName,
+                            bankAddress = bankAddress,
+                            isSubmitting = isSubmitting
+                        ),
+                        onContinue = { },
+                        onBack = { },
+                        snackbarHostState = SnackbarHostState(),
+                    )
+            }
         }
     }
 }

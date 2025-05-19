@@ -3,11 +3,12 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.det
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsMode
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryDetailsState
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details.BeneficiaryErrorType
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import org.junit.Test
 
@@ -76,19 +77,20 @@ class BeneficiaryDetailsScreenScreenshotTest {
         state: BeneficiaryDetailsState,
         showDeleteDialog: Boolean = false
     ) {
-        InvoicerTheme {
-            BeneficiaryDetailsScreen("").StateContent(
-                state = state,
-                onBack = {},
-                onRetry = {},
-                snackbarHost = SnackbarHostState(),
-                showDeleteDialog = showDeleteDialog,
-                onRequestDelete = { },
-                onConfirmDelete = { },
-                onDismissDelete = { },
-                onRequestEdit = { },
-            )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                BeneficiaryDetailsScreen("").StateContent(
+                    state = state,
+                    onBack = {},
+                    onRetry = {},
+                    snackbarHost = SnackbarHostState(),
+                    showDeleteDialog = showDeleteDialog,
+                    onRequestDelete = { },
+                    onConfirmDelete = { },
+                    onDismissDelete = { },
+                    onRequestEdit = { },
+                )
+            }
         }
     }
-
 }

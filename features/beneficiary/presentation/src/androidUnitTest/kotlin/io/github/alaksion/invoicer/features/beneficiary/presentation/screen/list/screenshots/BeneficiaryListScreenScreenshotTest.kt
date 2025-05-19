@@ -2,12 +2,13 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.lis
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.BeneficiaryListMode
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.BeneficiaryListScreen
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.BeneficiaryListState
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.list.rememberBeneficiaryListCallbacks
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
@@ -102,18 +103,19 @@ class BeneficiaryListScreenScreenshotTest {
     private fun TestContent(
         state: BeneficiaryListState
     ) {
-        InvoicerTheme {
-            BeneficiaryListScreen()
-                .StateContent(
-                    state = state,
-                    callbacks = rememberBeneficiaryListCallbacks(
-                        onClose = {},
-                        onRetry = {},
-                        onCreate = {},
-                        onItemClick = {},
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                BeneficiaryListScreen()
+                    .StateContent(
+                        state = state,
+                        callbacks = rememberBeneficiaryListCallbacks(
+                            onClose = {},
+                            onRetry = {},
+                            onCreate = {},
+                            onItemClick = {},
+                        )
                     )
-                )
+            }
         }
     }
-
 }

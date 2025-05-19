@@ -2,8 +2,9 @@ package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.cre
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.beneficiary.presentation.screen.create.steps.BeneficiaryBankInfoStep
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import kotlin.test.Test
 
@@ -40,17 +41,19 @@ class BeneficiaryBankInfoScreenshotTest {
         bankName: String,
         buttonEnabled: Boolean,
     ) {
-        InvoicerTheme {
-            BeneficiaryBankInfoStep()
-                .StateContent(
-                    address = address,
-                    bankName = bankName,
-                    buttonEnabled = buttonEnabled,
-                    onAddressChange = {},
-                    onBankNameChange = { },
-                    onBack = { },
-                    onContinue = {}
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                BeneficiaryBankInfoStep()
+                    .StateContent(
+                        address = address,
+                        bankName = bankName,
+                        buttonEnabled = buttonEnabled,
+                        onAddressChange = {},
+                        onBankNameChange = { },
+                        onBack = { },
+                        onContinue = {}
+                    )
+            }
         }
     }
 }

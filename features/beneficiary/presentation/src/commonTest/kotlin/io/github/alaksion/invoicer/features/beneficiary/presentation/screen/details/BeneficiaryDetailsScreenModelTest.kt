@@ -1,15 +1,10 @@
 package io.github.alaksion.invoicer.features.beneficiary.presentation.screen.details
 
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository
+import io.github.alaksion.invoicer.features.beneficiary.presentation.fakes.FakeBeneficiaryRepository.Companion.DEFAULT_BENEFICIARY
 import io.github.alaksion.invoicer.foundation.network.RequestError
-import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.model.BeneficiaryModel
-import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import io.github.alaksion.invoicer.foundation.utils.date.defaultFormat
-import io.mockk.Runs
-import io.mockk.clearAllMocks
-import io.mockk.coEvery
-import io.mockk.just
-import io.mockk.mockk
+import io.github.alaksion.invoicer.foundation.watchers.RefreshBeneficiaryPublisher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -18,7 +13,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.datetime.Instant
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -28,7 +22,7 @@ import kotlin.test.assertIs
 @OptIn(ExperimentalCoroutinesApi::class)
 class BeneficiaryDetailsScreenModelTest {
 
-    private val beneficiaryRepository = mockk<BeneficiaryRepository>()
+    private lateinit var beneficiaryRepository: FakeBeneficiaryRepository
     private val refreshBeneficiaryPublisher = RefreshBeneficiaryPublisher()
     private val dispatcher = StandardTestDispatcher()
 
@@ -37,7 +31,7 @@ class BeneficiaryDetailsScreenModelTest {
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        clearAllMocks()
+        beneficiaryRepository = FakeBeneficiaryRepository()
         viewModel = BeneficiaryDetailsScreenModel(
             beneficiaryRepository = beneficiaryRepository,
             dispatcher = dispatcher,
@@ -52,38 +46,23 @@ class BeneficiaryDetailsScreenModelTest {
 
     @Test
     fun `should initialize state successfully`() = runTest {
-        val createdAt = Instant.parse("2023-01-01T00:00:00Z")
-        val updatedAt = Instant.parse("2023-01-02T00:00:00Z")
-        val mockResponse = BeneficiaryModel(
-            name = "John Doe",
-            iban = "IBAN123",
-            swift = "SWIFT123",
-            bankName = "Bank Name",
-            bankAddress = "123 Bank St",
-            createdAt = createdAt,
-            updatedAt = updatedAt,
-            id = "123"
-        )
-        coEvery { beneficiaryRepository.getBeneficiaryDetails("1") } returns mockResponse
-
         viewModel.initState("1")
         advanceUntilIdle()
 
         val state = viewModel.state.value
-        assertEquals("John Doe", state.name)
-        assertEquals("IBAN123", state.iban)
-        assertEquals("SWIFT123", state.swift)
-        assertEquals("Bank Name", state.bankName)
-        assertEquals("123 Bank St", state.bankAddress)
-        assertEquals(createdAt.defaultFormat(), state.createdAt)
-        assertEquals(updatedAt.defaultFormat(), state.updatedAt)
+        assertEquals(DEFAULT_BENEFICIARY.name, state.name)
+        assertEquals(DEFAULT_BENEFICIARY.iban, state.iban)
+        assertEquals(DEFAULT_BENEFICIARY.swift, state.swift)
+        assertEquals(DEFAULT_BENEFICIARY.bankName, state.bankName)
+        assertEquals(DEFAULT_BENEFICIARY.bankAddress, state.bankAddress)
+        assertEquals(DEFAULT_BENEFICIARY.createdAt.defaultFormat(), state.createdAt)
+        assertEquals(DEFAULT_BENEFICIARY.updatedAt.defaultFormat(), state.updatedAt)
         assertEquals(BeneficiaryDetailsMode.Content, state.mode)
     }
 
     @Test
     fun `should set error state if request fails`() = runTest {
-        coEvery { beneficiaryRepository.getBeneficiaryDetails("1") } throws
-                IllegalStateException()
+        beneficiaryRepository.detailsError = IllegalStateException()
 
         viewModel.initState("1")
         advanceUntilIdle()
@@ -93,7 +72,6 @@ class BeneficiaryDetailsScreenModelTest {
 
     @Test
     fun `should delete beneficiary if request succeeds`() = runTest {
-        coEvery { beneficiaryRepository.deleteBeneficiary(any()) } just Runs
         viewModel.deleteBeneficiary("1")
 
         assertEquals(
@@ -104,7 +82,7 @@ class BeneficiaryDetailsScreenModelTest {
 
     @Test
     fun `should send error event if delete beneficiary fails`() = runTest {
-        coEvery { beneficiaryRepository.deleteBeneficiary(any()) } throws IllegalStateException()
+        beneficiaryRepository.deleteFails = true
         viewModel.deleteBeneficiary("1")
 
         assertIs<BeneficiaryDetailsEvent.DeleteError>(viewModel.events.first())
@@ -113,11 +91,12 @@ class BeneficiaryDetailsScreenModelTest {
     @Test
     fun `should display not found error event if get details fails with error code 403`() =
         runTest {
-            coEvery { beneficiaryRepository.getBeneficiaryDetails(any()) } throws RequestError.Http(
+            beneficiaryRepository.detailsError = RequestError.Http(
                 403,
                 null,
                 null
             )
+
             viewModel.initState("1")
 
             advanceUntilIdle()
@@ -133,11 +112,12 @@ class BeneficiaryDetailsScreenModelTest {
     @Test
     fun `should display not found error event if get details fails with error code 404`() =
         runTest {
-            coEvery { beneficiaryRepository.getBeneficiaryDetails(any()) } throws RequestError.Http(
-                403,
+            beneficiaryRepository.detailsError = RequestError.Http(
+                404,
                 null,
                 null
             )
+
             viewModel.initState("1")
 
             advanceUntilIdle()
@@ -151,13 +131,14 @@ class BeneficiaryDetailsScreenModelTest {
         }
 
     @Test
-    fun `should display not found error event if get details fails with unmapped error code`() =
+    fun `should display not found error if get details fails with unmapped error code`() =
         runTest {
-            coEvery { beneficiaryRepository.getBeneficiaryDetails(any()) } throws RequestError.Http(
+            beneficiaryRepository.detailsError = RequestError.Http(
                 400,
                 null,
                 null
             )
+
             viewModel.initState("1")
 
             advanceUntilIdle()

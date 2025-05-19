@@ -1,5 +1,5 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -7,15 +7,20 @@ android {
     namespace = "io.github.alaksion.invoicer.features.beneficiary.services"
 }
 
-dependencies {
-    implementation(platform(libs.koin.bom))
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.ktor.client.core)
-    implementation(libs.koin.core)
-    implementation(libs.datetime)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.core)
+            implementation(libs.koin.core)
+            implementation(libs.datetime)
+            implementation(projects.foundation.network)
+        }
 
-    implementation(projects.foundation.network)
-
-    testImplementation(kotlin("test"))
-    testImplementation(libs.coroutines.test)
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+        }
+    }
 }

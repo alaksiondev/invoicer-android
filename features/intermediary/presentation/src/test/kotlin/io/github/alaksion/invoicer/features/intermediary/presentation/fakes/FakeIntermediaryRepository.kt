@@ -4,6 +4,7 @@ import io.github.alaksion.invoicer.features.intermediary.services.domain.model.I
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import kotlinx.datetime.Instant
 
+@Suppress("TooGenericExceptionThrown")
 class FakeIntermediaryRepository : IntermediaryRepository {
 
     var createFails = false
@@ -19,7 +20,7 @@ class FakeIntermediaryRepository : IntermediaryRepository {
         bankName: String,
         bankAddress: String
     ) = if (createFails) {
-        throw IllegalStateException("Failed to create beneficiary")
+        throw Exception()
     } else {
         Unit
     }
@@ -28,7 +29,7 @@ class FakeIntermediaryRepository : IntermediaryRepository {
         page: Long,
         limit: Long
     ): List<IntermediaryModel> = if (listFails) {
-        throw IllegalStateException("Failed to get beneficiaries")
+        throw Exception()
     } else {
         DEFAULT_INTERMEDIARIES
     }
@@ -37,7 +38,7 @@ class FakeIntermediaryRepository : IntermediaryRepository {
         detailsError?.let { throw it } ?: DEFAULT_INTERMEDIARY
 
     override suspend fun deleteIntermediary(id: String) = if (deleteFails) {
-        throw IllegalStateException("Failed to delete beneficiary")
+        throw Exception()
     } else {
         Unit
     }
@@ -50,7 +51,7 @@ class FakeIntermediaryRepository : IntermediaryRepository {
         swift: String,
         iban: String
     ) = if (updateFails) {
-        throw IllegalStateException("Failed to update beneficiary")
+        throw Exception()
     } else {
         Unit
     }

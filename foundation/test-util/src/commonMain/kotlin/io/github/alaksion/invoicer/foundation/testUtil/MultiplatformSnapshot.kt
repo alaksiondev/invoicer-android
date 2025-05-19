@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 
-// Workaround because context fails to initialize when the test relies on compose resources.
+// Workaround because android context fails to initialize when the test relies on compose resources.
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MultiplatformSnapshot(

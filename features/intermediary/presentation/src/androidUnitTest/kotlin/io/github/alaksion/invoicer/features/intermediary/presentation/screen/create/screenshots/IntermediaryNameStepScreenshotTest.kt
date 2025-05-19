@@ -2,8 +2,9 @@ package io.github.alaksion.invoicer.features.intermediary.presentation.screen.cr
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.create.steps.IntermediaryNameStep
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import org.junit.Test
 
@@ -34,15 +35,17 @@ class IntermediaryNameStepScreenshotTest {
     private fun TestContent(
         name: String
     ) {
-        InvoicerTheme {
-            IntermediaryNameStep()
-                .StateContent(
-                    name = name,
-                    onNameChange = { },
-                    onBack = { },
-                    onContinue = { },
-                    buttonEnabled = false,
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                IntermediaryNameStep()
+                    .StateContent(
+                        name = name,
+                        onNameChange = { },
+                        onBack = { },
+                        onContinue = { },
+                        buttonEnabled = false,
+                    )
+            }
         }
     }
 }

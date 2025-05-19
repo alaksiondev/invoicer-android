@@ -1,9 +1,10 @@
 package io.github.alaksion.invoicer.features.intermediary.presentation.screen.feedback.screenshots
 
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.feedback.IntermediaryFeedbackScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.feedback.IntermediaryFeedbackType
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import org.junit.Test
 
@@ -14,13 +15,15 @@ class IntermediaryFeedbackScreenScreenshotTest {
 
     @Test
     fun beneficiaryFeedback_success() {
+
         paparazzi.snapshot {
-            InvoicerTheme {
-                IntermediaryFeedbackScreen(
-                    type = IntermediaryFeedbackType.CreateSuccess
-                ).StateContent { }
+            MultiplatformSnapshot {
+                InvoicerTheme {
+                    IntermediaryFeedbackScreen(
+                        type = IntermediaryFeedbackType.CreateSuccess
+                    ).StateContent { }
+                }
             }
         }
     }
-
 }

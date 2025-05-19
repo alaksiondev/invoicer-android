@@ -2,12 +2,13 @@ package io.github.alaksion.invoicer.features.intermediary.presentation.screen.li
 
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListMode
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.IntermediaryListState
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.intermediarylist.rememberIntermediaryListCallbacks
 import io.github.alaksion.invoicer.features.intermediary.services.domain.model.IntermediaryModel
+import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
@@ -102,18 +103,19 @@ class IntermediaryListScreenScreenshotTest {
     private fun TestContent(
         state: IntermediaryListState
     ) {
-        InvoicerTheme {
-            IntermediaryListScreen()
-                .StateContent(
-                    state = state,
-                    callbacks = rememberIntermediaryListCallbacks(
-                        onClose = {},
-                        onRetry = {},
-                        onCreate = {},
-                        onItemClick = {},
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                IntermediaryListScreen()
+                    .StateContent(
+                        state = state,
+                        callbacks = rememberIntermediaryListCallbacks(
+                            onClose = {},
+                            onRetry = {},
+                            onCreate = {},
+                            onItemClick = {},
+                        )
                     )
-                )
+            }
         }
     }
-
 }

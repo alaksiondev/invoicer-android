@@ -111,7 +111,7 @@ class UpdateIntermediaryScreenModelTest {
 
     @Test
     fun `should handle error during submission`() = runTest {
-        intermediaryRepository.createFails = true
+        intermediaryRepository.updateFails = true
 
         viewModel.submit("1")
 

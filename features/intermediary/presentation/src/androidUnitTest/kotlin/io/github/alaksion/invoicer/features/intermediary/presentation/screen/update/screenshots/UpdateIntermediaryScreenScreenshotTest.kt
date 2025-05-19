@@ -8,6 +8,7 @@ import io.github.alaksion.invoicer.features.intermediary.presentation.screen.upd
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryScreen
 import io.github.alaksion.invoicer.features.intermediary.presentation.screen.update.UpdateIntermediaryState
 import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import io.github.alaksion.invoicer.foundation.testUtil.MultiplatformSnapshot
 import org.junit.Rule
 import kotlin.test.Test
 
@@ -76,22 +77,24 @@ class UpdateIntermediaryScreenScreenshotTest {
     private fun TestContent(
         state: UpdateIntermediaryState
     ) {
-        InvoicerTheme {
-            UpdateIntermediaryScreen("")
-                .StateContent(
-                    state = state,
-                    snackbarHostState = SnackbarHostState(),
-                    callbacks = UpdateIntermediaryCallbacks(
-                        onBack = { },
-                        onChangeName = { },
-                        onChangeBankName = { },
-                        onChangeBankAddress = { },
-                        onChangeSwift = { },
-                        onChangeIban = { },
-                        onSubmit = { },
-                        onRetry = { },
-                    ),
-                )
+        MultiplatformSnapshot {
+            InvoicerTheme {
+                UpdateIntermediaryScreen("")
+                    .StateContent(
+                        state = state,
+                        snackbarHostState = SnackbarHostState(),
+                        callbacks = UpdateIntermediaryCallbacks(
+                            onBack = { },
+                            onChangeName = { },
+                            onChangeBankName = { },
+                            onChangeBankAddress = { },
+                            onChangeSwift = { },
+                            onChangeIban = { },
+                            onSubmit = { },
+                            onRetry = { },
+                        ),
+                    )
+            }
         }
     }
 }

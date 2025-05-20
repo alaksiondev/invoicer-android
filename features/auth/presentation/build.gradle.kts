@@ -39,10 +39,6 @@ kotlin {
             implementation(libs.coroutines.test)
         }
 
-        androidMain.dependencies {
-
-        }
-
         androidUnitTest.dependencies {
             implementation(projects.foundation.testUtil)
         }

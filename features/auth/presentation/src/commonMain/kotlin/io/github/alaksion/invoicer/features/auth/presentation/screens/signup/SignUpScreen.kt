@@ -17,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,14 +25,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import io.github.alaksion.invoicer.features.auth.presentation.R
+import invoicer.features.auth.presentation.generated.resources.Res
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_description
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_duplicate_account_description
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_duplicate_account_title
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_error
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_have_account_prefix
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_have_account_suffix
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_submit_button
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_title
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreen
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.PasswordStrengthCard
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.components.SignUpForm
@@ -46,6 +53,7 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Ver
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 internal class SignUpScreen : Screen {
@@ -54,9 +62,9 @@ internal class SignUpScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<SignUpScreenModel>()
-        val state by viewModel.state.collectAsStateWithLifecycle()
+        val state by viewModel.state.collectAsState()
         val scope = rememberCoroutineScope()
-        val genericErrorMessage = stringResource(R.string.auth_sign_up_error)
+        val genericErrorMessage = stringResource(Res.string.auth_sign_up_error)
         val keyboard = LocalSoftwareKeyboardController.current
         var showDuplicateAccountDialog by remember { mutableStateOf(false) }
 
@@ -140,7 +148,7 @@ internal class SignUpScreen : Screen {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Spacing.medium),
-                    label = stringResource(R.string.auth_sign_up_submit_button),
+                    label = stringResource(Res.string.auth_sign_up_submit_button),
                     onClick = callbacks.onSubmitClick,
                     isEnabled = state.buttonEnabled,
                     isLoading = state.requestLoading
@@ -157,8 +165,8 @@ internal class SignUpScreen : Screen {
             ) {
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 ScreenTitle(
-                    title = stringResource(R.string.auth_sign_up_title),
-                    subTitle = stringResource(R.string.auth_sign_up_description)
+                    title = stringResource(Res.string.auth_sign_up_title),
+                    subTitle = stringResource(Res.string.auth_sign_up_description)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 SignUpForm(
@@ -185,7 +193,7 @@ internal class SignUpScreen : Screen {
                                     .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     .toSpanStyle()
                             ) {
-                                append(text = stringResource(R.string.auth_sign_up_have_account_prefix))
+                                append(text = stringResource(Res.string.auth_sign_up_have_account_prefix))
                             }
                             append(" ")
                             withStyle(
@@ -193,7 +201,7 @@ internal class SignUpScreen : Screen {
                                     .copy(color = MaterialTheme.colorScheme.primary)
                                     .toSpanStyle()
                             ) {
-                                append(text = stringResource(R.string.auth_sign_up_have_account_suffix))
+                                append(text = stringResource(Res.string.auth_sign_up_have_account_suffix))
                             }
                         }
                     )
@@ -204,9 +212,9 @@ internal class SignUpScreen : Screen {
                 InvoicerDialog(
                     onDismiss = callbacks.onDismissDialog,
                     variant = DialogVariant.Error,
-                    title = stringResource(R.string.auth_sign_up_duplicate_account_title),
+                    title = stringResource(Res.string.auth_sign_up_duplicate_account_title),
                     description = stringResource(
-                        R.string.auth_sign_up_duplicate_account_description,
+                        Res.string.auth_sign_up_duplicate_account_description,
                         state.email
                     )
                 )

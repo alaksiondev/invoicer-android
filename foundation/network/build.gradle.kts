@@ -18,7 +18,6 @@ buildkonfig {
     packageName = "io.github.alaksion.invoicer.foundation.network"
     objectName = "NetworkBuildConfig"
     defaultConfigs {
-
         buildConfigField(
             type = FieldSpec.Type.STRING,
             value = properties.getProperty("DEBUG_APP_URL"),

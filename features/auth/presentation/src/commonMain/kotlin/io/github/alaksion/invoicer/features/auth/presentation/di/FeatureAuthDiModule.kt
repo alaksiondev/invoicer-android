@@ -1,10 +1,5 @@
 package io.github.alaksion.invoicer.features.auth.presentation.di
 
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelper
-import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelperImpl
-import io.github.alaksion.invoicer.features.auth.presentation.firebase.GoogleFirebaseHelper
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreenModel
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreenModel
 import io.github.alaksion.invoicer.features.auth.presentation.utils.EmailValidator
@@ -32,23 +27,9 @@ private fun Module.viewModelBindings() {
 
     factory {
         LoginScreenModel(
-            firebaseHelper = get(),
             dispatcher = Dispatchers.Default,
             signInCommander = get(),
             analyticsTracker = get()
-        )
-    }
-
-    factory {
-        GoogleFirebaseHelper(
-            context = get(),
-            firebaseAuth = Firebase.auth
-        )
-    }
-
-    factory<FirebaseHelper> {
-        FirebaseHelperImpl(
-            googleFirebaseHelper = get()
         )
     }
 

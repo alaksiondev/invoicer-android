@@ -1,8 +1,5 @@
 package io.github.alaksion.invoicer.features.auth.presentation.screens.login
 
-import android.app.Activity.RESULT_OK
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,27 +22,32 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import io.github.alaksion.invoicer.foundation.navigation.extensions.pushToFront
-import invoicer.foundation.design_system.generated.resources.Res
+import invoicer.features.auth.presentation.generated.resources.Res
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_description
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_dont_have_account_prefix
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_dont_have_account_suffix
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_error
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_google_button
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_submit_button
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_text_divider
+import invoicer.features.auth.presentation.generated.resources.auth_sign_in_title
 import invoicer.foundation.design_system.generated.resources.google
-import io.github.alaksion.invoicer.features.auth.presentation.R
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.components.SignInForm
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreen
+import io.github.alaksion.invoicer.foundation.auth.presentation.rememberGoogleLauncher
 import io.github.alaksion.invoicer.foundation.designSystem.components.ScreenTitle
 import io.github.alaksion.invoicer.foundation.designSystem.components.TextDivider
 import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.PrimaryButton
@@ -54,9 +56,12 @@ import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Spa
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.navigation.extensions.pushToFront
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import invoicer.foundation.design_system.generated.resources.Res as DsRes
 
 internal class LoginScreen : Screen {
 
@@ -64,29 +69,24 @@ internal class LoginScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
         val viewModel = koinScreenModel<LoginScreenModel>()
-        val state by viewModel.state.collectAsStateWithLifecycle()
+        val state by viewModel.state.collectAsState()
         val scope = rememberCoroutineScope()
         val snackBarHost = remember { SnackbarHostState() }
-        val genericErrorMessage = stringResource(R.string.auth_sign_in_error)
+        val genericErrorMessage = stringResource(Res.string.auth_sign_in_error)
         val keyboard = LocalSoftwareKeyboardController.current
 
-        val firebaseLauncher = rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                viewModel.handleGoogleTask(task)
-            } else {
-                viewModel.cancelGoogleSignIn()
-            }
-        }
+        val googleLauncher = rememberGoogleLauncher(
+            onSuccess = viewModel::handleGoogleSuccess,
+            onFailure = viewModel::handleGoogleError,
+            onCancel = viewModel::cancelGoogleSignIn
+        )
 
         StateContent(
             state = state,
             callBacks = rememberLoginCallbacks(
                 onSubmit = {
                     keyboard?.hide()
-                    viewModel.submit()
+                    viewModel.submitIdentityLogin()
                 },
                 onEmailChanged = viewModel::onEmailChanged,
                 onPasswordChanged = viewModel::onPasswordChanged,
@@ -95,9 +95,7 @@ internal class LoginScreen : Screen {
                 onSignUpClick = {
                     navigator?.pushToFront(SignUpScreen())
                 },
-                onLaunchGoogle = {
-                    firebaseLauncher.launch(viewModel.getGoogleClient().signInIntent)
-                }
+                onLaunchGoogle = viewModel::launchGoogleLogin
             ),
             snackbarHostState = snackBarHost
         )
@@ -118,6 +116,8 @@ internal class LoginScreen : Screen {
                             message = genericErrorMessage
                         )
                     }
+
+                    LoginScreenEvents.LaunchGoogleLogin -> scope.launch { googleLauncher.launch() }
                 }
             }
         }
@@ -153,8 +153,8 @@ internal class LoginScreen : Screen {
             ) {
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 ScreenTitle(
-                    title = stringResource(R.string.auth_sign_in_title),
-                    subTitle = stringResource(R.string.auth_sign_in_description)
+                    title = stringResource(Res.string.auth_sign_in_title),
+                    subTitle = stringResource(Res.string.auth_sign_in_description)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge3)
                 SignInForm(
@@ -171,21 +171,21 @@ internal class LoginScreen : Screen {
                     onClick = callBacks.onSubmit,
                     isEnabled = state.buttonEnabled,
                     isLoading = state.isSignInLoading,
-                    label = stringResource(R.string.auth_sign_in_submit_button)
+                    label = stringResource(Res.string.auth_sign_in_submit_button)
                 )
                 VerticalSpacer(height = SpacerSize.XLarge)
                 TextDivider(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.auth_sign_in_text_divider)
+                    text = stringResource(Res.string.auth_sign_in_text_divider)
                 )
                 VerticalSpacer(height = SpacerSize.Medium)
                 SecondaryButton(
                     modifier = Modifier.fillMaxWidth(),
-                    label = stringResource(R.string.auth_sign_in_google_button),
+                    label = stringResource(Res.string.auth_sign_in_google_button),
                     onClick = callBacks.onLaunchGoogle,
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(Res.drawable.google),
+                            painter = painterResource(DsRes.drawable.google),
                             contentDescription = null,
                             tint = Color.Unspecified,
                             modifier = Modifier
@@ -210,7 +210,7 @@ internal class LoginScreen : Screen {
                                     .copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     .toSpanStyle()
                             ) {
-                                append(text = stringResource(R.string.auth_sign_in_dont_have_account_prefix))
+                                append(text = stringResource(Res.string.auth_sign_in_dont_have_account_prefix))
                             }
                             append(" ")
                             withStyle(
@@ -218,7 +218,7 @@ internal class LoginScreen : Screen {
                                     .copy(color = MaterialTheme.colorScheme.primary)
                                     .toSpanStyle()
                             ) {
-                                append(text = stringResource(R.string.auth_sign_in_dont_have_account_suffix))
+                                append(text = stringResource(Res.string.auth_sign_in_dont_have_account_suffix))
                             }
                         }
                     )

@@ -17,15 +17,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import io.github.alaksion.invoicer.features.auth.presentation.R
+import invoicer.features.auth.presentation.generated.resources.Res
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_length
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_lowercase
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_number
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_special
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_title
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_uppercase
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.HorizontalSpacer
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppColor
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppSize
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PasswordStrengthCard(
@@ -40,28 +46,28 @@ internal fun PasswordStrengthCard(
             verticalArrangement = Arrangement.spacedBy(Spacing.xSmall)
         ) {
             Text(
-                text = stringResource(R.string.auth_sign_up_password_str_title),
+                text = stringResource(Res.string.auth_sign_up_password_str_title),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
             FieldStrength(
-                text = stringResource(R.string.auth_sign_up_password_str_length),
+                text = stringResource(Res.string.auth_sign_up_password_str_length),
                 isValid = passwordStrength.lengthValid
             )
             FieldStrength(
-                text = stringResource(R.string.auth_sign_up_password_str_uppercase),
+                text = stringResource(Res.string.auth_sign_up_password_str_uppercase),
                 isValid = passwordStrength.upperCaseValid
             )
             FieldStrength(
-                text = stringResource(R.string.auth_sign_up_password_str_lowercase),
+                text = stringResource(Res.string.auth_sign_up_password_str_lowercase),
                 isValid = passwordStrength.lowerCaseValid
             )
             FieldStrength(
-                text = stringResource(R.string.auth_sign_up_password_str_number),
+                text = stringResource(Res.string.auth_sign_up_password_str_number),
                 isValid = passwordStrength.digitValid
             )
             FieldStrength(
-                text = stringResource(R.string.auth_sign_up_password_str_special),
+                text = stringResource(Res.string.auth_sign_up_password_str_special),
                 isValid = passwordStrength.specialCharacterValid
             )
         }

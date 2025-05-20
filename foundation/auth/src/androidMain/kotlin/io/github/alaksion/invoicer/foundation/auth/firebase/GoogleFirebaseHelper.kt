@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.auth.presentation.firebase
+package io.github.alaksion.invoicer.foundation.auth.firebase
 
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -10,7 +10,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import io.github.alaksion.invoicer.features.auth.presentation.BuildConfig
+import io.github.alaksion.invoicer.foundation.auth.AuthBuildConfig
 import kotlinx.coroutines.tasks.await
 
 
@@ -20,7 +20,7 @@ internal class GoogleFirebaseHelper(
 ) {
     fun getSignInClient(): GoogleSignInClient {
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(BuildConfig.FIREBASE_WEB_ID)
+            .requestIdToken(AuthBuildConfig.FIREBASE_WEB_ID)
             .requestEmail()
             .build()
 

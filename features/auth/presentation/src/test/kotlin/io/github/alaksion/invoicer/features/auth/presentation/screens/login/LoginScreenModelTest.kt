@@ -80,7 +80,7 @@ class LoginScreenModelTest {
         coEvery { signInCommander.resolveCommand(any()) } returns Unit
         coEvery { analyticsTracker.track(any()) } just Runs
 
-        viewModel.submit()
+        viewModel.submitIdentityLogin()
 
         advanceUntilIdle()
         coVerify { signInCommander.resolveCommand(any<SignInCommand.Credential>()) }
@@ -92,7 +92,7 @@ class LoginScreenModelTest {
         every { firebaseHelper.getGoogleClient() } returns googleClient
         every { analyticsTracker.track(any()) } just Runs
 
-        val result = viewModel.getGoogleClient()
+        val result = viewModel.launchGoogleLogin()
 
         assertEquals(googleClient, result)
         assertEquals(true, viewModel.state.value.isGoogleLoading)
@@ -158,7 +158,7 @@ class LoginScreenModelTest {
 
         coEvery { analyticsTracker.track(any()) } just Runs
 
-        viewModel.submit()
+        viewModel.submitIdentityLogin()
 
         assertIs<LoginScreenEvents.Failure>(viewModel.events.first())
     }
@@ -176,7 +176,7 @@ class LoginScreenModelTest {
 
         coEvery { analyticsTracker.track(any()) } just Runs
 
-        viewModel.submit()
+        viewModel.submitIdentityLogin()
 
         assertIs<LoginScreenEvents.GenericFailure>(viewModel.events.first())
     }
@@ -191,7 +191,7 @@ class LoginScreenModelTest {
 
         coEvery { analyticsTracker.track(any()) } just Runs
 
-        viewModel.submit()
+        viewModel.submitIdentityLogin()
 
         assertIs<LoginScreenEvents.GenericFailure>(viewModel.events.first())
     }

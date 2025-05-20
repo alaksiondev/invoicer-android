@@ -1,15 +1,37 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import java.util.Properties
+
 plugins {
     id("invoicer.multiplatform.library")
+    id("invoicer.compose")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.buildKonfig)
 }
+
+val properties = Properties()
+properties.load(rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "io.github.alaksion.invoicer.foundation.auth"
 }
 
+buildkonfig {
+    packageName = "io.github.alaksion.invoicer.foundation.auth"
+    objectName = "AuthBuildConfig"
+    defaultConfigs {
+        buildConfigField(
+            type = FieldSpec.Type.STRING,
+            value = properties.getProperty("FIREBASE_WEB_ID"),
+            name = "FIREBASE_WEB_ID"
+        )
+    }
+}
+
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            // Compose
+            implementation(compose.foundation)
 
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
@@ -32,9 +54,14 @@ kotlin {
         }
 
         androidMain.dependencies {
-
+            // Firebase
+            implementation(libs.androidx.activity.compose)
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.auth)
+            implementation(libs.bundles.identity)
+            implementation(libs.google.services.auth)
+            implementation(libs.koin.android)
         }
-
     }
 }
 

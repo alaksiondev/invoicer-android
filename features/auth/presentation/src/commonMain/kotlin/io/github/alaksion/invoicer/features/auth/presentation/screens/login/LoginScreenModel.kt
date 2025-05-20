@@ -2,11 +2,6 @@ package io.github.alaksion.invoicer.features.auth.presentation.screens.login
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.tasks.Task
-import io.github.alaksion.invoicer.features.auth.presentation.firebase.FirebaseHelper
-import io.github.alaksion.invoicer.features.auth.presentation.firebase.GoogleResult
 import io.github.alaksion.invoicer.foundation.analytics.AnalyticsTracker
 import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommand
 import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommandManager
@@ -23,7 +18,6 @@ import kotlinx.coroutines.launch
 
 internal class LoginScreenModel(
     private val signInCommander: SignInCommandManager,
-    private val firebaseHelper: FirebaseHelper,
     private val dispatcher: CoroutineDispatcher,
     private val analyticsTracker: AnalyticsTracker
 ) : ScreenModel {
@@ -46,18 +40,20 @@ internal class LoginScreenModel(
         _state.value = _state.value.copy(censored = !_state.value.censored)
     }
 
-    fun submit() {
+    fun submitIdentityLogin() {
         if (_state.value.buttonEnabled) handleSignInRequest()
     }
 
-    fun getGoogleClient(): GoogleSignInClient {
-        analyticsTracker.track(LoginAnalytics.GoogleLoginStarted)
-        _state.update {
-            it.copy(
-                isGoogleLoading = true
-            )
+    fun launchGoogleLogin() {
+        screenModelScope.launch(dispatcher) {
+            analyticsTracker.track(LoginAnalytics.GoogleLoginStarted)
+            _state.update {
+                it.copy(
+                    isGoogleLoading = true
+                )
+            }
+            _events.emit(LoginScreenEvents.LaunchGoogleLogin)
         }
-        return firebaseHelper.getGoogleClient()
     }
 
     private fun handleSignInRequest() {
@@ -108,47 +104,43 @@ internal class LoginScreenModel(
         }
     }
 
-    fun handleGoogleTask(task: Task<GoogleSignInAccount>) {
+    fun handleGoogleError(error: Throwable) {
         screenModelScope.launch(dispatcher) {
-            val result = firebaseHelper.handleGoogleResult(task)
+            analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
+            _events.emit(
+                LoginScreenEvents.Failure(
+                    message = error.message.orEmpty()
+                )
+            )
+        }
+    }
 
-            when (result) {
-                is GoogleResult.Error -> {
+    fun handleGoogleSuccess(token: String) {
+        screenModelScope.launch(dispatcher) {
+            launchRequest {
+                signInCommander.resolveCommand(
+                    SignInCommand.Google(token)
+                )
+            }.handle(
+                onSuccess = {
+                    analyticsTracker.track(LoginAnalytics.GoogleLoginSuccess)
+                },
+                onFinish = {
+                    _state.update {
+                        it.copy(
+                            isGoogleLoading = false
+                        )
+                    }
+                },
+                onFailure = { result ->
                     analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
                     _events.emit(
                         LoginScreenEvents.Failure(
-                            message = result.error?.message.orEmpty()
+                            message = result.message.orEmpty()
                         )
                     )
                 }
-
-                is GoogleResult.Success -> {
-                    launchRequest {
-                        signInCommander.resolveCommand(
-                            SignInCommand.Google(result.token)
-                        )
-                    }.handle(
-                        onSuccess = {
-                            analyticsTracker.track(LoginAnalytics.GoogleLoginSuccess)
-                        },
-                        onFinish = {
-                            _state.update {
-                                it.copy(
-                                    isGoogleLoading = false
-                                )
-                            }
-                        },
-                        onFailure = { result ->
-                            analyticsTracker.track(LoginAnalytics.GoogleLoginFailure)
-                            _events.emit(
-                                LoginScreenEvents.Failure(
-                                    message = result.message.orEmpty()
-                                )
-                            )
-                        }
-                    )
-                }
-            }
+            )
         }
     }
 }

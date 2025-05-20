@@ -30,6 +30,7 @@ internal data class LoginScreenCallbacks(
 internal sealed interface LoginScreenEvents {
     data object GenericFailure : LoginScreenEvents
     data class Failure(val message: String) : LoginScreenEvents
+    data object LaunchGoogleLogin : LoginScreenEvents
 }
 
 @Composable

@@ -13,16 +13,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import io.github.alaksion.invoicer.features.auth.presentation.R
+import invoicer.features.auth.presentation.generated.resources.Res
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_length
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_lowercase
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_number
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_special
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_password_str_uppercase
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_strong_password_prefix
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_strong_password_suffix
+import invoicer.features.auth.presentation.generated.resources.auth_sign_up_weak_password_label
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthResult
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.SpacerSize
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.VerticalSpacer
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppColor
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.AppSize
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun StrengthStepper(
@@ -31,14 +39,14 @@ internal fun StrengthStepper(
 ) {
     val strengthMap = remember(passwordStrength) {
         listOf(
-            Pair(passwordStrength.lowerCaseValid, R.string.auth_sign_up_password_str_lowercase),
-            Pair(passwordStrength.upperCaseValid, R.string.auth_sign_up_password_str_uppercase),
-            Pair(passwordStrength.digitValid, R.string.auth_sign_up_password_str_number),
+            Pair(passwordStrength.lowerCaseValid, Res.string.auth_sign_up_password_str_lowercase),
+            Pair(passwordStrength.upperCaseValid, Res.string.auth_sign_up_password_str_uppercase),
+            Pair(passwordStrength.digitValid, Res.string.auth_sign_up_password_str_number),
             Pair(
                 passwordStrength.specialCharacterValid,
-                R.string.auth_sign_up_password_str_special
+                Res.string.auth_sign_up_password_str_special
             ),
-            Pair(passwordStrength.lengthValid, R.string.auth_sign_up_password_str_length),
+            Pair(passwordStrength.lengthValid, Res.string.auth_sign_up_password_str_length),
         )
     }
 
@@ -107,7 +115,7 @@ private fun ValidationErrorMessage(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     ).toSpanStyle()
             ) {
-                append(stringResource(R.string.auth_sign_up_weak_password_label))
+                append(stringResource(Res.string.auth_sign_up_weak_password_label))
             }
             append(" ")
             withStyle(
@@ -135,7 +143,7 @@ private fun ValidationSuccessMessage(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     ).toSpanStyle()
             ) {
-                append(stringResource(R.string.auth_sign_up_strong_password_prefix))
+                append(stringResource(Res.string.auth_sign_up_strong_password_prefix))
             }
             append(" ")
             withStyle(
@@ -144,7 +152,7 @@ private fun ValidationSuccessMessage(
                         color = AppColor.SuccessGreen
                     ).toSpanStyle()
             ) {
-                append(stringResource(R.string.auth_sign_up_strong_password_suffix))
+                append(stringResource(Res.string.auth_sign_up_strong_password_suffix))
             }
         }
     )

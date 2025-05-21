@@ -82,6 +82,11 @@ class KmpLibraryPlugin : Plugin<Project> {
                     isStatic = true
                 }
             }
+
+            compilerOptions {
+                // Common compiler options applied to all Kotlin source sets
+                freeCompilerArgs.add("-Xexpect-actual-classes")
+            }
         }
     }
 }

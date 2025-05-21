@@ -1,23 +1,23 @@
-package io.github.alaksion.invoicer.main
+package io.github.alaksion.invoicer.features.auth.presentation.screens.startup
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import io.github.alaksion.invoicer.foundation.network.request.handle
-import io.github.alaksion.invoicer.foundation.network.request.launchRequest
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommand
 import io.github.alaksion.invoicer.foundation.auth.domain.services.SignInCommandManager
 import io.github.alaksion.invoicer.foundation.auth.domain.services.SignOutService
+import io.github.alaksion.invoicer.foundation.network.request.handle
+import io.github.alaksion.invoicer.foundation.network.request.launchRequest
 import io.github.alaksion.invoicer.foundation.utils.logger.InvoicerLogger
 import kotlinx.coroutines.launch
 
-internal class MainViewModel(
+internal class StartupScreenModel(
     private val signInCommandManager: SignInCommandManager,
     private val signOutService: SignOutService,
     private val logger: InvoicerLogger
-) : ViewModel() {
+) : ScreenModel {
 
     fun startApp() {
-        viewModelScope.launch {
+        screenModelScope.launch {
             launchRequest {
                 signInCommandManager.resolveCommand(
                     SignInCommand.RefreshSession

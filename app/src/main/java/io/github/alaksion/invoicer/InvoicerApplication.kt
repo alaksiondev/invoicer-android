@@ -23,7 +23,6 @@ import io.github.alaksion.invoicer.foundation.storage.di.localStorageDiModule
 import io.github.alaksion.invoicer.foundation.utils.di.utilsDiModule
 import io.github.alaksion.invoicer.foundation.validator.di.validatorDiModule
 import io.github.alaksion.invoicer.foundation.watchers.di.watchersDiModule
-import io.github.alaksion.invoicer.main.mainDiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -44,7 +43,6 @@ class InvoicerApplication : Application() {
         startKoin {
             androidContext(this@InvoicerApplication)
             modules(
-                mainDiModule,
                 featureAuthPresentationDiModule,
                 networkDiModule,
                 validatorDiModule,

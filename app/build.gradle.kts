@@ -74,4 +74,5 @@ dependencies {
     implementation(projects.features.intermediary.presentation)
     implementation(projects.foundation.watchers)
     implementation(projects.features.qrcodeSession)
+    implementation(projects.sharedApp)
 }

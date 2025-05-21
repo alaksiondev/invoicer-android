@@ -2,6 +2,7 @@ package io.github.alaksion.invoicer.features.auth.presentation.di
 
 import io.github.alaksion.invoicer.features.auth.presentation.screens.login.LoginScreenModel
 import io.github.alaksion.invoicer.features.auth.presentation.screens.signup.SignUpScreenModel
+import io.github.alaksion.invoicer.features.auth.presentation.screens.startup.StartupScreenModel
 import io.github.alaksion.invoicer.features.auth.presentation.utils.EmailValidator
 import io.github.alaksion.invoicer.features.auth.presentation.utils.EmailValidatorImpl
 import io.github.alaksion.invoicer.features.auth.presentation.utils.PasswordStrengthValidator
@@ -35,6 +36,14 @@ private fun Module.viewModelBindings() {
 
     factory<PasswordStrengthValidator> {
         PasswordStrengthValidatorImpl
+    }
+
+    factory<StartupScreenModel> {
+        StartupScreenModel(
+            signInCommandManager = get(),
+            signOutService = get(),
+            logger = get()
+        )
     }
 
     factory<EmailValidator> { EmailValidatorImpl() }

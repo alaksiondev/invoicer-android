@@ -78,7 +78,7 @@ class KmpLibraryPlugin : Plugin<Project> {
                 iosSimulatorArm64()
             ).forEach { iosTarget ->
                 iosTarget.binaries.framework {
-                    baseName = "Invoicer"
+                    baseName = "invoicerShared"
                     isStatic = true
                 }
             }

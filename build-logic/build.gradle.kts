@@ -19,11 +19,6 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("invoicer-library") {
-            id = "invoicer.library"
-            implementationClass = "buildLogic.plugins.LibraryPlugin"
-        }
-
         create("invoicer-multiplatform-library") {
             id = "invoicer.multiplatform.library"
             implementationClass = "buildLogic.plugins.KmpLibraryPlugin"

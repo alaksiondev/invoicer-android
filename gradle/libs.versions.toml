@@ -2,49 +2,31 @@
 agp = "8.7.3"
 kotlin = "2.1.21"
 coreKtx = "1.16.0"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
-composeBom = "2025.05.00"
 koinBom = "4.1.0-Beta5"
 ktor = "3.1.1"
 voyager = "1.1.0-beta02"
-material-icons = "1.7.8"
 coroutines = "1.10.2"
 splashscreen = "1.0.1"
 datetime = "0.6.2"
 immutable-collections = "0.3.8"
 camerax-core = "1.4.2"
 google-services = "4.4.2"
-firebase-bom = "33.13.0"
+firebase-bom = "33.14.0"
 androidX-identity = "1.5.0"
 googleId = "1.1.1"
 google-services-auth = "21.3.0"
 crashlytics-plugin = "3.0.3"
 detekt = "1.23.8"
-mockk = "1.14.2"
 paparazzi = "2.0.0-alpha01"
 compose-multiplatform = "1.7.3"
 buildKonfig = "0.17.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 
 # Ktor
@@ -73,15 +55,12 @@ camerax-view = { module = "androidx.camera:camera-view", version.ref = "camerax-
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android" }
-koin-compose = { module = "io.insert-koin:koin-compose" }
-koin-junit4 = { module = "io.insert-koin:koin-test-junit4" }
 
 # Kotlin
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutable-collections" }
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 # Gradle PLugins
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -96,7 +75,6 @@ google-mlkit = { module = "com.google.mlkit:barcode-scanning", version = "17.3.0
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 
 # Identity
@@ -106,9 +84,6 @@ identity-googleid = { module = "com.google.android.libraries.identity.googleid:g
 
 # Google Services
 google-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "google-services-auth" }
-
-# Mock
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -125,9 +100,6 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 
 [bundles]
-compose-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3"]
-compose-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
 voyager = ["voyager-navigator", "voyager-screenmodel", "voyager-koin"]
 camerax = ["camerax-core", "camerax-camera2", "camerax-lifecycle", "camerax-view"]
 identity = ["identity-credentials-core", "identity-credentials-play", "identity-googleid"]
-

@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.tabs.settings
+package io.github.alaksion.features.home.presentation.tabs.settings
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope

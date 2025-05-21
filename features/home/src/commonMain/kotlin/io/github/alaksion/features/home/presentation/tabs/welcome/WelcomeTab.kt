@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.tabs.welcome
+package io.github.alaksion.features.home.presentation.tabs.welcome
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -10,9 +10,9 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
-import io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.components.WelcomeActions
+import io.github.alaksion.features.home.presentation.tabs.welcome.components.WelcomeActions
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
 
 internal object WelcomeTab : Tab {
 

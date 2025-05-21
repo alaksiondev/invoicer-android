@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.tabs.settings.components
+package io.github.alaksion.features.home.presentation.tabs.settings.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight

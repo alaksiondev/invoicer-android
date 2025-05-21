@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.tabs.settings
+package io.github.alaksion.features.home.presentation.tabs.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,18 +21,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import features.home.presentation.R
-import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
-import io.github.alaksion.invoicer.features.home.presentation.tabs.settings.components.SettingsItem
-import io.github.alaksion.invoicer.features.home.presentation.tabs.settings.components.SignOutDialog
+import invoicer.features.home.generated.resources.Res
+import invoicer.features.home.generated.resources.home_settings_authorization
+import invoicer.features.home.generated.resources.home_settings_label
+import invoicer.features.home.generated.resources.home_settings_sign_out
+import io.github.alaksion.features.home.presentation.tabs.settings.components.SettingsItem
+import io.github.alaksion.features.home.presentation.tabs.settings.components.SignOutDialog
 import io.github.alaksion.invoicer.foundation.designSystem.components.spacer.Spacer
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import io.github.alaksion.invoicer.foundation.navigation.InvoicerScreen
+import org.jetbrains.compose.resources.stringResource
 
 internal object SettingsTab : Tab {
 
@@ -80,7 +83,7 @@ internal object SettingsTab : Tab {
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = stringResource(R.string.home_settings_label))
+                        Text(text = stringResource(Res.string.home_settings_label))
                     },
                 )
             }
@@ -93,7 +96,7 @@ internal object SettingsTab : Tab {
             ) {
                 SettingsItem(
                     modifier = Modifier.fillMaxWidth(),
-                    content = stringResource(R.string.home_settings_authorization),
+                    content = stringResource(Res.string.home_settings_authorization),
                     icon = Icons.Outlined.QrCodeScanner,
                     onClick = callbacks.goToAuthorizations
                 )
@@ -107,7 +110,7 @@ internal object SettingsTab : Tab {
                         contentDescription = null
                     )
                     Text(
-                        text = stringResource(R.string.home_settings_sign_out)
+                        text = stringResource(Res.string.home_settings_sign_out)
                     )
                 }
             }

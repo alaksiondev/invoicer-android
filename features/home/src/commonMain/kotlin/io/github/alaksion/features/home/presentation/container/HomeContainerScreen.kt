@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.container
+package io.github.alaksion.features.home.presentation.container
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.WelcomeTab
+import io.github.alaksion.features.home.presentation.tabs.welcome.WelcomeTab
 
 internal class HomeContainerScreen : Screen {
     @Composable

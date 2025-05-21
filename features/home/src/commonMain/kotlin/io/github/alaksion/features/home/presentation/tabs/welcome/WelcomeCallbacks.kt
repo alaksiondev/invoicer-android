@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.tabs.welcome
+package io.github.alaksion.features.home.presentation.tabs.welcome
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

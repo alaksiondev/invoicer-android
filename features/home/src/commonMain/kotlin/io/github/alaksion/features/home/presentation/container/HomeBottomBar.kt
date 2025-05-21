@@ -1,4 +1,4 @@
-package io.github.alaksion.invoicer.features.home.presentation.container
+package io.github.alaksion.features.home.presentation.container
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
@@ -8,8 +8,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.tab.Tab
-import io.github.alaksion.invoicer.features.home.presentation.tabs.settings.SettingsTab
-import io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.WelcomeTab
+import io.github.alaksion.features.home.presentation.tabs.settings.SettingsTab
+import io.github.alaksion.features.home.presentation.tabs.welcome.WelcomeTab
 
 @Composable
 internal fun HomeBottomBar(

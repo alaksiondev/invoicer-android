@@ -1,37 +1,53 @@
 plugins {
-    id("invoicer.library")
+    id("invoicer.multiplatform.library")
     id("invoicer.compose")
     alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    namespace = "feature.qrcodeSession"
+    namespace = "io.github.alaksion.invoicer.features.qrcodeSession"
 }
 
-dependencies {
-    // Compose
-    implementation(libs.bundles.compose.ui)
-    implementation(libs.androidx.activity.compose)
-    debugImplementation(libs.bundles.compose.debug)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            // Compose
+            implementation(compose.ui)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
 
-    implementation(platform(libs.koin.bom))
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.ktor.client.core)
-    implementation(libs.koin.core)
-    implementation(libs.datetime)
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
 
-    // Camera
-    implementation(libs.bundles.camerax)
-    implementation(libs.google.mlkit)
+            // Ktor
+            implementation(libs.ktor.client.core)
 
-    implementation(projects.foundation.network)
-    implementation(projects.foundation.navigation)
-    implementation(projects.foundation.designSystem)
-    implementation(projects.foundation.ui)
-    implementation(projects.foundation.validator)
+            // Kotlin
+            implementation(libs.datetime)
+            implementation(libs.coroutines.core)
 
-    implementation(libs.bundles.voyager)
+            // Foundation
+            implementation(projects.foundation.network)
+            implementation(projects.foundation.navigation)
+            implementation(projects.foundation.designSystem)
+            implementation(projects.foundation.ui)
+            implementation(projects.foundation.validator)
+            implementation(projects.foundation.utils)
 
-    testImplementation(kotlin("test"))
-    testImplementation(libs.coroutines.test)
+            // Voyager
+            implementation(libs.bundles.voyager)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+        }
+
+        androidMain.dependencies {
+            // Camera
+            implementation(libs.bundles.camerax)
+            implementation(libs.google.mlkit)
+        }
+    }
 }

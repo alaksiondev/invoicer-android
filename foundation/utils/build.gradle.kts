@@ -1,5 +1,6 @@
 plugins {
     id("invoicer.multiplatform.library")
+    id("invoicer.compose")
 }
 
 android {
@@ -13,9 +14,14 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(compose.foundation)
             implementation(libs.datetime)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
         }
     }
 }

@@ -46,5 +46,9 @@ kotlin {
             implementation(libs.bundles.voyager)
             implementation(libs.voyager.transitions)
         }
+
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package o.github.alaksion.invoicer.sharedApp
+package io.github.alaksion.invoicer.sharedApp
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

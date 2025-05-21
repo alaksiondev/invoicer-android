@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import o.github.alaksion.invoicer.sharedApp.InvoicerApp
+import io.github.alaksion.invoicer.sharedApp.InvoicerApp
 
 class MainActivity : ComponentActivity() {
 

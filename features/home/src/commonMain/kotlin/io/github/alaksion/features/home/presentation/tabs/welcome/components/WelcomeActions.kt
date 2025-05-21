@@ -1,6 +1,5 @@
-package io.github.alaksion.invoicer.features.home.presentation.tabs.welcome.components
+package io.github.alaksion.features.home.presentation.tabs.welcome.components
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,28 +24,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import features.home.presentation.R
-import io.github.alaksion.invoicer.foundation.designSystem.theme.InvoicerTheme
+import invoicer.features.home.generated.resources.Res
+import invoicer.features.home.generated.resources.welcome_icon_beneficiary
+import invoicer.features.home.generated.resources.welcome_icon_intermediary
+import invoicer.features.home.generated.resources.welcome_icon_invoice
 import io.github.alaksion.invoicer.foundation.designSystem.tokens.Spacing
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 private enum class WelcomeItems(
     val icon: ImageVector,
-    @StringRes val text: Int
+    val text: StringResource
 ) {
     Invoice(
         icon = Icons.Outlined.AttachMoney,
-        text = R.string.welcome_icon_invoice
+        text = Res.string.welcome_icon_invoice
     ),
     Beneficiary(
         icon = Icons.Outlined.ArrowOutward,
-        text = R.string.welcome_icon_beneficiary
+        text = Res.string.welcome_icon_beneficiary
     ),
     Intermediary(
         icon = Icons.Outlined.Handshake,
-        text = R.string.welcome_icon_intermediary
+        text = Res.string.welcome_icon_intermediary
     )
 }
 
@@ -104,17 +105,5 @@ internal fun WelcomeActions(
                 }
             }
         }
-    }
-}
-
-@Composable
-@Preview
-private fun Preview() {
-    InvoicerTheme {
-        WelcomeActions(
-            onInvoiceClick = {},
-            onIntermediaryClick = {},
-            onBeneficiaryClick = {}
-        )
     }
 }

@@ -1,6 +1,6 @@
-package io.github.alaksion.invoicer.features.home.presentation.di
+package io.github.alaksion.features.home.presentation.di
 
-import io.github.alaksion.invoicer.features.home.presentation.tabs.settings.SettingsScreenModel
+import io.github.alaksion.features.home.presentation.tabs.settings.SettingsScreenModel
 import org.koin.dsl.module
 
 val homePresentationDiModule = module {

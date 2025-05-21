@@ -8,13 +8,26 @@
 import UIKit
 import invoicerShared
 
-class ViewController: UIViewController {
-
+class MainViewController: UIViewController {
+    
+    private let composeViewController: UIViewController
+    
+    required init() {
+        self.composeViewController = IosMainKt.IosMainViewController()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
-
         super.viewDidLoad()
-        view.backgroundColor = .red
-        // Do any additional setup after loading the view.
+        addChild(composeViewController)
+        composeViewController.view.translatesAutoresizingMaskIntoConstraints = true
+        composeViewController.view.frame = view.bounds
+        view.addSubview(composeViewController.view)
+        composeViewController.didMove(toParent: self)
     }
 }
 

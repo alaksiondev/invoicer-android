@@ -12,3 +12,16 @@ local.properties
 app/google-services.json
 **/build/
 /app/release
+
+
+# IOS
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+/*.gcno
+*.xcworkspacedata
+*/xcuserdata
+invoicer/invoicer.xcodeproj/xcuserdata/*
+invoicer/invoicer.xcodeproj/project.xcworkspace/xcuserdata/*

@@ -1,7 +1,6 @@
 package buildLogic.plugins
 
 import buildLogic.configs.AppConfig
-import buildLogic.extensions.getLibrary
 import buildLogic.extensions.getPlugin
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
@@ -13,7 +12,6 @@ class ComposePlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         installPlugins()
         androidSettings()
-        composeBom()
     }
 
     private fun Project.installPlugins() {
@@ -33,12 +31,5 @@ class ComposePlugin : Plugin<Project> {
                 compose = true
             }
         }
-    }
-
-    private fun Project.composeBom() {
-        dependencies.add(
-            "implementation",
-            dependencies.platform(getLibrary("androidx-compose-bom"))
-        )
     }
 }

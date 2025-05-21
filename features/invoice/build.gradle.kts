@@ -55,13 +55,3 @@ kotlin {
         }
     }
 }
-
-dependencies {
-    // Compose
-    implementation(libs.bundles.compose.ui)
-    debugImplementation(libs.bundles.compose.debug)
-    implementation(libs.androidx.activity.compose)
-
-    // Koin
-    implementation(libs.voyager.transitions)
-}

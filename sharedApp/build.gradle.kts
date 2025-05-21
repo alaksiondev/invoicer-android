@@ -10,6 +10,10 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            // Compose
+            implementation(compose.animationGraphics)
+            implementation(compose.foundation)
+
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
@@ -37,6 +41,10 @@ kotlin {
             implementation(projects.features.intermediary.presentation)
             implementation(projects.foundation.watchers)
             implementation(projects.features.qrcodeSession)
+
+            // Voyager
+            implementation(libs.bundles.voyager)
+            implementation(libs.voyager.transitions)
         }
     }
 }

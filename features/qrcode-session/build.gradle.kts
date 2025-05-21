@@ -33,6 +33,7 @@ kotlin {
             implementation(projects.foundation.designSystem)
             implementation(projects.foundation.ui)
             implementation(projects.foundation.validator)
+            implementation(projects.foundation.utils)
 
             // Voyager
             implementation(libs.bundles.voyager)

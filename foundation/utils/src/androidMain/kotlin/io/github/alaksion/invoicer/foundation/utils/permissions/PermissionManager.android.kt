@@ -34,6 +34,15 @@ actual fun rememberPermissionRequester(
         rememberLauncherForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
+            currentRequest.value?.let { permission ->
+                onResult(
+                    PermissionResult(
+                        permissionType = permission,
+                        isGranted = isGranted
+                    )
+                )
+            }
+
         }
 
     val requester = remember { AndroidPermissionRequester() }

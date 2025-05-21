@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -13,6 +14,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -27,6 +29,9 @@ import io.github.alaksion.invoicer.features.qrcodeSession.presentation.screens.s
 import io.github.alaksion.invoicer.foundation.designSystem.components.LoadingState
 import io.github.alaksion.invoicer.foundation.designSystem.components.buttons.BackButton
 import io.github.alaksion.invoicer.foundation.ui.events.EventEffect
+import io.github.alaksion.invoicer.foundation.utils.permissions.PermissionType
+import io.github.alaksion.invoicer.foundation.utils.permissions.checkPermission
+import io.github.alaksion.invoicer.foundation.utils.permissions.rememberPermissionRequester
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -40,6 +45,13 @@ internal class AuthorizationScanScreen : Screen {
         val scope = rememberCoroutineScope()
         val navigator = LocalNavigator.current
 
+        val hasCameraPermission = checkPermission(PermissionType.CAMERA)
+        val cameraPermissionState = remember { mutableStateOf(hasCameraPermission) }
+        val permissionRequester = rememberPermissionRequester { result ->
+            cameraPermissionState.value =
+                result.isGranted && result.permissionType == PermissionType.CAMERA
+        }
+
         StateContent(
             state = state,
             snackBarHostState = snackBarHost,
@@ -49,6 +61,12 @@ internal class AuthorizationScanScreen : Screen {
             },
             onScanFailure = {
                 screenModel.onScanError()
+            },
+            isCameraPermissionGranted = cameraPermissionState.value,
+            onRequestCameraPermission = {
+                scope.launch {
+                    permissionRequester.requestPermissionDialog(PermissionType.CAMERA)
+                }
             }
         )
 
@@ -73,6 +91,8 @@ internal class AuthorizationScanScreen : Screen {
     fun StateContent(
         state: AuthorizationScanState,
         snackBarHostState: SnackbarHostState,
+        isCameraPermissionGranted: Boolean,
+        onRequestCameraPermission: () -> Unit,
         onBackButton: () -> Unit,
         onScanSuccess: (String) -> Unit,
         onScanFailure: (Throwable) -> Unit,
@@ -101,13 +121,18 @@ internal class AuthorizationScanScreen : Screen {
                         label = stringResource(Res.string.qrcode_scan_in_progress)
                     )
 
-                    AuthorizationScanMode.CameraView -> QrCodeCameraView(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                        onScan = onScanSuccess,
-                        onFail = onScanFailure
-                    )
+                    AuthorizationScanMode.CameraView ->
+                        if (isCameraPermissionGranted)
+                            QrCodeCameraView(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth(),
+                                onScan = onScanSuccess,
+                                onFail = onScanFailure
+                            )
+                        else Button(onClick = onRequestCameraPermission) {
+                            Text("Request camera permission")
+                        }
                 }
             }
         }

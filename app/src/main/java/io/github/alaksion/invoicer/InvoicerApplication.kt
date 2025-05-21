@@ -2,8 +2,6 @@ package io.github.alaksion.invoicer
 
 import android.app.Application
 import cafe.adriel.voyager.core.registry.ScreenRegistry
-import features.qrcodeSession.di.qrCodeSessionDi
-import features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import io.github.alaksion.invoicer.features.auth.presentation.di.featureAuthPresentationDiModule
 import io.github.alaksion.invoicer.features.auth.presentation.navigation.authScreens
 import io.github.alaksion.invoicer.features.beneficiary.presentation.di.beneficiaryPresentationModule
@@ -16,6 +14,8 @@ import io.github.alaksion.invoicer.features.intermediary.presentation.navigation
 import io.github.alaksion.invoicer.features.intermediary.services.di.intermediaryServicesDiModule
 import io.github.alaksion.invoicer.features.invoice.di.invoiceDiModule
 import io.github.alaksion.invoicer.features.invoice.presentation.navigation.invoiceScreens
+import io.github.alaksion.invoicer.features.qrcodeSession.di.qrCodeSessionDi
+import io.github.alaksion.invoicer.features.qrcodeSession.presentation.navigation.qrCodeNavigationModule
 import io.github.alaksion.invoicer.foundation.analytics.di.analyticsDiModule
 import io.github.alaksion.invoicer.foundation.auth.di.foundationAuthDiModule
 import io.github.alaksion.invoicer.foundation.network.di.networkDiModule

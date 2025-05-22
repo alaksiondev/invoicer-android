@@ -32,7 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initApp() {
         AppInit(initializers: KotlinArray(size: 1, init: { KotlinInt in
-            KoinModule()
+            KoinModule(
+                storage: IosLocalStorage(),
+                analyticsTracker: IosAnalyticsTracker(),
+                firebaseHelper: IosFirebaseHelper()
+            )
         })).startAppModules()
     }
 }

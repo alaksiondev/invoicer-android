@@ -72,16 +72,10 @@ class KmpLibraryPlugin : Plugin<Project> {
                     }
                 }
             }
-            listOf(
-                iosX64(),
-                iosArm64(),
-                iosSimulatorArm64()
-            ).forEach { iosTarget ->
-                iosTarget.binaries.framework {
-                    baseName = "invoicerShared"
-                    isStatic = true
-                }
-            }
+
+            iosX64()
+            iosArm64()
+            iosSimulatorArm64()
 
             compilerOptions {
                 // Common compiler options applied to all Kotlin source sets

@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.commonMainApi
+
 plugins {
     id("invoicer.multiplatform.library")
     id("invoicer.compose")
@@ -23,8 +25,8 @@ kotlin {
             implementation(projects.foundation.designSystem)
             implementation(projects.foundation.network)
             implementation(projects.foundation.validator)
-            implementation(projects.foundation.storage)
-            implementation(projects.foundation.auth)
+            api(projects.foundation.storage)
+            api(projects.foundation.auth)
             implementation(projects.foundation.network)
             implementation(projects.foundation.utils)
 
@@ -36,7 +38,7 @@ kotlin {
             implementation(projects.features.beneficiary.services)
             implementation(projects.features.beneficiary.presentation)
             implementation(projects.foundation.watchers)
-            implementation(projects.foundation.analytics)
+            api(projects.foundation.analytics)
             implementation(projects.features.intermediary.services)
             implementation(projects.features.intermediary.presentation)
             implementation(projects.foundation.watchers)
@@ -49,6 +51,20 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.koin.android)
+        }
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "invoicerShared"
+            isStatic = true
+            export(projects.foundation.storage)
+            export(projects.foundation.auth)
+            export(projects.foundation.analytics)
         }
     }
 }

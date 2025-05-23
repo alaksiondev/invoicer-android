@@ -33,10 +33,3 @@ class MainViewController: UIViewController {
         composeViewController.didMove(toParent: self)
     }
 }
-
-extension MainViewController {
-    
-    func startGoogleSignIn() {
-       
-    }
-}

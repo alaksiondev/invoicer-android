@@ -7,6 +7,9 @@
 
 import UIKit
 import invoicerShared
+import FirebaseCore
+import FirebaseAuth
+import GoogleSignIn
 
 class MainViewController: UIViewController {
     
@@ -30,4 +33,3 @@ class MainViewController: UIViewController {
         composeViewController.didMove(toParent: self)
     }
 }
-

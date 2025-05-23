@@ -25,3 +25,4 @@ app/google-services.json
 */xcuserdata
 invoicer/invoicer.xcodeproj/xcuserdata/*
 invoicer/invoicer.xcodeproj/project.xcworkspace/xcuserdata/*
+**/GoogleService-Info.plist

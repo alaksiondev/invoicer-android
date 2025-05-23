@@ -29,7 +29,7 @@ actual fun rememberGoogleLauncher(
     val launcher = remember { IosGoogleLauncher() }
     val helper: IosGoogleFirebaseHelper = remember { KoinPlatform.getKoin().get() }
 
-    LaunchedEffect(helper, launcher) {
+    LaunchedEffect(launcher) {
         launcher.subscribe().collect {
             val result = helper.getGoogleIdToken()
             when (result) {
@@ -40,5 +40,5 @@ actual fun rememberGoogleLauncher(
         }
     }
 
-    return IosGoogleLauncher()
+    return launcher
 }

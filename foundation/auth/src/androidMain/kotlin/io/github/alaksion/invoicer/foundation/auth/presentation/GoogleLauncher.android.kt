@@ -61,7 +61,7 @@ actual fun rememberGoogleLauncher(
         }
     }
 
-    LaunchedEffect(launcher, fireBaseHelper) {
+    LaunchedEffect(launcher) {
         launcher.subscribe().collect {
             val signInClient = fireBaseHelper.getSignInClient()
             val intent = signInClient.signInIntent

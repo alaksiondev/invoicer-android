@@ -5,6 +5,7 @@ import io.github.alaksion.invoicer.features.intermediary.services.data.datasourc
 import io.github.alaksion.invoicer.features.intermediary.services.data.repository.IntermediaryRepositoryImpl
 import io.github.alaksion.invoicer.features.intermediary.services.domain.repository.IntermediaryRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.dsl.module
 
 val intermediaryServicesDiModule = module {

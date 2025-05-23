@@ -5,6 +5,7 @@ import io.github.alaksion.invoicer.features.beneficiary.services.data.datasource
 import io.github.alaksion.invoicer.features.beneficiary.services.data.repository.BeneficiaryRepositoryImpl
 import io.github.alaksion.invoicer.features.beneficiary.services.domain.repository.BeneficiaryRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.dsl.module
 
 val beneficiaryServicesDiModule = module {

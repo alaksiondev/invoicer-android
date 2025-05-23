@@ -15,6 +15,7 @@ import io.github.alaksion.invoicer.features.invoice.presentation.screens.create.
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.details.InvoiceDetailsScreenModel
 import io.github.alaksion.invoicer.features.invoice.presentation.screens.invoicelist.state.InvoiceListScreenModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
